@@ -1,4 +1,48 @@
 # === BLOCK Original Rules ===
+  - DOMAIN-SUFFIX,pub.network
+  - DOMAIN-SUFFIX,omappapi.com
+  - DOMAIN,skype.gmw.cn
+  - DOMAIN,ssp.kaiads.com
+  - DOMAIN-SUFFIX,shiguangpu.com
+  - DOMAIN-SUFFIX,firefoxchina.cn
+  - DOMAIN-SUFFIX,firefox.com.cn
+  - DOMAIN,firebaselogging-pa.googleapis.com
+  - DOMAIN,firebaseinstallations.googleapis.com
+  - DOMAIN,s2.ax1x.com
+  - DOMAIN-SUFFIX,crashlytics.com
+  - DOMAIN,ad.10010.com
+  - DOMAIN-SUFFIX,sentry.io
+  - DOMAIN-SUFFIX,revenuecat.com
+ 
+
+  - DOMAIN,config.cmpassport.com
+  - DOMAIN,www.cmpassport.com
+  - DOMAIN,ecm.cmpassport.com
+  - DOMAIN,config001.cmpassport.com
+  - DOMAIN,log001.cmpassport.com
+
+  - DOMAIN-SUFFIX,id6.me
+  - DOMAIN,mta.e.189.cn
+  - DOMAIN,open.e.189.cn
+
+  - DOMAIN,opencloud.wostore.cn
+  - DOMAIN-SUFFIX,wostore.cn
+
+  - DOMAIN,app-measurement.com
+  - DOMAIN,play.googleapis.com
+  - DOMAIN,clients3.google.com
+  - DOMAIN,settings.crashlytics.com
+
+  - DOMAIN-SUFFIX,comcsoft.com
+  - DOMAIN,appservices.comcsoft.com
+  - DOMAIN-SUFFIX,crashlytics.com
+  - DOMAIN,settings.crashlytics.com
+
+  - DOMAIN-SUFFIX,amplitude.com
+  - DOMAIN-SUFFIX,pdfexpert.com
+  - DOMAIN-SUFFIX,letsencrypt.org
+  - DOMAIN,gate.hockeyapp.net
+
 
 # --- TYPE: SUFFIX ---
 suffix,17gouwuba.com
