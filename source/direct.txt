@@ -39,11 +39,6 @@ suffix,116cd.net
 suffix,119you.com
 suffix,12306.cn
 suffix,12306.com
-suffix,yhgfb-cn-static.com
-suffix,applogcdn.com
-suffix,yhgfb-cn-static.com
-suffix,applogcdn.com
-suffix,xiaomiev.com
 suffix,1234567.com.cn
 suffix,123juzi.com
 suffix,123juzi.net
@@ -961,6 +956,7 @@ suffix,appeeres.com
 suffix,appinn.com
 suffix,appjiagu.com
 suffix,applinzi.com
+suffix,applogcdn.com
 suffix,applysquare.com
 suffix,applysquare.net
 suffix,appshike.com
@@ -7216,6 +7212,7 @@ suffix,xiaomidns.cn
 suffix,xiaomidns.com
 suffix,xiaomidns.com.cn
 suffix,xiaomidns.net
+suffix,xiaomiev.com
 suffix,xiaomiflash.com
 suffix,xiaomiinc.cn
 suffix,xiaomiinc.com
@@ -7421,6 +7418,7 @@ suffix,yfscdn.net
 suffix,yh31.com
 suffix,yhcdn.cn
 suffix,yhd.com
+suffix,yhgfb-cn-static.com
 suffix,yicai.com
 suffix,yiche.com
 suffix,yichuangyun.com.cn

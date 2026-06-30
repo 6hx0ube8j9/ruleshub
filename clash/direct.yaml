@@ -955,6 +955,7 @@ payload:
   - DOMAIN-SUFFIX,appinn.com
   - DOMAIN-SUFFIX,appjiagu.com
   - DOMAIN-SUFFIX,applinzi.com
+  - DOMAIN-SUFFIX,applogcdn.com
   - DOMAIN-SUFFIX,applysquare.com
   - DOMAIN-SUFFIX,applysquare.net
   - DOMAIN-SUFFIX,appshike.com
@@ -7210,6 +7211,7 @@ payload:
   - DOMAIN-SUFFIX,xiaomidns.com
   - DOMAIN-SUFFIX,xiaomidns.com.cn
   - DOMAIN-SUFFIX,xiaomidns.net
+  - DOMAIN-SUFFIX,xiaomiev.com
   - DOMAIN-SUFFIX,xiaomiflash.com
   - DOMAIN-SUFFIX,xiaomiinc.cn
   - DOMAIN-SUFFIX,xiaomiinc.com
@@ -7415,6 +7417,7 @@ payload:
   - DOMAIN-SUFFIX,yh31.com
   - DOMAIN-SUFFIX,yhcdn.cn
   - DOMAIN-SUFFIX,yhd.com
+  - DOMAIN-SUFFIX,yhgfb-cn-static.com
   - DOMAIN-SUFFIX,yicai.com
   - DOMAIN-SUFFIX,yiche.com
   - DOMAIN-SUFFIX,yichuangyun.com.cn
