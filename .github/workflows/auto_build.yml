@@ -1,0 +1,32 @@
+name: 自动编译分流规则
+
+on:
+  push:
+    paths:
+      - 'source/**'  
+      - 'build_rules.py' 
+  workflow_dispatch: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 1. 签出仓库代码
+      uses: actions/checkout@v4
+
+    - name: 2. 部署 Python 环境
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: 3. 执行编译脚本
+      run: python build_rules.py
+
+    - name: 4. 将编译好的规则自动提交并推送到仓库
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add source/ shadowrocket/ quantumultx/ clash/
+        # 只有在规则真的发生变化时才提交，防止死循环
+        git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 自动构建: 规范化底稿并更新多端规则(含Clash)" && git push)
