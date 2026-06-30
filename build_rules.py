@@ -20,45 +20,42 @@ def clean_and_parse_line(line):
         
     if line.startswith('-'):
         line = line.lstrip('-').strip()
-        line = line.replace("'", "").replace('"', "")
+        
+    line = line.replace("'", "").replace('"', "")
         
     if ',' in line:
         parts = [p.strip() for p in line.split(',')]
+        if len(parts) < 2:
+            return None, None
+            
         p1 = parts[0].upper()
         p2 = parts[1]
         
-        if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']:
-            return 'suffix', p2.lstrip('.')
-        if p1 in ['DOMAIN', 'HOST', 'FULL']:
-            return 'full', p2
-        if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']:
-            return 'keyword', p2
-        if p1 in ['IP-CIDR', 'IP-CIDR6', 'IP']:
-            return 'ip', p2
-        if p1 in ['PROCESS-NAME', 'PROCESS']:
-            return 'process', p2
+        if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: return 'suffix', p2.lstrip('.').lower()
+        if p1 in ['DOMAIN', 'HOST', 'FULL']: return 'full', p2.lower()
+        if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: return 'keyword', p2.lower()
+        
+        if p1 in ['IP-CIDR', 'IP']: return 'ip', p2
+        if p1 in ['IP-CIDR6', 'IP6-CIDR', 'IP6']: return 'ip6', p2
+
+        if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', p2
+        if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', p2
             
-        if p1.lower() in ['suffix', 'full', 'keyword', 'ip', 'process']:
-            val = p2.lstrip('.') if p1.lower() in ['suffix', 'full'] else p2
-            
-            if p1.lower() in ['suffix', 'full', 'keyword']:
-                val = val.lower()
-                
-            return p1.lower(), val
+        return None, None
+
+    if '/' in line and any(c.isdigit() for c in line):
+        return 'ip6' if ':' in line else 'ip', line
 
     if line.startswith('.'):
-        value = line.lstrip('.').lower() # 强制转小写
+        value = line.lstrip('.').lower()
         return ('full', value) if value.count('.') >= 2 else ('suffix', value)
             
-    if '/' in line and any(c.isdigit() for c in line):
-        return 'ip', line
-
     return 'suffix', line.lstrip('.').lower()
 
 def process_file(file_name):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0]
-    rules = {'suffix': set(), 'full': set(), 'keyword': set(), 'ip': set(), 'process': set()}
+    rules = {'suffix': set(), 'full': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set()}
     
     with open(source_path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -66,40 +63,43 @@ def process_file(file_name):
             if rule_type in rules:
                 rules[rule_type].add(value)
                 
+    # 1. source
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Original Rules ===\n\n")
-        for r_type in ['suffix', 'full', 'keyword', 'ip', 'process']:
+        for r_type in ['suffix', 'full', 'keyword', 'ip', 'ip6', 'process', 'useragent']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
                 for val in sorted(rules[r_type]):
                     f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
                 
+    # 2. shadowrocket
     sr_path = os.path.join(SHADOWROCKET_DIR, f"{base_name}.list")
     with open(sr_path, 'w', encoding='utf-8') as f_sr:
         f_sr.write(f"# Shadowrocket Rule-Set: {base_name}\n\n")
         for val in sorted(rules['suffix']): f_sr.write(f"DOMAIN-SUFFIX,{val}\n")
         for val in sorted(rules['full']): f_sr.write(f"DOMAIN,{val}\n")
         for val in sorted(rules['keyword']): f_sr.write(f"DOMAIN-KEYWORD,{val}\n")
+        for val in sorted(rules['useragent']): f_sr.write(f"USER-AGENT,{val}\n")
         for val in sorted(rules['ip']): f_sr.write(f"IP-CIDR,{val},no-resolve\n")
+        for val in sorted(rules['ip6']): f_sr.write(f"IP-CIDR6,{val},no-resolve\n")
 
+    # 3. QuantumultX 
     qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
-    
-    if base_name.lower() == 'direct':
-        qx_policy = 'DIRECT'
-    elif base_name.lower() == 'reject':
-        qx_policy = 'REJECT'
-    else:
-        qx_policy = base_name.capitalize() 
+    if base_name.lower() == 'direct': qx_policy = 'DIRECT'
+    elif base_name.lower() == 'reject': qx_policy = 'REJECT'
+    else: qx_policy = base_name.capitalize()
         
     with open(qx_path, 'w', encoding='utf-8') as f_qx:
         f_qx.write(f"# Quantumult X Rule-Set: {base_name}\n\n")
-        for val in sorted(rules['suffix']): f_qx.write(f"HOST-SUFFIX,{val},{qx_policy}\n")
-        for val in sorted(rules['full']): f_qx.write(f"HOST,{val},{qx_policy}\n")
-        for val in sorted(rules['keyword']): f_qx.write(f"HOST-KEYWORD,{val},{qx_policy}\n")
-        for val in sorted(rules['ip']): f_qx.write(f"IP-CIDR,{val},{qx_policy}\n")
+        for val in sorted(rules['suffix']): f_qx.write(f"host-suffix, {val}, {qx_policy}\n")
+        for val in sorted(rules['full']): f_qx.write(f"host, {val}, {qx_policy}\n")
+        for val in sorted(rules['keyword']): f_qx.write(f"host-keyword, {val}, {qx_policy}\n")
+        for val in sorted(rules['useragent']): f_qx.write(f"user-agent, {val}, {qx_policy}\n")
+        for val in sorted(rules['ip']): f_qx.write(f"ip-cidr, {val}, {qx_policy}, no-resolve\n")
+        for val in sorted(rules['ip6']): f_qx.write(f"ip6-cidr, {val}, {qx_policy}, no-resolve\n")
 
-    # 4. Clash (支持 process)
+    # 4. Clash
     clash_path = os.path.join(CLASH_DIR, f"{base_name}.yaml")
     with open(clash_path, 'w', encoding='utf-8') as f_clash:
         f_clash.write(f"# Clash Payload Rule-Set: {base_name}\n")
@@ -107,10 +107,11 @@ def process_file(file_name):
         for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
         for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
         for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")
-        for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
         for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
+        for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
+        for val in sorted(rules['ip6']): f_clash.write(f"  - IP-CIDR6,{val},no-resolve\n")
 
-    # 5. PAC (哈希表高性能查表)
+    # 5. PAC
     if base_name.lower() == 'direct':
         pac_path = os.path.join(PAC_DIR, f"{base_name}.pac")
         with open(pac_path, 'w', encoding='utf-8') as f_pac:
@@ -137,15 +138,18 @@ def process_file(file_name):
             f_pac.write("    }\n\n")
             f_pac.write("    return PROXY_METHOD;\n}\n")
 
-    # 6. sing-box (精准大小写处理)
+    # 6. sing-box
     sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
     sb_data = {"version": 1, "rules": []}
     sub_rule = {}
     if rules['suffix']: sub_rule["domain_suffix"] = sorted(list(rules['suffix']))
     if rules['full']: sub_rule["domain"] = sorted(list(rules['full']))
     if rules['keyword']: sub_rule["domain_keyword"] = sorted(list(rules['keyword']))
-    if rules['ip']: sub_rule["ip_cidr"] = sorted(list(rules['ip']))
     if rules['process']: sub_rule["process_name"] = sorted(list(rules['process']))
+    
+    combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
+    if combined_ips: sub_rule["ip_cidr"] = combined_ips
+    
     if sub_rule: sb_data["rules"].append(sub_rule)
         
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
