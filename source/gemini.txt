@@ -1,0 +1,6 @@
+  - DOMAIN,gemini.google.com,Gemini
+  - DOMAIN,gemini.gstatic.com,Gemini
+  - DOMAIN,proactivebackend-pa.googleapis.com,Gemini
+  - DOMAIN,alkalimessages-pa.googleapis.com,Gemini
+  - DOMAIN,gemini-user-content.googleusercontent.com,Gemini
+  - DOMAIN-KEYWORD,generativelanguage,Gemini
