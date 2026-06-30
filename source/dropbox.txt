@@ -9,6 +9,7 @@ suffix,dropbox.zendesk.com
 suffix,dropboxapi.com
 suffix,dropboxbusiness.com
 suffix,dropboxcaptcha.com
+suffix,dropboxexperiment.com
 suffix,dropboxforum.com
 suffix,dropboxforums.com
 suffix,dropboxinsiders.com
@@ -18,26 +19,13 @@ suffix,dropboxstatic.com
 suffix,dropboxusercontent.com
 suffix,getdropbox.com
 suffix,paper-attachments.s3.amazonaws.com
-  - DOMAIN-SUFFIX,db.tt,Drives
-  - DOMAIN-SUFFIX,dropbox.com,Drives  
-  - DOMAIN-SUFFIX,dropbox-dns.com,Drives
-  - DOMAIN-SUFFIX,dropbox.tech,Drives
-  - DOMAIN-SUFFIX,dropbox.zendesk.com,Drives
-  - DOMAIN-SUFFIX,dropboxapi.com,Drives
-  - DOMAIN-SUFFIX,dropboxbusiness.com,Drives
-  - DOMAIN-SUFFIX,dropboxcaptcha.com,Drives
-  - DOMAIN-SUFFIX,dropboxforum.com,Drives
-  - DOMAIN-SUFFIX,dropboxforums.com,Drives
-  - DOMAIN-SUFFIX,dropboxinsiders.com,Drives
-  - DOMAIN-SUFFIX,dropboxmail.com,Drives
-  - DOMAIN-SUFFIX,dropboxpartners.com,Drives
-  - DOMAIN-SUFFIX,dropboxstatic.com,Drives
-  - DOMAIN-SUFFIX,dropboxusercontent.com,Drives
-  - DOMAIN-SUFFIX,getdropbox.com,Drives
-  - DOMAIN-SUFFIX,paper-attachments.s3.amazonaws.com,Drives
-  - DOMAIN-SUFFIX,dropboxexperiment.com,Drives
-  - DOMAIN,dropbox-api.arkoselabs.com,Drives
-  - PROCESS-NAME,DbxSvc.exe,Drives
-  - PROCESS-NAME,DropboxUpdate.exe,Drives
-  - PROCESS-NAME,Dropbox.exe,Drives  
-  - PROCESS-NAME,DropboxUninstaller.exe,Drives   
+
+# --- TYPE: FULL ---
+full,dropbox-api.arkoselabs.com
+
+# --- TYPE: PROCESS ---
+process,DbxSvc.exe
+process,Dropbox.exe
+process,DropboxUninstaller.exe
+process,DropboxUpdate.exe
+

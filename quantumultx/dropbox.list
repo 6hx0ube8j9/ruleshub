@@ -8,6 +8,7 @@ host-suffix, dropbox.zendesk.com, Dropbox
 host-suffix, dropboxapi.com, Dropbox
 host-suffix, dropboxbusiness.com, Dropbox
 host-suffix, dropboxcaptcha.com, Dropbox
+host-suffix, dropboxexperiment.com, Dropbox
 host-suffix, dropboxforum.com, Dropbox
 host-suffix, dropboxforums.com, Dropbox
 host-suffix, dropboxinsiders.com, Dropbox
@@ -17,3 +18,4 @@ host-suffix, dropboxstatic.com, Dropbox
 host-suffix, dropboxusercontent.com, Dropbox
 host-suffix, getdropbox.com, Dropbox
 host-suffix, paper-attachments.s3.amazonaws.com, Dropbox
+host, dropbox-api.arkoselabs.com, Dropbox
