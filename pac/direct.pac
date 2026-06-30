@@ -4112,6 +4112,7 @@ var RULES = [
         "jddapeigou.com",
         "jddebug.com",
         "jddglobal.com",
+        "jddj.com",
         "jddtv.cn",
         "jddtv.com",
         "jdemall.com",

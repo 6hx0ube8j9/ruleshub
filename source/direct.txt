@@ -3,7 +3,6 @@
 # --- TYPE: SUFFIX ---
 suffix,001wifi.com
 suffix,00cdn.com
-suffix,jddj.com
 suffix,01058511989.com
 suffix,0123456789.com
 suffix,0360.cn
@@ -4062,6 +4061,7 @@ suffix,jdd-global.com
 suffix,jddapeigou.com
 suffix,jddebug.com
 suffix,jddglobal.com
+suffix,jddj.com
 suffix,jddtv.cn
 suffix,jddtv.com
 suffix,jdemall.com
