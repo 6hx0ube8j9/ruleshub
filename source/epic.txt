@@ -17,3 +17,6 @@ suffix,spyjinx.com
 suffix,unrealengine.com
 suffix,unrealtournament.com
 
+  - PROCESS-NAME,EpicGamesLauncher.exe,Games  
+  - PROCESS-NAME,EpicGamesUpdater.exe,Games    
+  - DOMAIN-SUFFIX,twinmotion.com,EpicGames
