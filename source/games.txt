@@ -43,3 +43,4 @@ process,BloonsTD6-Epic.exe
 process,BloonsTD6.exe
 process,Cleaner-BTD6.exe
 process,UnityCrashHandler64.exe
+
