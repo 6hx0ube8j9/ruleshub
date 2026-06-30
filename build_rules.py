@@ -94,39 +94,35 @@ def process_file(file_name):
         for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")
         for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
 
-    pac_path = os.path.join(PAC_DIR, f"{base_name}.pac")
-    with open(pac_path, 'w', encoding='utf-8') as f_pac:
-        direct_domains = sorted(list(rules['suffix'].union(rules['full'])))
-        f_pac.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
-        f_pac.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS;\n\n")
-        f_pac.write("var RULES = [\n    [\n")
-        for i, domain in enumerate(direct_domains):
-            comma = "," if i < len(direct_domains) - 1 else ""
-            f_pac.write(f'        "{domain}"{comma}\n')
-        f_pac.write("    ]\n];\n\n")
-        f_pac.write('var DIRECT_DOMAINS = {\n    "cn": 1\n};\n\n')
-        f_pac.write("(function init() {\n    if (!RULES) return;\n    for (var j = 0; j < RULES.length; j++) {\n")
-        f_pac.write("        var rules = RULES[j];\n        if (!rules) continue;\n")
-        f_pac.write("        for (var i = 0; i < rules.length; i++) {\n            var domain = rules[i];\n")
-        f_pac.write("            if (domain) {\n                DIRECT_DOMAINS[domain] = 1;\n            }\n        }\n    }\n    RULES = null;\n})();\n\n")
-        f_pac.write("function FindProxyForURL(url, host) {\n    if (isPlainHostName(host)) {\n        return \"DIRECT\";\n    }\n\n")
-        f_pac.write("    if (/^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n        return \"DIRECT\";\n    }\n\n")
-        f_pac.write("    var suffix = host;\n    while (true) {\n        if (DIRECT_DOMAINS[suffix] === 1) {\n            return \"DIRECT\";\n        }\n        var pos = suffix.indexOf('.');\n        if (pos <= 0) {\n            break;\n        }\n        suffix = suffix.substring(pos + 1);\n    }\n\n    return PROXY_METHOD;\n}\n")
+    # 🌟 Modified: Only generate PAC for 'direct' file
+    if base_name.lower() == 'direct':
+        pac_path = os.path.join(PAC_DIR, f"{base_name}.pac")
+        with open(pac_path, 'w', encoding='utf-8') as f_pac:
+            direct_domains = sorted(list(rules['suffix'].union(rules['full'])))
+            f_pac.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
+            f_pac.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS;\n\n")
+            f_pac.write("var RULES = [\n    [\n")
+            for i, domain in enumerate(direct_domains):
+                comma = "," if i < len(direct_domains) - 1 else ""
+                f_pac.write(f'        "{domain}"{comma}\n')
+            f_pac.write("    ]\n];\n\n")
+            f_pac.write('var DIRECT_DOMAINS = {\n    "cn": 1\n};\n\n')
+            f_pac.write("(function init() {\n    if (!RULES) return;\n    for (var j = 0; j < RULES.length; j++) {\n")
+            f_pac.write("        var rules = RULES[j];\n        if (!rules) continue;\n")
+            f_pac.write("        for (var i = 0; i < rules.length; i++) {\n            var domain = rules[i];\n")
+            f_pac.write("            if (domain) {\n                DIRECT_DOMAINS[domain] = 1;\n            }\n        }\n    }\n    RULES = null;\n})();\n\n")
+            f_pac.write("function FindProxyForURL(url, host) {\n    if (isPlainHostName(host)) {\n        return \"DIRECT\";\n    }\n\n")
+            f_pac.write("    if (/^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n        return \"DIRECT\";\n    }\n\n")
+            f_pac.write("    var suffix = host;\n    while (true) {\n        if (DIRECT_DOMAINS[suffix] === 1) {\n            return \"DIRECT\";\n        }\n        var pos = suffix.indexOf('.');\n        if (pos <= 0) {\n            break;\n        }\n        suffix = suffix.substring(pos + 1);\n    }\n\n    return PROXY_METHOD;\n}\n")
 
-    # Output sing-box rule_set (.json)
     sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
-    sb_data = {
-        "version": 1,
-        "rules": []
-    }
+    sb_data = {"version": 1, "rules": []}
     sub_rule = {}
     if rules['suffix']: sub_rule["domain_suffix"] = sorted(list(rules['suffix']))
     if rules['full']: sub_rule["domain"] = sorted(list(rules['full']))
     if rules['keyword']: sub_rule["domain_keyword"] = sorted(list(rules['keyword']))
     if rules['ip']: sub_rule["ip_cidr"] = sorted(list(rules['ip']))
-    
-    if sub_rule:
-        sb_data["rules"].append(sub_rule)
+    if sub_rule: sb_data["rules"].append(sub_rule)
         
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
