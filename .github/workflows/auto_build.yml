@@ -31,6 +31,14 @@ jobs:
           cat source/direct.txt >> source/online_direct.txt
         fi
         mv source/online_direct.txt source/direct.txt
+        
+        touch source/online_google.txt
+        curl -sSL "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Google/Google.list" >> source/online_google.txt
+        # 修正：此处判断和追加的文件名必须是 google.txt
+        if [ -f source/google.txt ]; then
+          cat source/google.txt >> source/online_google.txt
+        fi
+        mv source/online_google.txt source/google.txt        
 
     - name: 4. Execute build script
       run: python build_rules.py
