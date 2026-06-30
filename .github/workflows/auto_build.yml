@@ -51,9 +51,7 @@ jobs:
         merge_rules "microsoft.txt" \
           "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Microsoft/Microsoft.list" \
           "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Xbox/Xbox.list"
-		
-		
-		
+
     - name: 4. Execute build script
       run: python build_rules.py
 
