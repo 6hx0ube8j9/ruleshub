@@ -1,0 +1,19 @@
+# === EPIC Original Rules ===
+
+# --- TYPE: SUFFIX ---
+suffix,battlebreakers.com
+suffix,eac-cdn.com
+suffix,easy.ac
+suffix,easyanticheat.net
+suffix,epicgames.com
+suffix,epicgames.dev
+suffix,fortnite.com
+suffix,helpshift.com
+suffix,paragon.com
+suffix,playparagon.com
+suffix,roborecall.com
+suffix,shadowcomplex.com
+suffix,spyjinx.com
+suffix,unrealengine.com
+suffix,unrealtournament.com
+
