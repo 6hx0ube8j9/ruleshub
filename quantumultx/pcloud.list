@@ -1,0 +1,24 @@
+# Quantumult X Rule-Set: pcloud
+
+host-suffix, pcloud.com, Pcloud
+host, api.pcloud.com, Pcloud
+host, apipass.pcloud.com, Pcloud
+host, bineapi.pcloud.com, Pcloud
+host, bineapitok2.pcloud.com, Pcloud
+host, def2.pcloud.com, Pcloud
+host, e.pcloud.link, Pcloud
+host, eapi.pcloud.com, Pcloud
+host, edef12.pcloud.com, Pcloud
+host, et2-b.pcloud.com, Pcloud
+host, eth2.pcloud.com, Pcloud
+host, my.pcloud.com, Pcloud
+host, pass.pcloud.com, Pcloud
+host, pcdn-my.pcloud.com, Pcloud
+host, pcdn-pass.pcloud.com, Pcloud
+host, t100.pcloud.com, Pcloud
+host, th3.pcloud.com, Pcloud
+host, th4.pcloud.com, Pcloud
+host, webdav.pcloud.com, Pcloud
+ip-cidr, 185.62.236.0/22, Pcloud, no-resolve
+ip-cidr, 45.131.244.0/22, Pcloud, no-resolve
+ip-cidr, 74.120.8.0/22, Pcloud, no-resolve

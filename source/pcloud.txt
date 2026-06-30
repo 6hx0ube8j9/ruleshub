@@ -1,22 +1,30 @@
-  - DOMAIN,api.pcloud.com,Drives
-  - DOMAIN,apipass.pcloud.com,Drives 
-  - DOMAIN,bineapi.pcloud.com,Drives
-  - DOMAIN,bineapitok2.pcloud.com,Drives
-  - DOMAIN,def2.pcloud.com,Drives
-  - DOMAIN,e.pcloud.link,Drives
-  - DOMAIN,eapi.pcloud.com,Drives
-  - DOMAIN,edef12.pcloud.com,Drives
-  - DOMAIN,et2-b.pcloud.com,Drives
-  - DOMAIN,eth2.pcloud.com,Drives
-  - DOMAIN,my.pcloud.com,Drives
-  - DOMAIN,pass.pcloud.com,Drives   
-  - DOMAIN,pcdn-my.pcloud.com,Drives
-  - DOMAIN,pcdn-pass.pcloud.com,Drives   
-  - DOMAIN,t100.pcloud.com,Drives
-  - DOMAIN,th3.pcloud.com,Drives
-  - DOMAIN,th4.pcloud.com,Drives
-  - DOMAIN,webdav.pcloud.com,Drives 
-  - DOMAIN-SUFFIX,pcloud.com,Drives
-  - IP-CIDR,185.62.236.0/22,Drives,no-resolve
-  - IP-CIDR,45.131.244.0/22,Drives,no-resolve
-  - IP-CIDR,74.120.8.0/22,Drives,no-resolve
+# === PCLOUD Original Rules ===
+
+# --- TYPE: SUFFIX ---
+suffix,pcloud.com
+
+# --- TYPE: FULL ---
+full,api.pcloud.com
+full,apipass.pcloud.com
+full,bineapi.pcloud.com
+full,bineapitok2.pcloud.com
+full,def2.pcloud.com
+full,e.pcloud.link
+full,eapi.pcloud.com
+full,edef12.pcloud.com
+full,et2-b.pcloud.com
+full,eth2.pcloud.com
+full,my.pcloud.com
+full,pass.pcloud.com
+full,pcdn-my.pcloud.com
+full,pcdn-pass.pcloud.com
+full,t100.pcloud.com
+full,th3.pcloud.com
+full,th4.pcloud.com
+full,webdav.pcloud.com
+
+# --- TYPE: IP ---
+ip,185.62.236.0/22
+ip,45.131.244.0/22
+ip,74.120.8.0/22
+
