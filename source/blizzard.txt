@@ -1,5 +1,9 @@
 # === BLIZZARD Original Rules ===
-
+  - DOMAIN,blz-contentstack-images.akamaized.net,Blizzard
+  - DOMAIN,blz-contentstack-assets.akamaized.net,Blizzard
+  - DOMAIN,bnetaccount.akamaized.net,Blizzard  
+  - DOMAIN-SUFFIX,gs.skugry.dev,Blizzard
+  - DOMAIN-SUFFIX,qos.skugry.dev,Blizzard
 # --- TYPE: SUFFIX ---
 suffix,battle.net
 suffix,battlenet.com
