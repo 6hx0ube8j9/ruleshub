@@ -7929,6 +7929,11 @@
         "qiyi",
         "weibo"
       ],
+      "process_name": [
+        "FTBrowserProxy.exe",
+        "FTIMShell.exe",
+        "xiadan.exe"
+      ],
       "ip_cidr": [
         "101.224.0.0/13",
         "101.71.154.241/32",
