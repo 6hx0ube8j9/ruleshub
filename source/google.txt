@@ -8,7 +8,6 @@ suffix,265.com
 suffix,2mdn-cn.net
 suffix,2mdn.net
 suffix,466453.com
-suffix,USER-AGENT
 suffix,abc.xyz
 suffix,adgoogle.net
 suffix,admeld.com
@@ -642,9 +641,7 @@ suffix,txvia.com
 suffix,unfiltered.news
 suffix,urchin.com
 suffix,useplannr.com
-suffix,user-agent,%e4%ba%91%e7%ab%af%e7%a1%ac%e7%9b%98*
-suffix,user-agent,*com.google.drive*
-suffix,user-agent,google.drive*
+suffix,user-agent
 suffix,usvimosquito.com
 suffix,usvimosquitoproject.com
 suffix,v8.dev
@@ -706,4 +703,9 @@ ip,173.194.0.0/16
 ip,216.73.80.0/20
 ip,2620:120:e000::/40
 ip,74.125.0.0/16
+
+# --- TYPE: USERAGENT ---
+useragent,%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*
+useragent,*com.google.Drive*
+useragent,Google.Drive*
 

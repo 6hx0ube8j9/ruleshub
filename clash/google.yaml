@@ -7,7 +7,6 @@ payload:
   - DOMAIN-SUFFIX,2mdn-cn.net
   - DOMAIN-SUFFIX,2mdn.net
   - DOMAIN-SUFFIX,466453.com
-  - DOMAIN-SUFFIX,USER-AGENT
   - DOMAIN-SUFFIX,abc.xyz
   - DOMAIN-SUFFIX,adgoogle.net
   - DOMAIN-SUFFIX,admeld.com
@@ -641,9 +640,7 @@ payload:
   - DOMAIN-SUFFIX,unfiltered.news
   - DOMAIN-SUFFIX,urchin.com
   - DOMAIN-SUFFIX,useplannr.com
-  - DOMAIN-SUFFIX,user-agent,%e4%ba%91%e7%ab%af%e7%a1%ac%e7%9b%98*
-  - DOMAIN-SUFFIX,user-agent,*com.google.drive*
-  - DOMAIN-SUFFIX,user-agent,google.drive*
+  - DOMAIN-SUFFIX,user-agent
   - DOMAIN-SUFFIX,usvimosquito.com
   - DOMAIN-SUFFIX,usvimosquitoproject.com
   - DOMAIN-SUFFIX,v8.dev

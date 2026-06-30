@@ -7,7 +7,6 @@ DOMAIN-SUFFIX,265.com
 DOMAIN-SUFFIX,2mdn-cn.net
 DOMAIN-SUFFIX,2mdn.net
 DOMAIN-SUFFIX,466453.com
-DOMAIN-SUFFIX,USER-AGENT
 DOMAIN-SUFFIX,abc.xyz
 DOMAIN-SUFFIX,adgoogle.net
 DOMAIN-SUFFIX,admeld.com
@@ -641,9 +640,7 @@ DOMAIN-SUFFIX,txvia.com
 DOMAIN-SUFFIX,unfiltered.news
 DOMAIN-SUFFIX,urchin.com
 DOMAIN-SUFFIX,useplannr.com
-DOMAIN-SUFFIX,user-agent,%e4%ba%91%e7%ab%af%e7%a1%ac%e7%9b%98*
-DOMAIN-SUFFIX,user-agent,*com.google.drive*
-DOMAIN-SUFFIX,user-agent,google.drive*
+DOMAIN-SUFFIX,user-agent
 DOMAIN-SUFFIX,usvimosquito.com
 DOMAIN-SUFFIX,usvimosquitoproject.com
 DOMAIN-SUFFIX,v8.dev
@@ -694,6 +691,9 @@ DOMAIN-KEYWORD,blogspot
 DOMAIN-KEYWORD,gmail
 DOMAIN-KEYWORD,google
 DOMAIN-KEYWORD,recaptcha
+USER-AGENT,%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*
+USER-AGENT,*com.google.Drive*
+USER-AGENT,Google.Drive*
 IP-CIDR,172.110.32.0/21,no-resolve
 IP-CIDR,173.194.0.0/16,no-resolve
 IP-CIDR,216.73.80.0/20,no-resolve

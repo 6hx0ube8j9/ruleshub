@@ -518,7 +518,6 @@ suffix,9ht.com
 suffix,9xgame.com
 suffix,9xsecndns.cn
 suffix,9xu.com
-suffix,USER-AGENT
 suffix,a-isv.org
 suffix,a9vg.com
 suffix,aa5d.com
@@ -6779,6 +6778,7 @@ suffix,urlqh.cn
 suffix,urlshare.cn
 suffix,urselect.com
 suffix,urumqi-air.com
+suffix,user-agent
 suffix,useso.com
 suffix,uslk.net
 suffix,uucl.vip
