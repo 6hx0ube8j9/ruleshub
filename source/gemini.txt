@@ -1,12 +1,26 @@
 # === GEMINI Original Rules ===
 
+# --- TYPE: SUFFIX ---
+suffix,apis.google.com
+suffix,bard.google.com
+suffix,deepmind.com
+suffix,deepmind.google
+suffix,gemini.google.com
+suffix,generativeai.google
+suffix,proactivebackend-pa.googleapis.com
+
 # --- TYPE: FULL ---
+full,ai.google.dev
+full,alkalimakersuite-pa.clients6.google.com
 full,alkalimessages-pa.googleapis.com
 full,gemini-user-content.googleusercontent.com
 full,gemini.google.com
 full,gemini.gstatic.com
+full,makersuite.google.com
 full,proactivebackend-pa.googleapis.com
 
 # --- TYPE: KEYWORD ---
+keyword,colab
+keyword,developerprofiles
 keyword,generativelanguage
 
