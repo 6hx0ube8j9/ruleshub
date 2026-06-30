@@ -1,2 +1,5 @@
+# === GAMES Original Rules ===
+
+# --- TYPE: PROCESS ---
 process,BloonsTD6.exe
 
