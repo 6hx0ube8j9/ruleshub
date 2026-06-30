@@ -5,6 +5,7 @@ on:
     paths:
       - 'source/**'
       - 'build_rules.py'
+      - '.github/workflows/auto_build.yml'
   schedule:
     - cron: '0 22 * * *'
   workflow_dispatch:
