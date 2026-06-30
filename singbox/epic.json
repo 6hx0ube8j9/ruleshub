@@ -16,8 +16,13 @@
         "roborecall.com",
         "shadowcomplex.com",
         "spyjinx.com",
+        "twinmotion.com",
         "unrealengine.com",
         "unrealtournament.com"
+      ],
+      "process_name": [
+        "EpicGamesLauncher.exe",
+        "EpicGamesUpdater.exe"
       ]
     }
   ]

@@ -14,9 +14,11 @@ suffix,playparagon.com
 suffix,roborecall.com
 suffix,shadowcomplex.com
 suffix,spyjinx.com
+suffix,twinmotion.com
 suffix,unrealengine.com
 suffix,unrealtournament.com
 
-  - PROCESS-NAME,EpicGamesLauncher.exe,Games  
-  - PROCESS-NAME,EpicGamesUpdater.exe,Games    
-  - DOMAIN-SUFFIX,twinmotion.com,EpicGames
+# --- TYPE: PROCESS ---
+process,EpicGamesLauncher.exe
+process,EpicGamesUpdater.exe
+

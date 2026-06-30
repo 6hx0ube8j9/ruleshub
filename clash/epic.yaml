@@ -13,5 +13,8 @@ payload:
   - DOMAIN-SUFFIX,roborecall.com
   - DOMAIN-SUFFIX,shadowcomplex.com
   - DOMAIN-SUFFIX,spyjinx.com
+  - DOMAIN-SUFFIX,twinmotion.com
   - DOMAIN-SUFFIX,unrealengine.com
   - DOMAIN-SUFFIX,unrealtournament.com
+  - PROCESS-NAME,EpicGamesLauncher.exe
+  - PROCESS-NAME,EpicGamesUpdater.exe
