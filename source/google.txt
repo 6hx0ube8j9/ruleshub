@@ -9,9 +9,6 @@ suffix,2mdn-cn.net
 suffix,2mdn.net
 suffix,466453.com
 suffix,USER-AGENT
-suffix,USER-AGENT,%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*
-suffix,USER-AGENT,*com.google.Drive*
-suffix,USER-AGENT,Google.Drive*
 suffix,abc.xyz
 suffix,adgoogle.net
 suffix,admeld.com
@@ -645,6 +642,9 @@ suffix,txvia.com
 suffix,unfiltered.news
 suffix,urchin.com
 suffix,useplannr.com
+suffix,user-agent,%e4%ba%91%e7%ab%af%e7%a1%ac%e7%9b%98*
+suffix,user-agent,*com.google.drive*
+suffix,user-agent,google.drive*
 suffix,usvimosquito.com
 suffix,usvimosquitoproject.com
 suffix,v8.dev

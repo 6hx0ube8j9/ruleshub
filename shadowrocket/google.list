@@ -8,9 +8,6 @@ DOMAIN-SUFFIX,2mdn-cn.net
 DOMAIN-SUFFIX,2mdn.net
 DOMAIN-SUFFIX,466453.com
 DOMAIN-SUFFIX,USER-AGENT
-DOMAIN-SUFFIX,USER-AGENT,%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*
-DOMAIN-SUFFIX,USER-AGENT,*com.google.Drive*
-DOMAIN-SUFFIX,USER-AGENT,Google.Drive*
 DOMAIN-SUFFIX,abc.xyz
 DOMAIN-SUFFIX,adgoogle.net
 DOMAIN-SUFFIX,admeld.com
@@ -644,6 +641,9 @@ DOMAIN-SUFFIX,txvia.com
 DOMAIN-SUFFIX,unfiltered.news
 DOMAIN-SUFFIX,urchin.com
 DOMAIN-SUFFIX,useplannr.com
+DOMAIN-SUFFIX,user-agent,%e4%ba%91%e7%ab%af%e7%a1%ac%e7%9b%98*
+DOMAIN-SUFFIX,user-agent,*com.google.drive*
+DOMAIN-SUFFIX,user-agent,google.drive*
 DOMAIN-SUFFIX,usvimosquito.com
 DOMAIN-SUFFIX,usvimosquitoproject.com
 DOMAIN-SUFFIX,v8.dev
