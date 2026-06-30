@@ -1,0 +1,8 @@
+# Quantumult X Rule-Set: gemini
+
+host, alkalimessages-pa.googleapis.com, Gemini
+host, gemini-user-content.googleusercontent.com, Gemini
+host, gemini.google.com, Gemini
+host, gemini.gstatic.com, Gemini
+host, proactivebackend-pa.googleapis.com, Gemini
+host-keyword, generativelanguage, Gemini

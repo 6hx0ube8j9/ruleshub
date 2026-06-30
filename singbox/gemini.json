@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain": [
+        "alkalimessages-pa.googleapis.com",
+        "gemini-user-content.googleusercontent.com",
+        "gemini.google.com",
+        "gemini.gstatic.com",
+        "proactivebackend-pa.googleapis.com"
+      ],
+      "domain_keyword": [
+        "generativelanguage"
+      ]
+    }
+  ]
+}

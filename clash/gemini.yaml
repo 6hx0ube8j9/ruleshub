@@ -1,0 +1,8 @@
+# Clash Payload Rule-Set: gemini
+payload:
+  - DOMAIN,alkalimessages-pa.googleapis.com
+  - DOMAIN,gemini-user-content.googleusercontent.com
+  - DOMAIN,gemini.google.com
+  - DOMAIN,gemini.gstatic.com
+  - DOMAIN,proactivebackend-pa.googleapis.com
+  - DOMAIN-KEYWORD,generativelanguage
