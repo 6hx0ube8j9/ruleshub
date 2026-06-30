@@ -1,0 +1,115 @@
+# Quantumult X Rule-Set: mihoyo
+
+host-suffix, domain-keyword, Mihoyo
+host-suffix, domain-suffix.co.jp, Mihoyo
+host-suffix, domaindesktop.mihoyo.com, Mihoyo
+host-suffix, hoyo.link, Mihoyo
+host-suffix, hoyolab.com, Mihoyo
+host-suffix, hoyoverse.com, Mihoyo
+host-suffix, yuanshen.com, Mihoyo
+host, account.mihoyo.com, Mihoyo
+host, api-beta-os.mihoyo.com, Mihoyo
+host, api-beta-sdk-os-static.mihoyo.com, Mihoyo
+host, api-beta-sdk-os.mihoyo.com, Mihoyo
+host, api-global-takumi-static.mihoyo.com, Mihoyo
+host, api-os-community.mihoyo.com, Mihoyo
+host, api-os-takumi-static.mihoyo.com, Mihoyo
+host, api-os-takumi.mihoyo.com, Mihoyo
+host, api-sdk-os.mihoyo.com, Mihoyo
+host, api-sea.mihoyo.com, Mihoyo
+host, api-static.mihoyo.com, Mihoyo
+host, api-tw.mihoyo.com, Mihoyo
+host, apkdownload.mihoyo.com, Mihoyo
+host, assets-ios.hsod2.mihoyo.com, Mihoyo
+host, assets.hsod2.mihoyo.com, Mihoyo
+host, autopatchhk.yuanshen.com, Mihoyo
+host, cdp.cloud.unity3d.com, Mihoyo
+host, cms.esa01.mihoyo.com, Mihoyo
+host, content-static-sea.mihoyo.com, Mihoyo
+host, devapi-static.mihoyo.com, Mihoyo
+host, dispatchosglobal.yuanshen.com, Mihoyo
+host, download-sea.mihoyo.com, Mihoyo
+host, forums.mihoyo.com, Mihoyo
+host, genshin.mihoyo.com, Mihoyo
+host, genshinimpact.mihoyo.com, Mihoyo
+host, hk4e-api-os-static.mihoyo.com, Mihoyo
+host, hk4e-api-os.mihoyo.com, Mihoyo
+host, hk4e-api-static.mihoyo.com, Mihoyo
+host, hk4e-sdk-os.mihoyo.com, Mihoyo
+host, honkaiimpact3.mihoyo.com, Mihoyo
+host, hsod-us1.mihoyo.com, Mihoyo
+host, imap.mihoyo.com, Mihoyo
+host, img-os-static.hoyolab.com, Mihoyo
+host, img-os-static.hoyolab.com.w.cdngslb.com, Mihoyo
+host, img-os-static.mihoyo.com, Mihoyo
+host, img-static.mihoyo.com, Mihoyo
+host, log-upload-eur.mihoyo.com, Mihoyo
+host, log-upload-os.mihoyo.com, Mihoyo
+host, m.forums.mihoyo.com, Mihoyo
+host, mail.mihoyo.com, Mihoyo
+host, mi18n-os.mihoyo.com, Mihoyo
+host, minor-api-os.mihoyo.com, Mihoyo
+host, n0va-static.mihoyo.com, Mihoyo
+host, n0vadp.mihoyo.com, Mihoyo
+host, oa.mihoyo.com, Mihoyo
+host, op-os-takumi.mihoyo.com, Mihoyo
+host, osasiadispatch.yuanshen.com, Mihoyo
+host, overseauspider.yuanshen.com, Mihoyo
+host, pay.esa01.mihoyo.com, Mihoyo
+host, preapi-os-community.mihoyo.com, Mihoyo
+host, preapi-os-takumi.mihoyo.com, Mihoyo
+host, preapi-static.mihoyo.com, Mihoyo
+host, sandbox-api-os.mihoyo.com, Mihoyo
+host, sandbox-sdk-os.mihoyo.com, Mihoyo
+host, sdk-os-static.mihoyo.com, Mihoyo
+host, sentry-sea.mihoyo.com, Mihoyo
+host, static.event.mihoyo.com, Mihoyo
+host, static.mihoyo.com, Mihoyo
+host, tot.mihoyo.com, Mihoyo
+host, tot.tw.mihoyo.com, Mihoyo
+host, upload-os-bbs.mihoyo.com, Mihoyo
+host, uploadstatic-sea.mihoyo.com, Mihoyo
+host, uploadstatic.mihoyo.com, Mihoyo
+host, webapi-os.account.mihoyo.com, Mihoyo
+host, webstatic-asia.mihoyo.com, Mihoyo
+host, webstatic-global.mihoyo.com, Mihoyo
+host, webstatic-jp.mihoyo.com, Mihoyo
+host, webstatic-kr.mihoyo.com, Mihoyo
+host, webstatic-overseas.mihoyo.com, Mihoyo
+host, webstatic-sea-test.mihoyo.com, Mihoyo
+host, webstatic-sea.mihoyo.com, Mihoyo
+host, webstatic.mihoyo.com.m.alikunlun.com, Mihoyo
+host, x8af4371739i8h99.aliyunddos0007.com, Mihoyo
+host, ys-api-os.mihoyo.com, Mihoyo
+host-keyword, hoyolab, Mihoyo
+host-keyword, yuanshen, Mihoyo
+ip-cidr, 170.33.9.150/20, Mihoyo, no-resolve
+ip-cidr, 47.242.175.196/20, Mihoyo, no-resolve
+ip-cidr, 47.242.50.47/20, Mihoyo, no-resolve
+ip-cidr, 47.244.152.19/20, Mihoyo, no-resolve
+ip-cidr, 47.245.26.245/20, Mihoyo, no-resolve
+ip-cidr, 47.245.29.221/20, Mihoyo, no-resolve
+ip-cidr, 47.245.31.106/20, Mihoyo, no-resolve
+ip-cidr, 47.245.31.185/20, Mihoyo, no-resolve
+ip-cidr, 47.245.35.20/20, Mihoyo, no-resolve
+ip-cidr, 47.245.56.10/20, Mihoyo, no-resolve
+ip-cidr, 47.246.16.44/20, Mihoyo, no-resolve
+ip-cidr, 47.52.126.123/20, Mihoyo, no-resolve
+ip-cidr, 47.74.12.250/20, Mihoyo, no-resolve
+ip-cidr, 47.74.13.160/20, Mihoyo, no-resolve
+ip-cidr, 47.74.40.10/20, Mihoyo, no-resolve
+ip-cidr, 47.91.20.238/20, Mihoyo, no-resolve
+ip-cidr, 75.2.123.37/20, Mihoyo, no-resolve
+ip-cidr, 8.209.214.25/20, Mihoyo, no-resolve
+ip-cidr, 8.210.108.147/20, Mihoyo, no-resolve
+ip-cidr, 8.210.121.40/20, Mihoyo, no-resolve
+ip-cidr, 8.210.157.236/20, Mihoyo, no-resolve
+ip-cidr, 8.211.156.242/20, Mihoyo, no-resolve
+ip-cidr, 8.211.157.32/20, Mihoyo, no-resolve
+ip-cidr, 8.211.158.93/20, Mihoyo, no-resolve
+ip-cidr, 8.211.159.189/20, Mihoyo, no-resolve
+ip-cidr, 8.211.159.30/20, Mihoyo, no-resolve
+ip-cidr, 8.211.160.176/20, Mihoyo, no-resolve
+ip-cidr, 8.211.162.146/20, Mihoyo, no-resolve
+ip-cidr, 8.211.184.227/20, Mihoyo, no-resolve
+ip-cidr, 8.211.185.160/20, Mihoyo, no-resolve
