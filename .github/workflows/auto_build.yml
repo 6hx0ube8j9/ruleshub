@@ -1,4 +1,4 @@
-name: auto-build-rules
+name: sync-rules
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - 'build_rules.py'
       - '.github/workflows/auto_build.yml'
   schedule:
-    - cron: '0 22 * * *'
+    - cron: '0 22 */6 * *'
   workflow_dispatch:
 
 jobs:
@@ -35,14 +35,12 @@ jobs:
     - name: 4. Execute build script
       run: python build_rules.py
 
-    - name: 5. Install sing-box & compile to SRS
+    - name: 5. Install sing-box and compile to SRS
       run: |
-        # Download official sing-box binary
         curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v1.11.0/sing-box-1.11.0-linux-amd64.tar.gz
         tar -xzf sing-box.tar.gz
         mv sing-box-1.11.0-linux-amd64/sing-box .
         
-        # Compile JSON to binary SRS format for every json rule found
         for json_file in singbox/*.json; do
           if [ -f "$json_file" ]; then
             srs_file="${json_file%.json}.srs"
@@ -50,7 +48,6 @@ jobs:
           fi
         done
         
-        # Clean up temporary tools
         rm -rf sing-box sing-box.tar.gz sing-box-1.11.0-linux-amd64
 
     - name: 6. Push compiled rules back to repo
@@ -58,4 +55,4 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add source/ shadowrocket/ quantumultx/ clash/ pac/ singbox/
-        git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 auto build: update rules" && git pull --rebase origin main && git push)
+        git diff --quiet && git diff --staged --quiet || (git commit -m "auto build: update rules" && git pull --rebase origin main && git push)
