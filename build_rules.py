@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
 
-# 定义工作目录
+# 定义工作目录（这次加上了 clash）
 SOURCE_DIR = 'source'
 SHADOWROCKET_DIR = 'shadowrocket'
 QUANTUMULTX_DIR = 'quantumultx'
+CLASH_DIR = 'clash'
 
 # 确保所有目录存在
-for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR]:
+for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR]:
     if not os.path.exists(d):
         os.makedirs(d)
 
@@ -52,7 +53,6 @@ def clean_and_parse_line(line):
     # 4. 绞碎青龙带点格式 (例如: .apple.com)
     if line.startswith('.'):
         value = line.lstrip('.')
-        # 智能判定：点数 >= 2（说明总共3段或4段域名），判定为精准完全匹配
         return ('full', value) if value.count('.') >= 2 else ('suffix', value)
             
     # 5. 绞碎纯 IP 段 (含有斜杠 / 且包含数字)
@@ -79,12 +79,11 @@ def process_file(file_name):
     # 【出料 1】强制清洗并格式化底稿，确保底稿只留下神圣的“标准格式”
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} 原始底稿 (自动规范化排版) ===\n")
-        f_source.write("# 规范格式：类型,内容 (例如 suffix,apple.com)\\n\n")
+        f_source.write("# 规范格式：类型,内容 (例如 suffix,apple.com)\n\n")
         
         for r_type in ['suffix', 'full', 'keyword', 'ip']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
-                # 严格按字母 A-Z 排序
                 for val in sorted(rules[r_type]):
                     f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
@@ -107,7 +106,17 @@ def process_file(file_name):
         for val in sorted(rules['keyword']): f_qx.write(f"HOST-KEYWORD,{val},DIRECT\n")
         for val in sorted(rules['ip']): f_qx.write(f"IP-CIDR,{val},DIRECT\n")
 
-    print(f"✅ 绞肉机运行成功: {file_name} 已提纯并派生完毕。")
+    # 🌟【新增强调：出料 4】衍生派生：Clash 专属目录 (.yaml)
+    clash_path = os.path.join(CLASH_DIR, f"{base_name}.yaml")
+    with open(clash_path, 'w', encoding='utf-8') as f_clash:
+        f_clash.write(f"# Clash Payload Rule-Set: {base_name}\n")
+        f_clash.write("payload:\n")  # 标准的 Clash 规则集开头
+        for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
+        for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
+        for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")
+        for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
+
+    print(f"✅ 绞肉机运行成功: {file_name} 已提纯并派生（包含 Clash）完毕。")
 
 def main():
     files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
