@@ -1,5 +1,7 @@
 # === STEAM Original Rules ===
-
+  - PROCESS-NAME,steam.exe,Steam
+  - PROCESS-NAME,steamservice.exe,Steam
+  - PROCESS-NAME,steamwebhelper.exe,Steam  
 # --- TYPE: SUFFIX ---
 suffix,cdn-ali.content.steamchina.com
 suffix,cdn-qc.content.steamchina.com
