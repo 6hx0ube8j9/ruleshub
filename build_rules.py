@@ -40,16 +40,20 @@ def clean_and_parse_line(line):
             
         if p1.lower() in ['suffix', 'full', 'keyword', 'ip', 'process']:
             val = p2.lstrip('.') if p1.lower() in ['suffix', 'full'] else p2
+            
+            if p1.lower() in ['suffix', 'full', 'keyword']:
+                val = val.lower()
+                
             return p1.lower(), val
 
     if line.startswith('.'):
-        value = line.lstrip('.')
+        value = line.lstrip('.').lower() # 强制转小写
         return ('full', value) if value.count('.') >= 2 else ('suffix', value)
             
     if '/' in line and any(c.isdigit() for c in line):
         return 'ip', line
 
-    return 'suffix', line.lstrip('.')
+    return 'suffix', line.lstrip('.').lower()
 
 def process_file(file_name):
     source_path = os.path.join(SOURCE_DIR, file_name)
@@ -62,7 +66,6 @@ def process_file(file_name):
             if rule_type in rules:
                 rules[rule_type].add(value)
                 
-    # 1. 覆写 source 底稿，增加 PROCESS 分类，方便查阅
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Original Rules ===\n\n")
         for r_type in ['suffix', 'full', 'keyword', 'ip', 'process']:
@@ -72,7 +75,6 @@ def process_file(file_name):
                     f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
                 
-    # 2. 小火箭 (屏蔽 process)
     sr_path = os.path.join(SHADOWROCKET_DIR, f"{base_name}.list")
     with open(sr_path, 'w', encoding='utf-8') as f_sr:
         f_sr.write(f"# Shadowrocket Rule-Set: {base_name}\n\n")
@@ -81,14 +83,21 @@ def process_file(file_name):
         for val in sorted(rules['keyword']): f_sr.write(f"DOMAIN-KEYWORD,{val}\n")
         for val in sorted(rules['ip']): f_sr.write(f"IP-CIDR,{val},no-resolve\n")
 
-    # 3. 圈 X (屏蔽 process)
     qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
+    
+    if base_name.lower() == 'direct':
+        qx_policy = 'DIRECT'
+    elif base_name.lower() == 'reject':
+        qx_policy = 'REJECT'
+    else:
+        qx_policy = base_name.capitalize() 
+        
     with open(qx_path, 'w', encoding='utf-8') as f_qx:
         f_qx.write(f"# Quantumult X Rule-Set: {base_name}\n\n")
-        for val in sorted(rules['suffix']): f_qx.write(f"HOST-SUFFIX,{val},DIRECT\n")
-        for val in sorted(rules['full']): f_qx.write(f"HOST,{val},DIRECT\n")
-        for val in sorted(rules['keyword']): f_qx.write(f"HOST-KEYWORD,{val},DIRECT\n")
-        for val in sorted(rules['ip']): f_qx.write(f"IP-CIDR,{val},DIRECT\n")
+        for val in sorted(rules['suffix']): f_qx.write(f"HOST-SUFFIX,{val},{qx_policy}\n")
+        for val in sorted(rules['full']): f_qx.write(f"HOST,{val},{qx_policy}\n")
+        for val in sorted(rules['keyword']): f_qx.write(f"HOST-KEYWORD,{val},{qx_policy}\n")
+        for val in sorted(rules['ip']): f_qx.write(f"IP-CIDR,{val},{qx_policy}\n")
 
     # 4. Clash (支持 process)
     clash_path = os.path.join(CLASH_DIR, f"{base_name}.yaml")
@@ -101,15 +110,13 @@ def process_file(file_name):
         for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
         for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
 
-    # 5. PAC (性能极致优化版)
+    # 5. PAC (哈希表高性能查表)
     if base_name.lower() == 'direct':
         pac_path = os.path.join(PAC_DIR, f"{base_name}.pac")
         with open(pac_path, 'w', encoding='utf-8') as f_pac:
             direct_domains = sorted(list(rules['suffix'].union(rules['full'])))
             f_pac.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
             f_pac.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';\n\n")
-            
-            # 直接由 Python 静态生成 Hash Map，免去客户端运行时执行 init() 数组循环的开销
             f_pac.write("var DIRECT_DOMAINS = {\n")
             for i, domain in enumerate(direct_domains):
                 comma = "," if i < len(direct_domains) - 1 else ""
@@ -117,10 +124,8 @@ def process_file(file_name):
             f_pac.write("};\n\n")
             
             f_pac.write("function FindProxyForURL(url, host) {\n")
-            # 基础短域名及纯 IP 跳过
             f_pac.write("    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n")
             f_pac.write("        return \"DIRECT\";\n    }\n\n")
-            # 极速逐级域名后缀匹配 (O(1) 复杂度查表)
             f_pac.write("    var suffix = host;\n")
             f_pac.write("    while (suffix) {\n")
             f_pac.write("        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {\n")
@@ -132,7 +137,7 @@ def process_file(file_name):
             f_pac.write("    }\n\n")
             f_pac.write("    return PROXY_METHOD;\n}\n")
 
-    # 6. sing-box (支持 process)
+    # 6. sing-box (精准大小写处理)
     sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
     sb_data = {"version": 1, "rules": []}
     sub_rule = {}
