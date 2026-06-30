@@ -1,48 +1,4 @@
 # === BLOCK Original Rules ===
-  - DOMAIN-SUFFIX,pub.network
-  - DOMAIN-SUFFIX,omappapi.com
-  - DOMAIN,skype.gmw.cn
-  - DOMAIN,ssp.kaiads.com
-  - DOMAIN-SUFFIX,shiguangpu.com
-  - DOMAIN-SUFFIX,firefoxchina.cn
-  - DOMAIN-SUFFIX,firefox.com.cn
-  - DOMAIN,firebaselogging-pa.googleapis.com
-  - DOMAIN,firebaseinstallations.googleapis.com
-  - DOMAIN,s2.ax1x.com
-  - DOMAIN-SUFFIX,crashlytics.com
-  - DOMAIN,ad.10010.com
-  - DOMAIN-SUFFIX,sentry.io
-  - DOMAIN-SUFFIX,revenuecat.com
- 
-
-  - DOMAIN,config.cmpassport.com
-  - DOMAIN,www.cmpassport.com
-  - DOMAIN,ecm.cmpassport.com
-  - DOMAIN,config001.cmpassport.com
-  - DOMAIN,log001.cmpassport.com
-
-  - DOMAIN-SUFFIX,id6.me
-  - DOMAIN,mta.e.189.cn
-  - DOMAIN,open.e.189.cn
-
-  - DOMAIN,opencloud.wostore.cn
-  - DOMAIN-SUFFIX,wostore.cn
-
-  - DOMAIN,app-measurement.com
-  - DOMAIN,play.googleapis.com
-  - DOMAIN,clients3.google.com
-  - DOMAIN,settings.crashlytics.com
-
-  - DOMAIN-SUFFIX,comcsoft.com
-  - DOMAIN,appservices.comcsoft.com
-  - DOMAIN-SUFFIX,crashlytics.com
-  - DOMAIN,settings.crashlytics.com
-
-  - DOMAIN-SUFFIX,amplitude.com
-  - DOMAIN-SUFFIX,pdfexpert.com
-  - DOMAIN-SUFFIX,letsencrypt.org
-  - DOMAIN,gate.hockeyapp.net
-
 
 # --- TYPE: SUFFIX ---
 suffix,17gouwuba.com
@@ -67,6 +23,7 @@ suffix,abbyychina.com
 suffix,adsame.com
 suffix,akuai.top
 suffix,alienskins.cn
+suffix,amplitude.com
 suffix,anydeskchina.cn
 suffix,atplay.cn
 suffix,baiwanchuangyi.com
@@ -86,7 +43,9 @@ suffix,cishantao.com
 suffix,cjmakeding.com
 suffix,cjmkt.com
 suffix,codesoftchina.com
+suffix,comcsoft.com
 suffix,coreldrawchina.com
+suffix,crashlytics.com
 suffix,crossoverchina.com
 suffix,cszlks.com
 suffix,cudaojia.com
@@ -103,6 +62,8 @@ suffix,ediuschina.com
 suffix,erdoscs.com
 suffix,fan-yong.com
 suffix,feih.com.cn
+suffix,firefox.com.cn
+suffix,firefoxchina.cn
 suffix,fjlqqc.com
 suffix,fkku194.com
 suffix,flash.cn
@@ -125,6 +86,7 @@ suffix,hypersnap.net
 suffix,hyunke.com
 suffix,ichaosheng.com
 suffix,iconworkshop.cn
+suffix,id6.me
 suffix,idmchina.net
 suffix,imazingchina.com
 suffix,imindmap.cc
@@ -141,6 +103,7 @@ suffix,kingdeecn.cn
 suffix,kuaizip.com
 suffix,kualianyingxiao.cn
 suffix,kumihua.com
+suffix,letsencrypt.org
 suffix,logoshejishi.com
 suffix,ltheanine.cn
 suffix,luping.net.cn
@@ -168,20 +131,26 @@ suffix,nicelabel.cc
 suffix,ntfsformac.cc
 suffix,ntfsformac.cn
 suffix,officesoftcn.com
+suffix,omappapi.com
 suffix,overturechina.com
 suffix,passwordrecovery.cn
 suffix,pdfexpert.cc
+suffix,pdfexpert.com
 suffix,photozoomchina.com
 suffix,pinzhitmall.com
 suffix,poppyta.com
+suffix,pub.network
 suffix,qianchuanghr.com
 suffix,qichexin.com
 suffix,qinchugudao.com
 suffix,quanliyouxi.cn
 suffix,qutaobi.com
+suffix,revenuecat.com
 suffix,ry51w.cn
+suffix,sentry.io
 suffix,sg536.cn
 suffix,shankejingling.com
+suffix,shiguangpu.com
 suffix,sifubo.cn
 suffix,sifuce.cn
 suffix,sifuda.cn
@@ -207,6 +176,7 @@ suffix,urlaw.cn
 suffix,urlet.cn
 suffix,vegaschina.cn
 suffix,websd8.com
+suffix,wostore.cn
 suffix,wsgblw.com
 suffix,wx16999.com
 suffix,xchmai.com
@@ -232,7 +202,27 @@ suffix,zunmi.cn
 suffix,zzd6.com
 
 # --- TYPE: FULL ---
+full,ad.10010.com
+full,app-measurement.com
+full,appservices.comcsoft.com
+full,clients3.google.com
+full,config.cmpassport.com
+full,config001.cmpassport.com
+full,ecm.cmpassport.com
+full,firebaseinstallations.googleapis.com
+full,firebaselogging-pa.googleapis.com
+full,gate.hockeyapp.net
 full,geo2.adobe.com
+full,log001.cmpassport.com
+full,mta.e.189.cn
+full,open.e.189.cn
+full,opencloud.wostore.cn
+full,play.googleapis.com
+full,s2.ax1x.com
+full,settings.crashlytics.com
+full,skype.gmw.cn
+full,ssp.kaiads.com
+full,www.cmpassport.com
 
 # --- TYPE: KEYWORD ---
 keyword,112wan
