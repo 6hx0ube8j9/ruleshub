@@ -43,6 +43,7 @@ jobs:
         merge_rules "steam.txt"  "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Steam/Steam.list"
         merge_rules "epic.txt"   "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Epic/Epic.list"
         merge_rules "dropbox.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Dropbox/Dropbox.list"
+        merge_rules "gemini.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Gemini/Gemini.list"
         
         merge_rules "block.txt" \
           "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list" \
