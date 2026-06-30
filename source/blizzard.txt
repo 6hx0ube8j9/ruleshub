@@ -1,9 +1,5 @@
 # === BLIZZARD Original Rules ===
-  - DOMAIN,blz-contentstack-images.akamaized.net,Blizzard
-  - DOMAIN,blz-contentstack-assets.akamaized.net,Blizzard
-  - DOMAIN,bnetaccount.akamaized.net,Blizzard  
-  - DOMAIN-SUFFIX,gs.skugry.dev,Blizzard
-  - DOMAIN-SUFFIX,qos.skugry.dev,Blizzard
+
 # --- TYPE: SUFFIX ---
 suffix,battle.net
 suffix,battlenet.com
@@ -31,6 +27,7 @@ suffix,diablo3.com
 suffix,diablo3.nosdn.127.net
 suffix,diabloimmortal.com
 suffix,firesidegatherings.com
+suffix,gs.skugry.dev
 suffix,hearthstone.nosdn.127.net
 suffix,heroes.nos.netease.com
 suffix,heroesofthestorm.com
@@ -38,12 +35,18 @@ suffix,overwatch.nosdn.127.net
 suffix,playhearthstone.com
 suffix,playoverwatch.com
 suffix,playwarcraft3.com
+suffix,qos.skugry.dev
 suffix,sc2.nosdn.127.net
 suffix,starcraft.com
 suffix,starcraft2.com
 suffix,worldofwarcraft.com
 suffix,wow.nosdn.127.net
 suffix,wowchina.com
+
+# --- TYPE: FULL ---
+full,blz-contentstack-assets.akamaized.net
+full,blz-contentstack-images.akamaized.net
+full,bnetaccount.akamaized.net
 
 # --- TYPE: IP ---
 ip,103.4.114.233/32

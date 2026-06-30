@@ -26,6 +26,7 @@ host-suffix, diablo3.com, Blizzard
 host-suffix, diablo3.nosdn.127.net, Blizzard
 host-suffix, diabloimmortal.com, Blizzard
 host-suffix, firesidegatherings.com, Blizzard
+host-suffix, gs.skugry.dev, Blizzard
 host-suffix, hearthstone.nosdn.127.net, Blizzard
 host-suffix, heroes.nos.netease.com, Blizzard
 host-suffix, heroesofthestorm.com, Blizzard
@@ -33,12 +34,16 @@ host-suffix, overwatch.nosdn.127.net, Blizzard
 host-suffix, playhearthstone.com, Blizzard
 host-suffix, playoverwatch.com, Blizzard
 host-suffix, playwarcraft3.com, Blizzard
+host-suffix, qos.skugry.dev, Blizzard
 host-suffix, sc2.nosdn.127.net, Blizzard
 host-suffix, starcraft.com, Blizzard
 host-suffix, starcraft2.com, Blizzard
 host-suffix, worldofwarcraft.com, Blizzard
 host-suffix, wow.nosdn.127.net, Blizzard
 host-suffix, wowchina.com, Blizzard
+host, blz-contentstack-assets.akamaized.net, Blizzard
+host, blz-contentstack-images.akamaized.net, Blizzard
+host, bnetaccount.akamaized.net, Blizzard
 ip-cidr, 103.4.114.233/32, Blizzard, no-resolve
 ip-cidr, 103.4.115.248/32, Blizzard, no-resolve
 ip-cidr, 137.221.105.2/32, Blizzard, no-resolve

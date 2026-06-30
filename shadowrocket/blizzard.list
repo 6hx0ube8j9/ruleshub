@@ -26,6 +26,7 @@ DOMAIN-SUFFIX,diablo3.com
 DOMAIN-SUFFIX,diablo3.nosdn.127.net
 DOMAIN-SUFFIX,diabloimmortal.com
 DOMAIN-SUFFIX,firesidegatherings.com
+DOMAIN-SUFFIX,gs.skugry.dev
 DOMAIN-SUFFIX,hearthstone.nosdn.127.net
 DOMAIN-SUFFIX,heroes.nos.netease.com
 DOMAIN-SUFFIX,heroesofthestorm.com
@@ -33,12 +34,16 @@ DOMAIN-SUFFIX,overwatch.nosdn.127.net
 DOMAIN-SUFFIX,playhearthstone.com
 DOMAIN-SUFFIX,playoverwatch.com
 DOMAIN-SUFFIX,playwarcraft3.com
+DOMAIN-SUFFIX,qos.skugry.dev
 DOMAIN-SUFFIX,sc2.nosdn.127.net
 DOMAIN-SUFFIX,starcraft.com
 DOMAIN-SUFFIX,starcraft2.com
 DOMAIN-SUFFIX,worldofwarcraft.com
 DOMAIN-SUFFIX,wow.nosdn.127.net
 DOMAIN-SUFFIX,wowchina.com
+DOMAIN,blz-contentstack-assets.akamaized.net
+DOMAIN,blz-contentstack-images.akamaized.net
+DOMAIN,bnetaccount.akamaized.net
 IP-CIDR,103.4.114.233/32,no-resolve
 IP-CIDR,103.4.115.248/32,no-resolve
 IP-CIDR,137.221.105.2/32,no-resolve
