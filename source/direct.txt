@@ -39,6 +39,11 @@ suffix,116cd.net
 suffix,119you.com
 suffix,12306.cn
 suffix,12306.com
+suffix,yhgfb-cn-static.com
+suffix,applogcdn.com
+suffix,yhgfb-cn-static.com
+suffix,applogcdn.com
+suffix,xiaomiev.com
 suffix,1234567.com.cn
 suffix,123juzi.com
 suffix,123juzi.net
