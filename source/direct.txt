@@ -1,5 +1,4 @@
-# === DIRECT 原始底稿 (自动规范化排版) ===
-# 规范格式：类型,内容 (例如 suffix,apple.com)
+# === DIRECT Original Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,001wifi.com
