@@ -1,5 +1,6 @@
 # === MICROSOFT Original Rules ===
-
+  - DOMAIN-SUFFIX,microsoftpersonalcontent.com,Microsoft
+  - DOMAIN-SUFFIX,msftncsi.com,Microsoft  
 # --- TYPE: SUFFIX ---
 suffix,1drv.com
 suffix,1drv.ms
