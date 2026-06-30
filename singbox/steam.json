@@ -59,6 +59,11 @@
         "steambroadcast",
         "steamstore",
         "steamuserimages"
+      ],
+      "process_name": [
+        "steam.exe",
+        "steamservice.exe",
+        "steamwebhelper.exe"
       ]
     }
   ]
