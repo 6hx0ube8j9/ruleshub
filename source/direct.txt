@@ -1,5 +1,7 @@
 # === DIRECT Original Rules ===
-
+  - PROCESS-NAME,xiadan.exe,DIRECT
+  - PROCESS-NAME,FTIMShell.exe,DIRECT
+  - PROCESS-NAME,FTBrowserProxy.exe,DIRECT
 # --- TYPE: SUFFIX ---
 suffix,001wifi.com
 suffix,00cdn.com
