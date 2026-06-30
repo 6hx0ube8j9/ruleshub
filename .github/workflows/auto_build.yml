@@ -43,18 +43,14 @@ jobs:
         merge_rules "steam.txt"  "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Steam/Steam.list"
         merge_rules "epic.txt"   "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Epic/Epic.list"
         
-        block_urls=(
-          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list"
-          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Privacy/Privacy.list"
+        merge_rules "block.txt" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Privacy/Privacy.list" \
           "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Hijacking/Hijacking.list"
-        )
-        merge_rules "block.txt" "${block_urls[@]}"
-		
-		microsoft_urls=(
-          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Microsoft/Microsoft.list"
-          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Xbox/Xbox.list"		  
-        )
-        merge_rules "microsoft.txt" "${microsoft_urls[@]}"
+        
+        merge_rules "microsoft.txt" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Microsoft/Microsoft.list" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Xbox/Xbox.list"
 		
 		
 		
