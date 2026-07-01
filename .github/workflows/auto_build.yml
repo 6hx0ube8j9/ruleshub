@@ -23,42 +23,61 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: 3. Fetch and merge upstream rules
+    - name: 3. Fetch and merge upstream rules (Safe & Clean)
       run: |
         merge_rules() {
           local target=$1; shift
           local tmp="source/temp_merge.txt"
           > "$tmp"
+          
           for url in "$@"; do
-            curl -sSL "$url" >> "$tmp"
+            curl -sSLf "$url" >> "$tmp" || true
             echo "" >> "$tmp"
           done
-          [ -f "source/$target" ] && cat "source/$target" >> "$tmp"
-          sort -u "$tmp" -o "source/$target"
+          
+          if [ -f "source/$target" ]; then
+            grep -v "^#" "source/$target" >> "$tmp" || true
+          fi
+          
+          sort -u "$tmp" | sed '/^$/d' > "source/$target"
           rm "$tmp"
         }
 
-        merge_rules "direct.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/China/China_Domain.list"
-        merge_rules "google.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Google/Google.list"
-        merge_rules "steam.txt"  "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Steam/Steam.list"
-        merge_rules "epic.txt"   "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Epic/Epic.list"
-        merge_rules "dropbox.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Dropbox/Dropbox.list"
-        merge_rules "gemini.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Gemini/Gemini.list"
-        merge_rules "blizzard.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Blizzard/Blizzard.list"
+        
+        merge_rules "direct.txt" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/China/China_Domain.list"
+
+        merge_rules "google.txt" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list"
+
+        merge_rules "steam.txt" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Steam/Steam.list"
+
+        merge_rules "epic.txt" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Epic/Epic.list"
+
+        merge_rules "dropbox.txt" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Dropbox/Dropbox.list"
+
+        merge_rules "gemini.txt" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Gemini/Gemini.list"
+
+        merge_rules "blizzard.txt" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Blizzard/Blizzard.list"
         
         merge_rules "block.txt" \
-          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list" \
-          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Privacy/Privacy.list" \
-          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Hijacking/Hijacking.list"
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Privacy/Privacy.list" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list"
         
         merge_rules "microsoft.txt" \
-          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Microsoft/Microsoft.list" \
-          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Xbox/Xbox.list"
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list" \
+          "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list"
 
     - name: 4. Execute build script
       run: python build_rules.py
 
-    - name: 5. Install sing-box and compile to SRS
+    - name: 5. Install sing-box & Compile to SRS
       run: |
         curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v1.11.0/sing-box-1.11.0-linux-amd64.tar.gz
         tar -xzf sing-box.tar.gz
@@ -70,10 +89,23 @@ jobs:
             ./sing-box rule-set compile "$json_file" -o "$srs_file"
           fi
         done
-        
         rm -rf sing-box sing-box.tar.gz sing-box-1.11.0-linux-amd64
 
-    - name: 6. Push compiled rules back to repo
+    - name: 6. Install Mihomo & Compile to MRS
+      run: |
+        curl -Lo mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.18.3/mihomo-linux-amd64-v1.18.3.gz
+        gunzip mihomo.gz
+        chmod +x mihomo
+        
+        for yaml_file in clash/*.yaml; do
+          if [ -f "$yaml_file" ]; then
+            mrs_file="${yaml_file%.yaml}.mrs"
+            ./mihomo convert-ruleset classical "$yaml_file" "$mrs_file"
+          fi
+        done
+        rm -rf mihomo
+
+    - name: 7. Push compiled rules back to repo
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
