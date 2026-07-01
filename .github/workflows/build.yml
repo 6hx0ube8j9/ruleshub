@@ -1,16 +1,15 @@
-name: Build Clash and Mihomo Rules
+name: ruleshub
 
 on:
   push:
-    branches:
-      - main
     paths:
-      - 'source/**'                  # 修正：监听正确的源目录
+      - 'source/**'
       - 'build_rules.py'
       - '.github/workflows/build.yml'
+  schedule:
+    - cron: '0 22 */6 * *'
   workflow_dispatch:
 
-# 显式声明 GitHub 令牌的写入权限，防止推送被拒绝
 permissions:
   contents: write
 
@@ -19,70 +18,105 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: 1. Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 2. Setup Python environment
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.10'
 
-      - name: Download and Setup Mihomo
+      - name: 3. Fetch and merge upstream rules (Safe & Clean)
         run: |
-          MIHOMO_VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4)
-          echo "Latest Mihomo Version: $MIHOMO_VERSION"
+          merge_rules() {
+            local target=$1; shift
+            local tmp="source/temp_merge.txt"
+            > "$tmp"
+            
+            for url in "$@"; do
+              curl -sSLf "$url" >> "$tmp" || true
+              echo "" >> "$tmp"
+            done
+            
+            if [ -f "source/$target" ]; then
+              grep -v "^#" "source/$target" >> "$tmp" || true
+            fi
+            
+            sort -u "$tmp" | sed '/^$/d' > "source/$target"
+            rm "$tmp"
+          }
+
+          merge_rules "direct.txt" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/China/China_Domain.list"
+
+          merge_rules "google.txt" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list"
+
+          merge_rules "steam.txt" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Steam/Steam.list"
+
+          merge_rules "epic.txt" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Epic/Epic.list"
+
+          merge_rules "dropbox.txt" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Dropbox/Dropbox.list"
+
+          merge_rules "gemini.txt" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Gemini/Gemini.list"
+
+          merge_rules "blizzard.txt" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Blizzard/Blizzard.list"
           
-          curl -L -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
+          merge_rules "block.txt" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Privacy/Privacy.list" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list"
+          
+          merge_rules "microsoft.txt" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list" \
+            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list"
+
+      - name: 4. Execute build script
+        run: python build_rules.py
+
+      - name: 5. Install sing-box & Compile to SRS
+        run: |
+          curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v1.11.0/sing-box-1.11.0-linux-amd64.tar.gz
+          tar -xzf sing-box.tar.gz
+          mv sing-box-1.11.0-linux-amd64/sing-box .
+          
+          for json_file in singbox/*.json; do
+            if [ -f "$json_file" ]; then
+              srs_file="${json_file%.json}.srs"
+              echo "正在编译 Sing-box 规则集: $srs_file"
+              ./sing-box rule-set compile "$json_file" -o "$srs_file"
+            fi
+          done
+          rm -rf sing-box sing-box.tar.gz sing-box-1.11.0-linux-amd64
+
+      - name: 6. Install Mihomo & Compile to MRS
+        run: |
+          curl -Lo mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.18.3/mihomo-linux-amd64-v1.18.3.gz
           gunzip -c mihomo.gz > mihomo
           chmod +x mihomo
           
+          # 创建轻量数据库依赖，以彻底防范内核在 CI 环境下的任何挂起行为
           mkdir -p ~/.config/mihomo
-          curl -L -o ~/.config/mihomo/Country.mmdb "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
-          cp ~/.config/mihomo/Country.mmdb ./Country.mmdb
-
-      - name: Run Python Script to Parse Rules
-        run: |
-          python build_rules.py
-          echo "=== 🔍 检查 Python 运行后 clash 目录下的过渡文件 ==="
-          ls -la clash/
-
-      - name: Compile Mihomo MRS Rulesets
-        run: |
-          cd clash
-          shopt -s nullglob
+          curl -sL -o ~/.config/mihomo/Country.mmdb "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
           
-          echo "=== ⚙️ 开始编译 Domain 类型的 MRS 规则集 ==="
-          for domain_yaml in tmp_*_domain.yaml; do
-            base_name=$(echo "$domain_yaml" | sed 's/tmp_//' | sed 's/_domain.yaml//')
-            echo "⚡ 正在编译: ${base_name}_domain.mrs"
-            ../mihomo convert-ruleset domain yaml "$domain_yaml" "${base_name}_domain.mrs"
+          for yaml_file in clash/*.yaml; do
+            if [ -f "$yaml_file" ]; then
+              mrs_file="${yaml_file%.yaml}.mrs"
+              echo "正在编译 Mihomo 规则集: $mrs_file"
+              # 补充缺少的 yaml 格式化声明参数，杜绝无限期卡死
+              ./mihomo convert-ruleset classical yaml "$yaml_file" "$mrs_file"
+            fi
           done
-          
-          echo "=== ⚙️ 开始编译 IPCIDR 类型的 MRS 规则集 ==="
-          for ip_yaml in tmp_*_ipcidr.yaml; do
-            base_name=$(echo "$ip_yaml" | sed 's/tmp_//' | sed 's/_ipcidr.yaml//')
-            echo "⚡ 正在编译: ${base_name}_ipcidr.mrs"
-            ../mihomo convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}_ipcidr.mrs"
-          done
-          
-          # 清理临时文件
-          rm -f tmp_*.yaml
-          
-          echo "=== 🔍 检查 clash 目录最终生成的所有规则文件 ==="
-          ls -la
-          cd ..
+          rm -rf mihomo
 
-      - name: Commit and Push Changes
+      - name: 7. Push compiled rules back to repo
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          
-          # 修正：将所有生成的平台文件夹全部纳入托管
-          git add source/* shadowrocket/* quantumultx/* clash/* pac/* singbox/*
-          
-          if git diff --staged --quiet; then
-            echo "没有发现任何规则变更，跳过提交。"
-          else
-            git commit -m "自动构建：同步更新全平台客户端规则与 Mihomo MRS 二进制规则集 [skip ci]"
-            git push
-          fi
+          git add source/ shadowrocket/ quantumultx/ clash/ pac/ singbox/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "auto build: update rules" && git pull --rebase origin main && git push)
