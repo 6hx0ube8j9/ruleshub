@@ -12,23 +12,27 @@ PAC_DIR = 'pac'
 SINGBOX_DIR = 'singbox'
 MIHOMO_BIN = "./mihomo-bin"
 
+# 确保所有目录存在
 for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR, PAC_DIR, SINGBOX_DIR]:
     if not os.path.exists(d):
         os.makedirs(d)
 
+# ====================================================
+# 🔥 核心防御点 1：强行生成虚假本地配置，彻底禁用 Mihomo 网络功能
+# ====================================================
 home_dir = os.path.expanduser('~')
 mihomo_config_dir = os.path.join(home_dir, '.config', 'mihomo')
 os.makedirs(mihomo_config_dir, exist_ok=True)
 
 dummy_config = {
-    "mixed-port": 0,  
+    "mixed-port": 0,      # 0 代表完全关闭代理端口监听
     "allow-lan": False,
     "mode": "rule",
-    "log-level": "silent" 
+    "log-level": "silent" # 让它闭嘴，不输出无用日志
 }
 with open(os.path.join(mihomo_config_dir, 'config.yaml'), 'w', encoding='utf-8') as f:
     yaml.dump(dummy_config, f)
-
+# ====================================================
 
 def clean_and_parse_line(line):
     line = line.strip()
