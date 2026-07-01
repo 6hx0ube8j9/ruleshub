@@ -5,10 +5,14 @@ on:
     branches:
       - main
     paths:
-      - 'rules/**'
+      - 'source/**'                  # 修正：监听正确的源目录
       - 'build_rules.py'
       - '.github/workflows/build.yml'
   workflow_dispatch:
+
+# 显式声明 GitHub 令牌的写入权限，防止推送被拒绝
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -39,14 +43,12 @@ jobs:
       - name: Run Python Script to Parse Rules
         run: |
           python build_rules.py
-          echo "=== 🔍 Python 运行完毕，当前 clash 文件夹内的临时过渡文件列表： ==="
+          echo "=== 🔍 检查 Python 运行后 clash 目录下的过渡文件 ==="
           ls -la clash/
 
       - name: Compile Mihomo MRS Rulesets
         run: |
           cd clash
-          
-          # 开启 nullglob 扩展：若找不到匹配的 tmp_* 文件，循环直接安全跳过，不会把通配符当字符串处理
           shopt -s nullglob
           
           echo "=== ⚙️ 开始编译 Domain 类型的 MRS 规则集 ==="
@@ -63,10 +65,10 @@ jobs:
             ../mihomo convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}_ipcidr.mrs"
           done
           
-          # 清理临时过渡文件
+          # 清理临时文件
           rm -f tmp_*.yaml
           
-          echo "=== 🔍 编译完成，当前 clash 文件夹内最终产生的文件列表： ==="
+          echo "=== 🔍 检查 clash 目录最终生成的所有规则文件 ==="
           ls -la
           cd ..
 
@@ -74,11 +76,13 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add clash/*
+          
+          # 修正：将所有生成的平台文件夹全部纳入托管
+          git add source/* shadowrocket/* quantumultx/* clash/* pac/* singbox/*
           
           if git diff --staged --quiet; then
             echo "没有发现任何规则变更，跳过提交。"
           else
-            git commit -m "自动构建：更新 Clash YAML 经典配置与 Mihomo MRS 二进制规则集 [skip ci]"
+            git commit -m "自动构建：同步更新全平台客户端规则与 Mihomo MRS 二进制规则集 [skip ci]"
             git push
           fi
