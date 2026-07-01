@@ -8,6 +8,8 @@ on:
       - 'source/**'
       - 'build_rules.py'
       - '.github/workflows/build.yml'
+  schedule:
+    - cron: '0 22 */6 * *'
   workflow_dispatch:
 
 permissions:
@@ -21,7 +23,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python Environment
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
@@ -140,11 +142,12 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          git add source/* shadowrocket/* quantumultx/* clash/* pac/* singbox/*
+          git add source/ shadowrocket/ quantumultx/ clash/ pac/ singbox/
           
           if git diff --staged --quiet; then
             echo "No rules changes detected. Skipping commit."
           else
-            git commit -m "Automated build: update multi-platform client rules and binary rulesets [skip ci]"
+            git commit -m "Automated build: sync multi-platform rules and binary sets [skip ci]"
+            git pull --rebase origin main
             git push
           fi
