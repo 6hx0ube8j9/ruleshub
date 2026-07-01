@@ -52,6 +52,37 @@ def clean_and_parse_line(line):
             
     return 'suffix', line.lstrip('.').lower()
 
+def optimize_domains(rules):
+    """
+    核心：树状层级去重
+    """
+
+    sorted_suffixes = sorted(list(rules['suffix']), key=len)
+    clean_suffixes = set()
+    
+    for domain in sorted_suffixes:
+        is_subdomain = False
+        for clean in clean_suffixes:
+            if domain == clean or domain.endswith('.' + clean):
+                is_subdomain = True
+                break
+        if not is_subdomain:
+            clean_suffixes.add(domain)
+            
+    rules['suffix'] = clean_suffixes
+    
+    clean_full = set()
+    for domain in rules['full']:
+        is_covered = False
+        for clean in rules['suffix']:
+            if domain == clean or domain.endswith('.' + clean):
+                is_covered = True
+                break
+        if not is_covered:
+            clean_full.add(domain)
+            
+    rules['full'] = clean_full
+
 def process_file(file_name):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0]
@@ -62,6 +93,8 @@ def process_file(file_name):
             rule_type, value = clean_and_parse_line(line)
             if rule_type in rules:
                 rules[rule_type].add(value)
+                
+    optimize_domains(rules)
                 
     # 1. source
     with open(source_path, 'w', encoding='utf-8') as f_source:
