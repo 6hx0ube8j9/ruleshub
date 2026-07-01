@@ -15,19 +15,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 1. Checkout repository
+      - name: 1. 检出仓库代码
         uses: actions/checkout@v4
 
-      - name: 2. Setup Python environment
+      - name: 2. 配置 Python 环境
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           
-      - name: 3. Install Python dependencies
+      - name: 3. 安装 Python 依赖库
         run: |
           pip install PyYAML
         
-      - name: 4. Fetch and merge upstream rules (Safe & Clean)
+      - name: 4. 获取并合并上游规则源数据
         run: |
           merge_rules() {
             local target=$1; shift
@@ -57,16 +57,18 @@ jobs:
           merge_rules "block.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Privacy/Privacy.list" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list"
           merge_rules "microsoft.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list"
 
-      - name: 5. Pre-install Mihomo Kernel
+      - name: 5. 预安装 Mihomo 内核及必要数据库 (防止编译 MRS 失败)
         run: |
           curl -Lo mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.18.3/mihomo-linux-amd64-v1.18.3.gz
           gunzip -c mihomo.gz > mihomo-bin
           chmod +x mihomo-bin
+          # 下载内核编译 MRS 规则时必须依赖的 GeoIP 数据库文件
+          curl -Lo Country.mmdb https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb
 
-      - name: 6. Execute build script (Generates configurations & Compiles MRS)
+      - name: 6. 执行构建脚本 (生成各平台配置并编译 MRS)
         run: python build_rules.py
 
-      - name: 7. Install sing-box & Compile to SRS
+      - name: 7. 安装 sing-box 并编译为 SRS 二进制规则
         run: |
           curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v1.11.0/sing-box-1.11.0-linux-amd64.tar.gz
           tar -xzf sing-box.tar.gz
@@ -78,9 +80,10 @@ jobs:
               ./sing-box rule-set compile "$json_file" -o "$srs_file"
             fi
           done
-          rm -rf sing-box sing-box.tar.gz sing-box-1.11.0-linux-amd64 mihomo-bin mihomo.gz
+          # 清理临时下载的二进制工具和压缩包，保持工作区干净
+          rm -rf sing-box sing-box.tar.gz sing-box-1.11.0-linux-amd64 mihomo-bin mihomo.gz Country.mmdb
 
-      - name: 8. Push compiled rules back to repo
+      - name: 8. 将编译好的规则自动推送到 GitHub 仓库
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
