@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
 import json
+import yaml
+import subprocess
+import re
+import ipaddress
 
 SOURCE_DIR = 'source'
 SHADOWROCKET_DIR = 'shadowrocket'
@@ -8,54 +12,67 @@ QUANTUMULTX_DIR = 'quantumultx'
 CLASH_DIR = 'clash'
 PAC_DIR = 'pac'
 SINGBOX_DIR = 'singbox'
+MIHOMO_BIN = "./mihomo-bin"
 
 for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR, PAC_DIR, SINGBOX_DIR]:
     if not os.path.exists(d):
         os.makedirs(d)
 
+class KernelIntrospector:
+    """内核嗅探器：探测 Mihomo 命令格式，防止参数错误导致卡死"""
+    def __init__(self, bin_path):
+        self.bin_path = bin_path
+        self.needs_format_arg = self._detect() if os.path.exists(bin_path) else False
+        
+    def _detect(self):
+        try:
+            res = subprocess.run([self.bin_path, "convert-ruleset"], capture_output=True, text=True, timeout=5)
+            out = res.stderr + res.stdout
+            return "<format>" in out or " [format] " in out
+        except: 
+            return False
+            
+    def get_cmd(self, behavior, src, dst):
+        cmd = [self.bin_path, "convert-ruleset", behavior]
+        if self.needs_format_arg: 
+            cmd.append("yaml")
+        cmd.append(src)
+        cmd.append(dst)
+        return cmd
+
 def clean_and_parse_line(line):
     line = line.strip()
     if not line or line.startswith('#') or line.startswith('//') or line.startswith(';'):
         return None, None
-        
     if line.startswith('-'):
         line = line.lstrip('-').strip()
-        
     line = line.replace("'", "").replace('"', "")
-        
+    
     if ',' in line:
         parts = [p.strip() for p in line.split(',')]
-        if len(parts) < 2:
-            return None, None
-            
+        if len(parts) < 2: return None, None
         p1 = parts[0].upper()
         p2 = parts[1]
         
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: return 'suffix', p2.lstrip('.').lower()
         if p1 in ['DOMAIN', 'HOST', 'FULL']: return 'full', p2.lower()
         if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: return 'keyword', p2.lower()
-        
         if p1 in ['IP-CIDR', 'IP']: return 'ip', p2
         if p1 in ['IP-CIDR6', 'IP6-CIDR', 'IP6']: return 'ip6', p2
-
         if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', p2
         if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', p2
-            
         return None, None
 
     if '/' in line and any(c.isdigit() for c in line):
         return 'ip6' if ':' in line else 'ip', line
-
     if line.startswith('.'):
         value = line.lstrip('.').lower()
         return ('full', value) if value.count('.') >= 2 else ('suffix', value)
-            
     return 'suffix', line.lstrip('.').lower()
 
 def optimize_domains(rules):
     sorted_suffixes = sorted(list(rules['suffix']), key=lambda x: (x.count('.'), len(x)))
     clean_suffixes = set()
-    
     for domain in sorted_suffixes:
         parts = domain.split('.')
         is_subdomain = False
@@ -66,7 +83,6 @@ def optimize_domains(rules):
                 break
         if not is_subdomain:
             clean_suffixes.add(domain)
-            
     rules['suffix'] = clean_suffixes
     
     clean_full = set()
@@ -80,10 +96,29 @@ def optimize_domains(rules):
                 break
         if not is_covered:
             clean_full.add(domain)
-            
     rules['full'] = clean_full
 
-def process_file(file_name):
+def compile_mihomo_mrs(kernel, name, rules, behavior):
+    """通过 Python 调用内核编译 MRS，带 20 秒超时断路器"""
+    tmp_yaml = f"temp_{name}_{behavior}.yaml"
+    dst_mrs = os.path.join(CLASH_DIR, f"{name}.mrs" if behavior == 'domain' else f"{name}_IP.mrs")
+    try:
+        with open(tmp_yaml, 'w', encoding='utf-8') as f:
+            yaml.dump({'payload': rules}, f)
+        
+        res = subprocess.run(kernel.get_cmd(behavior, tmp_yaml, dst_mrs), capture_output=True, text=True, timeout=20)
+        if res.returncode != 0 or os.path.getsize(dst_mrs) == 0:
+            if os.path.exists(dst_mrs): os.remove(dst_mrs)
+            return False
+        print(f"Mihomo 编译成功: {dst_mrs}")
+        return True
+    except Exception as e:
+        print(f"Mihomo 编译失败 [{name}]: {str(e)}")
+        return False
+    finally:
+        if os.path.exists(tmp_yaml): os.remove(tmp_yaml)
+
+def process_file(file_name, kernel):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0]
     rules = {'suffix': set(), 'full': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set()}
@@ -119,10 +154,7 @@ def process_file(file_name):
 
     # 3. QuantumultX 
     qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
-    if base_name.lower() == 'direct': qx_policy = 'DIRECT'
-    elif base_name.lower() == 'reject': qx_policy = 'REJECT'
-    else: qx_policy = base_name.capitalize()
-        
+    qx_policy = 'DIRECT' if base_name.lower() == 'direct' else ('REJECT' if base_name.lower() == 'reject' else base_name.capitalize())
     with open(qx_path, 'w', encoding='utf-8') as f_qx:
         f_qx.write(f"# Quantumult X Rule-Set: {base_name}\n\n")
         for val in sorted(rules['suffix']): f_qx.write(f"host-suffix, {val}, {qx_policy}\n")
@@ -132,42 +164,26 @@ def process_file(file_name):
         for val in sorted(rules['ip']): f_qx.write(f"ip-cidr, {val}, {qx_policy}, no-resolve\n")
         for val in sorted(rules['ip6']): f_qx.write(f"ip6-cidr, {val}, {qx_policy}, no-resolve\n")
 
-    # 4. Clash
-    clash_path = os.path.join(CLASH_DIR, f"{base_name}.yaml")
-    with open(clash_path, 'w', encoding='utf-8') as f_clash:
-        for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
-        for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
-        for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")
-        for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
-        for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
-        for val in sorted(rules['ip6']): f_clash.write(f"  - IP-CIDR6,{val},no-resolve\n")
+    clash_domains = []
+    for val in sorted(rules['suffix']): clash_domains.append(f"+.{val}")
+    for val in sorted(rules['full']): clash_domains.append(val)
+    if clash_domains:
+        compile_mihomo_mrs(kernel, base_name, clash_domains, 'domain')
+        
+    clash_ips = sorted(list(rules['ip'].union(rules['ip6'])))
+    if clash_ips:
+        compile_mihomo_mrs(kernel, base_name, clash_ips, 'ipcidr')
 
     # 5. PAC
     if base_name.lower() == 'direct':
         pac_path = os.path.join(PAC_DIR, f"{base_name}.pac")
         with open(pac_path, 'w', encoding='utf-8') as f_pac:
             direct_domains = sorted(list(rules['suffix'].union(rules['full'])))
-            f_pac.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
-            f_pac.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';\n\n")
-            f_pac.write("var DIRECT_DOMAINS = {\n")
+            f_pac.write("var IP_ADDRESS = '127.0.0.1:7891';\nvar PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';\n\nvar DIRECT_DOMAINS = {\n")
             for i, domain in enumerate(direct_domains):
                 comma = "," if i < len(direct_domains) - 1 else ""
                 f_pac.write(f'    "{domain}": 1{comma}\n')
-            f_pac.write("};\n\n")
-            
-            f_pac.write("function FindProxyForURL(url, host) {\n")
-            f_pac.write("    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n")
-            f_pac.write("        return \"DIRECT\";\n    }\n\n")
-            f_pac.write("    var suffix = host;\n")
-            f_pac.write("    while (suffix) {\n")
-            f_pac.write("        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {\n")
-            f_pac.write("            return \"DIRECT\";\n")
-            f_pac.write("        }\n")
-            f_pac.write("        var pos = suffix.indexOf('.');\n")
-            f_pac.write("        if (pos === -1) break;\n")
-            f_pac.write("        suffix = suffix.substring(pos + 1);\n")
-            f_pac.write("    }\n\n")
-            f_pac.write("    return PROXY_METHOD;\n}\n")
+            f_pac.write("};\n\nfunction FindProxyForURL(url, host) {\n    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) { return \"DIRECT\"; }\n    var suffix = host;\n    while (suffix) {\n        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) { return \"DIRECT\"; }\n        var pos = suffix.indexOf('.');\n        if (pos === -1) break;\n        suffix = suffix.substring(pos + 1);\n    }\n    return PROXY_METHOD;\n}\n")
 
     # 6. sing-box
     sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
@@ -177,21 +193,19 @@ def process_file(file_name):
     if rules['full']: sub_rule["domain"] = sorted(list(rules['full']))
     if rules['keyword']: sub_rule["domain_keyword"] = sorted(list(rules['keyword']))
     if rules['process']: sub_rule["process_name"] = sorted(list(rules['process']))
-    
     combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
     if combined_ips: sub_rule["ip_cidr"] = combined_ips
-    
     if sub_rule: sb_data["rules"].append(sub_rule)
-        
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
-    print(f"Success: {file_name} compiled.")
+    print(f"Success: {file_name} 基础解析及多分流配置导出完成。")
 
 def main():
+    kernel = KernelIntrospector(MIHOMO_BIN)
     files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
     for file_name in files:
-        process_file(file_name)
+        process_file(file_name, kernel)
 
 if __name__ == '__main__':
     main()
