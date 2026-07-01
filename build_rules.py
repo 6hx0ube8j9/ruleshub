@@ -2,7 +2,6 @@
 import os
 import json
 import yaml
-import subprocess
 
 SOURCE_DIR = 'source'
 SHADOWROCKET_DIR = 'shadowrocket'
@@ -12,27 +11,10 @@ PAC_DIR = 'pac'
 SINGBOX_DIR = 'singbox'
 MIHOMO_BIN = "./mihomo-bin"
 
-# 确保所有目录存在
+# 确保所有目标目录存在
 for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR, PAC_DIR, SINGBOX_DIR]:
     if not os.path.exists(d):
         os.makedirs(d)
-
-# ====================================================
-# 🔥 核心防御点 1：强行生成虚假本地配置，彻底禁用 Mihomo 网络功能
-# ====================================================
-home_dir = os.path.expanduser('~')
-mihomo_config_dir = os.path.join(home_dir, '.config', 'mihomo')
-os.makedirs(mihomo_config_dir, exist_ok=True)
-
-dummy_config = {
-    "mixed-port": 0,      # 0 代表完全关闭代理端口监听
-    "allow-lan": False,
-    "mode": "rule",
-    "log-level": "silent" # 让它闭嘴，不输出无用日志
-}
-with open(os.path.join(mihomo_config_dir, 'config.yaml'), 'w', encoding='utf-8') as f:
-    yaml.dump(dummy_config, f)
-# ====================================================
 
 def clean_and_parse_line(line):
     line = line.strip()
@@ -94,7 +76,9 @@ def optimize_domains(rules):
 
 def compile_mihomo_mrs(name, rules, behavior):
     """
-    🔥 核心防御点 2：硬编码精准匹配 v1.18.3 的通用参数，不给内核任何死锁机会
+    通过 Shell 显式向 Mihomo 传递 5 个核心参数：
+    convert-ruleset [类型] [输入格式] [输入路径] [输出路径] [输出格式]
+    并在末尾追加 output 格式 mrs，确保规则集正确导出
     """
     tmp_yaml = f"temp_{name}_{behavior}.yaml"
     dst_mrs = os.path.join(CLASH_DIR, f"{name}.mrs" if behavior == 'domain' else f"{name}_IP.mrs")
@@ -102,18 +86,17 @@ def compile_mihomo_mrs(name, rules, behavior):
         with open(tmp_yaml, 'w', encoding='utf-8') as f:
             yaml.dump({'payload': rules}, f)
         
-        # 精准匹配：mihomo convert-ruleset [behavior] yaml [src] [dst]
-        cmd = [MIHOMO_BIN, "convert-ruleset", behavior, "yaml", tmp_yaml, dst_mrs]
-        
-        # 使用 standard sub-process，并在 5 秒内强制干掉不听话的进程
-        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5)
-        print(f"Mihomo Success: {dst_mrs}")
+        # 🟢 修正点：显式在命令末尾加上 "mrs" 参数，通知内核进行二进制封装
+        cmd = f'{MIHOMO_BIN} convert-ruleset {behavior} yaml "{tmp_yaml}" "{dst_mrs}" mrs > /dev/null 2>&1'
+        os.system(cmd)
         return True
     except Exception as e:
-        print(f"Mihomo Skipped/Error [{name}]: {str(e)}")
+        print(f"Mihomo 编译跳过 [{name}]: {str(e)}")
         return False
     finally:
-        if os.path.exists(tmp_yaml): os.remove(tmp_yaml)
+        if os.path.exists(tmp_yaml): 
+            try: os.remove(tmp_yaml)
+            except: pass
 
 def process_file(file_name):
     source_path = os.path.join(SOURCE_DIR, file_name)
@@ -128,7 +111,7 @@ def process_file(file_name):
                 
     optimize_domains(rules)
                 
-    # 1. Save source
+    # 1. 保存清理后的原始数据
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Original Rules ===\n\n")
         for r_type in ['suffix', 'full', 'keyword', 'ip', 'ip6', 'process', 'useragent']:
@@ -138,7 +121,7 @@ def process_file(file_name):
                     f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
                 
-    # 2. shadowrocket
+    # 2. 导出 Shadowrocket
     sr_path = os.path.join(SHADOWROCKET_DIR, f"{base_name}.list")
     with open(sr_path, 'w', encoding='utf-8') as f_sr:
         f_sr.write(f"# Shadowrocket Rule-Set: {base_name}\n\n")
@@ -149,7 +132,7 @@ def process_file(file_name):
         for val in sorted(rules['ip']): f_sr.write(f"IP-CIDR,{val},no-resolve\n")
         for val in sorted(rules['ip6']): f_sr.write(f"IP-CIDR6,{val},no-resolve\n")
 
-    # 3. QuantumultX 
+    # 3. 导出 QuantumultX
     qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
     qx_policy = 'DIRECT' if base_name.lower() == 'direct' else ('REJECT' if base_name.lower() == 'reject' else base_name.capitalize())
     with open(qx_path, 'w', encoding='utf-8') as f_qx:
@@ -161,7 +144,7 @@ def process_file(file_name):
         for val in sorted(rules['ip']): f_qx.write(f"ip-cidr, {val}, {qx_policy}, no-resolve\n")
         for val in sorted(rules['ip6']): f_qx.write(f"ip6-cidr, {val}, {qx_policy}, no-resolve\n")
 
-    # 4. Clash MRS
+    # 4. 导出 Clash 二进制 MRS (自动剥离域名和IP)
     clash_domains = []
     for val in sorted(rules['suffix']): clash_domains.append(f"+.{val}")
     for val in sorted(rules['full']): clash_domains.append(val)
@@ -172,7 +155,7 @@ def process_file(file_name):
     if clash_ips:
         compile_mihomo_mrs(base_name, clash_ips, 'ipcidr')
 
-    # 5. PAC
+    # 5. 导出 PAC
     if base_name.lower() == 'direct':
         pac_path = os.path.join(PAC_DIR, f"{base_name}.pac")
         with open(pac_path, 'w', encoding='utf-8') as f_pac:
@@ -183,7 +166,7 @@ def process_file(file_name):
                 f_pac.write(f'    "{domain}": 1{comma}\n')
             f_pac.write("};\n\nfunction FindProxyForURL(url, host) {\n    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) { return \"DIRECT\"; }\n    var suffix = host;\n    while (suffix) {\n        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) { return \"DIRECT\"; }\n        var pos = suffix.indexOf('.');\n        if (pos === -1) break;\n        suffix = suffix.substring(pos + 1);\n    }\n    return PROXY_METHOD;\n}\n")
 
-    # 6. sing-box
+    # 6. 导出 Sing-box JSON 配置
     sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
     sb_data = {"version": 1, "rules": []}
     sub_rule = {}
@@ -198,9 +181,12 @@ def process_file(file_name):
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
 def main():
+    print("开始生成分流规则...")
     files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
     for file_name in files:
+        print(f"正在处理目标: {file_name}")
         process_file(file_name)
+    print("所有分流转换任务顺利完成！")
 
 if __name__ == '__main__':
     main()
