@@ -15,7 +15,6 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR, PAC_DIR, SIN
 
 def clean_and_parse_line(line):
     line = line.strip()
-    # 原则 1：严格保持现有的注释过滤逻辑不变
     if not line or line.startswith('#') or line.startswith('//') or line.startswith(';'):
         return None, None
         
@@ -32,23 +31,37 @@ def clean_and_parse_line(line):
         p1 = parts[0].upper()
         p2 = parts[1]
         
-        if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: return 'suffix', p2.lstrip('.').lower()
-        if p1 in ['DOMAIN', 'HOST', 'FULL']: return 'full', p2.lower()
+        if p1 in ['HOST-WILDCARD', 'WILDCARD']:
+            return None, None
+            
+        # 优化：清理上游不规范的写法（如 DOMAIN-SUFFIX, *.baidu.com）
+        if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
+            return 'suffix', p2.replace('*.', '', 1).lstrip('.').lower()
+            
+        if p1 in ['DOMAIN', 'HOST', 'FULL']: 
+            p2 = p2.lower()
+            # 优化：把错写成 DOMAIN 的 *.baidu.com 纠正为 suffix
+            if p2.startswith('*.'): return 'suffix', p2[2:].lstrip('.')
+            # 优化：把错写成 DOMAIN 的通配符纠正为 keyword
+            if '*' in p2 or '?' in p2: return 'keyword', p2
+            return 'full', p2
+            
         if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: return 'keyword', p2.lower()
         if p1 in ['IP-CIDR', 'IP']: return 'ip', p2
         if p1 in ['IP-CIDR6', 'IP6-CIDR', 'IP6']: return 'ip6', p2
         if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', p2
+        # 注意：UA 往往大小写敏感，因此不执行 .lower()
         if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', p2
         return None, None
 
     if '/' in line and any(c.isdigit() for c in line):
         return 'ip6' if ':' in line else 'ip', line
 
-    # 修改要求 1：以 . 开头一律剥离并归类为 'suffix'
     if line.startswith('.'):
         return 'suffix', line.lstrip('.').lower()
+    if line.startswith('*.'):
+        return 'suffix', line[2:].lstrip('.').lower()
             
-    # 修改要求 2：剔除点数计算死板逻辑，无标签纯域名默认向下兼容作为 'suffix'
     return 'suffix', line.lower()
 
 def optimize_domains(rules):
@@ -114,34 +127,45 @@ def process_file(file_name):
 
     # 3. QuantumultX Output
     qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
-    if file_keyword == 'direct': qx_policy = 'DIRECT'
-    elif file_keyword == 'reject': qx_policy = 'REJECT'
+    if file_keyword == 'direct': qx_policy = 'direct'
+    elif file_keyword == 'reject': qx_policy = 'reject'
     else: qx_policy = base_name.capitalize()
         
     with open(qx_path, 'w', encoding='utf-8') as f_qx:
         f_qx.write(f"# Quantumult X Rule-Set: {base_name}\n\n")
         for val in sorted(rules['suffix']): f_qx.write(f"host-suffix, {val}, {qx_policy}\n")
         for val in sorted(rules['full']): f_qx.write(f"host, {val}, {qx_policy}\n")
-        for val in sorted(rules['keyword']): f_qx.write(f"host-keyword, {val}, {qx_policy}\n")
-        for val in sorted(rules['useragent']): f_qx.write(f"user-agent, {val}, {qx_policy}\n")
+        
+        # 【重要修复】动态区分 host-keyword 与 host-wildcard
+        for val in sorted(rules['keyword']): 
+            if '*' in val or '?' in val:
+                f_qx.write(f"host-wildcard, {val}, {qx_policy}\n")
+            else:
+                f_qx.write(f"host-keyword, {val}, {qx_policy}\n")
+                
+        # 【重要修复】强制 user-agent 补充通配符以实现包含匹配
+        for val in sorted(rules['useragent']): 
+            qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
+            f_qx.write(f"user-agent, {qx_ua}, {qx_policy}\n")
+            
         for val in sorted(rules['ip']): f_qx.write(f"ip-cidr, {val}, {qx_policy}, no-resolve\n")
         for val in sorted(rules['ip6']): f_qx.write(f"ip6-cidr, {val}, {qx_policy}, no-resolve\n")
 
-    # 4. Clash Output
+    # 4. Clash Output (Clash 核心原生不支持 USER-AGENT，故不输出)
     clash_path = os.path.join(CLASH_DIR, f"{base_name}.yaml")
     with open(clash_path, 'w', encoding='utf-8') as f_clash:
         f_clash.write(f"# Clash Payload Rule-Set: {base_name}\n")
         f_clash.write("payload:\n")
-        for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
-        for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
-        for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")
-        for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
-        for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
-        for val in sorted(rules['ip6']): f_clash.write(f"  - IP-CIDR6,{val},no-resolve\n")
+        for val in sorted(rules['suffix']): f_clash.write(f"  - 'DOMAIN-SUFFIX,{val}'\n")
+        for val in sorted(rules['full']): f_clash.write(f"  - 'DOMAIN,{val}'\n")
+        for val in sorted(rules['keyword']): f_clash.write(f"  - 'DOMAIN-KEYWORD,{val}'\n")
+        for val in sorted(rules['process']): f_clash.write(f"  - 'PROCESS-NAME,{val}'\n")
+        for val in sorted(rules['ip']): f_clash.write(f"  - 'IP-CIDR,{val},no-resolve'\n")
+        for val in sorted(rules['ip6']): f_clash.write(f"  - 'IP-CIDR6,{val},no-resolve'\n")
 
     # 5. PAC Output
-    if file_keyword == 'direct':
-        pac_path = os.path.join(PAC_DIR, f"{base_name}.pac")
+    if file_keyword in ['direct', 'china']:
+        pac_path = os.path.join(PAC_DIR, "direct.pac")
         with open(pac_path, 'w', encoding='utf-8') as f_pac:
             direct_domains = sorted(list(rules['suffix'].union(rules['full'])))
             f_pac.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
@@ -173,6 +197,8 @@ def process_file(file_name):
     if rules['full']: sub_rule["domain"] = sorted(list(rules['full']))
     if rules['keyword']: sub_rule["domain_keyword"] = sorted(list(rules['keyword']))
     if rules['process']: sub_rule["process_name"] = sorted(list(rules['process']))
+    # 顺手兼容：Sing-box 原生支持 user_agent 规则，补充写入
+    if rules['useragent']: sub_rule["user_agent"] = sorted(list(rules['useragent']))
     combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
     if combined_ips: sub_rule["ip_cidr"] = combined_ips
     if sub_rule: sb_data["rules"].append(sub_rule)
@@ -180,37 +206,31 @@ def process_file(file_name):
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
-    # 7. 全新精修：多模式二机制规则编译引擎
-    # 原则 1：名称内包含 'classic' 则 100% 拒绝转换二进制
+    # 7. 多模式二进制规则编译引擎
     if 'classic' in file_keyword:
         print(f"--> [CLASSIC SKIP] Fulfill matrix rule: {file_name} has NO binary output.")
         return
 
-    # 原则 2：只有名称内包含 'ip' 或 'IP'，才执行纯 IP-CIDR 转换
     if 'ip' in file_keyword:
         combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
         if combined_ips:
-            # 建立带有分类前缀的临时文件，给下游 Actions 识别编译类别
             with open(os.path.join(CLASH_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                 f.write("payload:\n")
-                for item in combined_ips: f.write(f"  - '{item}'\n")
+                for item in combined_ips: 
+                    f.write(f"  - 'IP-CIDR,{item},no-resolve'\n")
             
             sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips}]}
             with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{base_name}.json"), 'w', encoding='utf-8') as f:
                 json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
             print(f"--> [IP MODE] Prepared binary template for: {file_name}")
             
-    # 原则 3：其余所有普通规则（如 apple.txt），正常执行 Domain 模式转换（丢失/剥离IP段）
     else:
         if rules['suffix'] or rules['full']:
-            # Mihomo Domain 规则集的 payload 必须是不带标签的纯域名列表
-            # 融合规则集内的有效后缀及全域名
             combined_domains = sorted(list(rules['suffix'].union(rules['full'])))
             with open(os.path.join(CLASH_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                 f.write("payload:\n")
                 for item in combined_domains: f.write(f"  - '{item}'\n")
             
-            # Sing-box Domain 模式 JSON（不包含任何 IP 规则字段）
             sb_tmp_domain = {"version": 1, "rules": []}
             sub_dm_rule = {}
             if rules['suffix']: sub_dm_rule["domain_suffix"] = sorted(list(rules['suffix']))
