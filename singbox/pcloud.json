@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_suffix": [
+        "pcloud.com"
+      ],
+      "domain": [
+        "e.pcloud.link"
+      ],
+      "ip_cidr": [
+        "185.62.236.0/22",
+        "45.131.244.0/22",
+        "74.120.8.0/22"
+      ]
+    }
+  ]
+}
