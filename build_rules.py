@@ -46,7 +46,7 @@ def clean_and_parse_line(line):
     if line.startswith('.'):
         return 'suffix', line.lstrip('.').lower()
             
-    return 'suffix', line.lstrip('.').lower()
+    return 'suffix', line.lower()
 
 def optimize_domains(rules):
     sorted_suffixes = sorted(list(rules['suffix']), key=len)
@@ -177,35 +177,23 @@ def process_file(file_name):
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
-    # 7. Binary Rulesets Optimization Engine
     if 'classic' in file_keyword:
         print(f"Skipping binary ruleset compilation for classical rule: {file_name}")
         return
 
     if 'ip' in file_keyword:
+        combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
         if combined_ips:
-            with open(os.path.join(CLASH_DIR, f"tmp_{base_name}_ipcidr.yaml"), 'w', encoding='utf-8') as f:
+            with open(os.path.join(CLASH_DIR, f"tmp_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                 f.write("payload:\n")
                 for item in combined_ips: f.write(f"  - '{item}'\n")
             
             sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips}]}
             with open(os.path.join(SINGBOX_DIR, f"tmp_{base_name}.json"), 'w', encoding='utf-8') as f:
                 json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
+            print(f"Prepared binary source for IP rule-set: {file_name}")
     else:
-        clash_domains = [f"+.{val}" for val in sorted(rules['suffix'])] + sorted(list(rules['full']))
-        if clash_domains:
-            with open(os.path.join(CLASH_DIR, f"tmp_{base_name}_domain.yaml"), 'w', encoding='utf-8') as f:
-                f.write("payload:\n")
-                for item in clash_domains: f.write(f"  - '{item}'\n")
-                
-            sb_tmp_rules = {}
-            if rules['suffix']: sb_tmp_rules["domain_suffix"] = sorted(list(rules['suffix']))
-            if rules['full']: sb_tmp_rules["domain"] = sorted(list(rules['full']))
-            sb_tmp_dom = {"version": 1, "rules": [sb_tmp_rules]}
-            with open(os.path.join(SINGBOX_DIR, f"tmp_{base_name}.json"), 'w', encoding='utf-8') as f:
-                json.dump(sb_tmp_dom, f, indent=2, ensure_ascii=False)
-
-    print(f"Success: {file_name} compiled.")
+        print(f"Skipped binary ruleset compilation for non-IP rule-set: {file_name}")
 
 def main():
     if not os.path.exists(SOURCE_DIR):
