@@ -135,8 +135,6 @@ def process_file(file_name):
     # 4. Clash
     clash_path = os.path.join(CLASH_DIR, f"{base_name}.yaml")
     with open(clash_path, 'w', encoding='utf-8') as f_clash:
-        f_clash.write(f"# Clash Payload Rule-Set: {base_name}\n")
-        f_clash.write("payload:\n")
         for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
         for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
         for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")
