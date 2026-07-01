@@ -92,7 +92,7 @@ jobs:
 
       - name: 6. Install Mihomo & Compile to MRS
         run: |
-          curl -Lo mihomo.gz https://github.com/MetaCubeX/mihomo/releases/releases/download/v1.18.3/mihomo-linux-amd64-v1.18.3.gz
+          curl -Lo mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.18.3/mihomo-linux-amd64-v1.18.3.gz
           gunzip mihomo.gz
           chmod +x mihomo
           
