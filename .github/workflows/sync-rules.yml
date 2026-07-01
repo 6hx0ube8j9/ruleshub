@@ -5,7 +5,7 @@ on:
     paths:
       - 'source/**'
       - 'build_rules.py'
-      - '.github/workflows/auto_build.yml'
+      - '.github/workflows/sync-rules.yml'
   schedule:
     - cron: '0 22 */6 * *'
   workflow_dispatch:
@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
+  steps:
     - name: 1. Checkout repository
       uses: actions/checkout@v4
 
@@ -42,7 +42,7 @@ jobs:
           sort -u "$tmp" | sed '/^$/d' > "source/$target"
           rm "$tmp"
         }
-        
+
         merge_rules "direct.txt" \
           "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/China/China_Domain.list"
 
@@ -98,15 +98,8 @@ jobs:
         
         for yaml_file in clash/*.yaml; do
           if [ -f "$yaml_file" ]; then
-            base_name="${yaml_file%.yaml}"
-            
-            grep -E "DOMAIN|KEYWORD" "$yaml_file" > "${base_name}_domain.yaml"
-            ./mihomo convert-ruleset domain "${base_name}_domain.yaml" "${base_name}_domain.mrs"
-            
-            grep -E "IP-CIDR" "$yaml_file" > "${base_name}_ip.yaml"
-            ./mihomo convert-ruleset ipcidr "${base_name}_ip.yaml" "${base_name}_ip.mrs"
-            
-            rm "${base_name}_domain.yaml" "${base_name}_ip.yaml"
+            mrs_file="${yaml_file%.yaml}.mrs"
+            ./mihomo convert-ruleset classical "$yaml_file" "$mrs_file"
           fi
         done
         rm -rf mihomo
