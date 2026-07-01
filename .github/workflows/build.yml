@@ -100,8 +100,7 @@ jobs:
             if [ -f "$yaml_file" ]; then
               mrs_file="${yaml_file%.yaml}.mrs"
               echo "正在转换: $yaml_file -> $mrs_file"
-              # 核心修复：显式加上 yaml 声明，防止内核因无法识别边界而启动代理常驻
-              ./mihomo-bin convert-ruleset classical yaml "$yaml_file" "$mrs_file"
+              ./mihomo-bin convert-ruleset domain text "$yaml_file" "$mrs_file"
             fi
           done
           
