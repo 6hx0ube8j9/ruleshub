@@ -1,0 +1,37 @@
+# Quantumult X Rule-Set: x
+
+host-suffix, ads-twitter.com, X
+host-suffix, cms-twdigitalassets.com, X
+host-suffix, grok.com, X
+host-suffix, periscope.tv, X
+host-suffix, pscp.tv, X
+host-suffix, t.co, X
+host-suffix, tellapart.com, X
+host-suffix, tweetdeck.com, X
+host-suffix, twimg.co, X
+host-suffix, twimg.com, X
+host-suffix, twimg.org, X
+host-suffix, twitpic.com, X
+host-suffix, twitter.biz, X
+host-suffix, twitter.com, X
+host-suffix, twitter.jp, X
+host-suffix, twittercommunity.com, X
+host-suffix, twitterflightschool.com, X
+host-suffix, twitterinc.com, X
+host-suffix, twitteroauth.com, X
+host-suffix, twitterstat.us, X
+host-suffix, twtrdns.net, X
+host-suffix, twttr.com, X
+host-suffix, twttr.net, X
+host-suffix, twvid.com, X
+host-suffix, vine.co, X
+host-suffix, x.ai, X
+host-suffix, x.com, X
+host-keyword, twitter, X
+ip-cidr, 192.133.76.0/22, X, no-resolve
+ip-cidr, 199.16.156.0/22, X, no-resolve
+ip-cidr, 199.59.148.0/22, X, no-resolve
+ip-cidr, 199.96.56.0/21, X, no-resolve
+ip-cidr, 202.160.128.0/22, X, no-resolve
+ip-cidr, 209.237.192.0/19, X, no-resolve
+ip-cidr, 69.195.160.0/19, X, no-resolve

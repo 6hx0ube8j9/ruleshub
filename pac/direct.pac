@@ -1,3692 +1,6620 @@
+var IP_ADDRESS = '127.0.0.1:7891';
+var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';
+
+var DIRECT_DOMAINS = {
+    "001wifi.com": 1,
+    "00cdn.com": 1,
+    "01058511989.com": 1,
+    "0123456789.com": 1,
+    "0379home.com": 1,
+    "055110.com": 1,
+    "05sun.com": 1,
+    "0759job.com": 1,
+    "1.letvlive.com": 1,
+    "10010.com": 1,
+    "10010.net": 1,
+    "10029.com": 1,
+    "100bt.com": 1,
+    "100offer.com": 1,
+    "1010-0000.com": 1,
+    "11467.com": 1,
+    "114chn.com": 1,
+    "114menhu.com": 1,
+    "114piaowu.com": 1,
+    "114shouji.com": 1,
+    "115.com": 1,
+    "115cdn.com": 1,
+    "115cdn.net": 1,
+    "115img.com": 1,
+    "116cd.com": 1,
+    "116cd.net": 1,
+    "119you.com": 1,
+    "12306.com": 1,
+    "123juzi.com": 1,
+    "123juzi.net": 1,
+    "123pan.com": 1,
+    "123u.com": 1,
+    "12530.com": 1,
+    "126.am": 1,
+    "126.com": 1,
+    "126.fm": 1,
+    "126.link": 1,
+    "126.net": 1,
+    "127.com": 1,
+    "127.net": 1,
+    "127cdn.com": 1,
+    "12tu.cc": 1,
+    "1360.com": 1,
+    "139.com": 1,
+    "160.com": 1,
+    "163.com": 1,
+    "163.fm": 1,
+    "163.link": 1,
+    "1637.com": 1,
+    "163adl.com": 1,
+    "163cms.com": 1,
+    "163cn.tv": 1,
+    "163fen.com": 1,
+    "163img.com": 1,
+    "163industry.com": 1,
+    "163jiasu.com": 1,
+    "163kada.com": 1,
+    "163mail.com": 1,
+    "163mail.net": 1,
+    "163nasa.com": 1,
+    "163nos.com": 1,
+    "163qiyukf.com": 1,
+    "163yun.com": 1,
+    "166.com": 1,
+    "166.net": 1,
+    "166cdn.com": 1,
+    "166dns.com": 1,
+    "1688.com": 1,
+    "16888.com": 1,
+    "16rd.com": 1,
+    "17173.com": 1,
+    "17173cdn.com": 1,
+    "178.com": 1,
+    "178.net": 1,
+    "178linux.com": 1,
+    "17989.com": 1,
+    "17cdn.com": 1,
+    "17house.com": 1,
+    "17jita.com": 1,
+    "17lai.org": 1,
+    "17roco.com": 1,
+    "17swan.com": 1,
+    "17u.net": 1,
+    "17usoft.com": 1,
+    "17usoft.net": 1,
+    "17zuoye.com": 1,
+    "17zuoye.net": 1,
+    "18183.com": 1,
+    "188.com": 1,
+    "188.net": 1,
+    "188cdn.com": 1,
+    "189qas.com": 1,
+    "189smarthome.com": 1,
+    "18ebank.com": 1,
+    "1905.com": 1,
+    "19yxw.com": 1,
+    "1gdoutian.com": 1,
+    "1huizhan.com": 1,
+    "1kapp.com": 1,
+    "1mdoutian.com": 1,
+    "1nongjing.com": 1,
+    "1qianbao.com": 1,
+    "1qianbao.net": 1,
+    "1ting.com": 1,
+    "1zhe.com": 1,
+    "2-class.com": 1,
+    "2.letvlive.com": 1,
+    "2125.com": 1,
+    "21cn.com": 1,
+    "21cn.net": 1,
+    "21cnentmail.com": 1,
+    "21cnimg.com": 1,
+    "21cnsales.com": 1,
+    "21cntx.com": 1,
+    "21jingji.com": 1,
+    "2265.com": 1,
+    "2288.org": 1,
+    "2333333333333.com": 1,
+    "2345.com": 1,
+    "2345cdn.net": 1,
+    "258.com": 1,
+    "25pp.com": 1,
+    "263.net": 1,
+    "289.com": 1,
+    "2cto.com": 1,
+    "3000.com": 1,
+    "300hu.com": 1,
+    "310win.com": 1,
+    "315che.com": 1,
+    "321fenx.com": 1,
+    "3234.com": 1,
+    "32r.com": 1,
+    "3304399.com": 1,
+    "3304399.net": 1,
+    "3322.org": 1,
+    "3387.com": 1,
+    "33lc.com": 1,
+    "343480.com": 1,
+    "3454.com": 1,
+    "3456.cc": 1,
+    "35.com": 1,
+    "3533.com": 1,
+    "356884.com": 1,
+    "35go.net": 1,
+    "360-g.net": 1,
+    "360-game.net": 1,
+    "360-jr.com": 1,
+    "360.com": 1,
+    "360.net": 1,
+    "3600.com": 1,
+    "360adlab.com": 1,
+    "360adlab.net": 1,
+    "360adlab.org": 1,
+    "360aiyi.com": 1,
+    "360buy.com": 1,
+    "360buyimg.com": 1,
+    "360buyinternational.com": 1,
+    "360chou.com": 1,
+    "360daikuan.com": 1,
+    "360dlcdn.com": 1,
+    "360doc.com": 1,
+    "360doc.net": 1,
+    "360doc11.net": 1,
+    "360doc18.net": 1,
+    "360doc21.net": 1,
+    "360doc22.net": 1,
+    "360doc25.net": 1,
+    "360doc30.net": 1,
+    "360doc33.net": 1,
+    "360doc35.net": 1,
+    "360doc36.net": 1,
+    "360doc37.net": 1,
+    "360doc4.net": 1,
+    "360gtm.com": 1,
+    "360huzhubao.com": 1,
+    "360imgcdn.com": 1,
+    "360in.com": 1,
+    "360jie.com": 1,
+    "360jinrong.net": 1,
+    "360jq.com": 1,
+    "360jrjietiao.com": 1,
+    "360kan.com": 1,
+    "360kuai.com": 1,
+    "360os.com": 1,
+    "360panyun.com": 1,
+    "360panyun.net": 1,
+    "360qhcdn.com": 1,
+    "360qyaq.com": 1,
+    "360safe.com": 1,
+    "360shouji.com": 1,
+    "360shuke.com": 1,
+    "360sides.com": 1,
+    "360sides.net": 1,
+    "360so.com": 1,
+    "360so.net": 1,
+    "360sou.com": 1,
+    "360sou.net": 1,
+    "360src.com": 1,
+    "360taojin.com": 1,
+    "360top.com": 1,
+    "360totalsecurity.com": 1,
+    "360tpcdn.com": 1,
+    "360tres.com": 1,
+    "360vcloud.com": 1,
+    "360vcloud.net": 1,
+    "360webcache.com": 1,
+    "360wzb.com": 1,
+    "360xinyongka.com": 1,
+    "360xlab.com": 1,
+    "360xlab.net": 1,
+    "360xlab.org": 1,
+    "360xyws.com": 1,
+    "360zhushou.com": 1,
+    "360zhyx.com": 1,
+    "360zqaq.com": 1,
+    "365azw.com": 1,
+    "365dmp.com": 1,
+    "365yg.com": 1,
+    "36dianping.com": 1,
+    "36kr.com": 1,
+    "36krcdn.com": 1,
+    "36krcnd.com": 1,
+    "37.com": 1,
+    "3733.com": 1,
+    "37swan.com": 1,
+    "37wan.com": 1,
+    "3839.com": 1,
+    "3839apk.com": 1,
+    "3839app.com": 1,
+    "3839app.net": 1,
+    "3839img.com": 1,
+    "3839pay.com": 1,
+    "3839pic.com": 1,
+    "3839vc.com": 1,
+    "3839video.com": 1,
+    "39.net": 1,
+    "3conline.com": 1,
+    "3d66.com": 1,
+    "3days.cc": 1,
+    "3dmgame.com": 1,
+    "3elife.net": 1,
+    "3h3.com": 1,
+    "3ny8.com": 1,
+    "3r5y.com": 1,
+    "3songshu.com": 1,
+    "3yx.com": 1,
+    "4008000000.com": 1,
+    "4008100800.com": 1,
+    "4008824365.com": 1,
+    "4008880999.com": 1,
+    "4008880999.net": 1,
+    "4009997658.com": 1,
+    "400gb.com": 1,
+    "40407.com": 1,
+    "408399.com": 1,
+    "408399.net": 1,
+    "4399.com": 1,
+    "4399.net": 1,
+    "4399api.com": 1,
+    "4399api.net": 1,
+    "4399biule.com": 1,
+    "4399dmw.com": 1,
+    "4399er.com": 1,
+    "4399hhh.com": 1,
+    "4399inc.com": 1,
+    "4399mail.com": 1,
+    "4399pk.com": 1,
+    "4399sj.com": 1,
+    "4399swf.com": 1,
+    "4399wanju.com": 1,
+    "4399youpai.com": 1,
+    "4399youxi.com": 1,
+    "4399yyy.com": 1,
+    "4848360.com": 1,
+    "49644913.com": 1,
+    "4paradigm.com": 1,
+    "4sender.com": 1,
+    "4sender.net": 1,
+    "500.com": 1,
+    "500d.me": 1,
+    "5054399.com": 1,
+    "5054399.net": 1,
+    "50bang.org": 1,
+    "50union.com": 1,
+    "51.com": 1,
+    "51.la": 1,
+    "510yh.cc": 1,
+    "510you.com": 1,
+    "51240.com": 1,
+    "5173cdn.com": 1,
+    "517lppz.com": 1,
+    "51caocao.net": 1,
+    "51ccd.com": 1,
+    "51cdn.com": 1,
+    "51credit.com": 1,
+    "51cto.com": 1,
+    "51dzt.com": 1,
+    "51eshop.com": 1,
+    "51gaifang.com": 1,
+    "51hejia.com": 1,
+    "51jingying.com": 1,
+    "51job.com": 1,
+    "51jobcdn.com": 1,
+    "51lstt.com": 1,
+    "51meishu.com": 1,
+    "51newsapp.com": 1,
+    "51nod.com": 1,
+    "51sole.com": 1,
+    "51wendang.com": 1,
+    "51xiancheng.com": 1,
+    "51y5.com": 1,
+    "51y5.net": 1,
+    "51yangsheng.com": 1,
+    "51yes.com": 1,
+    "51ym.me": 1,
+    "5253.com": 1,
+    "52hxw.com": 1,
+    "52miji.com": 1,
+    "52pk.com": 1,
+    "52z.com": 1,
+    "53kf.com": 1,
+    "55.com": 1,
+    "5566ua.com": 1,
+    "5577.com": 1,
+    "55bbs.com": 1,
+    "56.com": 1,
+    "56che.com": 1,
+    "58.com": 1,
+    "5858.com": 1,
+    "58antenna.com": 1,
+    "58che.com": 1,
+    "58corp.com": 1,
+    "58dns.org": 1,
+    "58ganji-corp.com": 1,
+    "58ganji.com": 1,
+    "58lovepet.com": 1,
+    "58peilian.com": 1,
+    "58pic.com": 1,
+    "58shangban.com": 1,
+    "58supin.com": 1,
+    "58uxd.com": 1,
+    "58wangpan.com": 1,
+    "58xinghuo.com": 1,
+    "58xueche.com": 1,
+    "5945i.com": 1,
+    "5bite.com": 1,
+    "5fun.com": 1,
+    "5gzm.net": 1,
+    "5ifund.com": 1,
+    "5khouse.com": 1,
+    "5read.com": 1,
+    "5you.com": 1,
+    "61.com": 1,
+    "6360.com": 1,
+    "6463.com": 1,
+    "6655.com": 1,
+    "666kuaishou.com": 1,
+    "666kuaishou.net": 1,
+    "66wz.com": 1,
+    "68h5.com": 1,
+    "6rooms.com": 1,
+    "6tt.com": 1,
+    "700chat.com": 1,
+    "71.am": 1,
+    "71.am.com": 1,
+    "714.com": 1,
+    "715083.com": 1,
+    "71acg.com": 1,
+    "71acg.net": 1,
+    "71edge.com": 1,
+    "71edge.net": 1,
+    "7230.com": 1,
+    "72byte.com": 1,
+    "72whys.com": 1,
+    "75.team": 1,
+    "75team.com": 1,
+    "766.com": 1,
+    "766app.com": 1,
+    "766er.com": 1,
+    "766test.com": 1,
+    "78h34.com": 1,
+    "7down.com": 1,
+    "7fresh.com": 1,
+    "7k7k.com": 1,
+    "7moor.com": 1,
+    "7po.com": 1,
+    "7x24cc.com": 1,
+    "7x24s.com": 1,
+    "7xdown.com": 1,
+    "8008205555.com": 1,
+    "8009900800.com": 1,
+    "800wen.com": 1,
+    "80tt.app": 1,
+    "816798.net": 1,
+    "818ps.com": 1,
+    "8264.com": 1,
+    "84399.com": 1,
+    "8686c.com": 1,
+    "88.com": 1,
+    "885.com": 1,
+    "88cdn.com": 1,
+    "8btc.com": 1,
+    "900.la": 1,
+    "91.com": 1,
+    "917.com": 1,
+    "91danji.com": 1,
+    "91yunxiao.com": 1,
+    "92btbtt.com": 1,
+    "93trf.com": 1,
+    "95021.com": 1,
+    "95095.com": 1,
+    "95508.com": 1,
+    "95516.com": 1,
+    "95516.net": 1,
+    "9553.com": 1,
+    "95580.net": 1,
+    "95588.com": 1,
+    "962.net": 1,
+    "9718.com": 1,
+    "9724.com": 1,
+    "97973.com": 1,
+    "97bike.com": 1,
+    "97hanju.com": 1,
+    "97jumi.com": 1,
+    "97riju.net": 1,
+    "97taiju.net": 1,
+    "99.com": 1,
+    "99166.com": 1,
+    "998.com": 1,
+    "999d.com": 1,
+    "99danji.com": 1,
+    "99fund.com": 1,
+    "9fzt.com": 1,
+    "9ht.com": 1,
+    "9xgame.com": 1,
+    "9xu.com": 1,
+    "a-isv.org": 1,
+    "a9vg.com": 1,
+    "aa5d.com": 1,
+    "aamyoe.com": 1,
+    "aaplimg.com": 1,
+    "aardio.com": 1,
+    "abbyychina.com": 1,
+    "abc-ca.com": 1,
+    "abchina.com": 1,
+    "abercrombie.com": 1,
+    "abhouses.com": 1,
+    "acadn.com": 1,
+    "accessibilityunion.com": 1,
+    "accessibilityunion.org": 1,
+    "account-cn.huami.com": 1,
+    "acctdns.com": 1,
+    "acctdns.net": 1,
+    "accuweather.com": 1,
+    "acetaffy.club": 1,
+    "acfun.com": 1,
+    "acfun.tv": 1,
+    "acg.rip": 1,
+    "acg.tv": 1,
+    "acgjc.com": 1,
+    "acgvideo.com": 1,
+    "acloudbaas.com": 1,
+    "acm.org": 1,
+    "acoloo.com": 1,
+    "acplay.net": 1,
+    "acs.org": 1,
+    "activitybyte.com": 1,
+    "acwing.com": 1,
+    "ad-diamond.com": 1,
+    "adhimalayandi.com": 1,
+    "adigifactory.com": 1,
+    "adimages.sina.com.hk": 1,
+    "adl163.com": 1,
+    "admin5.com": 1,
+    "adobesc.com": 1,
+    "ads1.lfengmobile.com": 1,
+    "aduspot.com": 1,
+    "adxvip.com": 1,
+    "afdian.net": 1,
+    "afdiancdn.com": 1,
+    "afdvr.cc": 1,
+    "afp.adchina.com": 1,
+    "afpchinesesports.com": 1,
+    "afzhan.com": 1,
+    "agcloudcs.com": 1,
+    "agconnect.link": 1,
+    "agora.io": 1,
+    "agoralab.co": 1,
+    "agrantsem.com": 1,
+    "ahd.so": 1,
+    "ahitv.com": 1,
+    "ahjk34.com": 1,
+    "ahwxcs.com": 1,
+    "aiaa.org": 1,
+    "aianno.com": 1,
+    "aibreeno.com": 1,
+    "aicccloud.com": 1,
+    "aicdn.com": 1,
+    "aicdn.work": 1,
+    "aichaoxing.com": 1,
+    "aicoinstorge.com": 1,
+    "aidi.tv": 1,
+    "aiditv.cc": 1,
+    "aiemy.com": 1,
+    "aiganggu.com": 1,
+    "aihst8.com": 1,
+    "aiketour.com": 1,
+    "aiops.com": 1,
+    "aip.org": 1,
+    "aipage.com": 1,
+    "aipai.com": 1,
+    "aiqicha.com": 1,
+    "aiqiyicloud-mgmt.com": 1,
+    "aiqiyicloud.com": 1,
+    "aiqiyicloud.net": 1,
+    "air-matters.com": 1,
+    "air-matters.io": 1,
+    "airchangan.com": 1,
+    "airchinacargo.com": 1,
+    "airepay.net": 1,
+    "airguilin.com": 1,
+    "aisee.tv": 1,
+    "aiskycn.com": 1,
+    "aitangyou.com": 1,
+    "aitransfy.com": 1,
+    "aixcoder.com": 1,
+    "aixifan.com": 1,
+    "aixinhaitun.com": 1,
+    "aiyunxiao.com": 1,
+    "aizhan.com": 1,
+    "ajhimalayanqf.com": 1,
+    "ajkimg.com": 1,
+    "ajzq.com": 1,
+    "akadns.net": 1,
+    "alcatel-home.com": 1,
+    "alcatelmobile.com": 1,
+    "aldwx.com": 1,
+    "aleenote.com": 1,
+    "ali-expo.com": 1,
+    "ali213.net": 1,
+    "aliapp-inc.com": 1,
+    "aliapp.com": 1,
+    "aliapp.org": 1,
+    "aliappcdn.com": 1,
+    "alibaba": 1,
+    "alibaba-inc.com": 1,
+    "alibaba.com": 1,
+    "alibabacapital.com": 1,
+    "alibabachengdun.com": 1,
+    "alibabacloud.co.in": 1,
+    "alibabacloud.com": 1,
+    "alibabacloud.com.au": 1,
+    "alibabacloud.com.hk": 1,
+    "alibabacloud.com.my": 1,
+    "alibabacloud.com.sg": 1,
+    "alibabacloud.com.tw": 1,
+    "alibabacorp.com": 1,
+    "alibabadesign-enable.com": 1,
+    "alibabadesign.com": 1,
+    "alibabadns.com": 1,
+    "alibabadoctor.com": 1,
+    "alibabafuturehotel.com": 1,
+    "alibabagroup.com": 1,
+    "alibabainno.com": 1,
+    "alibabaplanet.com": 1,
+    "alibabatech.org": 1,
+    "alibabatechqa.com": 1,
+    "alibabaued.com": 1,
+    "alibabausercontent.com": 1,
+    "alibabawood.com": 1,
+    "alibench.com": 1,
+    "alicdn.com": 1,
+    "alicdn.net": 1,
+    "alicloud.com": 1,
+    "alicloudapi-inner.com": 1,
+    "alicloudapi.com": 1,
+    "alicloudcc.com": 1,
+    "alicloudccp.com": 1,
+    "alicloudddos.com": 1,
+    "alicloudlayer.com": 1,
+    "alicloudsec.com": 1,
+    "alicloudwaf.com": 1,
+    "alicontainer.com": 1,
+    "alictf.com": 1,
+    "alidayu.com": 1,
+    "alidns.com": 1,
+    "alidns.net": 1,
+    "alidz.net": 1,
+    "aliexpress.com": 1,
+    "aliexpress.ru": 1,
+    "alifanyi.com": 1,
+    "aligaofang.com": 1,
+    "aligenie.com": 1,
+    "aligfcc.com": 1,
+    "aligfddos.com": 1,
+    "aligfwaf.com": 1,
+    "alihealth.hk": 1,
+    "alihealth.net": 1,
+    "aliimg.com": 1,
+    "aliiotapp.com": 1,
+    "alikmd.com": 1,
+    "alikunlun.com": 1,
+    "alikunlun.net": 1,
+    "alimama.com": 1,
+    "alimamaframe.com": 1,
+    "alimaomall.com": 1,
+    "alime.ai": 1,
+    "alimebot.com": 1,
+    "alimei.com": 1,
+    "alimmdn.com": 1,
+    "alipan.com": 1,
+    "alipay": 1,
+    "alipay-corp.com": 1,
+    "alipay-eco.com": 1,
+    "alipay-inc.com": 1,
+    "alipay.com": 1,
+    "alipay.hk": 1,
+    "alipay.net": 1,
+    "alipaydev.com": 1,
+    "alipaydns.com": 1,
+    "alipayeshop.com": 1,
+    "alipaylog.com": 1,
+    "alipaymo.com": 1,
+    "alipayobjects.com": 1,
+    "alipayplus.com": 1,
+    "aliplus.com": 1,
+    "aliresearch-internal.com": 1,
+    "aliresearch.com": 1,
+    "alirtc.com": 1,
+    "alisealing-pre.com": 1,
+    "alisealing-sit.com": 1,
+    "alisealing-uat.com": 1,
+    "alisealing.com": 1,
+    "alisoft.com": 1,
+    "alisports.com": 1,
+    "alitelecom.com": 1,
+    "alitianji.com": 1,
+    "alitrip.com": 1,
+    "alittle-tea.com": 1,
+    "aliued.com": 1,
+    "aliunicorn.com": 1,
+    "alivecdn.com": 1,
+    "aliway.com": 1,
+    "aliwork.com": 1,
+    "alixiaomi.com": 1,
+    "alixiaoyouhui.com": 1,
+    "alixueyuan.net": 1,
+    "aliypc.com": 1,
+    "aliyun-inc.com": 1,
+    "aliyun-iot-share.com": 1,
+    "aliyun-znfhq.net": 1,
+    "aliyun.com": 1,
+    "aliyun.xin": 1,
+    "aliyunbaas.com": 1,
+    "aliyuncc.com": 1,
+    "aliyuncdn.com": 1,
+    "aliyuncdn.net": 1,
+    "aliyunceng.com": 1,
+    "aliyuncs.com": 1,
+    "aliyunddos0024.com": 1,
+    "aliyunddos1001.com": 1,
+    "aliyunddos1002.com": 1,
+    "aliyunddos1003.com": 1,
+    "aliyunddos1004.com": 1,
+    "aliyunddos1005.com": 1,
+    "aliyunddos1006.com": 1,
+    "aliyunddos1007.com": 1,
+    "aliyunddos1008.com": 1,
+    "aliyunddos1009.com": 1,
+    "aliyunddos1010.com": 1,
+    "aliyunddos1011.com": 1,
+    "aliyunddos1012.com": 1,
+    "aliyunddos1013.com": 1,
+    "aliyunddos1014.com": 1,
+    "aliyunddos1015.com": 1,
+    "aliyunddos1016.com": 1,
+    "aliyunddos1017.com": 1,
+    "aliyunddos1018.com": 1,
+    "aliyunddos1019.com": 1,
+    "aliyunddos1020.com": 1,
+    "aliyunddos1021.com": 1,
+    "aliyunddos1022.com": 1,
+    "aliyunddos1023.com": 1,
+    "aliyunddos1024.com": 1,
+    "aliyunddos1025.com": 1,
+    "aliyunddos1026.com": 1,
+    "aliyunddos1027.com": 1,
+    "aliyunddos1028.com": 1,
+    "aliyunddos1029.com": 1,
+    "aliyunddos1030.com": 1,
+    "aliyundrive.com": 1,
+    "aliyundrive.net": 1,
+    "aliyunduncc.com": 1,
+    "aliyundunddos.com": 1,
+    "aliyundunwaf.com": 1,
+    "aliyunedu.net": 1,
+    "aliyunga.com": 1,
+    "aliyunga0004.com": 1,
+    "aliyunga0005.com": 1,
+    "aliyunga0006.com": 1,
+    "aliyunga0007.com": 1,
+    "aliyunga0008.com": 1,
+    "aliyunga0009.com": 1,
+    "aliyunga0010.com": 1,
+    "aliyunga0011.com": 1,
+    "aliyunga0012.com": 1,
+    "aliyunga0013.com": 1,
+    "aliyunga0014.com": 1,
+    "aliyunga0015.com": 1,
+    "aliyunga0016.com": 1,
+    "aliyunga0017.com": 1,
+    "aliyunga0018.com": 1,
+    "aliyunga0019.com": 1,
+    "aliyunga0020.com": 1,
+    "aliyunga0021.com": 1,
+    "aliyunga0022.com": 1,
+    "aliyunga0023.com": 1,
+    "aliyunga0024.com": 1,
+    "aliyunga0025.com": 1,
+    "aliyunga0026.com": 1,
+    "aliyunga0027.com": 1,
+    "aliyunga0028.com": 1,
+    "aliyunga0029.com": 1,
+    "aliyunga0030.com": 1,
+    "aliyunga0031.com": 1,
+    "aliyunga0032.com": 1,
+    "aliyunga0033.com": 1,
+    "aliyunga0034.com": 1,
+    "aliyunga0035.com": 1,
+    "aliyunga0036.com": 1,
+    "aliyunga0037.com": 1,
+    "aliyunga0038.com": 1,
+    "aliyunga0039.com": 1,
+    "aliyunga0040.com": 1,
+    "aliyunga0041.com": 1,
+    "aliyunga0042.com": 1,
+    "aliyunga0043.com": 1,
+    "aliyunga0044.com": 1,
+    "aliyunga0045.com": 1,
+    "aliyunga0046.com": 1,
+    "aliyunga0047.com": 1,
+    "aliyunga0048.com": 1,
+    "aliyunga0049.com": 1,
+    "aliyunga0050.com": 1,
+    "aliyunga860004.com": 1,
+    "aliyunga8601.com": 1,
+    "aliyunga8602.com": 1,
+    "aliyunga8603.com": 1,
+    "aliyungf.com": 1,
+    "aliyungrtn.com": 1,
+    "aliyunidaas.com": 1,
+    "aliyuniot.com": 1,
+    "aliyunrtc.com": 1,
+    "aliyunvpc.com": 1,
+    "aliyunwaf.com": 1,
+    "alizhaopin.com": 1,
+    "allawnfs.com": 1,
+    "allawno.com": 1,
+    "allawntech.com": 1,
+    "allinbots.com": 1,
+    "alloyteam.com": 1,
+    "allyes.com": 1,
+    "alphassl.com": 1,
+    "amap.com": 1,
+    "amapauto.com": 1,
+    "amd.com": 1,
+    "amemv.com": 1,
+    "amemv.net": 1,
+    "amhimalayanet.com": 1,
+    "ams.org": 1,
+    "analytics.strava.com": 1,
+    "andes.tech": 1,
+    "andfx.net": 1,
+    "androidga.com": 1,
+    "anfensi.com": 1,
+    "anhuimobile.com": 1,
+    "animebytes.tv": 1,
+    "animetamashi.com": 1,
+    "animetorrents.me": 1,
+    "anitama.net": 1,
+    "anjuke.com": 1,
+    "anjukestatic.com": 1,
+    "annualreviews.org": 1,
+    "anquan.org": 1,
+    "anquanke.com": 1,
+    "anruan.com": 1,
+    "antfin.com": 1,
+    "antfortune.com": 1,
+    "antgroup.com": 1,
+    "anticheatexpert.com": 1,
+    "antutu.com": 1,
+    "anxia.com": 1,
+    "aos-incentive.huami.com": 1,
+    "aotrip.net": 1,
+    "aoyou.com": 1,
+    "apaas-zone-test.com": 1,
+    "apabi.com": 1,
+    "apass.com": 1,
+    "apcdns.com": 1,
+    "apcdns.net": 1,
+    "apdcdn.com": 1,
+    "apecn.com": 1,
+    "api-aos-cnbj6.huami.com": 1,
+    "api-mifit-cn.huami.com": 1,
+    "api-mifit.huami.com": 1,
+    "api.crisp.chat": 1,
+    "api.game.letvstore.com": 1,
+    "apifabric.net": 1,
+    "apifox.com": 1,
+    "apigwtencent.com": 1,
+    "apimkt.net": 1,
+    "apira.org": 1,
+    "apirc.org": 1,
+    "apk3.com": 1,
+    "apk8.com": 1,
+    "aplaybox.com": 1,
+    "apollo-platform.com": 1,
+    "apollo-share.com": 1,
+    "apollo.auto": 1,
+    "app-analytics-cn.huami.com": 1,
+    "appchina.com": 1,
+    "appchizi.com": 1,
+    "appcoo.com": 1,
+    "appeeres.com": 1,
+    "appinn.com": 1,
+    "appjiagu.com": 1,
+    "applinzi.com": 1,
+    "applogcdn.com": 1,
+    "applysquare.com": 1,
+    "applysquare.net": 1,
+    "appshike.com": 1,
+    "appsimg.com": 1,
+    "appsina.com": 1,
+    "appsmall.mobi": 1,
+    "aps.org": 1,
+    "aqviwv.com": 1,
+    "aqvx8mcr392mv7.com": 1,
+    "armaf.org": 1,
+    "arpun.com": 1,
+    "ascelibrary.org": 1,
+    "asczwa.com": 1,
+    "asczxcefsv.com": 1,
+    "asdlkjf.com": 1,
+    "ashgdf.com": 1,
+    "asm.org": 1,
+    "asme.org": 1,
+    "astm.org": 1,
+    "atatech.org": 1,
+    "atb.so": 1,
+    "ating.info": 1,
+    "atlab.ai": 1,
+    "atpanel.com": 1,
+    "autonavi.com": 1,
+    "avec6ua79dc6.com": 1,
+    "avicsec.com": 1,
+    "awemeughun.com": 1,
+    "awesome-hd.me": 1,
+    "axhimalayancc.com": 1,
+    "azetac.com": 1,
+    "azhimalayanvh.com": 1,
+    "b23.tv": 1,
+    "b2byao.com": 1,
+    "b3log.org": 1,
+    "b612.net": 1,
+    "bababian.com": 1,
+    "babymoment.net": 1,
+    "babytree.com": 1,
+    "babytreeimg.com": 1,
+    "baduziyuan.com": 1,
+    "baeapps.com": 1,
+    "baetyl.tech": 1,
+    "baidiapp.com": 1,
+    "baidinet.com": 1,
+    "baidu-bank.com": 1,
+    "baidu-cdn.com": 1,
+    "baidu-cdn.net": 1,
+    "baidu-int.com": 1,
+    "baidu-itm.com": 1,
+    "baidu-tech.com": 1,
+    "baidu.com": 1,
+    "baidu.com.hk": 1,
+    "baidu.hk": 1,
+    "baidu.mobi": 1,
+    "baiduads.com": 1,
+    "baiduapp.com": 1,
+    "baidubce.com": 1,
+    "baidubcr.com": 1,
+    "baidubos.com": 1,
+    "baiducloudapi.com": 1,
+    "baiducontent.com": 1,
+    "baidufree.com": 1,
+    "baiduhui.com": 1,
+    "baidupan.com": 1,
+    "baidupcs.com": 1,
+    "baidupcs.net": 1,
+    "baidustatic.com": 1,
+    "baiduux.com": 1,
+    "baiduwaf.com": 1,
+    "baiduwebgame.com": 1,
+    "baiduxiaodai.com": 1,
+    "baiduyangguang.org": 1,
+    "baiduyuncdn.com": 1,
+    "baiduyuncdn.net": 1,
+    "baiduyundns.com": 1,
+    "baiduyundns.net": 1,
+    "baiduyunwaf.com": 1,
+    "baifae.com": 1,
+    "baifendian.com": 1,
+    "baifubao.com": 1,
+    "baihangbao.com": 1,
+    "baihangdai.com": 1,
+    "baihe.com": 1,
+    "baijiayun.com": 1,
+    "baijii.com": 1,
+    "baijincdn.com": 1,
+    "baike.com": 1,
+    "baishan-cloud.com": 1,
+    "baishancloud.com": 1,
+    "baishangeek.com": 1,
+    "baitiao.com": 1,
+    "baixing.com": 1,
+    "baixing.net": 1,
+    "baiying.com": 1,
+    "baka.im": 1,
+    "bakshifen.com": 1,
+    "baltamatica.com": 1,
+    "bamenzhushou.com": 1,
+    "bangbang.com": 1,
+    "bangongziyuan.com": 1,
+    "bank-of-china.com": 1,
+    "bankcomm.com": 1,
+    "bankcomm.com.au": 1,
+    "bankcomm.com.mo": 1,
+    "bankcomm.com.tw": 1,
+    "bankofchina.com": 1,
+    "banmaaike.com": 1,
+    "baobianli.net": 1,
+    "baofeng.com": 1,
+    "baofeng.mobi": 1,
+    "baofeng.net": 1,
+    "baofengtv.com": 1,
+    "baokang.com": 1,
+    "baomitu.com": 1,
+    "baotoo.com": 1,
+    "baoxianshichang.com": 1,
+    "baozengzhang.com": 1,
+    "bapiw.com": 1,
+    "bartender.cc": 1,
+    "battlecare.net": 1,
+    "baydn.com": 1,
+    "bazai.com": 1,
+    "bbbcdns.com": 1,
+    "bce-cdn.com": 1,
+    "bce-cdn.net": 1,
+    "bceapp.com": 1,
+    "bcebos.com": 1,
+    "bcedns.com": 1,
+    "bcedns.net": 1,
+    "bcedocument.com": 1,
+    "bcehost.com": 1,
+    "bcehosts.com": 1,
+    "bceidaas.com": 1,
+    "bceimg.com": 1,
+    "bcelive.com": 1,
+    "bcevod.com": 1,
+    "bcewaf.com": 1,
+    "bcfmglobal.com": 1,
+    "bchdemo.site": 1,
+    "bcvbw.com": 1,
+    "bcy.net": 1,
+    "bcyimg.com": 1,
+    "bdactivity.com": 1,
+    "bdatu.com": 1,
+    "bdbae.com": 1,
+    "bdcloudapi.com": 1,
+    "bde4.cc": 1,
+    "bdeceimg.com": 1,
+    "bdfangzhou.com": 1,
+    "bdgslb.com": 1,
+    "bdimg.com": 1,
+    "bdstatic.com": 1,
+    "bdtjrcv.com": 1,
+    "bduapp.com": 1,
+    "bdurl.net": 1,
+    "bdxiguaimg.com": 1,
+    "bdxiguastatic.com": 1,
+    "bdycdn.com": 1,
+    "bdycdn.net": 1,
+    "bdydns.com": 1,
+    "bdydns.net": 1,
+    "bdymkt.com": 1,
+    "bdysite.com": 1,
+    "bdysites.com": 1,
+    "bearychat.com": 1,
+    "beatsbydre.com": 1,
+    "beihaidc.com": 1,
+    "beijing-lipin.com": 1,
+    "beitaichufang.com": 1,
+    "bengbeng.com": 1,
+    "benghuai.com": 1,
+    "benmi.com": 1,
+    "berlin8.org": 1,
+    "berui.com": 1,
+    "bescloud.com": 1,
+    "besclouds.com": 1,
+    "bestcloudcdn.com": 1,
+    "bestclouddns.com": 1,
+    "bestopview.com": 1,
+    "betterzip.net": 1,
+    "betterzipcn.com": 1,
+    "beyondcompare.cc": 1,
+    "bfe-networks.com": 1,
+    "bfe-networks.net": 1,
+    "bfimg.com": 1,
+    "bh3.com": 1,
+    "bhsr.com": 1,
+    "bhuvgy.com": 1,
+    "biancheng.net": 1,
+    "bianews.com": 1,
+    "bibaodao.com": 1,
+    "bidchance.com": 1,
+    "biddingx.com": 1,
+    "bihu.com": 1,
+    "biji.com": 1,
+    "biliapi.com": 1,
+    "biliapi.net": 1,
+    "bilibili.cc": 1,
+    "bilibili.co": 1,
+    "bilibili.com": 1,
+    "bilibili.net": 1,
+    "bilibili.tv": 1,
+    "bilibiligame.co": 1,
+    "bilibiligame.net": 1,
+    "bilibilipay.com": 1,
+    "bilicdn1.com": 1,
+    "bilicdn2.com": 1,
+    "bilicdn3.com": 1,
+    "bilicdn4.com": 1,
+    "bilicdn5.com": 1,
+    "bilicomics.com": 1,
+    "biligame.co": 1,
+    "biligame.com": 1,
+    "biligame.net": 1,
+    "biligo.com": 1,
+    "biliintl.com": 1,
+    "biliplus.com": 1,
+    "bilivideo.com": 1,
+    "bilivideo.net": 1,
+    "bio-equip.com": 1,
+    "bio360.net": 1,
+    "bio4p.com": 1,
+    "biodiscover.com": 1,
+    "bishijie.com": 1,
+    "bitauto.com": 1,
+    "bitautoimg.com": 1,
+    "bitecoin.com": 1,
+    "biyehome.net": 1,
+    "bjango.com": 1,
+    "bjcathay.com": 1,
+    "bjinfobank.com": 1,
+    "bjsbnet.com": 1,
+    "bjtndao.org": 1,
+    "bjyouth.net": 1,
+    "bjyueshenzj.com": 1,
+    "bk3r.com": 1,
+    "bkapigw.com": 1,
+    "bkapps.com": 1,
+    "bkclouds.cc": 1,
+    "bkiije.com": 1,
+    "bktencent.com": 1,
+    "blackberry.com": 1,
+    "blackdragon.com": 1,
+    "blogjava.net": 1,
+    "blovestorm.com": 1,
+    "blurdev.com": 1,
+    "blyun.com": 1,
+    "blzddist1-a.akamaihd.net": 1,
+    "bmj.com": 1,
+    "bobbns.com": 1,
+    "bobo.com": 1,
+    "bocamchina.com": 1,
+    "bocaviation.com": 1,
+    "boccfc.cc": 1,
+    "bocfullertonbank.com": 1,
+    "bocgi.com": 1,
+    "bocgins.com": 1,
+    "bochk.com": 1,
+    "bocichina.com": 1,
+    "bocifunds.com": 1,
+    "bocigroup.com": 1,
+    "bocim.com": 1,
+    "bohejiasuqi.com": 1,
+    "bohu.co": 1,
+    "bojianger.com": 1,
+    "bokecc.com": 1,
+    "booking.com": 1,
+    "boosj.com": 1,
+    "bootcdn.net": 1,
+    "bootcss.com": 1,
+    "bosera.com": 1,
+    "bosszhipin.com": 1,
+    "boxiaole.com": 1,
+    "bq233.com": 1,
+    "bqtalk.com": 1,
+    "brmnq.com": 1,
+    "broadcasthe.net": 1,
+    "browserleaks.com": 1,
+    "bscabank.com": 1,
+    "bsclink.com": 1,
+    "bscstorage.com": 1,
+    "bscstorage.net": 1,
+    "bsgslb.com": 1,
+    "bspapp.com": 1,
+    "bstatic.com": 1,
+    "bt-tt.com": 1,
+    "btcfans.com": 1,
+    "btgtravel.com": 1,
+    "bthhotels.com": 1,
+    "btime.com": 1,
+    "btshoufa.net": 1,
+    "build9s.io": 1,
+    "buy.shanrongmall.com": 1,
+    "buyjingxi.com": 1,
+    "bx1k.com": 1,
+    "byodonline.com": 1,
+    "bystack.com": 1,
+    "byteac.com": 1,
+    "byteacctimg.com": 1,
+    "byteactivity.com": 1,
+    "bytecdn.com": 1,
+    "bytecdntp.com": 1,
+    "byted-static.com": 1,
+    "byted.org": 1,
+    "bytedance.com": 1,
+    "bytedance.net": 1,
+    "bytedance.org": 1,
+    "bytedanceapi.com": 1,
+    "bytedapm.com": 1,
+    "bytedns.net": 1,
+    "bytedns1.com": 1,
+    "bytedns2.com": 1,
+    "bytednsdoc.com": 1,
+    "byteeffecttos.com": 1,
+    "bytefcdn.com": 1,
+    "bytegecko.com": 1,
+    "bytegoofy.com": 1,
+    "bytegslb.com": 1,
+    "bytehwm.com": 1,
+    "byteimg.com": 1,
+    "byteintl.net": 1,
+    "bytelb.net": 1,
+    "bytemaimg.com": 1,
+    "bytemastatic.com": 1,
+    "bytescm.com": 1,
+    "bytesfield.com": 1,
+    "bytesmanager.com": 1,
+    "bytetcc.com": 1,
+    "bytetos.com": 1,
+    "bytexservice.com": 1,
+    "bytianshankd.com": 1,
+    "c-ctrip.com": 1,
+    "c-t.work": 1,
+    "c1a0.com": 1,
+    "c1a2.com": 1,
+    "c1a3.com": 1,
+    "c54sauo3y85m2g.com": 1,
+    "c8uixr96iv79.com": 1,
+    "ca9ce6rv872ce1.com": 1,
+    "cabbagebox.com": 1,
+    "caigoutong.net": 1,
+    "caihongjia.com": 1,
+    "caijingwu.com": 1,
+    "cailianpress.com": 1,
+    "caing.com": 1,
+    "cainiao-inc.com": 1,
+    "cainiao-inc.net": 1,
+    "cainiao.com": 1,
+    "cainiaoyizhan.com": 1,
+    "caixin.com": 1,
+    "caixinmedia.com": 1,
+    "caixinonline.com": 1,
+    "caiyu.com": 1,
+    "caiyun.com": 1,
+    "caiyunai.com": 1,
+    "caiyunapp.com": 1,
+    "cambridge.org": 1,
+    "camera360.com": 1,
+    "canbaojin.com": 1,
+    "cang.com": 1,
+    "cankaoxiaoxi.com": 1,
+    "caocaobusiness.cc": 1,
+    "caocaocustomer.cc": 1,
+    "caocaoglobal.com": 1,
+    "caocaojourney.cc": 1,
+    "caocaokeji.net": 1,
+    "caocaomarketing.cc": 1,
+    "caocaomedia.cc": 1,
+    "caocaoproduct.cc": 1,
+    "caocaopromotion.cc": 1,
+    "caocaoservice.cc": 1,
+    "caocaotravel.cc": 1,
+    "caocaotrip.cc": 1,
+    "caocaotrip.com": 1,
+    "capitalonline.net": 1,
+    "cardbaobao.com": 1,
+    "carnoc.com": 1,
+    "carry6.com": 1,
+    "carry6.net": 1,
+    "cas.org": 1,
+    "catus.xyz": 1,
+    "catuscdn.xyz": 1,
+    "ccb.com": 1,
+    "ccbcos.com": 1,
+    "ccbfund.com": 1,
+    "ccbfutures.com": 1,
+    "ccbhome.net": 1,
+    "ccbintl.com.hk": 1,
+    "ccbleasing.com": 1,
+    "ccbseoul.com": 1,
+    "ccbxt.com": 1,
+    "ccgslb.com": 1,
+    "ccgslb.net": 1,
+    "ccnew.com": 1,
+    "cctalk.com": 1,
+    "cctv.com": 1,
+    "cctvpic.com": 1,
+    "cczq.com": 1,
+    "cczq.net": 1,
+    "cdn.angruo.com": 1,
+    "cdn20.com": 1,
+    "cdn30.org": 1,
+    "cdn913.com": 1,
+    "cdnc.org": 1,
+    "cdncl.net": 1,
+    "cdndns1.com": 1,
+    "cdndns2.com": 1,
+    "cdndns2.net": 1,
+    "cdndo.com": 1,
+    "cdndoctor.com": 1,
+    "cdngot.com": 1,
+    "cdngslb.com": 1,
+    "cdnhub.net": 1,
+    "cdnhwc1.com": 1,
+    "cdnhwc2.com": 1,
+    "cdnhwc3.com": 1,
+    "cdnhwc5.com": 1,
+    "cdnhwc6.com": 1,
+    "cdnhwc7.com": 1,
+    "cdnhwcajk17.com": 1,
+    "cdnhwcatq08.com": 1,
+    "cdnhwcbni108.com": 1,
+    "cdnhwcbqs106.com": 1,
+    "cdnhwcbzj102.com": 1,
+    "cdnhwcchh18.com": 1,
+    "cdnhwccmz121.com": 1,
+    "cdnhwcead111.com": 1,
+    "cdnhwcedi10.com": 1,
+    "cdnhwcedt124.com": 1,
+    "cdnhwcggk22.com": 1,
+    "cdnhwcgnc118.com": 1,
+    "cdnhwcgqa21.com": 1,
+    "cdnhwchcg02.com": 1,
+    "cdnhwcibv122.com": 1,
+    "cdnhwcick110.com": 1,
+    "cdnhwcjlg112.com": 1,
+    "cdnhwcjog12.com": 1,
+    "cdnhwcjsb120.com": 1,
+    "cdnhwckfz116.com": 1,
+    "cdnhwckon103.com": 1,
+    "cdnhwcljk104.com": 1,
+    "cdnhwcllh11.com": 1,
+    "cdnhwclxu105.com": 1,
+    "cdnhwclxw05.com": 1,
+    "cdnhwcoem01.com": 1,
+    "cdnhwcohm19.com": 1,
+    "cdnhwcoph123.com": 1,
+    "cdnhwcprh113.com": 1,
+    "cdnhwcpsd13.com": 1,
+    "cdnhwcqgw115.com": 1,
+    "cdnhwcqir15.com": 1,
+    "cdnhwcqve117.com": 1,
+    "cdnhwcqwg14.com": 1,
+    "cdnhwctnm107.com": 1,
+    "cdnhwctxz24.com": 1,
+    "cdnhwcuim119.com": 1,
+    "cdnhwcupf06.com": 1,
+    "cdnhwcurq03.com": 1,
+    "cdnhwcvix16.com": 1,
+    "cdnhwcxcy07.com": 1,
+    "cdnhwczba04.com": 1,
+    "cdnhwczjt20.com": 1,
+    "cdnhwczks109.com": 1,
+    "cdnhwczmn114.com": 1,
+    "cdnhwczth23.com": 1,
+    "cdnhwcztu09.com": 1,
+    "cdnhwczxh101.com": 1,
+    "cdntip.com": 1,
+    "cdntips.com": 1,
+    "cdntips.net": 1,
+    "ceair.com": 1,
+    "cebbank.com": 1,
+    "ceblease.com": 1,
+    "cecdc.com": 1,
+    "cecport.com": 1,
+    "ceeunion.com": 1,
+    "cekeis.com": 1,
+    "centanet.com": 1,
+    "cerambath.org": 1,
+    "cf-ns.com": 1,
+    "cf-ns.net": 1,
+    "cf-ns.site": 1,
+    "cf-ns.tech": 1,
+    "cfmna-tencent.com": 1,
+    "cftest7.com": 1,
+    "cftest8.com": 1,
+    "cftsupport.com": 1,
+    "cfund108.com": 1,
+    "cfzq.com": 1,
+    "cgws.com": 1,
+    "ch.com": 1,
+    "chachaba.com": 1,
+    "chaindd.com": 1,
+    "chainnode.com": 1,
+    "changanfunds.com": 1,
+    "changba.com": 1,
+    "changdunovel.com": 1,
+    "changyan.com": 1,
+    "chanpin100.com": 1,
+    "chaojituzi.net": 1,
+    "chaoxing.cc": 1,
+    "chaoxing.com": 1,
+    "chaoxingv.com": 1,
+    "chashebao.com": 1,
+    "chatnos.com": 1,
+    "chazhengla.com": 1,
+    "chdbits.co": 1,
+    "che168.com": 1,
+    "checkzeit.com": 1,
+    "cheetahgames.com": 1,
+    "cheetahgo.net": 1,
+    "cheetahmobile.com": 1,
+    "cheng.xin": 1,
+    "cheyisou.com": 1,
+    "china-ceec-cooperation.com": 1,
+    "china-chair.com": 1,
+    "china-nengyuan.com": 1,
+    "china.com": 1,
+    "chinaamc.com": 1,
+    "chinabooktrading.com": 1,
+    "chinacache.com": 1,
+    "chinacache.net": 1,
+    "chinachugui.com": 1,
+    "chinadongchu.com": 1,
+    "chinadzfp.com": 1,
+    "chinaexpressair.com": 1,
+    "chinafph.com": 1,
+    "chinagslb.com": 1,
+    "chinagslb.net": 1,
+    "chinahr.com": 1,
+    "chinakaoyan.com": 1,
+    "chinalawedu.com": 1,
+    "chinalincoln.com": 1,
+    "chinalions.com": 1,
+    "chinalive.com": 1,
+    "chinamobile.com": 1,
+    "chinamobileltd.com": 1,
+    "chinamwh.com": 1,
+    "chinanetcenter.com": 1,
+    "chinanews.com": 1,
+    "chinapay.com": 1,
+    "chinapayhongkong.com": 1,
+    "chinapp.net": 1,
+    "chinapubmed.net": 1,
+    "chinaso.com": 1,
+    "chinasspp.com": 1,
+    "chinastock.com": 1,
+    "chinatelecom-ec.com": 1,
+    "chinatelecom-h.com": 1,
+    "chinatelecomglobal.com": 1,
+    "chinatranslation.net": 1,
+    "chinaunicom.com": 1,
+    "chinaunicom.com.hk": 1,
+    "chinaunicomglobal.com": 1,
+    "chinaunionpay.com": 1,
+    "chinaunionpay.net": 1,
+    "chinaunix.net": 1,
+    "chinauos.com": 1,
+    "chinaweiyu.com": 1,
+    "chinawutong.com": 1,
+    "chinaxiv.com": 1,
+    "chinaxiv.net": 1,
+    "chinaxiv.org": 1,
+    "chinaz.com": 1,
+    "chinaz.net": 1,
+    "chinazns.com": 1,
+    "chinesemooc.org": 1,
+    "chiphell.com": 1,
+    "chndoi.com": 1,
+    "chndoi.net": 1,
+    "chndoi.org": 1,
+    "chntel.com": 1,
+    "chongdiantou.com": 1,
+    "chongnengjihua.com": 1,
+    "chouti.com": 1,
+    "chrstatic.com": 1,
+    "chua.pro": 1,
+    "chuangxin.com": 1,
+    "chuanke.com": 1,
+    "chuansong.me": 1,
+    "chuansongme.com": 1,
+    "chugou360.com": 1,
+    "chuimg.com": 1,
+    "chunbo.com": 1,
+    "chunboimg.com": 1,
+    "chunyu.mobi": 1,
+    "chushou.tv": 1,
+    "chuyu.me": 1,
+    "cibn-intl.com": 1,
+    "cibn.cc": 1,
+    "cibnlive.com": 1,
+    "cibnott.net": 1,
+    "cibntv.net": 1,
+    "cicc.com": 1,
+    "ciccwm.com": 1,
+    "cignacmb-ipmi.com": 1,
+    "cignacmb.com": 1,
+    "cignacmbamc.com": 1,
+    "cindasc.com": 1,
+    "ciscon.org": 1,
+    "citic": 1,
+    "citic.com": 1,
+    "citicbank.com": 1,
+    "citicbank.net": 1,
+    "citicbank.org": 1,
+    "citiccapital.com": 1,
+    "citiciam.com": 1,
+    "citicifh.com": 1,
+    "citics.com": 1,
+    "citics.com.hk": 1,
+    "citicsf.com": 1,
+    "citicsinfo.com": 1,
+    "city8.com": 1,
+    "citybrain.com": 1,
+    "ciweimao.com": 1,
+    "cjmakeding.com": 1,
+    "cjmkt.com": 1,
+    "cjol.com": 1,
+    "cjsc.com": 1,
+    "ckd.im": 1,
+    "clarivate.com": 1,
+    "clashroyaleapp.com": 1,
+    "classix-unlimited.co.uk": 1,
+    "clhimalayanxx.com": 1,
+    "client.amplifi.com": 1,
+    "clk1.top": 1,
+    "cloud-beijing.com": 1,
+    "cloud-control.top": 1,
+    "cloud-hebi.com": 1,
+    "cloud-industry-delivery.site": 1,
+    "cloud-ningbo.com": 1,
+    "cloud-ordos.com": 1,
+    "cloud-shenzhen.com": 1,
+    "cloud-shiyan.com": 1,
+    "cloud-wuhan.com": 1,
+    "cloud-xian.com": 1,
+    "cloud-xm.com": 1,
+    "cloud-zhaoqing.com": 1,
+    "cloud-zhongwei.com": 1,
+    "clouda.com": 1,
+    "cloudajs.org": 1,
+    "cloudanqing.com": 1,
+    "cloudappl.com": 1,
+    "cloudbaoshan.com": 1,
+    "cloudbase.net": 1,
+    "cloudbeibei.com": 1,
+    "cloudbinzhou.com": 1,
+    "cloudchangde.com": 1,
+    "cloudchangsha.com": 1,
+    "cloudchangzhou.com": 1,
+    "cloudchaozhou.com": 1,
+    "cloudchengde.com": 1,
+    "cloudchengdu.com": 1,
+    "cloudchuzhou.com": 1,
+    "cloudczs.com": 1,
+    "clouddalian.com": 1,
+    "clouddatong.com": 1,
+    "clouddn.com": 1,
+    "clouddongying.com": 1,
+    "cloudflare-cn.com": 1,
+    "cloudflarecn.net": 1,
+    "cloudflareinsights-cn.com": 1,
+    "cloudflareprod.com": 1,
+    "cloudflarestaging.com": 1,
+    "cloudflarestoragegw.com": 1,
+    "cloudfoshan.com": 1,
+    "cloudfront-cn.net": 1,
+    "cloudfuqing.com": 1,
+    "cloudganzhou.com": 1,
+    "cloudguangzhou.com": 1,
+    "cloudhaidong.com": 1,
+    "cloudhefei.com": 1,
+    "cloudhengshui.com": 1,
+    "cloudhost.link": 1,
+    "cloudhuaihua.com": 1,
+    "cloudhuizhou.com": 1,
+    "cloudidaas.com": 1,
+    "cloudjinan.com": 1,
+    "cloudjinchang.com": 1,
+    "cloudjingzhou.com": 1,
+    "cloudjining.com": 1,
+    "cloudjiujiang.com": 1,
+    "cloudkunming.com": 1,
+    "cloudleshan.com": 1,
+    "cloudlijiang.com": 1,
+    "cloudlishui.com": 1,
+    "cloudluohe.com": 1,
+    "cloudluoyang.com": 1,
+    "cloudmeishan.com": 1,
+    "cloudnanan.com": 1,
+    "cloudnanjing.com": 1,
+    "cloudnanning.com": 1,
+    "cloudnantong.com": 1,
+    "cloudnetb2b.com": 1,
+    "cloudquanzhou.com": 1,
+    "cloudsanya.com": 1,
+    "cloudsee.com": 1,
+    "cloudsee.net": 1,
+    "cloudseetech.com": 1,
+    "cloudshanghai.com": 1,
+    "cloudshaoyang.com": 1,
+    "cloudshenfuxingqu.com": 1,
+    "cloudsigma.com": 1,
+    "cloudsiping.com": 1,
+    "cloudsite.vip": 1,
+    "cloudsuqian.com": 1,
+    "cloudtangshan.com": 1,
+    "cloudtianjin.com": 1,
+    "cloudtongchuan.com": 1,
+    "cloudtongliang.com": 1,
+    "cloudvdn.com": 1,
+    "cloudweinan.com": 1,
+    "cloudxiangtan.com": 1,
+    "cloudxianyou.com": 1,
+    "cloudxining.com": 1,
+    "cloudxns.com": 1,
+    "cloudxns.net": 1,
+    "cloudyanan.com": 1,
+    "cloudyancheng.com": 1,
+    "cloudyantai.com": 1,
+    "cloudyinchuan.com": 1,
+    "cloudytrace.com": 1,
+    "cloudytrace.org": 1,
+    "cloudyueyang.com": 1,
+    "cloudyuncheng.com": 1,
+    "cloudyuxi.com": 1,
+    "cloudzhongshan.com": 1,
+    "cloudzhuhai.com": 1,
+    "clsa.com": 1,
+    "cm.fancyapi.com": 1,
+    "cmb-leasing.com": 1,
+    "cmbchina.biz": 1,
+    "cmbchina.com": 1,
+    "cmbi.com.hk": 1,
+    "cmbimg.com": 1,
+    "cmbuat.com": 1,
+    "cmbwinglungbank.com": 1,
+    "cmccb2b.com": 1,
+    "cmcloud.org": 1,
+    "cmcm.com": 1,
+    "cmcmadmin.com": 1,
+    "cmcmapp.com": 1,
+    "cmcmcdn.com": 1,
+    "cmcmcmai.com": 1,
+    "cmcmiot.com": 1,
+    "cmcmpc.com": 1,
+    "cmcmsecurity.com": 1,
+    "cmcmserv.com": 1,
+    "cmcmtrans.com": 1,
+    "cmct.tv": 1,
+    "cmechina.net": 1,
+    "cmedia360.com": 1,
+    "cmf.biz": 1,
+    "cmf.ltd": 1,
+    "cmfchina.com": 1,
+    "cmfu.com": 1,
+    "cmpassport.com": 1,
+    "cmschina.com": 1,
+    "cmschina.com.hk": 1,
+    "cn": 1,
+    "cn88.net": 1,
+    "cnanzhi.com": 1,
+    "cnbeta.com": 1,
+    "cnbetacdn.com": 1,
+    "cnbksy.com": 1,
+    "cnblogs.com": 1,
+    "cnblogsc.com": 1,
+    "cncbinternational.com": 1,
+    "cncqcloud.com": 1,
+    "cnegov.com": 1,
+    "cnegov.org": 1,
+    "cnepub.com": 1,
+    "cnfol.com": 1,
+    "cnfolimg.com": 1,
+    "cngslb.com": 1,
+    "cngslb.net": 1,
+    "cnhbstock.com": 1,
+    "cnitblog.com": 1,
+    "cnjsun.com": 1,
+    "cnki.net": 1,
+    "cnkidoi.com": 1,
+    "cnkidoi.net": 1,
+    "cnkidoi.org": 1,
+    "cnlang.org": 1,
+    "cnlaw.net": 1,
+    "cnmo.com": 1,
+    "cnmooc.org": 1,
+    "cnmstl.net": 1,
+    "cnnic.net": 1,
+    "cnrdn.com": 1,
+    "cnsciedu.com": 1,
+    "cnstock.com": 1,
+    "cnsuning.com": 1,
+    "cnthinkers.com": 1,
+    "cnweblog.com": 1,
+    "cnzz.com": 1,
+    "cnzz.net": 1,
+    "cocodiy.com": 1,
+    "code666.com": 1,
+    "codechina.net": 1,
+    "codesoftchina.com": 1,
+    "coding.me": 1,
+    "coding.net": 1,
+    "codm.com": 1,
+    "cofeed.com": 1,
+    "cofool.com": 1,
+    "coindog.com": 1,
+    "colinker.com": 1,
+    "coloros.com": 1,
+    "coloros.net": 1,
+    "com-hs-hkdy.com": 1,
+    "comicat.org": 1,
+    "computeinit.com": 1,
+    "comsenz.com": 1,
+    "conew.com": 1,
+    "content4ads.com": 1,
+    "contentchina.com": 1,
+    "cookicut.com": 1,
+    "coolapk.com": 1,
+    "coolapkmarket.com": 1,
+    "coolapkmarket.net": 1,
+    "coolbuy.com": 1,
+    "cooldock.com": 1,
+    "coolsite.vip": 1,
+    "cootekservice.com": 1,
+    "corari.com": 1,
+    "coreldrawchina.com": 1,
+    "cowlevel.net": 1,
+    "cowtransfer.com": 1,
+    "cppblog.com": 1,
+    "cpppf.org": 1,
+    "cqcb.com": 1,
+    "cqccn.com": 1,
+    "cqhimalayanky.com": 1,
+    "cqmilahuoguo.com": 1,
+    "cqvip.com": 1,
+    "cr173.com": 1,
+    "createwf.com": 1,
+    "crggcn.com": 1,
+    "cri-grandera.com": 1,
+    "cri-on.com": 1,
+    "criankara.com": 1,
+    "criarabic.com": 1,
+    "criberlin.com": 1,
+    "cribsas.com": 1,
+    "crieasyfm.com": 1,
+    "crienglish.com": 1,
+    "criezfm.com": 1,
+    "crilondon.com": 1,
+    "crimoscow.com": 1,
+    "crinihaochina.com": 1,
+    "cririo.com": 1,
+    "criseoul.com": 1,
+    "crisydney.com": 1,
+    "critokyo.com": 1,
+    "criwashington.com": 1,
+    "crossoverchina.com": 1,
+    "crsky.com": 1,
+    "cryuantafund.com": 1,
+    "csair.com": 1,
+    "csbew.com": 1,
+    "csc108.com": 1,
+    "csci.hk": 1,
+    "csdn.com": 1,
+    "csdn.net": 1,
+    "csfounder.com": 1,
+    "csjplatform.com": 1,
+    "csmjzs.com": 1,
+    "cspro.org": 1,
+    "csslcloud.net": 1,
+    "csto.com": 1,
+    "csxbank.com": 1,
+    "ctcdn.com": 1,
+    "ctcdn.net": 1,
+    "ctcdn.org": 1,
+    "ctdns.net": 1,
+    "ctdns.org": 1,
+    "ctexcel.ca": 1,
+    "ctexcel.com": 1,
+    "ctexcel.com.hk": 1,
+    "ctexcel.fr": 1,
+    "ctexcel.us": 1,
+    "ctfile.com": 1,
+    "ctfile.net": 1,
+    "ctfund.com": 1,
+    "cthcdn.com": 1,
+    "cthcdn.net": 1,
+    "ctiforum.com": 1,
+    "ctlcdn.com": 1,
+    "ctlcdn.net": 1,
+    "ctmcdn.com": 1,
+    "ctmcdn.net": 1,
+    "ctobsnssdk.com": 1,
+    "ctoutiao.com": 1,
+    "ctrip.co.id": 1,
+    "ctrip.co.kr": 1,
+    "ctrip.co.th": 1,
+    "ctrip.com": 1,
+    "ctrip.com.hk": 1,
+    "ctrip.my": 1,
+    "ctrip.sg": 1,
+    "ctripbiz.com": 1,
+    "ctripbuy.hk": 1,
+    "ctripteam.com": 1,
+    "ctsbw.com": 1,
+    "ctsec.com": 1,
+    "ctxcdn.com": 1,
+    "ctxcdn.net": 1,
+    "ctycdn.com": 1,
+    "ctycdn.net": 1,
+    "ctycdn.org": 1,
+    "ctyuncdn.com": 1,
+    "ctyuncdn.net": 1,
+    "ctzcdn.com": 1,
+    "ctzcdn.net": 1,
+    "cu5gaia.com": 1,
+    "cubead.com": 1,
+    "cvnad.com": 1,
+    "cwitxoakk98d.com": 1,
+    "cwxzx.com": 1,
+    "cxbiji.com": 1,
+    "cxyule.com": 1,
+    "cyagen.com": 1,
+    "cybtc.com": 1,
+    "cyol.com": 1,
+    "cyts.com": 1,
+    "cz88.net": 1,
+    "cztv.com": 1,
+    "cztvcloud.com": 1,
+    "czybjz.com": 1,
+    "d10a.com": 1,
+    "d11a.com": 1,
+    "d22a.com": 1,
+    "d4z1onkegyrs5.cloudfront.net": 1,
+    "d9j8.com": 1,
+    "dadajiasu.com": 1,
+    "dadighost.com": 1,
+    "daguzhe.com": 1,
+    "dailygn.com": 1,
+    "dajiabao.com": 1,
+    "dajie.com": 1,
+    "dajieimg.com": 1,
+    "dalipan.com": 1,
+    "dalongyun.com": 1,
+    "dandanplay.com": 1,
+    "dandanzan.com": 1,
+    "dangbei.com": 1,
+    "dangdang.com": 1,
+    "danji100.com": 1,
+    "danji6.com": 1,
+    "danjuanapp.com": 1,
+    "danjuanfunds.com": 1,
+    "dao123.com": 1,
+    "daocloud.io": 1,
+    "daojia-inc.com": 1,
+    "daojia.com": 1,
+    "daojialianmeng.com": 1,
+    "daoru.in": 1,
+    "daovoice.io": 1,
+    "dashengpan.com": 1,
+    "dawnjs.com": 1,
+    "dayu.com": 1,
+    "dayu.work": 1,
+    "dayugslb.com": 1,
+    "dayukaoshi.com": 1,
+    "dazijia.com": 1,
+    "dbank.com": 1,
+    "dbankcdn.com": 1,
+    "dbankcloud.asia": 1,
+    "dbankcloud.com": 1,
+    "dbankedge.asia": 1,
+    "dbankedge.net": 1,
+    "dcarapi.com": 1,
+    "dcarimg.com": 1,
+    "dcarlive.com": 1,
+    "dcarstatic.com": 1,
+    "dcarvod.com": 1,
+    "dcdapp.com": 1,
+    "dcdkjx.com": 1,
+    "dcloudlive.com": 1,
+    "dcloudstc.com": 1,
+    "dct-cloud.com": 1,
+    "dd373.com": 1,
+    "ddchong.com": 1,
+    "ddimg.net": 1,
+    "ddiqbh.com": 1,
+    "ddmogo.com": 1,
+    "ddooo.com": 1,
+    "ddurl.to": 1,
+    "dedecms.com": 1,
+    "deepin.com": 1,
+    "deepin.io": 1,
+    "deepin.org": 1,
+    "deepinos.org": 1,
+    "dengguobi.com": 1,
+    "develenv.com": 1,
+    "devui.design": 1,
+    "dfcfs.com": 1,
+    "dfcfw.com": 1,
+    "dfham.com": 1,
+    "dfig0.com": 1,
+    "dfkhgj.com": 1,
+    "dftoutiao.com": 1,
+    "dftzj.com": 1,
+    "dg-paas.com": 1,
+    "dginfo.com": 1,
+    "dgjy.net": 1,
+    "dgk2n.com": 1,
+    "dgphospital.com": 1,
+    "dgtle.com": 1,
+    "dhrest.com": 1,
+    "dhrest2.com": 1,
+    "di28nl.com": 1,
+    "dianchacha.com": 1,
+    "diandao.org": 1,
+    "diandian.com": 1,
+    "diandianchong.com": 1,
+    "diandianqi.com": 1,
+    "dianping.com": 1,
+    "dianwannan.com": 1,
+    "dida365.com": 1,
+    "didi-food.com": 1,
+    "didi.xin": 1,
+    "didialift.com": 1,
+    "didiaustralia.blog": 1,
+    "didichuxing.com": 1,
+    "didiglobal.com": 1,
+    "didimobility.co.jp": 1,
+    "didimobility.com": 1,
+    "didiopenapi.com": 1,
+    "didipai.com": 1,
+    "didiqiche.com": 1,
+    "didistatic.com": 1,
+    "diditaxi.com": 1,
+    "didiwuxian.com": 1,
+    "didiyun.com": 1,
+    "didiyun.org": 1,
+    "didiyunapi.com": 1,
+    "diffir.com": 1,
+    "dingding.xin": 1,
+    "dingqibao.com": 1,
+    "dingtalk.com": 1,
+    "dingtalk.net": 1,
+    "dingtalkapps.com": 1,
+    "dingwei.link": 1,
+    "dingxiang-inc.com": 1,
+    "diopic.net": 1,
+    "dious.cc": 1,
+    "discuz.com": 1,
+    "discuz.net": 1,
+    "discuz.org": 1,
+    "ditianshanhe.com": 1,
+    "diyiyou.com": 1,
+    "dj.tc": 1,
+    "dj99.com": 1,
+    "djdyqn.com": 1,
+    "dji.net": 1,
+    "djkhgy2.com": 1,
+    "djrhf0.com": 1,
+    "dkhg23.com": 1,
+    "dl-vip.pcfaster.baidu.co.th": 1,
+    "dl.delivery.mp.microsoft.com": 1,
+    "dler.cloud": 1,
+    "dlgslb.net": 1,
+    "dlnel.com": 1,
+    "dlnel.org": 1,
+    "dmaow.com": 1,
+    "dmhmusic.com": 1,
+    "dmrta.com": 1,
+    "dmrtb.com": 1,
+    "dmvideo.mobi": 1,
+    "dmvideo.net": 1,
+    "dmvideo.org": 1,
+    "dmyouxi.com": 1,
+    "dmzj.com": 1,
+    "dmzzkz.com": 1,
+    "dns.pub": 1,
+    "dnsnut.com": 1,
+    "dnspod.com": 1,
+    "dnspod.mobi": 1,
+    "dnspod.net": 1,
+    "dnspod.org": 1,
+    "dnssina.com": 1,
+    "dnsv1.com": 1,
+    "dnsv2.com": 1,
+    "dnsv3.com": 1,
+    "dnsv4.com": 1,
+    "dnsv5.com": 1,
+    "doc88.com": 1,
+    "docer.com": 1,
+    "docin.com": 1,
+    "dockerone.com": 1,
+    "dockone.io": 1,
+    "docschina.org": 1,
+    "doctoryou.ai": 1,
+    "dogedoge.com": 1,
+    "doh.pub": 1,
+    "domob-inc.com": 1,
+    "domob.org": 1,
+    "domobcdn.com": 1,
+    "domobnetwork.com": 1,
+    "domp4.cc": 1,
+    "donews.com": 1,
+    "dongao.com": 1,
+    "dongchedi.com": 1,
+    "dongchediapp.com": 1,
+    "dongfanglicaishi.com": 1,
+    "dongguantoday.com": 1,
+    "dongmansoft.com": 1,
+    "dongting.com": 1,
+    "dopa.com": 1,
+    "dospy.com": 1,
+    "doticloud.com": 1,
+    "dotwe.org": 1,
+    "douban.com": 1,
+    "douban.fm": 1,
+    "doubanio.com": 1,
+    "douhuameiquan.com": 1,
+    "douhuameiquan.net": 1,
+    "doutianshequ.com": 1,
+    "douxie.com": 1,
+    "douyin.com": 1,
+    "douyinact.com": 1,
+    "douyinact.net": 1,
+    "douyincdn.com": 1,
+    "douyinclips.com": 1,
+    "douyinliving.com": 1,
+    "douyinmusicclips.com": 1,
+    "douyinmusicvideo.com": 1,
+    "douyinpic.com": 1,
+    "douyinshortvideo.com": 1,
+    "douyinstatic.com": 1,
+    "douyinvideo.net": 1,
+    "douyinvod.com": 1,
+    "douyu.com": 1,
+    "douyu.tv": 1,
+    "douyuscdn.com": 1,
+    "douyutv.com": 1,
+    "downcc.com": 1,
+    "download.jetbrains.com": 1,
+    "download.microsoft.com": 1,
+    "downxia.com": 1,
+    "downyi.com": 1,
+    "doxygen.io": 1,
+    "doyonoc.com": 1,
+    "dpfile.com": 1,
+    "dpsoidf.com": 1,
+    "dragonest.com": 1,
+    "dratio.com": 1,
+    "dreamcast.hk": 1,
+    "dreams-travel.com": 1,
+    "drivergenius.com": 1,
+    "dsdlove.com": 1,
+    "dtstatic.com": 1,
+    "du-xiaomai.com": 1,
+    "dualspace.com": 1,
+    "dualspacetech.com": 1,
+    "duapp-preview.com": 1,
+    "duapp.com": 1,
+    "duapp.net": 1,
+    "duapps.com": 1,
+    "duba.com": 1,
+    "duba.net": 1,
+    "dui.ai": 1,
+    "duiopen.com": 1,
+    "duitang.com": 1,
+    "dulife.com": 1,
+    "dulightapp.com": 1,
+    "dumall.com": 1,
+    "duoduocdn.com": 1,
+    "duokan.com": 1,
+    "duokanbox.com": 1,
+    "duolabao.com": 1,
+    "duomai.com": 1,
+    "duomeng.net": 1,
+    "duomeng.org": 1,
+    "duoshuo.com": 1,
+    "duote.com": 1,
+    "duowan.com": 1,
+    "dur9.com": 1,
+    "dusdn.com": 1,
+    "dusdn.net": 1,
+    "dushifen.com": 1,
+    "dutils.com": 1,
+    "duxiaomai.net": 1,
+    "duxiu.com": 1,
+    "duxuetang.com": 1,
+    "dvkors.com": 1,
+    "dwion.com": 1,
+    "dwstatic.com": 1,
+    "dxpmedia.com": 1,
+    "dxycdn.com": 1,
+    "dxzq.net": 1,
+    "dyhgames.com": 1,
+    "dyhjw.com": 1,
+    "dymusictape.com": 1,
+    "dymusicvideo.com": 1,
+    "dyshortvideo.com": 1,
+    "dytt8.net": 1,
+    "dyvideotape.com": 1,
+    "dzdvip.com": 1,
+    "dzsc.com": 1,
+    "dzw3.com": 1,
+    "dzwww.com": 1,
+    "e-sscard.com": 1,
+    "e22a.com": 1,
+    "easebar.com": 1,
+    "easebar.net": 1,
+    "easesale.com": 1,
+    "easiu.com": 1,
+    "easou.com": 1,
+    "eastday.com": 1,
+    "eastmoney.com": 1,
+    "eastmoneyfutures.com": 1,
+    "eastsoo.com": 1,
+    "easyclean.fun": 1,
+    "easyrecoverychina.com": 1,
+    "easytrip.com": 1,
+    "eayyou.com": 1,
+    "eb-ind.com": 1,
+    "ebasset.com": 1,
+    "ebchina.com": 1,
+    "ebchinaintl.com": 1,
+    "ebfcn.com": 1,
+    "ebfortune.com": 1,
+    "ebico.com": 1,
+    "ebrun.com": 1,
+    "ebscn-am.com": 1,
+    "ebscn.com": 1,
+    "ebscohost.com": 1,
+    "ebtrust.com": 1,
+    "ecitic.com": 1,
+    "ecitic.net": 1,
+    "ecjobhome.com": 1,
+    "ecloud-gdu.com": 1,
+    "ecombdapi.com": 1,
+    "edcfda.com": 1,
+    "ediuschina.com": 1,
+    "edu-hb.com": 1,
+    "edu4399.com": 1,
+    "eduei.com": 1,
+    "eeyy.com": 1,
+    "effirst.com": 1,
+    "eflycloud.com": 1,
+    "eghimalayanak.com": 1,
+    "ejhimalayanje.com": 1,
+    "eksoi7mwa4fa27.com": 1,
+    "ele.me": 1,
+    "ele.to": 1,
+    "elecfans.com": 1,
+    "eleme.io": 1,
+    "elemecdn.com": 1,
+    "elenet.me": 1,
+    "elita.work": 1,
+    "elong.com": 1,
+    "emarbox.com": 1,
+    "emas-poc.com": 1,
+    "emerald.com": 1,
+    "empornium.me": 1,
+    "emsec.hk": 1,
+    "emumax.com": 1,
+    "engineeringvillage.com": 1,
+    "enterdesk.com": 1,
+    "eoeandroid.com": 1,
+    "eolink.com": 1,
+    "equitystory.com": 1,
+    "er07.com": 1,
+    "er8gmvwi54p5x1.com": 1,
+    "erddv.com": 1,
+    "erg3r.com": 1,
+    "ergcb.com": 1,
+    "ergvx.com": 1,
+    "erji.net": 1,
+    "ersjk.com": 1,
+    "essurl.com": 1,
+    "estrongs.com": 1,
+    "etagri.com": 1,
+    "etao.com": 1,
+    "etoote.com": 1,
+    "etoote.net": 1,
+    "ets100.com": 1,
+    "ettdnsv.com": 1,
+    "eudic.net": 1,
+    "euhhob.com": 1,
+    "everbox.net": 1,
+    "everbright.com": 1,
+    "ewqcxz.com": 1,
+    "ewsdxc.com": 1,
+    "ewtp.com": 1,
+    "ewtp.org": 1,
+    "ex.puata.info": 1,
+    "excelhome.net": 1,
+    "exmailgz.com": 1,
+    "expreview.com": 1,
+    "extfans.com": 1,
+    "eyoubaidu.com": 1,
+    "ezpro.pro": 1,
+    "f.cx": 1,
+    "f61a.com": 1,
+    "f61b.com": 1,
+    "facephoto.com": 1,
+    "faceu.com": 1,
+    "faceu.mobi": 1,
+    "faceu.net": 1,
+    "fadfunds.com": 1,
+    "faloo.com": 1,
+    "familyincloud.com": 1,
+    "famulei.com": 1,
+    "fang.com": 1,
+    "fangxiaoer.com": 1,
+    "fanli.com": 1,
+    "fanqienovel.com": 1,
+    "fanxian.com": 1,
+    "fast666ioceywit93h8a.com": 1,
+    "fastapi.net": 1,
+    "fastcdn.com": 1,
+    "fastidea.cc": 1,
+    "fastidea.me": 1,
+    "fatfreader.com": 1,
+    "fatherai.com": 1,
+    "faxianpindao.com": 1,
+    "fbank.com": 1,
+    "fdcyun.com": 1,
+    "fe-cdn.huami.com": 1,
+    "fe-static.huami.com": 1,
+    "feedsp.com": 1,
+    "feidee.com": 1,
+    "feidee.net": 1,
+    "feihuo.com": 1,
+    "feiliao.com": 1,
+    "feimaoyun.com": 1,
+    "feiniaomy.com": 1,
+    "feishu.net": 1,
+    "feishucdn.com": 1,
+    "feishupkg.com": 1,
+    "feizhu.com": 1,
+    "feng.com": 1,
+    "feng1.com": 1,
+    "fengcx.com": 1,
+    "fengedu.com": 1,
+    "fengimg.com": 1,
+    "fengkeji.com": 1,
+    "fengkongcloud.com": 1,
+    "fengniao.com": 1,
+    "fengxian110.com": 1,
+    "fenxi.com": 1,
+    "fenzijr.com": 1,
+    "fetion-portal.com": 1,
+    "fetionpic.com": 1,
+    "feucnp.com": 1,
+    "ffbuddy.com": 1,
+    "fgo.wiki": 1,
+    "fhldns.com": 1,
+    "fhldns.net": 1,
+    "fimmu.com": 1,
+    "finchina.com": 1,
+    "finzfin.com": 1,
+    "finzjr.com": 1,
+    "fir.im": 1,
+    "fixdown.com": 1,
+    "fjhps.com": 1,
+    "flhimalayandn.com": 1,
+    "fliggy.com": 1,
+    "fliggy.hk": 1,
+    "flstudiochina.com": 1,
+    "flxdns.com": 1,
+    "flycua.com": 1,
+    "flyert.com": 1,
+    "flzhan.com": 1,
+    "fm365.com": 1,
+    "fm3838.com": 1,
+    "fofa.info": 1,
+    "fofa.so": 1,
+    "ford.com": 1,
+    "foresightfund.com": 1,
+    "formysql.com": 1,
+    "founderff.com": 1,
+    "foundertype.com": 1,
+    "foxmail.com": 1,
+    "fqjob.net": 1,
+    "fqnovel.com": 1,
+    "fqnovelpic.com": 1,
+    "fqnovelvod.com": 1,
+    "frdic.com": 1,
+    "freebuf.com": 1,
+    "fresh-ideas.cc": 1,
+    "freshhema.com": 1,
+    "frontjs.com": 1,
+    "frontwize.com": 1,
+    "fsfund.com": 1,
+    "fsllq.com": 1,
+    "fspcdn.com": 1,
+    "ftfund.com": 1,
+    "fthimalayandb.com": 1,
+    "fugetech.com": 1,
+    "fullgoal.com": 1,
+    "fullluckcalendar.com": 1,
+    "fun.tv": 1,
+    "funcdn.com": 1,
+    "funnycore.com": 1,
+    "funshion.com": 1,
+    "funshion.net": 1,
+    "fusion.design": 1,
+    "fusionappl.com": 1,
+    "futu5.com": 1,
+    "futunn.com": 1,
+    "fuwai.com": 1,
+    "fuwj.com": 1,
+    "fxxz.com": 1,
+    "fyeds.com": 1,
+    "fyeds0.com": 1,
+    "fyeds1.com": 1,
+    "fyeds2.com": 1,
+    "fyeds3.com": 1,
+    "fyeds4.com": 1,
+    "fyeds5.com": 1,
+    "fyeds6.com": 1,
+    "fyeds7.com": 1,
+    "fyeds8.com": 1,
+    "fyeds9.com": 1,
+    "fymall0.com": 1,
+    "fymall1.com": 1,
+    "fymall4.com": 1,
+    "fymall7.com": 1,
+    "fymall9.com": 1,
+    "fymallqa0.com": 1,
+    "fymallqa1.com": 1,
+    "fymallqa2.com": 1,
+    "fymallqa3.com": 1,
+    "fymallqa4.com": 1,
+    "fymallqa7.com": 1,
+    "fymallqa9.com": 1,
+    "fzaqjy.com": 1,
+    "fzfinancing.com": 1,
+    "g-cores.com": 1,
+    "g768r.com": 1,
+    "gaapqcloud.com": 1,
+    "galaxyasset.com": 1,
+    "game-client.com": 1,
+    "game234.com": 1,
+    "gameabc.com": 1,
+    "gamebonfire.com": 1,
+    "gamehaopu.com": 1,
+    "gameitop.com": 1,
+    "gamekee.com": 1,
+    "gameloop.com": 1,
+    "gameloop.fun": 1,
+    "gamemei.com": 1,
+    "gamenow.club": 1,
+    "gamersky.com": 1,
+    "gamewifi.net": 1,
+    "gandi.net": 1,
+    "ganji.com": 1,
+    "ganjistatic1.com": 1,
+    "gaode.com": 1,
+    "gaodun.com": 1,
+    "gaoshouyou.com": 1,
+    "gaoxiaojob.com": 1,
+    "garmin.com": 1,
+    "gazellegames.net": 1,
+    "gcloudcs.com": 1,
+    "gcloudcstest.com": 1,
+    "gcloudcstestonly.com": 1,
+    "gclouddolphin.com": 1,
+    "gcloudsdk.com": 1,
+    "gcores.com": 1,
+    "gctianshanxh.com": 1,
+    "gctwds.com": 1,
+    "gd165.com": 1,
+    "gdfgq.club": 1,
+    "gdjdxy.com": 1,
+    "gdliontech.com": 1,
+    "gdrc.com": 1,
+    "gdtianshanoa.com": 1,
+    "gdtimg.com": 1,
+    "geekpark.net": 1,
+    "geely-motors.com": 1,
+    "geely-test.com": 1,
+    "geely.com": 1,
+    "geely.com.qa": 1,
+    "geely.pe": 1,
+    "geelyauto.com.hk": 1,
+    "geelycv.com": 1,
+    "geelydesign.com": 1,
+    "geelyholding.com": 1,
+    "geelylaos.com": 1,
+    "geelyminiprogram.com": 1,
+    "geelyph.com": 1,
+    "geelysc.com": 1,
+    "geelyswedenholdings.com": 1,
+    "geespace.com": 1,
+    "geetest.com": 1,
+    "geilicdn.com": 1,
+    "geometryauto.com": 1,
+    "getpricetag.com": 1,
+    "getui.com": 1,
+    "gezida.com": 1,
+    "gfan.com": 1,
+    "gfdwsx.com": 1,
+    "gfh82.com": 1,
+    "gfnormal00aa.com": 1,
+    "gfnormal00ab.com": 1,
+    "gfnormal00ac.com": 1,
+    "gfnormal00ad.com": 1,
+    "gfnormal00ae.com": 1,
+    "gfnormal00af.com": 1,
+    "gfnormal00ag.com": 1,
+    "gfnormal00ah.com": 1,
+    "gfnormal00ai.com": 1,
+    "gfnormal00aj.com": 1,
+    "gfnormal00ak.com": 1,
+    "gfnormal00al.com": 1,
+    "gfnormal00am.com": 1,
+    "gfnormal00an.com": 1,
+    "gfnormal00ao.com": 1,
+    "gfnormal00ap.com": 1,
+    "gfnormal00aq.com": 1,
+    "gfnormal00ar.com": 1,
+    "gfnormal00as.com": 1,
+    "gfnormal00at.com": 1,
+    "gfnormal01aa.com": 1,
+    "gfnormal01ab.com": 1,
+    "gfnormal01ac.com": 1,
+    "gfnormal01ad.com": 1,
+    "gfnormal01ae.com": 1,
+    "gfnormal01af.com": 1,
+    "gfnormal01ag.com": 1,
+    "gfnormal01ah.com": 1,
+    "gfnormal01ai.com": 1,
+    "gfnormal01aj.com": 1,
+    "gfnormal01ak.com": 1,
+    "gfnormal01al.com": 1,
+    "gfnormal01am.com": 1,
+    "gfnormal01an.com": 1,
+    "gfnormal01ao.com": 1,
+    "gfnormal01ap.com": 1,
+    "gfnormal01aq.com": 1,
+    "gfnormal01ar.com": 1,
+    "gfnormal01as.com": 1,
+    "gfnormal01at.com": 1,
+    "gfnormal02aa.com": 1,
+    "gfnormal02ab.com": 1,
+    "gfnormal02ac.com": 1,
+    "gfnormal02ad.com": 1,
+    "gfnormal02ae.com": 1,
+    "gfnormal02af.com": 1,
+    "gfnormal02ag.com": 1,
+    "gfnormal02ah.com": 1,
+    "gfnormal02ai.com": 1,
+    "gfnormal02aj.com": 1,
+    "gfnormal02ak.com": 1,
+    "gfnormal02al.com": 1,
+    "gfnormal02am.com": 1,
+    "gfnormal02an.com": 1,
+    "gfnormal02ao.com": 1,
+    "gfnormal02ap.com": 1,
+    "gfnormal02aq.com": 1,
+    "gfnormal02ar.com": 1,
+    "gfnormal02as.com": 1,
+    "gfnormal02at.com": 1,
+    "gfnormal03aa.com": 1,
+    "gfnormal03ab.com": 1,
+    "gfnormal03ac.com": 1,
+    "gfnormal03ad.com": 1,
+    "gfnormal03ae.com": 1,
+    "gfnormal03af.com": 1,
+    "gfnormal03ag.com": 1,
+    "gfnormal03ah.com": 1,
+    "gfnormal03ai.com": 1,
+    "gfnormal03aj.com": 1,
+    "gfnormal03ak.com": 1,
+    "gfnormal03al.com": 1,
+    "gfnormal03am.com": 1,
+    "gfnormal03an.com": 1,
+    "gfnormal03ao.com": 1,
+    "gfnormal03ap.com": 1,
+    "gfnormal03aq.com": 1,
+    "gfnormal03ar.com": 1,
+    "gfnormal03as.com": 1,
+    "gfnormal03at.com": 1,
+    "gfnormal04aa.com": 1,
+    "gfnormal04ab.com": 1,
+    "gfnormal04ac.com": 1,
+    "gfnormal04ad.com": 1,
+    "gfnormal04ae.com": 1,
+    "gfnormal04af.com": 1,
+    "gfnormal04ag.com": 1,
+    "gfnormal04ah.com": 1,
+    "gfnormal04ai.com": 1,
+    "gfnormal04aj.com": 1,
+    "gfnormal04ak.com": 1,
+    "gfnormal04al.com": 1,
+    "gfnormal04am.com": 1,
+    "gfnormal04an.com": 1,
+    "gfnormal04ao.com": 1,
+    "gfnormal04ap.com": 1,
+    "gfnormal04aq.com": 1,
+    "gfnormal04ar.com": 1,
+    "gfnormal04as.com": 1,
+    "gfnormal04at.com": 1,
+    "gfnormal05aa.com": 1,
+    "gfnormal05ab.com": 1,
+    "gfnormal05ac.com": 1,
+    "gfnormal05ad.com": 1,
+    "gfnormal05ae.com": 1,
+    "gfnormal05af.com": 1,
+    "gfnormal05ag.com": 1,
+    "gfnormal05ah.com": 1,
+    "gfnormal05ai.com": 1,
+    "gfnormal05aj.com": 1,
+    "gfnormal05ak.com": 1,
+    "gfnormal05al.com": 1,
+    "gfnormal05am.com": 1,
+    "gfnormal05an.com": 1,
+    "gfnormal05ao.com": 1,
+    "gfnormal05ap.com": 1,
+    "gfnormal05aq.com": 1,
+    "gfnormal05ar.com": 1,
+    "gfnormal05as.com": 1,
+    "gfnormal05at.com": 1,
+    "gfnormal06aa.com": 1,
+    "gfnormal06ab.com": 1,
+    "gfnormal06ac.com": 1,
+    "gfnormal06ad.com": 1,
+    "gfnormal06ae.com": 1,
+    "gfnormal06af.com": 1,
+    "gfnormal06ag.com": 1,
+    "gfnormal06ah.com": 1,
+    "gfnormal06ai.com": 1,
+    "gfnormal06aj.com": 1,
+    "gfnormal06ak.com": 1,
+    "gfnormal06al.com": 1,
+    "gfnormal06am.com": 1,
+    "gfnormal06an.com": 1,
+    "gfnormal06ao.com": 1,
+    "gfnormal06ap.com": 1,
+    "gfnormal06aq.com": 1,
+    "gfnormal06ar.com": 1,
+    "gfnormal06as.com": 1,
+    "gfnormal06at.com": 1,
+    "gfnormal07aa.com": 1,
+    "gfnormal07ab.com": 1,
+    "gfnormal07ac.com": 1,
+    "gfnormal07ad.com": 1,
+    "gfnormal07ae.com": 1,
+    "gfnormal07af.com": 1,
+    "gfnormal07ag.com": 1,
+    "gfnormal07ah.com": 1,
+    "gfnormal07ai.com": 1,
+    "gfnormal07aj.com": 1,
+    "gfnormal07ak.com": 1,
+    "gfnormal07al.com": 1,
+    "gfnormal07am.com": 1,
+    "gfnormal07an.com": 1,
+    "gfnormal07ao.com": 1,
+    "gfnormal07ap.com": 1,
+    "gfnormal07aq.com": 1,
+    "gfnormal07ar.com": 1,
+    "gfnormal07as.com": 1,
+    "gfnormal07at.com": 1,
+    "gfnormal08aa.com": 1,
+    "gfnormal08ab.com": 1,
+    "gfnormal08ac.com": 1,
+    "gfnormal08ad.com": 1,
+    "gfnormal08ae.com": 1,
+    "gfnormal08af.com": 1,
+    "gfnormal08ag.com": 1,
+    "gfnormal08ah.com": 1,
+    "gfnormal08ai.com": 1,
+    "gfnormal08aj.com": 1,
+    "gfnormal08ak.com": 1,
+    "gfnormal08al.com": 1,
+    "gfnormal08am.com": 1,
+    "gfnormal08an.com": 1,
+    "gfnormal08ao.com": 1,
+    "gfnormal08ap.com": 1,
+    "gfnormal08aq.com": 1,
+    "gfnormal08ar.com": 1,
+    "gfnormal08as.com": 1,
+    "gfnormal08at.com": 1,
+    "gfnormal09aa.com": 1,
+    "gfnormal09ab.com": 1,
+    "gfnormal09ac.com": 1,
+    "gfnormal09ad.com": 1,
+    "gfnormal09ae.com": 1,
+    "gfnormal09af.com": 1,
+    "gfnormal09ag.com": 1,
+    "gfnormal09ah.com": 1,
+    "gfnormal09ai.com": 1,
+    "gfnormal09aj.com": 1,
+    "gfnormal09ak.com": 1,
+    "gfnormal09al.com": 1,
+    "gfnormal09am.com": 1,
+    "gfnormal09an.com": 1,
+    "gfnormal09ao.com": 1,
+    "gfnormal09ap.com": 1,
+    "gfnormal09aq.com": 1,
+    "gfnormal09ar.com": 1,
+    "gfnormal09as.com": 1,
+    "gfnormal09at.com": 1,
+    "gfund.com": 1,
+    "gfvip00aa.com": 1,
+    "gfvip00ab.com": 1,
+    "gfvip00ac.com": 1,
+    "gfvip00ad.com": 1,
+    "gfvip00ae.com": 1,
+    "gfvip00af.com": 1,
+    "gfvip00ag.com": 1,
+    "gfvip00ah.com": 1,
+    "gfvip00ai.com": 1,
+    "gfvip00aj.com": 1,
+    "gfvip00ak.com": 1,
+    "gfvip00al.com": 1,
+    "gfvip00am.com": 1,
+    "gfvip00an.com": 1,
+    "gfvip00ao.com": 1,
+    "gfvip00ap.com": 1,
+    "gfvip00aq.com": 1,
+    "gfvip00ar.com": 1,
+    "gfvip00as.com": 1,
+    "gfvip00at.com": 1,
+    "gfvip01aa.com": 1,
+    "gfvip01ab.com": 1,
+    "gfvip01ac.com": 1,
+    "gfvip01ad.com": 1,
+    "gfvip01ae.com": 1,
+    "gfvip01af.com": 1,
+    "gfvip01ag.com": 1,
+    "gfvip01ah.com": 1,
+    "gfvip01ak.com": 1,
+    "gfvip01al.com": 1,
+    "gfvip01am.com": 1,
+    "gfvip01an.com": 1,
+    "gfvip01ao.com": 1,
+    "gfvip01ap.com": 1,
+    "gfvip01aq.com": 1,
+    "gfvip01ar.com": 1,
+    "gfvip01as.com": 1,
+    "gfvip01at.com": 1,
+    "gfvip02aa.com": 1,
+    "gfvip02ab.com": 1,
+    "gfvip02ac.com": 1,
+    "gfvip02ad.com": 1,
+    "gfvip02ae.com": 1,
+    "gfvip02af.com": 1,
+    "gfvip02ag.com": 1,
+    "gfvip02ah.com": 1,
+    "gfvip02ai.com": 1,
+    "gfvip02aj.com": 1,
+    "gfvip02ak.com": 1,
+    "gfvip02al.com": 1,
+    "gfvip02am.com": 1,
+    "gfvip02an.com": 1,
+    "gfvip02ao.com": 1,
+    "gfvip02ap.com": 1,
+    "gfvip02aq.com": 1,
+    "gfvip02ar.com": 1,
+    "gfvip02as.com": 1,
+    "gfvip02at.com": 1,
+    "gfvip03aa.com": 1,
+    "gfvip03ab.com": 1,
+    "gfvip03ac.com": 1,
+    "gfvip03ad.com": 1,
+    "gfvip03ae.com": 1,
+    "gfvip03af.com": 1,
+    "gfvip03ag.com": 1,
+    "gfvip03ah.com": 1,
+    "gfvip03ai.com": 1,
+    "gfvip03aj.com": 1,
+    "gfvip03ak.com": 1,
+    "gfvip03al.com": 1,
+    "gfvip03am.com": 1,
+    "gfvip03an.com": 1,
+    "gfvip03ao.com": 1,
+    "gfvip03ap.com": 1,
+    "gfvip03aq.com": 1,
+    "gfvip03ar.com": 1,
+    "gfvip03as.com": 1,
+    "gfvip03at.com": 1,
+    "gfvip04aa.com": 1,
+    "gfvip04ab.com": 1,
+    "gfvip04ac.com": 1,
+    "gfvip04ad.com": 1,
+    "gfvip04ae.com": 1,
+    "gfvip04af.com": 1,
+    "gfvip04ag.com": 1,
+    "gfvip04ah.com": 1,
+    "gfvip04ai.com": 1,
+    "gfvip04aj.com": 1,
+    "gfvip04ak.com": 1,
+    "gfvip04al.com": 1,
+    "gfvip04am.com": 1,
+    "gfvip04an.com": 1,
+    "gfvip04ao.com": 1,
+    "gfvip04ap.com": 1,
+    "gfvip04aq.com": 1,
+    "gfvip04ar.com": 1,
+    "gfvip04as.com": 1,
+    "gfvip04at.com": 1,
+    "gfvip05aa.com": 1,
+    "gfvip05ab.com": 1,
+    "gfvip05ac.com": 1,
+    "gfvip05ad.com": 1,
+    "gfvip05ae.com": 1,
+    "gfvip05af.com": 1,
+    "gfvip05ag.com": 1,
+    "gfvip05ah.com": 1,
+    "gfvip05ai.com": 1,
+    "gfvip05aj.com": 1,
+    "gfvip05ak.com": 1,
+    "gfvip05al.com": 1,
+    "gfvip05am.com": 1,
+    "gfvip05an.com": 1,
+    "gfvip05ao.com": 1,
+    "gfvip05ap.com": 1,
+    "gfvip05aq.com": 1,
+    "gfvip05ar.com": 1,
+    "gfvip05as.com": 1,
+    "gfvip05at.com": 1,
+    "gfvip06aa.com": 1,
+    "gfvip06ab.com": 1,
+    "gfvip06ac.com": 1,
+    "gfvip06ad.com": 1,
+    "gfvip06ae.com": 1,
+    "gfvip06af.com": 1,
+    "gfvip06ag.com": 1,
+    "gfvip06ah.com": 1,
+    "gfvip06ai.com": 1,
+    "gfvip06aj.com": 1,
+    "gfvip06ak.com": 1,
+    "gfvip06al.com": 1,
+    "gfvip06am.com": 1,
+    "gfvip06an.com": 1,
+    "gfvip06ao.com": 1,
+    "gfvip06ap.com": 1,
+    "gfvip06aq.com": 1,
+    "gfvip06ar.com": 1,
+    "gfvip06as.com": 1,
+    "gfvip06at.com": 1,
+    "gfvip07aa.com": 1,
+    "gfvip07ab.com": 1,
+    "gfvip07ac.com": 1,
+    "gfvip07ad.com": 1,
+    "gfvip07ae.com": 1,
+    "gfvip07af.com": 1,
+    "gfvip07ag.com": 1,
+    "gfvip07ah.com": 1,
+    "gfvip07ai.com": 1,
+    "gfvip07aj.com": 1,
+    "gfvip07ak.com": 1,
+    "gfvip07al.com": 1,
+    "gfvip07am.com": 1,
+    "gfvip07an.com": 1,
+    "gfvip07ao.com": 1,
+    "gfvip07ap.com": 1,
+    "gfvip07aq.com": 1,
+    "gfvip07ar.com": 1,
+    "gfvip07as.com": 1,
+    "gfvip07at.com": 1,
+    "gfvip08aa.com": 1,
+    "gfvip08ab.com": 1,
+    "gfvip08ac.com": 1,
+    "gfvip08ad.com": 1,
+    "gfvip08ae.com": 1,
+    "gfvip08af.com": 1,
+    "gfvip08ag.com": 1,
+    "gfvip08ah.com": 1,
+    "gfvip08ai.com": 1,
+    "gfvip08aj.com": 1,
+    "gfvip08ak.com": 1,
+    "gfvip08al.com": 1,
+    "gfvip08am.com": 1,
+    "gfvip08an.com": 1,
+    "gfvip08ao.com": 1,
+    "gfvip08ap.com": 1,
+    "gfvip08aq.com": 1,
+    "gfvip08ar.com": 1,
+    "gfvip08as.com": 1,
+    "gfvip08at.com": 1,
+    "ggoplay.com": 1,
+    "ggowan.com": 1,
+    "ghtianshancn.com": 1,
+    "gifshow.com": 1,
+    "gildata.com": 1,
+    "giocdn.com": 1,
+    "gitcode.com": 1,
+    "gitcode.net": 1,
+    "gitee.com": 1,
+    "gitee.io": 1,
+    "gitv.tv": 1,
+    "gktianshanjd.com": 1,
+    "glinksure.com": 1,
+    "global-ks-cdn.com": 1,
+    "globrand.com": 1,
+    "gm86.com": 1,
+    "gmz88.com": 1,
+    "gneec.com": 1,
+    "gneec3.com": 1,
+    "gneec4.com": 1,
+    "gneec5.com": 1,
+    "gneec7.com": 1,
+    "gneeccloud.com": 1,
+    "go2map.com": 1,
+    "gobasearcher.com": 1,
+    "godic.net": 1,
+    "gogokid.com": 1,
+    "gold678.com": 1,
+    "goldenear.club": 1,
+    "golue.com": 1,
+    "gomeplus.com": 1,
+    "gongxiangcj.com": 1,
+    "gongyi.xin": 1,
+    "goodluckcalendar.com": 1,
+    "goodread.com": 1,
+    "goofish.com": 1,
+    "goosail.com": 1,
+    "goproxy.io": 1,
+    "goselling.com": 1,
+    "goto-game.com": 1,
+    "goto-game.mobi": 1,
+    "goto-game.org": 1,
+    "gotokeep.com": 1,
+    "gotolink.net": 1,
+    "goufw.com": 1,
+    "gouwo.com": 1,
+    "govqcloud.com": 1,
+    "gowinamc.com": 1,
+    "gplus-lab.com": 1,
+    "gpxiv5kew4mvk.com": 1,
+    "gqzewmsk8yma18.com": 1,
+    "gr3xuaov74khb.com": 1,
+    "gracg.com": 1,
+    "gree.com": 1,
+    "greencompute.org": 1,
+    "greenxiazai.com": 1,
+    "growingio.com": 1,
+    "grzq.com": 1,
+    "gsadds.com": 1,
+    "gszq.com": 1,
+    "gtags.net": 1,
+    "gtarsc.com": 1,
+    "gtgres.com": 1,
+    "gtimg.com": 1,
+    "gtja.com": 1,
+    "gtm-a1b2.com": 1,
+    "gtm-a1b3.com": 1,
+    "gtm-a1b4.com": 1,
+    "gtm-a1b5.com": 1,
+    "gtm-a1b6.com": 1,
+    "gtm-a1b7.com": 1,
+    "gtm-a1b8.com": 1,
+    "gtm-a1b9.com": 1,
+    "gtm-a2b2.com": 1,
+    "gtm-a2b3.com": 1,
+    "gtm-a2b4.com": 1,
+    "gtm-a2b5.com": 1,
+    "gtm-a2b6.com": 1,
+    "gtm-a2b7.com": 1,
+    "gtm-a2b8.com": 1,
+    "gtm-a2b9.com": 1,
+    "gtm-a3b1.com": 1,
+    "gtm-a3b3.com": 1,
+    "gtm-a3b4.com": 1,
+    "gtm-a3b5.com": 1,
+    "gtm-a3b6.com": 1,
+    "gtm-a3b7.com": 1,
+    "gtm-a3b8.com": 1,
+    "gtm-a3b9.com": 1,
+    "gtm-a4b1.com": 1,
+    "gtm-a4b2.com": 1,
+    "gtm-a4b3.com": 1,
+    "gtm-a4b4.com": 1,
+    "gtm-a4b5.com": 1,
+    "gtm-a4b6.com": 1,
+    "gtm-a4b7.com": 1,
+    "gtm-a4b8.com": 1,
+    "gtm-a4b9.com": 1,
+    "gtm-a5b1.com": 1,
+    "gtm-a5b2.com": 1,
+    "gtm-a5b3.com": 1,
+    "gtm-a5b4.com": 1,
+    "gtm-a5b5.com": 1,
+    "gtm-a6b1.com": 1,
+    "gtm-a6b2.com": 1,
+    "gtm-a6b3.com": 1,
+    "gtm-a6b4.com": 1,
+    "gtm.pub": 1,
+    "gts.work": 1,
+    "guabu.com": 1,
+    "guaiguai.com": 1,
+    "guanaitong.com": 1,
+    "guanhaobio.com": 1,
+    "gucheng.com": 1,
+    "guichuideng.com": 1,
+    "guigu.org": 1,
+    "guitarpro.cc": 1,
+    "guodu.com": 1,
+    "guoguo-app.com": 1,
+    "guokr.com": 1,
+    "guoping123.com": 1,
+    "guosen.com": 1,
+    "guotv.com": 1,
+    "guoxinmac.com": 1,
+    "guoxuedashi.com": 1,
+    "guoxuemi.com": 1,
+    "gupzs.com": 1,
+    "gushiwen.org": 1,
+    "guzhangting.com": 1,
+    "gvcr9zaemdzh.com": 1,
+    "gwdang.com": 1,
+    "gxairlines.com": 1,
+    "gxb.io": 1,
+    "gxic.club": 1,
+    "gyhimalayanul.com": 1,
+    "gz12301.com": 1,
+    "gzwanju.com": 1,
+    "h2os.com": 1,
+    "h5uc.com": 1,
+    "h5util.com": 1,
+    "h803w.com": 1,
+    "hack520.com": 1,
+    "hackhome.com": 1,
+    "hackinn.com": 1,
+    "hacpai.com": 1,
+    "haibaoyl.com": 1,
+    "haibian.com": 1,
+    "haidilao.com": 1,
+    "haima.me": 1,
+    "haimawan.com": 1,
+    "haina.com": 1,
+    "hainan.com": 1,
+    "hainan.net": 1,
+    "hainanairlines.com": 1,
+    "haishun.com": 1,
+    "haitong.com": 1,
+    "haitongib.com": 1,
+    "haitunzhibo.com": 1,
+    "haluan2u.com": 1,
+    "hanboshi.com": 1,
+    "handanjob.com": 1,
+    "hangjiayun.com": 1,
+    "hanjuba.com": 1,
+    "hanjushe.com": 1,
+    "hanjutv.cc": 1,
+    "hao123.com": 1,
+    "hao123.net": 1,
+    "hao123img.com": 1,
+    "hao222.com": 1,
+    "hao222.net": 1,
+    "haofenshu.com": 1,
+    "haokan.com": 1,
+    "haolietou.com": 1,
+    "haoso.com": 1,
+    "haosou.com": 1,
+    "haosou.net": 1,
+    "haosou360.com": 1,
+    "haote.com": 1,
+    "haowu.link": 1,
+    "haoyisheng.com": 1,
+    "haoyouyinxiang.com": 1,
+    "happyhlddz.com": 1,
+    "happykey6.com": 1,
+    "harmonyos.com": 1,
+    "hazq.com": 1,
+    "hbooker.com": 1,
+    "hc-cdn.com": 1,
+    "hczq.com": 1,
+    "hd8y.com": 1,
+    "hdbits.org": 1,
+    "hdchina.org": 1,
+    "hdcmct.org": 1,
+    "hddolby.com": 1,
+    "hdhome.org": 1,
+    "hdsky.me": 1,
+    "hdslb.com": 1,
+    "hdslb.net": 1,
+    "hdslb.org": 1,
+    "hdyxgame.com": 1,
+    "healthjd.com": 1,
+    "healthybaike.com": 1,
+    "heavenlywind.cc": 1,
+    "hefei.cc": 1,
+    "heihei.com": 1,
+    "heisha.net": 1,
+    "hello-inc.com": 1,
+    "hellobike.com": 1,
+    "hellof1.com": 1,
+    "hellowebfont.com": 1,
+    "hemamax.com": 1,
+    "hemaos.com": 1,
+    "henha.com": 1,
+    "henku.com": 1,
+    "henkuai.com": 1,
+    "herostart.com": 1,
+    "heweather.net": 1,
+    "hexun.com": 1,
+    "heycan.com": 1,
+    "heytap.com": 1,
+    "heytapcloud.com": 1,
+    "heytapcs.com": 1,
+    "heytapdownload.com": 1,
+    "heytapimage.com": 1,
+    "heytapmobi.com": 1,
+    "heytea-co.com": 1,
+    "heytea.com": 1,
+    "hftfund.com": 1,
+    "hgfdrf.com": 1,
+    "hhmm0.com": 1,
+    "hhtravel.com": 1,
+    "hhtravel.com.tw": 1,
+    "hiapk.com": 1,
+    "hiascend.com": 1,
+    "hibusiness.com": 1,
+    "hichina.com": 1,
+    "hichina.net": 1,
+    "hiclc.com": 1,
+    "hicloud.com": 1,
+    "hid98ys.com": 1,
+    "hifortune.net": 1,
+    "hifuntv.com": 1,
+    "hihocoder.com": 1,
+    "hihonor.com": 1,
+    "hiido.com": 1,
+    "hikunpeng.com": 1,
+    "hikunpeng.net": 1,
+    "hisilicon.com": 1,
+    "hitv.com": 1,
+    "hixiaoe.com": 1,
+    "hiyd.com": 1,
+    "hjapi.com": 1,
+    "hjkhjkl.com": 1,
+    "hkd82.com": 1,
+    "hkgcloudcs.com": 1,
+    "hkserversolution.com": 1,
+    "hktheone.com": 1,
+    "hlzqgs.com": 1,
+    "hmbaidustatic.com": 1,
+    "hn-cbec.com": 1,
+    "hnacargo.com": 1,
+    "hnair.com": 1,
+    "hnair.net": 1,
+    "hnrcsc.com": 1,
+    "hntv.tv": 1,
+    "hnyuyuhui.com": 1,
+    "hollisterco.com": 1,
+    "hollycrm.com": 1,
+    "homeinns.com": 1,
+    "homekoo.com": 1,
+    "hongbo100.com": 1,
+    "hongdefund.com": 1,
+    "hongen.com": 1,
+    "hongmeiti.com": 1,
+    "hongmeiti.net": 1,
+    "hongsanban.com": 1,
+    "hongtastock.com": 1,
+    "hongxiu.com": 1,
+    "hongyuanqh.com": 1,
+    "hoopchina.com": 1,
+    "hori-gz.com": 1,
+    "hostbuf.com": 1,
+    "hotmail.com": 1,
+    "hotsoonapp.com": 1,
+    "hotsoonapp.net": 1,
+    "hotsoonvideo.com": 1,
+    "hotsoonvideo.net": 1,
+    "hotsoonzb.com": 1,
+    "hotsoonzb.net": 1,
+    "houdao.com": 1,
+    "houyicaiji.com": 1,
+    "houyuantuan.com": 1,
+    "howbuy.com": 1,
+    "hpearx.com": 1,
+    "hr-welink.com": 1,
+    "hsbank.cc": 1,
+    "hsbank.com": 1,
+    "hsdatalab.com": 1,
+    "hsfund.com": 1,
+    "htcases.com": 1,
+    "htcc.fund": 1,
+    "hteacher.net": 1,
+    "htfutures.com": 1,
+    "htisec.com": 1,
+    "html5mark.com": 1,
+    "htsamc.com": 1,
+    "htsc.com": 1,
+    "htsec.com": 1,
+    "https-rulesets.org": 1,
+    "htyssdf.com": 1,
+    "hua10036.com": 1,
+    "huajingsec.com": 1,
+    "huamengxiaoshuo.com": 1,
+    "huangyuhui.net": 1,
+    "huanqiu.com": 1,
+    "huashengdaili.com": 1,
+    "huatu.com": 1,
+    "huawangzhixun.com": 1,
+    "huawei.com": 1,
+    "huaweiacad.com": 1,
+    "huaweiapaas.com": 1,
+    "huaweiapi.com": 1,
+    "huaweicloud-dns.com": 1,
+    "huaweicloud-dns.net": 1,
+    "huaweicloud-dns.org": 1,
+    "huaweicloud-smn.com": 1,
+    "huaweicloud-smn.net": 1,
+    "huaweicloud.com": 1,
+    "huaweicloudapis.com": 1,
+    "huaweicloudlive.com": 1,
+    "huaweicloudsite.com": 1,
+    "huaweicloudwaf.com": 1,
+    "huaweidevice.com": 1,
+    "huaweielab.com": 1,
+    "huaweiief.com": 1,
+    "huaweiita.com": 1,
+    "huaweils.com": 1,
+    "huaweimarine.com": 1,
+    "huaweimarketplace.com": 1,
+    "huaweirtc.com": 1,
+    "huaweisafedns.com": 1,
+    "huaweishop.net": 1,
+    "huaweisre.com": 1,
+    "huaweistatic.com": 1,
+    "huaweiyun.com": 1,
+    "huaxiong.com": 1,
+    "huayingsc.com": 1,
+    "huijistatic.com": 1,
+    "huijiwiki.com": 1,
+    "huishij.com": 1,
+    "huize.com": 1,
+    "hujia.org": 1,
+    "hujiang.com": 1,
+    "hukeck.com": 1,
+    "hukecs.com": 1,
+    "hukecwx.com": 1,
+    "hukefjb.com": 1,
+    "hukehyh.com": 1,
+    "hukelc.com": 1,
+    "hukenb.com": 1,
+    "hukesxm.com": 1,
+    "hukewq.com": 1,
+    "hukexyy.com": 1,
+    "hunaniptv.com": 1,
+    "hunantv.com": 1,
+    "huochepiao.com": 1,
+    "huocheso.com": 1,
+    "huoqibao.com": 1,
+    "huoshan.com": 1,
+    "huoshancdn.com": 1,
+    "huoshangroup.com": 1,
+    "huoshanimg.com": 1,
+    "huoshanlive.com": 1,
+    "huoshanparty.com": 1,
+    "huoshanstatic.com": 1,
+    "huoshante8.com": 1,
+    "huoshanvideo.net": 1,
+    "huoshanvod.com": 1,
+    "huoshanxiaoshipin.net": 1,
+    "huoshanzhibo.com": 1,
+    "huoshanzhibo.net": 1,
+    "huoxing.com": 1,
+    "huoyanyunying.com": 1,
+    "hupu.com": 1,
+    "hupu.gg": 1,
+    "hupu.io": 1,
+    "hupucdn.com": 1,
+    "hupujrs.com": 1,
+    "huxiu.com": 1,
+    "huxiucdn.com": 1,
+    "huya.com": 1,
+    "huyaos.com": 1,
+    "hwad.net": 1,
+    "hwccpc.com": 1,
+    "hwcdnsre.com": 1,
+    "hwcloudlive.com": 1,
+    "hwclouds-dns.com": 1,
+    "hwclouds-dns.net": 1,
+    "hwclouds.com": 1,
+    "hwclouds.mobi": 1,
+    "hwclouds.net": 1,
+    "hwclouds.org": 1,
+    "hwcloudsite.com": 1,
+    "hwcloudvis.com": 1,
+    "hwgis.com": 1,
+    "hwht.com": 1,
+    "hwlchain.com": 1,
+    "hwocloud.com": 1,
+    "hwpan.com": 1,
+    "hwshu.com": 1,
+    "hwtelcloud.com": 1,
+    "hwtrip.com": 1,
+    "hxcdn.net": 1,
+    "hxfy888.com": 1,
+    "hxly9.com": 1,
+    "hxsd.com": 1,
+    "hypersnap.net": 1,
+    "hyzm.cc": 1,
+    "hz.pre.tbusergw.taobao.net": 1,
+    "hz.tbusergw.taobao.net": 1,
+    "hzchuli.top": 1,
+    "hzyzhp.com": 1,
+    "i360mall.com": 1,
+    "i3839.com": 1,
+    "ialicdn.com": 1,
+    "iappsafe.com": 1,
+    "iask.com": 1,
+    "ibaitiao.com": 1,
+    "ibaotu.com": 1,
+    "ibcet.org": 1,
+    "ibidian.com": 1,
+    "ibkstore.com": 1,
+    "ibm.com": 1,
+    "ibreeno.com": 1,
+    "ibuychem.com": 1,
+    "ibytedapm.com": 1,
+    "ica-alliance.org": 1,
+    "icaidao.com": 1,
+    "icbc": 1,
+    "icbc-at.com": 1,
+    "icbc-cz.com": 1,
+    "icbc-ltd.com": 1,
+    "icbc-uk.com": 1,
+    "icbc-us.com": 1,
+    "icbc.ae": 1,
+    "icbc.be": 1,
+    "icbc.co.id": 1,
+    "icbc.co.jp": 1,
+    "icbc.co.kr": 1,
+    "icbc.co.nl": 1,
+    "icbc.com.au": 1,
+    "icbc.com.es": 1,
+    "icbc.com.kh": 1,
+    "icbc.com.kw": 1,
+    "icbc.com.la": 1,
+    "icbc.com.mm": 1,
+    "icbc.com.mo": 1,
+    "icbc.com.mx": 1,
+    "icbc.com.pe": 1,
+    "icbc.com.pk": 1,
+    "icbc.com.qa": 1,
+    "icbc.com.sg": 1,
+    "icbc.com.vn": 1,
+    "icbc.de": 1,
+    "icbc.eu": 1,
+    "icbc.lu": 1,
+    "icbcalmaty.kz": 1,
+    "icbcasia.com": 1,
+    "icbcbr.com.br": 1,
+    "icbci.com.hk": 1,
+    "icbcina.com": 1,
+    "icbcindia.com": 1,
+    "icbcit.com": 1,
+    "icbclondon.com": 1,
+    "icbcme.ae": 1,
+    "icbcmoscow.ru": 1,
+    "icbcmy.com": 1,
+    "icbcnz.com": 1,
+    "icbcpanama.com": 1,
+    "icbcparis.fr": 1,
+    "icbcpl.com": 1,
+    "icbcstandard.com": 1,
+    "icbcstandardbank.com": 1,
+    "icbcstandardresources.com": 1,
+    "icbcstandardsecurities.com": 1,
+    "icbcswiss.com": 1,
+    "icbcthai.com": 1,
+    "icbkfs.com": 1,
+    "icbkus.com": 1,
+    "icedropper.com": 1,
+    "icetorrent.org": 1,
+    "icevirtuallibrary.com": 1,
+    "ichangtou.com": 1,
+    "iciba.com": 1,
+    "iciba.net": 1,
+    "icourse163.com": 1,
+    "icourse163.org": 1,
+    "icourses163.com": 1,
+    "icourses163.org": 1,
+    "ics-sec.com": 1,
+    "ics.design": 1,
+    "id4r.com": 1,
+    "id4r.net": 1,
+    "id6.me": 1,
+    "idaasksyun.com": 1,
+    "idcgcloudcs.com": 1,
+    "idcquan.com": 1,
+    "idongdong.com": 1,
+    "idouyinpic.com": 1,
+    "idouyinstatic.com": 1,
+    "idouyinvod.com": 1,
+    "idqqimg.com": 1,
+    "ieee.org": 1,
+    "ieeewifi.com": 1,
+    "iemiq.com": 1,
+    "iesdouyin.com": 1,
+    "iesdouyin.net": 1,
+    "ieshs.com": 1,
+    "ieshs.net": 1,
+    "ieshuodong.net": 1,
+    "ieshuoshan.com": 1,
+    "ieshuoshan.net": 1,
+    "ietheivaicai.com": 1,
+    "ifanr.com": 1,
+    "ifanr.in": 1,
+    "ifanrusercontent.com": 1,
+    "ifanrx.com": 1,
+    "ifeng.com": 1,
+    "ifengimg.com": 1,
+    "ifengweekly.com": 1,
+    "ifireeye.com": 1,
+    "iflyink.com": 1,
+    "iflyrec.com": 1,
+    "iflytek.com": 1,
+    "igamecj.com": 1,
+    "iganggu.com": 1,
+    "igao7.com": 1,
+    "igetget.com": 1,
+    "igtm.pub": 1,
+    "igwfmc.com": 1,
+    "ihappystudio.com": 1,
+    "iheima.com": 1,
+    "ihst8.com": 1,
+    "ihuman.com": 1,
+    "ihuoshanimg.com": 1,
+    "ihuoshanvod.com": 1,
+    "ihuoyan.com": 1,
+    "ihykb.com": 1,
+    "ijiandao.com": 1,
+    "ijinshan.com": 1,
+    "ikafan.com": 1,
+    "ikb.vc": 1,
+    "ikhimalayaniq.com": 1,
+    "ikupan.me": 1,
+    "ilangqu.com": 1,
+    "ileapcloud.com": 1,
+    "ileopard.com": 1,
+    "ilinksure.com": 1,
+    "im-cc.com": 1,
+    "im-ch.com": 1,
+    "im2maker.com": 1,
+    "im9.com": 1,
+    "images-amazon.com": 1,
+    "images-cn.ssl-images-amazon.com": 1,
+    "imcapptest.com": 1,
+    "imedao.com": 1,
+    "imf.org": 1,
+    "img4399.com": 1,
+    "img4me.com": 1,
+    "imgcdc.com": 1,
+    "imgcook.com": 1,
+    "imgo.tv": 1,
+    "imindmap.cc": 1,
+    "imooc.com": 1,
+    "imqq.com": 1,
+    "imweb.io": 1,
+    "imwukong.com": 1,
+    "in.th": 1,
+    "incopat.com": 1,
+    "indienova.com": 1,
+    "infinitynewtab.com": 1,
+    "info-insur.com": 1,
+    "infoq.com": 1,
+    "infoqstatic.com": 1,
+    "inftab.com": 1,
+    "ingags.com": 1,
+    "inkuai.com": 1,
+    "inluckcalendar.com": 1,
+    "intltencentcos.com": 1,
+    "ioage.com": 1,
+    "iop.org": 1,
+    "iopiopl.com": 1,
+    "ip-cdn.com": 1,
+    "ip.istatmenus.app": 1,
+    "ip.la": 1,
+    "ip.sb": 1,
+    "ip138.com": 1,
+    "ipadown.com": 1,
+    "ipanda.com": 1,
+    "ipanda.net": 1,
+    "ipapark.com": 1,
+    "ipinyou.com": 1,
+    "ipip.net": 1,
+    "ipplus360.com": 1,
+    "iprdp.net": 1,
+    "ipssh.net": 1,
+    "ipv6-test.com": 1,
+    "ipv6radar.com": 1,
+    "iq.com": 1,
+    "iqiyi.com": 1,
+    "iqiyi.demo.uwp": 1,
+    "iqiyiedge.com": 1,
+    "iqiyiedge.net": 1,
+    "iqiyipic.com": 1,
+    "iqtianshanmw.com": 1,
+    "iranshao.com": 1,
+    "irs01.com": 1,
+    "isd.com": 1,
+    "ishumei.com": 1,
+    "iskcd.com": 1,
+    "ispcache.net": 1,
+    "ispqcloud.com": 1,
+    "isvjcloud.com": 1,
+    "isvjd.com": 1,
+    "isxtv.com": 1,
+    "it165.net": 1,
+    "it168.com": 1,
+    "it610.com": 1,
+    "italentclc.com": 1,
+    "iteye.com": 1,
+    "ithome.com": 1,
+    "ithome.net": 1,
+    "itjuzi.com": 1,
+    "itmop.com": 1,
+    "itopsdk.com": 1,
+    "itsk.com": 1,
+    "iuhtg8.com": 1,
+    "iujkm.com": 1,
+    "iuktb.com": 1,
+    "iuynfg.com": 1,
+    "ivweb.io": 1,
+    "iwhqmk.com": 1,
+    "iwuyou189.com": 1,
+    "ixdzs.com": 1,
+    "ixgvideo.com": 1,
+    "ixiede.com": 1,
+    "ixigua.com": 1,
+    "ixiguavideo.com": 1,
+    "iyingdi.com": 1,
+    "iyiou.com": 1,
+    "iyunxiao.com": 1,
+    "izobrt.com": 1,
+    "iztzq.com": 1,
+    "izuche.com": 1,
+    "izuchebao.com": 1,
+    "j-test.com": 1,
+    "j6n29.com": 1,
+    "ja-cloud.com": 1,
+    "jaeapp.com": 1,
+    "jaecdn.com": 1,
+    "jamanetwork.com": 1,
+    "jandan.net": 1,
+    "java.com": 1,
+    "java1234.com": 1,
+    "jb51.com": 1,
+    "jbcz.tv": 1,
+    "jchat.io": 1,
+    "jcloud-cache.com": 1,
+    "jcloud-cache.net": 1,
+    "jcloud-cdn.com": 1,
+    "jcloud-live.com": 1,
+    "jcloud-oss.com": 1,
+    "jcloud.com": 1,
+    "jcloudcache.com": 1,
+    "jcloudcache.net": 1,
+    "jcloudcs.com": 1,
+    "jclouddn.com": 1,
+    "jclouddns.com": 1,
+    "jclouddns.net": 1,
+    "jcloudec.com": 1,
+    "jcloudedge.com": 1,
+    "jcloudedge.net": 1,
+    "jcloudgslb.com": 1,
+    "jcloudgslb.net": 1,
+    "jcloudimg.com": 1,
+    "jcloudimg.net": 1,
+    "jcloudlb.com": 1,
+    "jcloudlb.net": 1,
+    "jcloudlive.com": 1,
+    "jcloudlv.com": 1,
+    "jcloudoss.com": 1,
+    "jcloudresolve.com": 1,
+    "jcloudresolve.net": 1,
+    "jcloudss.com": 1,
+    "jcloudstatic.com": 1,
+    "jcloudstatic.net": 1,
+    "jcloudvideo.com": 1,
+    "jcloudvideo.net": 1,
+    "jcloudwaf.com": 1,
+    "jcloudwaftest.com": 1,
+    "jcloudwaftest.net": 1,
+    "jclps.com": 1,
+    "jd-app.com": 1,
+    "jd-ex.com": 1,
+    "jd-ex.net": 1,
+    "jd.co.th": 1,
+    "jd.com": 1,
+    "jd.hk": 1,
+    "jd.id": 1,
+    "jd.ru": 1,
+    "jd.shop": 1,
+    "jdair.net": 1,
+    "jdbusiness.com": 1,
+    "jdcache.com": 1,
+    "jdcdn.com": 1,
+    "jdcloud-api.com": 1,
+    "jdcloud-api.net": 1,
+    "jdcloud-edu.com": 1,
+    "jdcloud-elite.com": 1,
+    "jdcloud-elive.com": 1,
+    "jdcloud-livebuy.com": 1,
+    "jdcloud-mail.com": 1,
+    "jdcloud-openapi.com": 1,
+    "jdcloud-oss.com": 1,
+    "jdcloud.com": 1,
+    "jdcloudcache.com": 1,
+    "jdcloudcache.net": 1,
+    "jdcloudcdn.com": 1,
+    "jdcloudcdn.net": 1,
+    "jdcloudcs.com": 1,
+    "jdclouddns.com": 1,
+    "jdclouddns.net": 1,
+    "jdcloudedge.com": 1,
+    "jdcloudedge.net": 1,
+    "jdcloudlb.com": 1,
+    "jdcloudlb.net": 1,
+    "jdcloudlive.com": 1,
+    "jdcloudlive.net": 1,
+    "jdcloudresolve.com": 1,
+    "jdcloudresolve.net": 1,
+    "jdcloudsite.com": 1,
+    "jdcloudstatic.com": 1,
+    "jdcloudstatic.net": 1,
+    "jdcloudstatus.com": 1,
+    "jdcloudstatus.net": 1,
+    "jdcloudvideo.com": 1,
+    "jdcloudvideo.net": 1,
+    "jdcloudwaf.com": 1,
+    "jdcontent.com": 1,
+    "jdd-global.com": 1,
+    "jddapeigou.com": 1,
+    "jddebug.com": 1,
+    "jddglobal.com": 1,
+    "jddj.com": 1,
+    "jddtv.com": 1,
+    "jdemall.com": 1,
+    "jdfeijing.com": 1,
+    "jdfinance.com": 1,
+    "jdfmgt.com": 1,
+    "jdfw1.com": 1,
+    "jdgslb.com": 1,
+    "jdgslb.net": 1,
+    "jdh.com": 1,
+    "jdis.org": 1,
+    "jdjinrong.com": 1,
+    "jdl.com": 1,
+    "jdpay.com": 1,
+    "jdpaydns.com": 1,
+    "jdsmartkf.com": 1,
+    "jdwl.com": 1,
+    "jdworldwide.com": 1,
+    "jdx.com": 1,
+    "jftianshancn.com": 1,
+    "jhgtgb.com": 1,
+    "jhscm.com": 1,
+    "jhu.edu": 1,
+    "jia.com": 1,
+    "jiameng.com": 1,
+    "jianbihua.com": 1,
+    "jianguopuzi.com": 1,
+    "jianguoyun.com": 1,
+    "jiangzidushu.com": 1,
+    "jiangzikanshu.com": 1,
+    "jiangziyuedu.com": 1,
+    "jianhangcaifu.com": 1,
+    "jianshu.com": 1,
+    "jianshu.io": 1,
+    "jianshuapi.com": 1,
+    "jianyuweb.com": 1,
+    "jianzhi8.com": 1,
+    "jiaodong.net": 1,
+    "jiaoyibao.com": 1,
+    "jiaoyimao.com": 1,
+    "jiasu.bohe.com": 1,
+    "jiasuhui.com": 1,
+    "jiasule.com": 1,
+    "jiathis.com": 1,
+    "jiayuan.com": 1,
+    "jiazhao.com": 1,
+    "jibencaozuo.com": 1,
+    "jidian.im": 1,
+    "jiejingku.net": 1,
+    "jiemeng8.com": 1,
+    "jiemian.com": 1,
+    "jikeiot.cloud": 1,
+    "jikexueyuan.com": 1,
+    "jikipedia.com": 1,
+    "jimeng.com": 1,
+    "jindidata.com": 1,
+    "jingdong.com": 1,
+    "jingdongjinrong.com": 1,
+    "jinglingbiaozhu.com": 1,
+    "jingpinhui.com": 1,
+    "jingxi.com": 1,
+    "jinianbi.com": 1,
+    "jinrishici.com": 1,
+    "jinritoutiao.com": 1,
+    "jinrongren.net": 1,
+    "jinse.com": 1,
+    "jinshuju.net": 1,
+    "jinshujucdn.com": 1,
+    "jinti.com": 1,
+    "jiqizhixin.com": 1,
+    "jisuanke.com": 1,
+    "jisuqiang.com": 1,
+    "jisuqiang.net": 1,
+    "jisuxia.com": 1,
+    "jiuzhilan.com": 1,
+    "jiyoujia.com": 1,
+    "jiyunhudong.com": 1,
+    "jiyunhudong.net": 1,
+    "jj20.com": 1,
+    "jjbzhx.com": 1,
+    "jjtianshangi.com": 1,
+    "jjwxc.net": 1,
+    "jkbl.com": 1,
+    "jkcsjd.com": 1,
+    "jkhds872.com": 1,
+    "jkjiekuan.com": 1,
+    "jkkefv.com": 1,
+    "jksdhgu.com": 1,
+    "jmlk.co": 1,
+    "jmstatic.com": 1,
+    "job5588.com": 1,
+    "job910.com": 1,
+    "jobjm.com": 1,
+    "jokecommunity.com": 1,
+    "jokecommunity.net": 1,
+    "jomocdn.net": 1,
+    "jomodns.com": 1,
+    "jomodns.net": 1,
+    "jovcloud.com": 1,
+    "jovetech.com": 1,
+    "jovision.com": 1,
+    "jovisionai.com": 1,
+    "jovmall.com": 1,
+    "joybuy.com": 1,
+    "joybuy.es": 1,
+    "jpmorganchina.com": 1,
+    "jpopsuki.eu": 1,
+    "jpush.io": 1,
+    "jpushoa.com": 1,
+    "jrjiekuan.com": 1,
+    "jsbc.com": 1,
+    "jsboxbbs.com": 1,
+    "jsplayground.net": 1,
+    "jsrdgg.com": 1,
+    "jstor.org": 1,
+    "jstti.com": 1,
+    "jstucdn.com": 1,
+    "jstv.com": 1,
+    "jsyks.com": 1,
+    "jtamac.com": 1,
+    "jtamc.com": 1,
+    "juangua.com": 1,
+    "juefeng.com": 1,
+    "juejin.im": 1,
+    "juhuasuan.com": 1,
+    "juhuiwan.com": 1,
+    "juhuiwan.net": 1,
+    "juliangyinqing.com": 1,
+    "juliangyinqing.net": 1,
+    "julive.com": 1,
+    "jumdfd.com": 1,
+    "jumei.com": 1,
+    "juneyaoair.com": 1,
+    "juphoon.com": 1,
+    "justalkcloud.com": 1,
+    "juwan.com": 1,
+    "juwuxian.com": 1,
+    "juxia.com": 1,
+    "juyanwenjuan.com": 1,
+    "juzone.cc": 1,
+    "jvtianshanuu.com": 1,
+    "jxedt.com": 1,
+    "jxfeng.com": 1,
+    "jxksw.net": 1,
+    "jxlog.istreamsche.com": 1,
+    "jxphone.com": 1,
+    "jxsj2sy.com": 1,
+    "jyimg.com": 1,
+    "jzfz.net": 1,
+    "jzsec.com": 1,
+    "k.sohu": 1,
+    "k366.com": 1,
+    "k8azeicxy4idx.com": 1,
+    "kada.com": 1,
+    "kada163.com": 1,
+    "kaifayun.com": 1,
+    "kaifubiao.com": 1,
+    "kaixin001.com": 1,
+    "kaiyanapp.com": 1,
+    "kameng98.com": 1,
+    "kanbox.com": 1,
+    "kandian.com": 1,
+    "kandian.net": 1,
+    "kandian.tv": 1,
+    "kanimg.com": 1,
+    "kankan.com": 1,
+    "kankanews.com": 1,
+    "kantianqi.net": 1,
+    "kanxue.com": 1,
+    "kanyouxi.com": 1,
+    "kanyouxi.tv": 1,
+    "kanzhun.com": 1,
+    "kaola.com": 1,
+    "kaola.com.hk": 1,
+    "kaolacdn.com": 1,
+    "kaopu001.com": 1,
+    "kaoshibao.com": 1,
+    "karger.com": 1,
+    "kaspersky-labs.com": 1,
+    "kc.kexinshe.com": 1,
+    "kcbebank.com": 1,
+    "kcdnvip.com": 1,
+    "kd100.com": 1,
+    "kdslife.com": 1,
+    "ke6payux9q4pih.com": 1,
+    "keboyunxiao.com": 1,
+    "kechuang.org": 1,
+    "keepcdn.com": 1,
+    "keepfrds.com": 1,
+    "kejet.net": 1,
+    "kejids.com": 1,
+    "ketangpai.com": 1,
+    "keylol.com": 1,
+    "keyshot.cc": 1,
+    "kf5.com": 1,
+    "kgimg.com": 1,
+    "kimiss.com": 1,
+    "kingcloud.com": 1,
+    "kingcloudad.com": 1,
+    "kingdee.com": 1,
+    "kingmb.com": 1,
+    "kingsoft-office-service.com": 1,
+    "kingsoft.com": 1,
+    "kirkcloud.com": 1,
+    "kisops.com": 1,
+    "kissyui.com": 1,
+    "kiyuu.club": 1,
+    "kjdvsg.com": 1,
+    "kjsdh6.com": 1,
+    "kjtianshanxu.com": 1,
+    "kkmh.com": 1,
+    "kkzhan.com": 1,
+    "kkzj.com": 1,
+    "klpbbs.com": 1,
+    "kmail.com": 1,
+    "knewone.com": 1,
+    "kolsou.com": 1,
+    "kongfz.com": 1,
+    "koocdn.com": 1,
+    "koolearn.com": 1,
+    "koopass.com": 1,
+    "koowo.com": 1,
+    "koubei.com": 1,
+    "kouclo.com": 1,
+    "koudai.com": 1,
+    "koudai8.com": 1,
+    "kouxin.com": 1,
+    "kouxin.net": 1,
+    "kq7.com": 1,
+    "ks-cdn.com": 1,
+    "ks-cdn1.com": 1,
+    "ks-cdnv6.com": 1,
+    "ks-live.com": 1,
+    "ksapisrv.com": 1,
+    "ksc-test.com": 1,
+    "kscbigdata.cloud": 1,
+    "kscloudapi.com": 1,
+    "ksdhgy.com": 1,
+    "kshwtj.com": 1,
+    "ksmobile.com": 1,
+    "ksmobile.net": 1,
+    "ksoapp.com": 1,
+    "ksops.com": 1,
+    "ksord.com": 1,
+    "ksosoft.com": 1,
+    "kspkg.com": 1,
+    "ksyna.com": 1,
+    "ksyun.com": 1,
+    "ksyun.net": 1,
+    "ksyunad.com": 1,
+    "ksyuncdn-k1.com": 1,
+    "ksyuncdn-k2.com": 1,
+    "ksyuncdn.com": 1,
+    "ksyuncdnv6.com": 1,
+    "ksyuncs.com": 1,
+    "ksyungslb.com": 1,
+    "ksyungslb2.com": 1,
+    "ksyunv5.com": 1,
+    "ksyunv6.com": 1,
+    "ksyunv7.com": 1,
+    "ksyunwaf.com": 1,
+    "kting.info": 1,
+    "ktv.com": 1,
+    "ku6.com": 1,
+    "ku6.net": 1,
+    "ku6cdn.com": 1,
+    "ku6img.com": 1,
+    "ku6vms.com": 1,
+    "kuaaa.com": 1,
+    "kuai666aa8e43gomqhzeg.com": 1,
+    "kuai666e9rqs5wumk7at3.com": 1,
+    "kuai666gki3osg54rx7a.com": 1,
+    "kuai666gkq3semv1r34.com": 1,
+    "kuai666i4rmp7c5i16hb.com": 1,
+    "kuai666kysktrxmwici27.com": 1,
+    "kuai666m6vgmorxw77vb5.com": 1,
+    "kuai666ogv754urmpb4.com": 1,
+    "kuai666trqtauks5ht6x.com": 1,
+    "kuai666vs5aq9o3ytdgp.com": 1,
+    "kuaiapps.com": 1,
+    "kuaidi100.com": 1,
+    "kuaidilab.com": 1,
+    "kuaiduizuoye.com": 1,
+    "kuaifan.shop": 1,
+    "kuaihou.com": 1,
+    "kuaikanmanhua.com": 1,
+    "kuaipandata.com": 1,
+    "kuaishou.com": 1,
+    "kuaishouapp.com": 1,
+    "kuaishouapp.net": 1,
+    "kuaishoupay.com": 1,
+    "kuaishouzt.com": 1,
+    "kuaizhan.com": 1,
+    "kuangxiangit.com": 1,
+    "kuche.com": 1,
+    "kugoo.com": 1,
+    "kugou.com": 1,
+    "kugou.net": 1,
+    "kugouipv6.com": 1,
+    "kuhimalayandp.com": 1,
+    "kuku123.com": 1,
+    "kuledushu.com": 1,
+    "kumi.com": 1,
+    "kumiao.com": 1,
+    "kumiao.tv": 1,
+    "kunlunaq.com": 1,
+    "kunlunar.com": 1,
+    "kunlunca.com": 1,
+    "kunluncan.com": 1,
+    "kunlundns.com": 1,
+    "kunlunea.com": 1,
+    "kunlungem.com": 1,
+    "kunlungr.com": 1,
+    "kunlunhuf.com": 1,
+    "kunlunle.com": 1,
+    "kunlunli.com": 1,
+    "kunlunno.com": 1,
+    "kunlunpi.com": 1,
+    "kunlunra.com": 1,
+    "kunlunsa.com": 1,
+    "kunlunsc.com": 1,
+    "kunlunsl.com": 1,
+    "kunlunso.com": 1,
+    "kunlunta.com": 1,
+    "kunlunvi.com": 1,
+    "kunlunwe.com": 1,
+    "kuqin.com": 1,
+    "kuxiaomiao.com": 1,
+    "kuxiaomiao.net": 1,
+    "kuyiso.com": 1,
+    "kuyunbo.club": 1,
+    "kwai666.com": 1,
+    "kwaicdn.com": 1,
+    "kwaicdnx.com": 1,
+    "kwaie65eu4gvs1943.com": 1,
+    "kwaiekow98icxsp7fz.com": 1,
+    "kwaiesovc9xgzfcmt.com": 1,
+    "kwailai.com": 1,
+    "kwairga8upiycbiv.com": 1,
+    "kwairia4qs5e76v52z.com": 1,
+    "kwairpoewaum3s9z41.com": 1,
+    "kwairr9aw56vso581r.com": 1,
+    "kwaisczway7r4tz7m8.com": 1,
+    "kwaishouapp.com": 1,
+    "kwaishouapp.net": 1,
+    "kwaitalk.com": 1,
+    "kwaitv.com": 1,
+    "kwaiww7t3qi8x217.com": 1,
+    "kwaiymx64war5a7f.com": 1,
+    "kwaizt.com": 1,
+    "kwimgs.com": 1,
+    "lady8844.com": 1,
+    "lagou.com": 1,
+    "lahuashanbx.com": 1,
+    "laifeng.com": 1,
+    "laiqukankan.com": 1,
+    "laiwang.com": 1,
+    "lancdn.com": 1,
+    "landian.vip": 1,
+    "landiannews.com": 1,
+    "langke.tv": 1,
+    "lanhuapp.com": 1,
+    "lanzou.com": 1,
+    "lanzoub.com": 1,
+    "lanzouc.com": 1,
+    "lanzoue.com": 1,
+    "lanzouf.com": 1,
+    "lanzoug.com": 1,
+    "lanzouh.com": 1,
+    "lanzoui.com": 1,
+    "lanzouj.com": 1,
+    "lanzouk.com": 1,
+    "lanzoul.com": 1,
+    "lanzoum.com": 1,
+    "lanzouo.com": 1,
+    "lanzoup.com": 1,
+    "lanzouq.com": 1,
+    "lanzous.com": 1,
+    "lanzout.com": 1,
+    "lanzouu.com": 1,
+    "lanzouv.com": 1,
+    "lanzouw.com": 1,
+    "lanzoux.com": 1,
+    "lanzouy.com": 1,
+    "laohu.com": 1,
+    "laomaotao.net": 1,
+    "laomaotao.org": 1,
+    "laosiji.com": 1,
+    "lapin365.com": 1,
+    "larksuite.com": 1,
+    "larksuitecdn.com": 1,
+    "larsonlimited.com": 1,
+    "lascn.net": 1,
+    "lasmasas.com": 1,
+    "lawxp.com": 1,
+    "lawyee.org": 1,
+    "layuicdn.com": 1,
+    "lazada.com": 1,
+    "lazyaudio.com": 1,
+    "lbmobi.com": 1,
+    "lczq.com": 1,
+    "ld246.com": 1,
+    "ldmnq.com": 1,
+    "le.com": 1,
+    "leangoo.com": 1,
+    "leanote.com": 1,
+    "lecloud.com": 1,
+    "ledu.com": 1,
+    "leetcode-cn.com": 1,
+    "leigod.com": 1,
+    "leijun.com": 1,
+    "leikeji.com": 1,
+    "leiphone.com": 1,
+    "leiting.com": 1,
+    "leju.com": 1,
+    "lemall.com": 1,
+    "lemicp.com": 1,
+    "lenauth.com": 1,
+    "lenovo.com": 1,
+    "lenovocloudos.com": 1,
+    "lenovoeservice.com": 1,
+    "lenovogame.com": 1,
+    "lenovomm.com": 1,
+    "letianshanec.com": 1,
+    "leturich.org": 1,
+    "letv.com": 1,
+    "letvcdn.com": 1,
+    "letvcloud.com": 1,
+    "letvimg.com": 1,
+    "levc.com": 1,
+    "lexiangla.com": 1,
+    "lf126.net": 1,
+    "lf127.net": 1,
+    "lhzq.com": 1,
+    "liangxinyao.com": 1,
+    "lianjia.com": 1,
+    "lianlianpay.com": 1,
+    "lianliantao.net": 1,
+    "lianliantaoshop.com": 1,
+    "lianmishu.com": 1,
+    "liantu.com": 1,
+    "lianwangtech.com": 1,
+    "lianwifi.com": 1,
+    "lianzhuli.com": 1,
+    "liaoxuefeng.com": 1,
+    "liba.com": 1,
+    "libaclub.com": 1,
+    "libguides.com": 1,
+    "licdn.com": 1,
+    "liebaoh5.com": 1,
+    "liebaopay.com": 1,
+    "liepin.com": 1,
+    "lietou-static.com": 1,
+    "lietou.com": 1,
+    "lieyunwang.com": 1,
+    "lifetmt.com": 1,
+    "lifetmt.net": 1,
+    "lifetmt.org": 1,
+    "liffmp.com": 1,
+    "lightalk.com": 1,
+    "lightonus.com": 1,
+    "lightyy.com": 1,
+    "likuso.com": 1,
+    "linezing.com": 1,
+    "lingfengyun.com": 1,
+    "lingkou.com": 1,
+    "linglonglife.com": 1,
+    "lingshoujia.com": 1,
+    "linkdesign.tech": 1,
+    "linkedin.com": 1,
+    "linkeye.net": 1,
+    "linkvans.com": 1,
+    "linsn.com": 1,
+    "linuxidc.com": 1,
+    "liqucn.com": 1,
+    "liulanqi.net": 1,
+    "liulishuo.com": 1,
+    "liuxiaoer.com": 1,
+    "live800.com": 1,
+    "livechina.com": 1,
+    "liweijia.com": 1,
+    "lixinger.com": 1,
+    "lizhi.fm": 1,
+    "lizhi.io": 1,
+    "lizhifm.com": 1,
+    "ljcdn.com": 1,
+    "ljhks.com": 1,
+    "ljhks.net": 1,
+    "lkcoffee.com": 1,
+    "lkjujm.com": 1,
+    "lkkbrand.com": 1,
+    "llsapp.com": 1,
+    "llscdn.com": 1,
+    "llsserver.com": 1,
+    "llsttapp.com": 1,
+    "lneab.com": 1,
+    "lnlib.net": 1,
+    "localizecdn.com": 1,
+    "lofter.com": 1,
+    "logiseasy.com": 1,
+    "logoshejishi.com": 1,
+    "loli.net": 1,
+    "longhoo.net": 1,
+    "longre.com": 1,
+    "longtugame.com": 1,
+    "longzhu.com": 1,
+    "loogoo.com": 1,
+    "lotianshangx.com": 1,
+    "lotpc.com": 1,
+    "loupan.com": 1,
+    "lovev.com": 1,
+    "lppz.com": 1,
+    "lppzimg.com": 1,
+    "lrts.me": 1,
+    "lsgenius.com": 1,
+    "lsplayer.com": 1,
+    "lstt-app.com": 1,
+    "lsttapp.com": 1,
+    "lsttappmoney.com": 1,
+    "lsttapppro.com": 1,
+    "lsttappspace.com": 1,
+    "lsttappweb.com": 1,
+    "lsttappworks.com": 1,
+    "lsttmoney.com": 1,
+    "lsttnews.com": 1,
+    "lsttonline.com": 1,
+    "lsttpro.com": 1,
+    "lsttrich.com": 1,
+    "lsttweb.com": 1,
+    "lsttworks.com": 1,
+    "lu.com": 1,
+    "lucifr.com": 1,
+    "luckforcalendar.com": 1,
+    "luckincalendar.com": 1,
+    "luckincdn.com": 1,
+    "luckincoffee.com": 1,
+    "luckincoffeecdn.com": 1,
+    "luckyair.net": 1,
+    "ludashi.com": 1,
+    "ludoworld.net": 1,
+    "lufax.com": 1,
+    "lufaxcdn.com": 1,
+    "lufunds.com": 1,
+    "lunwengo.net": 1,
+    "luojilab.com": 1,
+    "luoo.net": 1,
+    "luyouqi.com": 1,
+    "lvmama.com": 1,
+    "lvsexitong.com": 1,
+    "lvtds.com": 1,
+    "lwjhql.com": 1,
+    "lwurl.to": 1,
+    "lx.pub": 1,
+    "lx.run": 1,
+    "lxdns.com": 1,
+    "lxdns.info": 1,
+    "lxdns.org": 1,
+    "lxjapp.com": 1,
+    "lxway.com": 1,
+    "lxzjjt.com": 1,
+    "ly.com": 1,
+    "lynkco-test.com": 1,
+    "m-team.cc": 1,
+    "m.sohu": 1,
+    "m1.run": 1,
+    "m3-cloud.com": 1,
+    "m6.run": 1,
+    "m6tza3ip7x8zr1.com": 1,
+    "m9.run": 1,
+    "ma.run": 1,
+    "maccms.com": 1,
+    "madsrevolution.net": 1,
+    "mafengwo.com": 1,
+    "mafengwo.net": 1,
+    "magedu.com": 1,
+    "magi.com": 1,
+    "magicw3.com": 1,
+    "mahjongai.net": 1,
+    "mahjongcup.com": 1,
+    "mahjongcup.net": 1,
+    "mai.tn": 1,
+    "maikr.com": 1,
+    "mail4399.com": 1,
+    "maileds.com": 1,
+    "mairuan.com": 1,
+    "mairuan.net": 1,
+    "mairuanwang.com": 1,
+    "maisanqi.com": 1,
+    "maitix.com": 1,
+    "maitix.net": 1,
+    "makeding.com": 1,
+    "mamecn.com": 1,
+    "manhuatai.com": 1,
+    "manmanbuy.com": 1,
+    "manmankan.com": 1,
+    "maoercdn.com": 1,
+    "maoyan.com": 1,
+    "maoyun.com": 1,
+    "maoyun.tv": 1,
+    "maoyuncloud.com": 1,
+    "mapbar.com": 1,
+    "marioall.com": 1,
+    "marioin.com": 1,
+    "mariowap.com": 1,
+    "marshotspot.com": 1,
+    "marvelunlimitedresources.com": 1,
+    "material.istreamsche.com": 1,
+    "matpool.com": 1,
+    "matpool.net": 1,
+    "maxcdn.com": 1,
+    "mayi.com": 1,
+    "mayihr.com": 1,
+    "mayshijia.com": 1,
+    "mbalib.com": 1,
+    "mbcloud.com": 1,
+    "mcbang.com": 1,
+    "mcbbs.net": 1,
+    "mdeer.com": 1,
+    "mdnice.com": 1,
+    "mdoutv.com": 1,
+    "mdpda.com": 1,
+    "me.com": 1,
+    "me1.ltd": 1,
+    "me4399.com": 1,
+    "mechina.org": 1,
+    "media.paperclipclub.net": 1,
+    "mediav.com": 1,
+    "medicexam.net": 1,
+    "mefenglife.com": 1,
+    "mefenlife.com": 1,
+    "mei.com": 1,
+    "meifang.com": 1,
+    "meika360.com": 1,
+    "meili-inc.com": 1,
+    "meilishuo.com": 1,
+    "meimingteng.com": 1,
+    "meipai.com": 1,
+    "meiqia.com": 1,
+    "meishichina.com": 1,
+    "meishij.net": 1,
+    "meitu.com": 1,
+    "meituan.com": 1,
+    "meituan.net": 1,
+    "meitudata.com": 1,
+    "meitustat.com": 1,
+    "meixincdn.com": 1,
+    "meizu.com": 1,
+    "mengtuoshi.wang": 1,
+    "metalrevolution.com": 1,
+    "metatrader4.com": 1,
+    "metatrader5.com": 1,
+    "meu95otw4967t.com": 1,
+    "mfcteda.com": 1,
+    "mftianshanam.com": 1,
+    "mgslb.com": 1,
+    "mgslb.net": 1,
+    "mgslb.org": 1,
+    "mgtv.com": 1,
+    "mh-pic.com": 1,
+    "mi-cache.com": 1,
+    "mi-cdn.com": 1,
+    "mi-customer.com": 1,
+    "mi-idc.com": 1,
+    "mi-img.com": 1,
+    "mi-img1.com": 1,
+    "mi-img2.com": 1,
+    "mi-img3.com": 1,
+    "mi-img4.com": 1,
+    "mi-img5.com": 1,
+    "mi-static.com": 1,
+    "mi.com": 1,
+    "mi0.cc": 1,
+    "mianbaoshu.cc": 1,
+    "miaobolive.com": 1,
+    "miaomiaoz.com": 1,
+    "miaomiaozhe.com": 1,
+    "miaopai.com": 1,
+    "miaostreet.com": 1,
+    "miaozhen.com": 1,
+    "micode.net": 1,
+    "micro-game-client.com": 1,
+    "microsoftonline.com": 1,
+    "midasbuy.com": 1,
+    "miercn.com": 1,
+    "mifenlife.com": 1,
+    "migucloud.com": 1,
+    "migufm.com": 1,
+    "migugk.com": 1,
+    "migutv.com": 1,
+    "miguvideo.com": 1,
+    "mihayo.com": 1,
+    "mihayou.com": 1,
+    "mihoyo.com": 1,
+    "mihoyocg.com": 1,
+    "mihoyogift.com": 1,
+    "mihoyomall.com": 1,
+    "mihuashi.com": 1,
+    "mij.cc": 1,
+    "mijisou.com": 1,
+    "mikecrm.com": 1,
+    "mikge.com": 1,
+    "miliao.com": 1,
+    "milliant.com": 1,
+    "miloli.info": 1,
+    "minapp.com": 1,
+    "mincdn.com": 1,
+    "mindmanager.cc": 1,
+    "mindmapper.cc": 1,
+    "mingxigu.com": 1,
+    "mingyuanfund.com": 1,
+    "mingyuanyun.com": 1,
+    "minhangshi.com": 1,
+    "minitiao.com": 1,
+    "mipay.com": 1,
+    "mipcdn.com": 1,
+    "mipengine.com": 1,
+    "mipengine.org": 1,
+    "mipplan.com": 1,
+    "mipplan.org": 1,
+    "mipush.com": 1,
+    "miredian.com": 1,
+    "mirrors.yun-idc.com": 1,
+    "missjia.net": 1,
+    "mitalk.com": 1,
+    "mitvos.com": 1,
+    "mitvos.net": 1,
+    "miui.com": 1,
+    "miusi.co": 1,
+    "miwifi.com": 1,
+    "mixinshe.com": 1,
+    "mixrnb.com": 1,
+    "miyoushe.com": 1,
+    "miyun.com": 1,
+    "mjf2020.com": 1,
+    "mjia.cc": 1,
+    "mki7rxcwmfe7c.com": 1,
+    "mlhimalayanxt.com": 1,
+    "mls-cdn.com": 1,
+    "mlt01.com": 1,
+    "mmarket.com": 1,
+    "mmarket6.com": 1,
+    "mmbang.com": 1,
+    "mmbang.info": 1,
+    "mmqidian.com": 1,
+    "mmstat.com": 1,
+    "mnbvdfg.com": 1,
+    "mnbvtgv.com": 1,
+    "mndqlib.net": 1,
+    "mob.com": 1,
+    "mobike.com": 1,
+    "mobilelegends.com": 1,
+    "mobilemgr-global.com": 1,
+    "mobmore.com": 1,
+    "mofang.com": 1,
+    "mofazhu.com": 1,
+    "mogecloud.com": 1,
+    "mogecloud.net": 1,
+    "mogengyun.com": 1,
+    "mogengyun.net": 1,
+    "mogoo.com": 1,
+    "mogu.com": 1,
+    "mogucdn.com": 1,
+    "mogujie.com": 1,
+    "mogujielive.com": 1,
+    "moji.com": 1,
+    "mojichina.com": 1,
+    "mojidict.com": 1,
+    "mok8uptsmk19.com": 1,
+    "mokahr.com": 1,
+    "moke.com": 1,
+    "moleecel.com": 1,
+    "monidata.com": 1,
+    "monternet.com": 1,
+    "moocollege.com": 1,
+    "moomoo.com": 1,
+    "moomoobull.com": 1,
+    "moonton.com": 1,
+    "mop.com": 1,
+    "morethan.tv": 1,
+    "morganstanleyhuaxin.com": 1,
+    "moulem.com": 1,
+    "moxz.net": 1,
+    "mp4er.com": 1,
+    "mpcloudapp.com": 1,
+    "mpg.de": 1,
+    "mpserverless.com": 1,
+    "mqqurl.com": 1,
+    "msanjia.com": 1,
+    "msauth.net": 1,
+    "mscbsc.com": 1,
+    "msecnd.net": 1,
+    "mshare.cc": 1,
+    "msocdn.com": 1,
+    "msstatic.com": 1,
+    "mszdld.com": 1,
+    "mszdld.net": 1,
+    "mszq.com": 1,
+    "mt3.com": 1,
+    "mti100.com": 1,
+    "mting.info": 1,
+    "mtmyg.com": 1,
+    "mtyun.com": 1,
+    "mubu.com": 1,
+    "mucfc.com": 1,
+    "mukewang.com": 1,
+    "mumayi.com": 1,
+    "muomou.com": 1,
+    "muwai.com": 1,
+    "muyewx.com": 1,
+    "muzhiwan.com": 1,
+    "mvtianshanlr.com": 1,
+    "mxhichina.com": 1,
+    "my-qcloud.com": 1,
+    "my3w.com": 1,
+    "my4399.com": 1,
+    "myalicdn.com": 1,
+    "myalirtc.com": 1,
+    "myanonamouse.net": 1,
+    "myapp.com": 1,
+    "mychinaunicom.com": 1,
+    "mycleanmymac.com": 1,
+    "mydown.com": 1,
+    "mydrivers.com": 1,
+    "myelasticsearch.com": 1,
+    "myhuaweicloud.com": 1,
+    "myhwcdn.com": 1,
+    "myhwcloudlive.com": 1,
+    "myhwclouds.com": 1,
+    "myhwclouds.net": 1,
+    "myilibrary.com": 1,
+    "myip.la": 1,
+    "myoas.com": 1,
+    "myoas.net": 1,
+    "myoppo.com": 1,
+    "mypaas.com": 1,
+    "myqcloud.com": 1,
+    "myqcloud.net": 1,
+    "myshow360.net": 1,
+    "mysiteres.com": 1,
+    "mysmth.net": 1,
+    "myunlu.com": 1,
+    "myypark.com": 1,
+    "myyx618.com": 1,
+    "myzaker.com": 1,
+    "mznznj.com": 1,
+    "mzres.com": 1,
+    "mzstatic.com": 1,
+    "n802.com": 1,
+    "nagcloudcs.com": 1,
+    "naixuecha.com": 1,
+    "nanyangpt.com": 1,
+    "naobiao.com": 1,
+    "natgmj.com": 1,
+    "nattest-china.com": 1,
+    "nature.com": 1,
+    "nba.com": 1,
+    "nbhuke.com": 1,
+    "ncfimg.com": 1,
+    "ncfjj.com": 1,
+    "ncore.cc": 1,
+    "ncyrqs.com": 1,
+    "ndiip.com": 1,
+    "nease.net": 1,
+    "neffkb.com": 1,
+    "neihancommunity.com": 1,
+    "neihancommunity.net": 1,
+    "neihandiantai.com": 1,
+    "neihanshequ.com": 1,
+    "neohytung.com": 1,
+    "netbian.com": 1,
+    "netease-inc.com": 1,
+    "netease.com": 1,
+    "netease.im": 1,
+    "neteasegame.com": 1,
+    "neteasegame.net": 1,
+    "neteasegames.com": 1,
+    "neteasegames.net": 1,
+    "netianshannu.com": 1,
+    "netstatic.net": 1,
+    "newasp.net": 1,
+    "newbandeng.com": 1,
+    "newcoder.com": 1,
+    "newsapp01.com": 1,
+    "newupbank.com": 1,
+    "newyx.net": 1,
+    "nextstudios.com": 1,
+    "nextworkshop.net": 1,
+    "nffund.com": 1,
+    "nfmrtfv.com": 1,
+    "nfoservers.com": 1,
+    "nga.wiki": 1,
+    "ngaa.info": 1,
+    "ngaa.shop": 1,
+    "ngaa.top": 1,
+    "ngaacdn.com": 1,
+    "ngaacdn.net": 1,
+    "ngaagslb.com": 1,
+    "ngaagslb.net": 1,
+    "ngabbs.com": 1,
+    "ngacn.cc": 1,
+    "nghmesc.com": 1,
+    "nhcilab.com": 1,
+    "nhmuni.com": 1,
+    "nic.xin": 1,
+    "nicaifu.com": 1,
+    "nicaifu.net": 1,
+    "nicelabel.cc": 1,
+    "nidiandaojia.com": 1,
+    "nihaoafrica.org": 1,
+    "nihaotv.net": 1,
+    "nim-lang-cn.org": 1,
+    "niuclass.net": 1,
+    "njdiip.com": 1,
+    "njibhu.com": 1,
+    "nmrdata.com": 1,
+    "nnjioko.com": 1,
+    "nnthink.com": 1,
+    "nomuraoi-sec.com": 1,
+    "northgun.com": 1,
+    "novipnoad.com": 1,
+    "novotrail.com": 1,
+    "novotrails.com": 1,
+    "nowcoder.com": 1,
+    "nowcoder.net": 1,
+    "nowcoder.org": 1,
+    "nowscore.com": 1,
+    "noxnny.com": 1,
+    "npmmirror.com": 1,
+    "nqiief.com": 1,
+    "nqmoui.com": 1,
+    "nruan.com": 1,
+    "ntalker.com": 1,
+    "ntaow.com": 1,
+    "ntes53.com": 1,
+    "ntes53.net": 1,
+    "ntescdn.com": 1,
+    "ntfsformac.cc": 1,
+    "ntp.org": 1,
+    "ntservicepack.microsoft.com": 1,
+    "nuomi.com": 1,
+    "nutstore.net": 1,
+    "nutstorehq.com": 1,
+    "nvidia.com": 1,
+    "nvsheng.com": 1,
+    "nvsip.com": 1,
+    "nx-sc.com": 1,
+    "nxtianshangb.com": 1,
+    "nzbdw.com": 1,
+    "nzsiteres.com": 1,
+    "nzwgs.com": 1,
+    "oadz.com": 1,
+    "oascentral.sina.com.hk": 1,
+    "oasesalliance.com": 1,
+    "oceanengine.com": 1,
+    "ocwms.com": 1,
+    "oecd-ilibrary.org": 1,
+    "oeeee.com": 1,
+    "offcn.com": 1,
+    "office.com": 1,
+    "office.net": 1,
+    "office365.com": 1,
+    "officese.com": 1,
+    "ofo.com": 1,
+    "ofweek.com": 1,
+    "oi-wiki.com": 1,
+    "oicq88.com": 1,
+    "okhimalayanzi.com": 1,
+    "oklpoi.com": 1,
+    "okooo.com": 1,
+    "ol-cdn.com": 1,
+    "ol-img.com": 1,
+    "olatop.com": 1,
+    "olatop.net": 1,
+    "oldboyedu.com": 1,
+    "omeet.cc": 1,
+    "oncdp.com": 1,
+    "oneapm.com": 1,
+    "onegreen.net": 1,
+    "onenote.net": 1,
+    "oneplus.com": 1,
+    "oneplus.net": 1,
+    "oneplusbbs.com": 1,
+    "oneplusmobile.com": 1,
+    "onexmail.com": 1,
+    "oneyac.com": 1,
+    "onlinedown.net": 1,
+    "onlinesjtu.com": 1,
+    "onlylady.com": 1,
+    "oortgslb.com": 1,
+    "oortos.tech": 1,
+    "opdown.com": 1,
+    "open-search.org": 1,
+    "open.cd": 1,
+    "openaboc.com": 1,
+    "openapp.run": 1,
+    "openharmonyproject.com": 1,
+    "openintelliedge.tech": 1,
+    "openkylin.top": 1,
+    "openlearning.com": 1,
+    "openmidas.com": 1,
+    "openrasp.com": 1,
+    "openrasp.info": 1,
+    "openrasp.net": 1,
+    "openrasp.org": 1,
+    "oplustrust.com": 1,
+    "oppo.com": 1,
+    "oppo.mobi": 1,
+    "oppodigital.com": 1,
+    "oppoer.me": 1,
+    "oppofind.com": 1,
+    "oppomobile.com": 1,
+    "oppopay.com": 1,
+    "opposales.com": 1,
+    "opstatics.com": 1,
+    "optaim.com": 1,
+    "opuzswk5tbt25.com": 1,
+    "oracle-tencent.com": 1,
+    "oracle-tencent.net": 1,
+    "oracle.com": 1,
+    "oray.com": 1,
+    "orient-fund.com": 1,
+    "origin-a.akamaihd.ne": 1,
+    "origin-a.akamaihd.net": 1,
+    "ortc.cc": 1,
+    "os-lb.com": 1,
+    "osapublishing.org": 1,
+    "oschina.net": 1,
+    "ott4china.com": 1,
+    "ottcn.com": 1,
+    "oup.com": 1,
+    "oupeng.com": 1,
+    "ourbits.club": 1,
+    "ourdvs.com": 1,
+    "ourdvsss.com": 1,
+    "outlook.com": 1,
+    "oversea-ks-cdn.com": 1,
+    "overturechina.com": 1,
+    "ovid.com": 1,
+    "ovscdns.com": 1,
+    "ovscdns.net": 1,
+    "owsgo.com": 1,
+    "oxfordartonline.com": 1,
+    "oxfordbibliographies.com": 1,
+    "oxfordmusiconline.com": 1,
+    "oywtv.com": 1,
+    "oyxdwx.com": 1,
+    "p2cdn.com": 1,
+    "p2peye.com": 1,
+    "p4pfile.com": 1,
+    "p4ws8zptrrdc6.com": 1,
+    "p5w.net": 1,
+    "pacmantwo.com": 1,
+    "pagescube.com": 1,
+    "pahhhf.com": 1,
+    "pailitao.com": 1,
+    "paipai.com": 1,
+    "paipaibang.com": 1,
+    "pangolin-dsp-toutiao-b.com": 1,
+    "pangolin-dsp-toutiao.com": 1,
+    "pangolin-sdk-toutiao-b.com": 1,
+    "pangolin-sdk-toutiao.com": 1,
+    "panplayable-toutiao-b.com": 1,
+    "panplayable-toutiao.com": 1,
+    "pansoso.com": 1,
+    "paopaoche.net": 1,
+    "papocket.com": 1,
+    "passthepopcorn.me": 1,
+    "paypal.com": 1,
+    "paypal.me": 1,
+    "paypalobjects.com": 1,
+    "pc120.com": 1,
+    "pc6.com": 1,
+    "pcbeta.com": 1,
+    "pchome.net": 1,
+    "pcmgr-global.com": 1,
+    "pcpop.com": 1,
+    "pddpic.com": 1,
+    "pddugc.com": 1,
+    "pdfexpert.cc": 1,
+    "pearvideo.com": 1,
+    "peccn.com": 1,
+    "peijian.com": 1,
+    "peiwanlu.com": 1,
+    "pengyou.com": 1,
+    "pepsitmall.com": 1,
+    "pftianshanno.com": 1,
+    "pglstatp-toutiao-b.com": 1,
+    "pglstatp-toutiao.com": 1,
+    "pgyer.com": 1,
+    "pgzs.com": 1,
+    "pharmacodia.com": 1,
+    "philanthropy.xin": 1,
+    "phoenixtv.com": 1,
+    "photozoomchina.com": 1,
+    "phpcomposer.com": 1,
+    "phpweblog.net": 1,
+    "phpwind.com": 1,
+    "phpwind.net": 1,
+    "piaogroup.com": 1,
+    "piaoliang.com": 1,
+    "pickpikka.com": 1,
+    "pigai.org": 1,
+    "pilidns.com": 1,
+    "pinduoduo.com": 1,
+    "pinduoduo.net": 1,
+    "pingan.com": 1,
+    "pingan.com.hk": 1,
+    "pinganventures.com": 1,
+    "pingplusplus.com": 1,
+    "pingwest.com": 1,
+    "pingxx.com": 1,
+    "pinjiago.com": 1,
+    "pinjiao.com": 1,
+    "pintu360.com": 1,
+    "pipaw.com": 1,
+    "pipaw.net": 1,
+    "pipix.com": 1,
+    "pkoplink.com": 1,
+    "pkulaw.com": 1,
+    "playdisorder.com": 1,
+    "plex.tv": 1,
+    "pmallstore.com": 1,
+    "pmphmooc.com": 1,
+    "pn1waq.com": 1,
+    "pnas.org": 1,
+    "pniao.com": 1,
+    "po7ryumvkx34.com": 1,
+    "poikm.com": 1,
+    "poiuytw.com": 1,
+    "polyinno.com": 1,
+    "polyv.net": 1,
+    "popincdn.com": 1,
+    "powerapp.io": 1,
+    "pphimalayanrt.com": 1,
+    "pplive.com": 1,
+    "pps.tv": 1,
+    "ppsimg.com": 1,
+    "ppstream.com": 1,
+    "ppstream.net": 1,
+    "ppsurl.com": 1,
+    "pptbest.com": 1,
+    "pptv.com": 1,
+    "pptvyun.com": 1,
+    "pqyvzr56aceitx.com": 1,
+    "prayaya.com": 1,
+    "prestodb-china.com": 1,
+    "privatehd.to": 1,
+    "proquest.com": 1,
+    "proximabeta.com": 1,
+    "prpracg.com": 1,
+    "psbc.com": 1,
+    "psnine.com": 1,
+    "pstatp.com": 1,
+    "pterclub.com": 1,
+    "pubbcsapp.com": 1,
+    "pubghelper.com": 1,
+    "pubgtool.com": 1,
+    "pubyun.com": 1,
+    "pushcfg.com": 1,
+    "pvacegurmbz3e.com": 1,
+    "pwrdoverseagame.com": 1,
+    "pwrdoverseas.com": 1,
+    "py-axa.com": 1,
+    "q-supreme.com": 1,
+    "q78s5.com": 1,
+    "qazasd.com": 1,
+    "qazdsa.com": 1,
+    "qbox.me": 1,
+    "qbox.net": 1,
+    "qbview.com": 1,
+    "qc188.com": 1,
+    "qcc.com": 1,
+    "qcds.com": 1,
+    "qcloud-edumall.com": 1,
+    "qcloud.com": 1,
+    "qcloud.la": 1,
+    "qcloudapps.com": 1,
+    "qcloudcdn.com": 1,
+    "qcloudcjgj.com": 1,
+    "qcloudclass.com": 1,
+    "qcloudcos.com": 1,
+    "qclouder.com": 1,
+    "qcloudgme.com": 1,
+    "qcloudimg.com": 1,
+    "qcloudipv6.com": 1,
+    "qcloudmarket.com": 1,
+    "qcloudns.com": 1,
+    "qcloudsmartiot.com": 1,
+    "qcloudtcic.com": 1,
+    "qcloudtiw.com": 1,
+    "qcloudtrip.com": 1,
+    "qcloudtt.com": 1,
+    "qcloudwaf.com": 1,
+    "qcloudwzgj.com": 1,
+    "qcloudzygj.com": 1,
+    "qcvod.net": 1,
+    "qd-metro.com": 1,
+    "qd.ink": 1,
+    "qd8.com": 1,
+    "qdaily.com": 1,
+    "qdcloudsolution.com": 1,
+    "qdd.gd": 1,
+    "qdd.gg": 1,
+    "qdd.la": 1,
+    "qdmm.com": 1,
+    "qdwebim.com": 1,
+    "qdwenxue.com": 1,
+    "qeodns.com": 1,
+    "qeodns.net": 1,
+    "qgnvbc.com": 1,
+    "qgyksr.com": 1,
+    "qh-cdn.com": 1,
+    "qh-dl.com": 1,
+    "qh-lb.com": 1,
+    "qh24.com": 1,
+    "qhcdn-lb.com": 1,
+    "qhcdn.com": 1,
+    "qhdlcdn.com": 1,
+    "qhimg.com": 1,
+    "qhimgs.com": 1,
+    "qhimgs0.com": 1,
+    "qhimgs1.com": 1,
+    "qhimgs2.com": 1,
+    "qhimgs3.com": 1,
+    "qhimgs4.com": 1,
+    "qhimgs5.com": 1,
+    "qhimgs6.com": 1,
+    "qhmsg.com": 1,
+    "qhres.com": 1,
+    "qhres2.com": 1,
+    "qhsetup.com": 1,
+    "qhstatic.com": 1,
+    "qhtui.com": 1,
+    "qhupdate.com": 1,
+    "qiandunvpn.com": 1,
+    "qiangbus.com": 1,
+    "qianjia.com": 1,
+    "qianlima.com": 1,
+    "qianqian.com": 1,
+    "qianxun.com": 1,
+    "qianyicp.com": 1,
+    "qianzhan.com": 1,
+    "qiaobutang.com": 1,
+    "qibox.com": 1,
+    "qichacha.com": 1,
+    "qichamao.com": 1,
+    "qidian.com": 1,
+    "qidianmm.com": 1,
+    "qie.tv": 1,
+    "qifeiye.com": 1,
+    "qihoo.com": 1,
+    "qihoo.net": 1,
+    "qihu-lb.com": 1,
+    "qihu.com": 1,
+    "qihuapi.com": 1,
+    "qihucdn.com": 1,
+    "qijiayoudao.net": 1,
+    "qikoo.com": 1,
+    "qiku.com": 1,
+    "qikucdn.com": 1,
+    "qimao.com": 1,
+    "qin.io": 1,
+    "qingcache.com": 1,
+    "qingcdn.com": 1,
+    "qingcloud.com": 1,
+    "qingdaochina.org": 1,
+    "qingdaonews.com": 1,
+    "qinglidashi.com": 1,
+    "qingmail.com": 1,
+    "qingmang.me": 1,
+    "qingmang.mobi": 1,
+    "qingsongchou.com": 1,
+    "qingstor.com": 1,
+    "qingting.fm": 1,
+    "qingtingtrip.com": 1,
+    "qingzhou.biz": 1,
+    "qingzhou.ltd": 1,
+    "qingzhou.pro": 1,
+    "qingzhouip.com": 1,
+    "qiniu-enterprise.com": 1,
+    "qiniu-solutions.com": 1,
+    "qiniu.co": 1,
+    "qiniu.com": 1,
+    "qiniu.in": 1,
+    "qiniu.io": 1,
+    "qiniu.org": 1,
+    "qiniu.us": 1,
+    "qiniu.work": 1,
+    "qiniuapi.com": 1,
+    "qiniuapp.com": 1,
+    "qiniublob.com": 1,
+    "qiniucc.com": 1,
+    "qiniucdn.com": 1,
+    "qiniucloud.net": 1,
+    "qiniucs.com": 1,
+    "qiniudn.com": 1,
+    "qiniudns.com": 1,
+    "qiniudns.net": 1,
+    "qiniudns2.com": 1,
+    "qiniug.com": 1,
+    "qiniuimg.com": 1,
+    "qiniuinc.com": 1,
+    "qiniukodo.com": 1,
+    "qiniup.com": 1,
+    "qiniupkg.com": 1,
+    "qiniuqcdn.com": 1,
+    "qiniurs.com": 1,
+    "qiniutek.com": 1,
+    "qiumibao.com": 1,
+    "qiuwen.wiki": 1,
+    "qixin.com": 1,
+    "qiyi.com": 1,
+    "qiyipic.com": 1,
+    "qiyukf.com": 1,
+    "qiyukf.net": 1,
+    "qiyuns3.com": 1,
+    "qizuang.com": 1,
+    "qlhimalayantm.com": 1,
+    "qlippie.com": 1,
+    "qmail.com": 1,
+    "qmhimalayanpz.com": 1,
+    "qmoji.mobi": 1,
+    "qmoji.net": 1,
+    "qnfcdn.com": 1,
+    "qnlinking.com": 1,
+    "qnsdk.com": 1,
+    "qnssl.com": 1,
+    "qnydns.com": 1,
+    "qnydns.net": 1,
+    "qplus.com": 1,
+    "qpmwg68cre9pci.com": 1,
+    "qq.cn.com": 1,
+    "qq.com": 1,
+    "qq.design": 1,
+    "qq.net": 1,
+    "qq.wang": 1,
+    "qq.xn--fiqs8s": 1,
+    "qq163.com": 1,
+    "qq163.net": 1,
+    "qq3xkm64kavh.com": 1,
+    "qqddc.com": 1,
+    "qqgameapp.com": 1,
+    "qqgamedesign.com": 1,
+    "qqgames.com": 1,
+    "qqgexingqianming.com": 1,
+    "qqmail.com": 1,
+    "qqmra.com": 1,
+    "qqopenapp.com": 1,
+    "qqrer.com": 1,
+    "qqrizhi.com": 1,
+    "qqshuoshuo.com": 1,
+    "qqurl.com": 1,
+    "qqwewew.com": 1,
+    "qschou.com": 1,
+    "qss-lb.com": 1,
+    "qstatic.com": 1,
+    "qtaeixd.com": 1,
+    "qtmojo.com": 1,
+    "quaolai.com": 1,
+    "qudong.com": 1,
+    "qugame.com": 1,
+    "qunar.com": 1,
+    "qunarzz.com": 1,
+    "qunjielong.com": 1,
+    "qutao.com": 1,
+    "qutianshanav.com": 1,
+    "quumibao.com": 1,
+    "quyaoya.com": 1,
+    "qwe1e.com": 1,
+    "qwps.com": 1,
+    "qwps.net": 1,
+    "qwqfzl.com": 1,
+    "qxllq.com": 1,
+    "qy.com": 1,
+    "qy.net": 1,
+    "qyer.com": 1,
+    "qyerstatic.com": 1,
+    "qyunapp.com": 1,
+    "qzone.com": 1,
+    "qzoneapp.com": 1,
+    "r79xqa8r7e93.com": 1,
+    "r9t1.com": 1,
+    "rainclassroom.com": 1,
+    "rarbg.to": 1,
+    "rat3c.com": 1,
+    "ratingtoken.net": 1,
+    "raychase.net": 1,
+    "rdcnzz.com": 1,
+    "rdfybk.com": 1,
+    "rdgz.org": 1,
+    "readdsp.com": 1,
+    "readnovel.com": 1,
+    "realapp.xin": 1,
+    "realcybertron.com": 1,
+    "realme.com": 1,
+    "realme.net": 1,
+    "realmebbs.com": 1,
+    "realmemobile.com": 1,
+    "realmeservice.com": 1,
+    "redacted.ch": 1,
+    "redfcv.com": 1,
+    "remai.today": 1,
+    "renren-inc.com": 1,
+    "renren.com": 1,
+    "rergdfh.com": 1,
+    "resset.com": 1,
+    "rfchost.com": 1,
+    "ribaoapi.com": 1,
+    "ribaocdn.com": 1,
+    "rj.m.taobao.co": 1,
+    "rmwxgame.com": 1,
+    "ro8qwpaikd4kx.com": 1,
+    "rocketmq.cloud": 1,
+    "rockyenglish.com": 1,
+    "rokid.com": 1,
+    "romzj.com": 1,
+    "rong360.com": 1,
+    "rongechain.com": 1,
+    "ronghub.com": 1,
+    "rootjl.com": 1,
+    "rosoyp.com": 1,
+    "routerlogin.net": 1,
+    "routewize.com": 1,
+    "rrmj.tv": 1,
+    "rsc.org": 1,
+    "rtbasia.com": 1,
+    "rtxapp.com": 1,
+    "rtxonline.com": 1,
+    "rtyhfg.com": 1,
+    "ruan8.com": 1,
+    "ruanmei.com": 1,
+    "ruby-china.org": 1,
+    "rubyconfchina.org": 1,
+    "ruguoapp.com": 1,
+    "runoob.com": 1,
+    "runsheng.com": 1,
+    "rzrc114.com": 1,
+    "s-microsoft.com": 1,
+    "s-reader.com": 1,
+    "s-zone.com": 1,
+    "s7y3.com": 1,
+    "saasops.tech": 1,
+    "saayaa.com": 1,
+    "sacdr.net": 1,
+    "saebbs.com": 1,
+    "safe-lb.com": 1,
+    "safejmp.com": 1,
+    "sagepub.com": 1,
+    "saibo.com": 1,
+    "sail2world.com": 1,
+    "samasty.com": 1,
+    "sandai.net": 1,
+    "sanguosha.com": 1,
+    "sanguows.com": 1,
+    "sankuai.com": 1,
+    "sanwen.net": 1,
+    "saolife.com": 1,
+    "saraba1st.com": 1,
+    "sbhimalayanml.com": 1,
+    "sbsjk.com": 1,
+    "sc2yun.com": 1,
+    "sc96655.com": 1,
+    "scdn0077.com": 1,
+    "scdn08xd.com": 1,
+    "scdn0wcp.com": 1,
+    "scdn0wes.com": 1,
+    "scdn0xks.com": 1,
+    "scdn10a7.com": 1,
+    "scdn12zo.com": 1,
+    "scdn1dcz.com": 1,
+    "scdn1eul.com": 1,
+    "scdn1kjh.com": 1,
+    "scdn2kw9.com": 1,
+    "scdn2lhh.com": 1,
+    "scdn323r.com": 1,
+    "scdn3t09.com": 1,
+    "scdn40kn.com": 1,
+    "scdn43uu.com": 1,
+    "scdn46r9.com": 1,
+    "scdn4cpe.com": 1,
+    "scdn4esv.com": 1,
+    "scdn4iy4.com": 1,
+    "scdn4usw.com": 1,
+    "scdn549v.com": 1,
+    "scdn67mw.com": 1,
+    "scdn6e40.com": 1,
+    "scdn7c4e.com": 1,
+    "scdn7gsf.com": 1,
+    "scdn7ma2.com": 1,
+    "scdn8ksq.com": 1,
+    "scdn8ppt.com": 1,
+    "scdn98um.com": 1,
+    "scdnacsj.com": 1,
+    "scdnazo0.com": 1,
+    "scdnbi9w.com": 1,
+    "scdnbiar.com": 1,
+    "scdnc77s.com": 1,
+    "scdndn0v.com": 1,
+    "scdndsa6.com": 1,
+    "scdndtma.com": 1,
+    "scdne3lt.com": 1,
+    "scdne60t.com": 1,
+    "scdneb5k.com": 1,
+    "scdneufe.com": 1,
+    "scdnf3v6.com": 1,
+    "scdnfu51.com": 1,
+    "scdng.com": 1,
+    "scdngs0h.com": 1,
+    "scdnguqg.com": 1,
+    "scdnh957.com": 1,
+    "scdnhagn.com": 1,
+    "scdnhfua.com": 1,
+    "scdnhou6.com": 1,
+    "scdnifld.com": 1,
+    "scdnioyt.com": 1,
+    "scdnirdl.com": 1,
+    "scdnj8do.com": 1,
+    "scdnjfj2.com": 1,
+    "scdnjk59.com": 1,
+    "scdnkeuo.com": 1,
+    "scdnl05m.com": 1,
+    "scdnl46h.com": 1,
+    "scdnmba2.com": 1,
+    "scdnmnrz.com": 1,
+    "scdnmskl.com": 1,
+    "scdnndj2.com": 1,
+    "scdnnm9o.com": 1,
+    "scdnnrib.com": 1,
+    "scdnnub6.com": 1,
+    "scdno55z.com": 1,
+    "scdnoklx.com": 1,
+    "scdnokqh.com": 1,
+    "scdnooyg.com": 1,
+    "scdnpe31.com": 1,
+    "scdnq6rc.com": 1,
+    "scdnqjg9.com": 1,
+    "scdnqkxi.com": 1,
+    "scdnqo8s.com": 1,
+    "scdnqrty.com": 1,
+    "scdnqumc.com": 1,
+    "scdnr7p2.com": 1,
+    "scdnr932.com": 1,
+    "scdnsmjc.com": 1,
+    "scdnsvg4.com": 1,
+    "scdnt1h7.com": 1,
+    "scdnt9n9.com": 1,
+    "scdntucs.com": 1,
+    "scdntxla.com": 1,
+    "scdnukio.com": 1,
+    "scdnulx9.com": 1,
+    "scdnv7uq.com": 1,
+    "scdnvij7.com": 1,
+    "scdnw4kb.com": 1,
+    "scdnwehb.com": 1,
+    "scdnwljp.com": 1,
+    "scdnwmp0.com": 1,
+    "scdnwpqy.com": 1,
+    "scdnwwp9.com": 1,
+    "scdnxgev.com": 1,
+    "scdny1t3.com": 1,
+    "scdnydiw.com": 1,
+    "scdnywwp.com": 1,
+    "scdnzrch.com": 1,
+    "schimalayanuz.com": 1,
+    "sciencedirect.com": 1,
+    "scomper.me": 1,
+    "scopus.com": 1,
+    "scoregg.com": 1,
+    "sczsxx.com": 1,
+    "sdffqaz.com": 1,
+    "sdfscx.com": 1,
+    "sdg53.com": 1,
+    "sdgdwljt.com": 1,
+    "sdhgu.com": 1,
+    "sdo.com": 1,
+    "seafile.com": 1,
+    "searchtb.com": 1,
+    "seasungame.com": 1,
+    "seasungames.com": 1,
+    "sec-wiki.com": 1,
+    "secec.com": 1,
+    "securityinsight.com": 1,
+    "segmentfault.com": 1,
+    "sehimalayanqj.com": 1,
+    "sencdn.com": 1,
+    "senderline.com": 1,
+    "senderline.net": 1,
+    "seniverse.com": 1,
+    "senlinjimore.com": 1,
+    "senseagro.com": 1,
+    "servicewechat.com": 1,
+    "sf-airlines.com": 1,
+    "sf-cityrush.com": 1,
+    "sf-express.com": 1,
+    "sf-financial.com": 1,
+    "sf-saas.com": 1,
+    "sfacg.com": 1,
+    "sfcar.hk": 1,
+    "sfgy.org": 1,
+    "sg.work": 1,
+    "sgamer.com": 1,
+    "sgsic.com": 1,
+    "sgyeyou.com": 1,
+    "sgyouxi.com": 1,
+    "shanbay.com": 1,
+    "shang360.com": 1,
+    "shangc.net": 1,
+    "shanghaiqihu.com": 1,
+    "shanghairc.com": 1,
+    "shangshi360.com": 1,
+    "shangyouxuan.com": 1,
+    "shangzhibo.tv": 1,
+    "shanhaitujian.com": 1,
+    "shankejingling.com": 1,
+    "shanshuihotel.com": 1,
+    "sharejoytech.com": 1,
+    "sharejs.com": 1,
+    "sharepoint.com": 1,
+    "shebiaotm.com": 1,
+    "shelter-china.com": 1,
+    "shelterdome.net": 1,
+    "shenduoduo.cc": 1,
+    "shengdaosoft.com": 1,
+    "shengmingfa.com": 1,
+    "shenjing.com": 1,
+    "shenmayouxi.com": 1,
+    "sheui.com": 1,
+    "shgsec.com": 1,
+    "shhxzq.com": 1,
+    "shidianbaike.com": 1,
+    "shifen.com": 1,
+    "shihualuo8998.com": 1,
+    "shijiexia.com": 1,
+    "shikongdaoyu.com": 1,
+    "shimo.im": 1,
+    "shimonote.com": 1,
+    "shixiseng.com": 1,
+    "shkdfua.com": 1,
+    "shlsyb.com": 1,
+    "shmetro.com": 1,
+    "shoujihuifu.com": 1,
+    "shouyoubus.com": 1,
+    "showshell.com": 1,
+    "shrbank.com": 1,
+    "shssp.org": 1,
+    "shuame.com": 1,
+    "shuidichou.com": 1,
+    "shuidihuzhu.com": 1,
+    "shujuapi.com": 1,
+    "shujupie.com": 1,
+    "shumensy.com": 1,
+    "shuoba.com": 1,
+    "shuoba.me": 1,
+    "shuoba.org": 1,
+    "shuoshuokong.com": 1,
+    "shuqi.com": 1,
+    "shuqireader.com": 1,
+    "shutcm.com": 1,
+    "shyhhema.com": 1,
+    "shzq.com": 1,
+    "siam.org": 1,
+    "sichuanair.com": 1,
+    "sifou.com": 1,
+    "silkroddream.com": 1,
+    "silktrek.com": 1,
+    "simei8.com": 1,
+    "simuwang.com": 1,
+    "sina.com": 1,
+    "sina.net": 1,
+    "sinaapp.com": 1,
+    "sinacdn.com": 1,
+    "sinacloud.com": 1,
+    "sinacloud.net": 1,
+    "sinadaxue.com": 1,
+    "sinaedge.com": 1,
+    "sinaimg.com": 1,
+    "sinajs.com": 1,
+    "sinanet.com": 1,
+    "sinanode.com": 1,
+    "sinas3.com": 1,
+    "sinas3.net": 1,
+    "sinastorage.com": 1,
+    "sinasws.com": 1,
+    "sinauda.com": 1,
+    "sinesafe.com": 1,
+    "sinocache.net": 1,
+    "sinogslb.com": 1,
+    "sinogslb.net": 1,
+    "sinopec-usa.com": 1,
+    "sinopec.com": 1,
+    "sinopecgroup.com": 1,
+    "sinopecsales.com": 1,
+    "sinorusfocus.com": 1,
+    "sinorussian21st.org": 1,
+    "siteapp-static.com": 1,
+    "sixjoy.com": 1,
+    "sjtm.me": 1,
+    "sjwyx.com": 1,
+    "skdj5.com": 1,
+    "skidstorm.com": 1,
+    "skycn.com": 1,
+    "skysea.com": 1,
+    "slja2.com": 1,
+    "slk1.net": 1,
+    "sllssrq.com": 1,
+    "sm.ms": 1,
+    "smartcom.cc": 1,
+    "smartisan.com": 1,
+    "smartisanos.com": 1,
+    "smartont.net": 1,
+    "smogfly.club": 1,
+    "sms.imagetasks.com": 1,
+    "smtcdn.com": 1,
+    "smtcdns.com": 1,
+    "smtcdns.net": 1,
+    "smzdm.com": 1,
+    "smzdmimg.com": 1,
+    "snail.com": 1,
+    "snailmobile.com": 1,
+    "snap-buy.com": 1,
+    "snapdrop.net": 1,
+    "snapplay.com": 1,
+    "snimay.com": 1,
+    "snodehome.com": 1,
+    "snowballfinance.com": 1,
+    "snowballsecurities.com": 1,
+    "snssdk.com": 1,
+    "snwx.com": 1,
+    "so.com": 1,
+    "sobaidupan.com": 1,
+    "sobot.com": 1,
+    "soboten.com": 1,
+    "sofreight.com": 1,
+    "softwhy.com": 1,
+    "sofun.com": 1,
+    "sogo.com": 1,
+    "sogou-inc.com": 1,
+    "sogou-op.org": 1,
+    "sogou.com": 1,
+    "sogou.net": 1,
+    "sogoucdn.com": 1,
+    "sohu-inc.com": 1,
+    "sohu.com": 1,
+    "sohuapps.com": 1,
+    "sohucs.com": 1,
+    "sohumail.com": 1,
+    "sohuora.com": 1,
+    "sohurdc.com": 1,
+    "sohusce.com": 1,
+    "sojson.com": 1,
+    "sojump.com": 1,
+    "sokoyo-rj.com": 1,
+    "soku.com": 1,
+    "solidot.org": 1,
+    "somode.com": 1,
+    "sony.com": 1,
+    "sonyentertainmentnetwork.com": 1,
+    "soovvi.com": 1,
+    "soso.com": 1,
+    "sososnap.com": 1,
+    "sou.com": 1,
+    "soufunimg.com": 1,
+    "souqian.com": 1,
+    "southmoney.com": 1,
+    "souxia.com": 1,
+    "sparenode.com": 1,
+    "sparkletour.com": 1,
+    "spcdntip.com": 1,
+    "spcdntipbak.com": 1,
+    "spcloudhw.com": 1,
+    "spcloudhw.net": 1,
+    "spdyidea.com": 1,
+    "speedin.shop": 1,
+    "speedws.info": 1,
+    "speedws.org": 1,
+    "speiyou.com": 1,
+    "spiedigitallibrary.org": 1,
+    "springer.com": 1,
+    "springerlink.com": 1,
+    "springsunday.net": 1,
+    "springtour.com": 1,
+    "sq.cc": 1,
+    "sqqnh.org": 1,
+    "sqzksub.com": 1,
+    "sseinfo.com": 1,
+    "ssixvo9gaybkp5.com": 1,
+    "ssjlicai.com": 1,
+    "sslawy.com": 1,
+    "sslibrary.com": 1,
+    "sspai.com": 1,
+    "ssports.com": 1,
+    "ssrcdn.com": 1,
+    "ssscdn.com": 1,
+    "starbaby.cc": 1,
+    "starbaby.com": 1,
+    "stargame.com": 1,
+    "starlakelab.com": 1,
+    "starschina.com": 1,
+    "starschinalive.com": 1,
+    "startssl.com": 1,
+    "static163.net": 1,
+    "staticdn.net": 1,
+    "staticfile.org": 1,
+    "stcn.com": 1,
+    "steamcommunity-a.akamaihd.net": 1,
+    "steampp.net": 1,
+    "stmjsociety.com": 1,
+    "stockstar.com": 1,
+    "store-cdn.huami.com": 1,
+    "suanya.com": 1,
+    "subhd.tv": 1,
+    "sui.com": 1,
+    "sumkoo.com": 1,
+    "sumkoo.net": 1,
+    "sun0769.com": 1,
+    "suning.com": 1,
+    "suningbank.com": 1,
+    "suningcdn.com": 1,
+    "suningcdn.net": 1,
+    "suningcloud.com": 1,
+    "suningdns.com": 1,
+    "suningdns.net": 1,
+    "suningestate.com": 1,
+    "suninggslb.net": 1,
+    "suningholdings.com": 1,
+    "suninghotel.com": 1,
+    "suningmail.com": 1,
+    "suningyunyou.com": 1,
+    "sunlife-everbright.com": 1,
+    "sunrtb.com": 1,
+    "sunywo.com": 1,
+    "suopingbao.com": 1,
+    "supercell.com": 1,
+    "superlib.com": 1,
+    "superlib.net": 1,
+    "superlitetech.com": 1,
+    "supermap.com": 1,
+    "supermapcloud.com": 1,
+    "supervisionus.com": 1,
+    "supet.com": 1,
+    "suzuki-china.com": 1,
+    "svfrrg.com": 1,
+    "svk3o97xmyid93.com": 1,
+    "swan366.com": 1,
+    "swaqds.com": 1,
+    "swhysc.com": 1,
+    "swsmu.com": 1,
+    "sxhimalayanqd.com": 1,
+    "sxwao4zi6dgp.com": 1,
+    "sys321.com": 1,
+    "syscan360.com": 1,
+    "syscan360.net": 1,
+    "syscan360.org": 1,
+    "syxlgame.com": 1,
+    "sz-qtzs.com": 1,
+    "szbdyd.com": 1,
+    "szfw.org": 1,
+    "szhk.com": 1,
+    "szny189.com": 1,
+    "szzfgjj.com": 1,
+    "t.sohu": 1,
+    "t.tt": 1,
+    "t00ls.cc": 1,
+    "t00ls.net": 1,
+    "t1y5.com": 1,
+    "t4x3.com": 1,
+    "t79d6.com": 1,
+    "t7rt5.com": 1,
+    "taeapp.com": 1,
+    "taihe.com": 1,
+    "taihuoniao.com": 1,
+    "taijuwang.com": 1,
+    "taikang.com": 1,
+    "taikanglife.com": 1,
+    "taikangzhijia.com": 1,
+    "takungpao.com": 1,
+    "talkingdata.com": 1,
+    "talldns.com": 1,
+    "talldns.net": 1,
+    "tamaegis.com": 1,
+    "tandfonline.com": 1,
+    "tangeche.com": 1,
+    "tangping.com": 1,
+    "tankeai.com": 1,
+    "tanx.com": 1,
+    "tanxlog.istreamsche.com": 1,
+    "tao123.com": 1,
+    "taobao": 1,
+    "taobao.com": 1,
+    "taobao.org": 1,
+    "taobao.wang": 1,
+    "taobaocdn.com": 1,
+    "taobaotest.com": 1,
+    "taobaotesting.com": 1,
+    "taobizhong.com": 1,
+    "taoche.com": 1,
+    "taohua.com": 1,
+    "taojianghu.com": 1,
+    "taomee.com": 1,
+    "taopiaopiao.com": 1,
+    "taotao.com": 1,
+    "taotv.com": 1,
+    "taotv.net": 1,
+    "tap.io": 1,
+    "tapdb.net": 1,
+    "tapimg.com": 1,
+    "taplb.com": 1,
+    "taptap.com": 1,
+    "tav-global.com": 1,
+    "tawk.link": 1,
+    "tawk.to": 1,
+    "tazai.com": 1,
+    "tb.pub": 1,
+    "tbcache.com": 1,
+    "tbcdn.com": 1,
+    "tbmcas.com": 1,
+    "tbmkt.com": 1,
+    "tbsandbox.com": 1,
+    "tbshare123.com": 1,
+    "tburl.in": 1,
+    "tcdlive.com": 1,
+    "tcdnhw.com": 1,
+    "tcdnkcbak.com": 1,
+    "tcdnlive.com": 1,
+    "tcdnlivebak1.com": 1,
+    "tcdnlivebak2.com": 1,
+    "tcdnos.com": 1,
+    "tcdnos.net": 1,
+    "tcdntip.com": 1,
+    "tcdnvod.com": 1,
+    "tcdnvodbak.com": 1,
+    "tcfmglobal.com": 1,
+    "tcl.com": 1,
+    "tcloudbase.com": 1,
+    "tcloudbase.net": 1,
+    "tcloudbaseapp.com": 1,
+    "tcloudbi.com": 1,
+    "tclouddrive.com": 1,
+    "tcloudedu.com": 1,
+    "tcloudhw.com": 1,
+    "tcloudhw.net": 1,
+    "tcloudscdn.com": 1,
+    "tcloudscdn.net": 1,
+    "tdd.la": 1,
+    "tdnsv1.com": 1,
+    "tdnsv5.com": 1,
+    "tdnsv6.com": 1,
+    "tdnsx1.com": 1,
+    "tdtbd.com": 1,
+    "te5.com": 1,
+    "teachblog.net": 1,
+    "teambition.com": 1,
+    "teambition.net": 1,
+    "teambitionapis.com": 1,
+    "teamviewer.com": 1,
+    "techo.chat": 1,
+    "tefscloud.com": 1,
+    "tefscloud.net": 1,
+    "tekkenthree.com": 1,
+    "teleows.com": 1,
+    "temyee.com": 1,
+    "tenant-zone-dev.com": 1,
+    "tencdns.net": 1,
+    "tencent-cloud.com": 1,
+    "tencent-cloud.net": 1,
+    "tencent-gcloud.com": 1,
+    "tencent.co.id": 1,
+    "tencent.com": 1,
+    "tencent.com.hk": 1,
+    "tencent.design": 1,
+    "tencent.net": 1,
+    "tencentads.com": 1,
+    "tencentapps.com": 1,
+    "tencentbyod.com": 1,
+    "tencentcdb.com": 1,
+    "tencentclb.com": 1,
+    "tencentcloud-aiot.com": 1,
+    "tencentcloudapi.com": 1,
+    "tencentcloudclub.com": 1,
+    "tencentcloudcr.com": 1,
+    "tencentcloudmarket.com": 1,
+    "tencentcloudns.com": 1,
+    "tencentcloudsec.com": 1,
+    "tencentcloudses.com": 1,
+    "tencentcos.com": 1,
+    "tencentcs.com": 1,
+    "tencentdayu.com": 1,
+    "tencentdb.com": 1,
+    "tencentdevices.com": 1,
+    "tencentdigitalassistant.com": 1,
+    "tencentdms.com": 1,
+    "tencenteiam.com": 1,
+    "tencentelasticsearch.com": 1,
+    "tencentid.com": 1,
+    "tencentidentity.com": 1,
+    "tencentipv6.com": 1,
+    "tencentlog.com": 1,
+    "tencentmind.com": 1,
+    "tencentmusic.com": 1,
+    "tencentproxy.com": 1,
+    "tencentrio.com": 1,
+    "tencentstart.com": 1,
+    "tencenttid.com": 1,
+    "tencentwemeet.club": 1,
+    "tencentwepark.com": 1,
+    "tencentyun.com": 1,
+    "tendbcluster.com": 1,
+    "tendis.net": 1,
+    "tenpay.com": 1,
+    "tenxcloud.com": 1,
+    "test-cignacmb.com": 1,
+    "test-ipv6.com": 1,
+    "testwaf.com": 1,
+    "tetrisone.com": 1,
+    "texasholdemcup.com": 1,
+    "texasholdemcup.net": 1,
+    "tfgvb.com": 1,
+    "tfzq.com": 1,
+    "tgbus.com": 1,
+    "tggypn.com": 1,
+    "tgovcloud.com": 1,
+    "tgtianshanga.com": 1,
+    "themisweeps.com": 1,
+    "thinkcloudlab.com": 1,
+    "thinkpad.com": 1,
+    "ths123.com": 1,
+    "thundercdn.com": 1,
+    "thunderurl.com": 1,
+    "tianchi.com": 1,
+    "tiancity.com": 1,
+    "tiancitycdn.com": 1,
+    "tianjimedia.com": 1,
+    "tianjin-air.com": 1,
+    "tianlailive.com": 1,
+    "tianmao.com": 1,
+    "tianqi.com": 1,
+    "tianyablog.com": 1,
+    "tianyaclub.com": 1,
+    "tianyancha.com": 1,
+    "tianyaui.com": 1,
+    "tianzuida.com": 1,
+    "tidaas.com": 1,
+    "tieba.com": 1,
+    "tiebaimg.com": 1,
+    "tietuku.com": 1,
+    "tiexue.net": 1,
+    "tieyou.com": 1,
+    "tiktokd.net": 1,
+    "tiktokd.org": 1,
+    "time.is": 1,
+    "timedoo.com": 1,
+    "timibase.com": 1,
+    "timipc.com": 1,
+    "timmerse.com": 1,
+    "tingbook.com": 1,
+    "tingkanbao.com": 1,
+    "tingyun.com": 1,
+    "tipdim.org": 1,
+    "tisi.org": 1,
+    "titanar.com": 1,
+    "titianshanfz.com": 1,
+    "tivitv.com": 1,
+    "tj1-miui-bn-stage01.kscn": 1,
+    "tjjt360.com": 1,
+    "tjstats.com": 1,
+    "tjupt.org": 1,
+    "tkhealthcare.com": 1,
+    "tlgslb.com": 1,
+    "tlivecdn.com": 1,
+    "tmall": 1,
+    "tmall.com": 1,
+    "tmall.hk": 1,
+    "tmall.ru": 1,
+    "tmallgenie.com": 1,
+    "tmallgenieapi.com": 1,
+    "tmallplay.net": 1,
+    "tmalltv.com": 1,
+    "tmcdn.net": 1,
+    "tmjiasuqi.com": 1,
+    "tmjl.ai": 1,
+    "tmqd.me": 1,
+    "tmqd.so": 1,
+    "tmshare123.com": 1,
+    "tmtpost.com": 1,
+    "tmtsmartlife.com": 1,
+    "tmtsmartrun.com": 1,
+    "tmxz.me": 1,
+    "tmzvps.com": 1,
+    "toaobg.com": 1,
+    "tobosu.com": 1,
+    "tom.com": 1,
+    "tongdun.net": 1,
+    "tongtaiamc.com": 1,
+    "tongxianghuicn.com": 1,
+    "tools.team": 1,
+    "tophub.today": 1,
+    "toplife.com": 1,
+    "topthink.com": 1,
+    "toscdn.com": 1,
+    "totheglory.im": 1,
+    "touqikan.com": 1,
+    "toursbms.com": 1,
+    "toutiao.com": 1,
+    "toutiao11.com": 1,
+    "toutiao12.com": 1,
+    "toutiao13.com": 1,
+    "toutiao14.com": 1,
+    "toutiao15.com": 1,
+    "toutiaoapi.com": 1,
+    "toutiaocdn.com": 1,
+    "toutiaocdn.net": 1,
+    "toutiaocloud.com": 1,
+    "toutiaocloud.net": 1,
+    "toutiaogood.com": 1,
+    "toutiaohao.com": 1,
+    "toutiaohao.net": 1,
+    "toutiaoimg.com": 1,
+    "toutiaoimg.net": 1,
+    "toutiaojisu.com": 1,
+    "toutiaolite.com": 1,
+    "toutiaolite1.com": 1,
+    "toutiaolite2.com": 1,
+    "toutiaopage.com": 1,
+    "toutiaoribao.net": 1,
+    "toutiaostatic.com": 1,
+    "toutiaovod.com": 1,
+    "toutiaowap.com": 1,
+    "toutiaowap.net": 1,
+    "toutiaoyule.com": 1,
+    "touzid.com": 1,
+    "tpyzq.com": 1,
+    "tqapp.com": 1,
+    "tqiangg.com": 1,
+    "tqiangg.net": 1,
+    "tracup.com": 1,
+    "tradaquan.com": 1,
+    "travelsky.com": 1,
+    "trellocdn.com": 1,
+    "trfgvb.com": 1,
+    "trip.com": 1,
+    "tripcdn.com": 1,
+    "trpcdn.com": 1,
+    "trpcdn.net": 1,
+    "trunktech.com": 1,
+    "trustexporter.com": 1,
+    "trustutn.org": 1,
+    "tsm-yuntrust.com": 1,
+    "tsparkling.com": 1,
+    "tswjs.org": 1,
+    "ttbyte.com": 1,
+    "ttbyte.net": 1,
+    "ttjisu.com": 1,
+    "ttmeiju.com": 1,
+    "ttnea.com": 1,
+    "ttplayer.com": 1,
+    "ttpod.com": 1,
+    "tu54o7863tbf6.com": 1,
+    "tudou.com": 1,
+    "tudouui.com": 1,
+    "tudouxy01.com": 1,
+    "tuer123.com": 1,
+    "tuicool.com": 1,
+    "tuiwen.net": 1,
+    "tujia.com": 1,
+    "tujidu.com": 1,
+    "tuniu.com": 1,
+    "tutuapp.com": 1,
+    "tuwan.com": 1,
+    "tuwanjun.com": 1,
+    "tv.sohu": 1,
+    "tv002.com": 1,
+    "tweakcube.com": 1,
+    "twmsuf.com": 1,
+    "twsapp.com": 1,
+    "twscholar.com": 1,
+    "tx-exhibition.com": 1,
+    "tx163.com": 1,
+    "txbanche.com": 1,
+    "txbyod.com": 1,
+    "txidc.wang": 1,
+    "txjhqh.com": 1,
+    "txrjy.com": 1,
+    "txtyxg.com": 1,
+    "txyscdn.com": 1,
+    "txyscdn.net": 1,
+    "typeeasy.net": 1,
+    "tysurl.com": 1,
+    "tyututy.com": 1,
+    "u-cdn.net": 1,
+    "u.tools": 1,
+    "u17.com": 1,
+    "u17i.com": 1,
+    "u17t.com": 1,
+    "uat1.bfsspadserver.8le8le.com": 1,
+    "ubibibi.com": 1,
+    "ubja.vip": 1,
+    "ubssdic.com": 1,
+    "ubuntukylin.com": 1,
+    "uc-test.com": 1,
+    "uc123.com": 1,
+    "ucbug.com": 1,
+    "ucfly.com": 1,
+    "ucgslb.com": 1,
+    "ucgslb.info": 1,
+    "ucgslb.net": 1,
+    "ucgslb.top": 1,
+    "ucloud-edm.com": 1,
+    "ucloud365.com": 1,
+    "ucloudadmin.com": 1,
+    "ucloudapi.com": 1,
+    "ucloudgda.com": 1,
+    "ucloudnaming.com": 1,
+    "ucloudnaming.info": 1,
+    "ucloudnaming.net": 1,
+    "ucloudoss.com": 1,
+    "ucloudstack.com": 1,
+    "ucloudstack.net": 1,
+    "ucloudstor.com": 1,
+    "ucloudufile.com": 1,
+    "ucnaming.com": 1,
+    "ucnaming.info": 1,
+    "ucnaming.net": 1,
+    "ucweb.com": 1,
+    "udache.com": 1,
+    "udacity.com": 1,
+    "uetianshanyp.com": 1,
+    "uewaf.com": 1,
+    "ufileos.com": 1,
+    "uflowx.com": 1,
+    "ugdesk.com": 1,
+    "ugdtimg.com": 1,
+    "uggame.com": 1,
+    "ugslb.com": 1,
+    "ugslb.info": 1,
+    "ugslb.net": 1,
+    "ugslb.top": 1,
+    "ugslb2.net": 1,
+    "uhasadmin.com": 1,
+    "uhbthn.com": 1,
+    "uiwow.com": 1,
+    "ujnfdfv.com": 1,
+    "ule.com": 1,
+    "ulecdn.com": 1,
+    "ulikecam.com": 1,
+    "ulikecam.mobi": 1,
+    "ulikecam.net": 1,
+    "ultraiso.net": 1,
+    "um.run": 1,
+    "umajor.net": 1,
+    "umeng.com": 1,
+    "umengcloud.com": 1,
+    "umetrip.com": 1,
+    "umsns.com": 1,
+    "umtrack.com": 1,
+    "un.org": 1,
+    "unaming.info": 1,
+    "unaming.net": 1,
+    "uni-bielefeld.de": 1,
+    "unicomgd.com": 1,
+    "unicompayment.com": 1,
+    "unicompayment.net": 1,
+    "unicompayment.org": 1,
+    "uning.com": 1,
+    "uniny.com": 1,
+    "unionpay.com": 1,
+    "unionpay.net": 1,
+    "unionpayintl.com": 1,
+    "unionpaysecure.com": 1,
+    "uniontech.com": 1,
+    "uoj.ac": 1,
+    "uoko.com": 1,
+    "uonline-sh.com": 1,
+    "uonline-sh.net": 1,
+    "upai.com": 1,
+    "upaiyun.com": 1,
+    "upcdn.net": 1,
+    "update.microsoft.com": 1,
+    "upe.net": 1,
+    "upos-hz-mirrorakam.akamaized.net": 1,
+    "upqzfile.com": 1,
+    "upqzfilebk.com": 1,
+    "upyun.com": 1,
+    "urhimalayanak.com": 1,
+    "url7.me": 1,
+    "urselect.com": 1,
+    "urumqi-air.com": 1,
+    "user-agent": 1,
+    "useso.com": 1,
+    "uslk.net": 1,
+    "uucl.vip": 1,
+    "uueasy.com": 1,
+    "uufund.com": 1,
+    "uuhimalayanqm.com": 1,
+    "uuu9.com": 1,
+    "uw36gicu5xav.com": 1,
+    "uxengine.net": 1,
+    "uyhjnm.com": 1,
+    "uyunad.com": 1,
+    "uzzf.com": 1,
+    "v-56.com": 1,
+    "v.sohu": 1,
+    "v.to": 1,
+    "v5875.com": 1,
+    "v78q.com": 1,
+    "value500.com": 1,
+    "valueq-sea.com": 1,
+    "vamaker.com": 1,
+    "vancl.com": 1,
+    "vanclimg.com": 1,
+    "vaptcha.com": 1,
+    "vaptcha.net": 1,
+    "variflight.com": 1,
+    "vayol.com": 1,
+    "vbmnmy.com": 1,
+    "vcimg.com": 1,
+    "vcloudgtm.com": 1,
+    "vcloudgtm.net": 1,
+    "vcloudstc.com": 1,
+    "vcloudstc.net": 1,
+    "vcloudvod.com": 1,
+    "vctianshanvs.com": 1,
+    "vdnplus.com": 1,
+    "vdnplus.net": 1,
+    "vdolady.com": 1,
+    "veeqi.net": 1,
+    "vegslb.com": 1,
+    "veryhuo.com": 1,
+    "veryzhun.com": 1,
+    "vg.com": 1,
+    "vg89qeas3xagd.com": 1,
+    "vghimalayandm.com": 1,
+    "vghimalayanet.com": 1,
+    "vgtime.com": 1,
+    "vgyuhu.com": 1,
+    "vhisxs.com": 1,
+    "vic18.com": 1,
+    "videocc.net": 1,
+    "videojj.com": 1,
+    "videomind.cloud": 1,
+    "videomind.net": 1,
+    "videoxiaoyouxi.com": 1,
+    "vijos.org": 1,
+    "vip.com": 1,
+    "vipappsina.com": 1,
+    "vipcaocao.com": 1,
+    "vipdlt.com": 1,
+    "vipexam.org": 1,
+    "vipmro.com": 1,
+    "vipmro.net": 1,
+    "vipsinaapp.com": 1,
+    "vipstatic.com": 1,
+    "vista123.com": 1,
+    "visualstudio.com": 1,
+    "vmall-hw.com": 1,
+    "vmall.com": 1,
+    "vmallres.com": 1,
+    "vobao.com": 1,
+    "vodtcbk.com": 1,
+    "volccdn.com": 1,
+    "volcdem.com": 1,
+    "volceapplog.com": 1,
+    "volces.com": 1,
+    "volcimagex.net": 1,
+    "volcvod.com": 1,
+    "volleychina.org": 1,
+    "volvocars.com": 1,
+    "voovlive.com": 1,
+    "vpgame.com": 1,
+    "vplay8.com": 1,
+    "vrbt.mobi": 1,
+    "vshabo.com": 1,
+    "vshoucang.com": 1,
+    "vuxmpw.com": 1,
+    "vwanjia.com": 1,
+    "vxo7tu.com": 1,
+    "vzuu.com": 1,
+    "wakaligong.com": 1,
+    "wali.com": 1,
+    "wallstcn.com": 1,
+    "wallstreetcn.com": 1,
+    "wamawama.com": 1,
+    "wan.wang": 1,
+    "wan68.com": 1,
+    "wandoujia.com": 1,
+    "wanggou.com": 1,
+    "wangsu.com": 1,
+    "wangyangyang.vip": 1,
+    "wangyin.com": 1,
+    "wanhongbao.com": 1,
+    "wanjiashow.com": 1,
+    "wanmei.com": 1,
+    "wanmei.net": 1,
+    "wannianli8.com": 1,
+    "wanplus.com": 1,
+    "wanwan4399.com": 1,
+    "wanwang.com": 1,
+    "wanwushuo.com": 1,
+    "wanwuzhinan.com": 1,
+    "wanyiwang.com": 1,
+    "wanyol.com": 1,
+    "wanyx.com": 1,
+    "wapone.net": 1,
+    "warmchina121.com": 1,
+    "wbimg.com": 1,
+    "wcbygame.com": 1,
+    "wdfok.com": 1,
+    "wdjimg.com": 1,
+    "wdzj.com": 1,
+    "we4399.com": 1,
+    "weand.com": 1,
+    "weather.com": 1,
+    "webank.com": 1,
+    "webankcdn.net": 1,
+    "webgame163.com": 1,
+    "webgamehome.com": 1,
+    "webnovel.com": 1,
+    "webofknowledge.com": 1,
+    "webqxs.com": 1,
+    "webterren.com": 1,
+    "wechat.com": 1,
+    "wechatlegal.net": 1,
+    "wechatpay.com": 1,
+    "wechatpay.com.hk": 1,
+    "wegame.com": 1,
+    "wegamedeveloper.com": 1,
+    "wegameplus.com": 1,
+    "weiaixiaoshuo.com": 1,
+    "weibo.com": 1,
+    "weibo.tv": 1,
+    "weibocdn.com": 1,
+    "weiboums.com": 1,
+    "weicaifu.com": 1,
+    "weico.cc": 1,
+    "weidian.com": 1,
+    "weiguan.com": 1,
+    "weilaicaijing.com": 1,
+    "weilaiyunxiao.com": 1,
+    "weiphone.com": 1,
+    "weiphone.net": 1,
+    "weishi.com": 1,
+    "weixin.com": 1,
+    "weixin4bus.com": 1,
+    "weixinbridge.com": 1,
+    "weixinsxy.com": 1,
+    "weiyangx.com": 1,
+    "weiyun.com": 1,
+    "welltrend-edu.com": 1,
+    "wenjuan.com": 1,
+    "wenku.in": 1,
+    "wenku8.net": 1,
+    "wenmingban.com": 1,
+    "wenshibaowenbei.com": 1,
+    "wenxin-ge.com": 1,
+    "wenyupages.com": 1,
+    "werewolf.53site.com": 1,
+    "wertalk.com": 1,
+    "wesingapp.com": 1,
+    "west95582.com": 1,
+    "westlaw.com": 1,
+    "weui.io": 1,
+    "wework-studio.com": 1,
+    "wf.pub": 1,
+    "wfdata.club": 1,
+    "wfss100.com": 1,
+    "whalecloud.com": 1,
+    "whatismyip.com": 1,
+    "whccb.com": 1,
+    "whlovehome.com": 1,
+    "whyenjoy.com": 1,
+    "wicresoft.com": 1,
+    "wifi.com": 1,
+    "wifi188.com": 1,
+    "wifi6667.com": 1,
+    "wifiapi.net": 1,
+    "wificstia.com": 1,
+    "wifidigyy.com": 1,
+    "wifinew.com": 1,
+    "wifinews.com": 1,
+    "wifiniu.com": 1,
+    "wifisdk.net": 1,
+    "wifivpn.net": 1,
+    "wiley.com": 1,
+    "win007.com": 1,
+    "win7china.com": 1,
+    "win8.net": 1,
+    "win8china.com": 1,
+    "windows.com": 1,
+    "windows.net": 1,
+    "windows10zj.com": 1,
+    "windows7en.com": 1,
+    "windowsupdate.com": 1,
+    "windowsupdate.microsoft.com": 1,
+    "windowszj.com": 1,
+    "winegame.net": 1,
+    "winwin7.com": 1,
+    "wirlesshare.com": 1,
+    "wisefx.com": 1,
+    "wishdown.com": 1,
+    "wiwide.com": 1,
+    "wjx.com": 1,
+    "wjx.top": 1,
+    "wkanx.com": 1,
+    "wkcdn.com": 1,
+    "wkopen.com": 1,
+    "wlyxmusic.net": 1,
+    "wmupd.com": 1,
+    "wmwm.com": 1,
+    "wmzhe.com": 1,
+    "wnhuifu.com": 1,
+    "wnsqzonebk.com": 1,
+    "wo-link.tech": 1,
+    "wo116114.com": 1,
+    "wo1wan.com": 1,
+    "woa.com": 1,
+    "woaanc.com": 1,
+    "woaifanyi.com": 1,
+    "woaihuoshan.com": 1,
+    "wobaif.com": 1,
+    "wodingche.com": 1,
+    "wohst8.com": 1,
+    "wol.tv": 1,
+    "wolai.com": 1,
+    "wom186.com": 1,
+    "womai.com": 1,
+    "wondercv.com": 1,
+    "woniu.com": 1,
+    "wonnder.com": 1,
+    "wooyun.org": 1,
+    "woozooo.com": 1,
+    "workbenchapi.com": 1,
+    "worktile.com": 1,
+    "worldbank.org": 1,
+    "worldscientific.com": 1,
+    "wowchina.com": 1,
+    "wowenda.com": 1,
+    "wowenwen.com": 1,
+    "wowtb.com": 1,
+    "woxihuan.com": 1,
+    "woyaogexing.com": 1,
+    "woyoo.com": 1,
+    "wps.com": 1,
+    "wpscdn.com": 1,
+    "wpsep.net": 1,
+    "wpsgo.com": 1,
+    "wpske.com": 1,
+    "wpsmail.net": 1,
+    "wpsplus.com": 1,
+    "wqiis.com": 1,
+    "wqzsc36ou356m.com": 1,
+    "wrating.com": 1,
+    "wscdns.com": 1,
+    "wscdns.info": 1,
+    "wscdns.org": 1,
+    "wshifen.com": 1,
+    "wsimg.com": 1,
+    "wsoso.com": 1,
+    "wssanguo.com": 1,
+    "wsxsdf.com": 1,
+    "wting.info": 1,
+    "wtown.com": 1,
+    "wtzw.com": 1,
+    "wubashangban.com": 1,
+    "wuhaozhan.net": 1,
+    "wukong.com": 1,
+    "wukongwenda.com": 1,
+    "wuliujie.com": 1,
+    "wuliuyun.com": 1,
+    "wumii.com": 1,
+    "wuming.com": 1,
+    "wusuobuneng.com": 1,
+    "wusuobuneng.org": 1,
+    "wuxianhaibao.com": 1,
+    "wuximediaglobal.com": 1,
+    "wuxizazhi.com": 1,
+    "wuxizazhi.net": 1,
+    "wuyou189.com": 1,
+    "www.libvideo.com": 1,
+    "www.yxssp.com": 1,
+    "wxgamemini.com": 1,
+    "wxlagame.com": 1,
+    "wxsbank.com": 1,
+    "wxutil.com": 1,
+    "wxzq.com": 1,
+    "wywyx.com": 1,
+    "wztianshanfs.com": 1,
+    "wztsy.com": 1,
+    "x-cloud.cc": 1,
+    "x315.com": 1,
+    "x3g1.com": 1,
+    "x9gc3siwevbpc.com": 1,
+    "xa-bank.com": 1,
+    "xafc.com": 1,
+    "xbiao.com": 1,
+    "xbox.com": 1,
+    "xboxlive.com": 1,
+    "xcbbtf.com": 1,
+    "xcsc.com": 1,
+    "xd.com": 1,
+    "xdcdn.net": 1,
+    "xdgogogo.com": 1,
+    "xdrcftv.com": 1,
+    "xdrig.com": 1,
+    "xdwan.com": 1,
+    "xdxiaoshuo.com": 1,
+    "xesimg.com": 1,
+    "xevddy.com": 1,
+    "xf-fund.com": 1,
+    "xfdown.com": 1,
+    "xhaiwai.com": 1,
+    "xhostfire.com": 1,
+    "xhscdn.com": 1,
+    "xhscdn.net": 1,
+    "xiachufang.com": 1,
+    "xiamenair.com": 1,
+    "xiami.com": 1,
+    "xiami.fm": 1,
+    "xiami.net": 1,
+    "xianfae.com": 1,
+    "xianjiqun.com": 1,
+    "xianousiqi.com": 1,
+    "xianyu.mobi": 1,
+    "xiaobai.com": 1,
+    "xiaobaipan.com": 1,
+    "xiaobaixitong.com": 1,
+    "xiaobaobianli.com": 1,
+    "xiaobaobianli.net": 1,
+    "xiaobool.com": 1,
+    "xiaodutv.com": 1,
+    "xiaoe-tech.com": 1,
+    "xiaog.xyz": 1,
+    "xiaogouh5.com": 1,
+    "xiaohongshu.com": 1,
+    "xiaojukeji.com": 1,
+    "xiaoka.tv": 1,
+    "xiaokaxiu.com": 1,
+    "xiaokesoso.com": 1,
+    "xiaoluerhuo.com": 1,
+    "xiaoluhaohuo.com": 1,
+    "xiaoluyouxuan.com": 1,
+    "xiaoluzhidian.com": 1,
+    "xiaomi.com": 1,
+    "xiaomi.net": 1,
+    "xiaomi.org": 1,
+    "xiaomicache.com": 1,
+    "xiaomicorp.com": 1,
+    "xiaomicorp.net": 1,
+    "xiaomicp.com": 1,
+    "xiaomidns.com": 1,
+    "xiaomidns.net": 1,
+    "xiaomiev.com": 1,
+    "xiaomiflash.com": 1,
+    "xiaomiinc.com": 1,
+    "xiaomiinc.net": 1,
+    "xiaomingtaiji.com": 1,
+    "xiaomisa.com": 1,
+    "xiaomisa.net": 1,
+    "xiaomisa.org": 1,
+    "xiaomiyoupin.com": 1,
+    "xiaoso.net": 1,
+    "xiaoxiongxitong.com": 1,
+    "xiaoyiads.com": 1,
+    "xiaoyuankousuan.com": 1,
+    "xiaoyuxitong.com": 1,
+    "xiayx.com": 1,
+    "xiazaiba.com": 1,
+    "xiguaapp.com": 1,
+    "xiguashipin.net": 1,
+    "xiguavideo.net": 1,
+    "xihuan.me": 1,
+    "ximalaya.com": 1,
+    "xin.xin": 1,
+    "xinchong.com": 1,
+    "xindexuexi.com": 1,
+    "xindong.com": 1,
+    "xingjiesj.com": 1,
+    "xingtan001.com": 1,
+    "xingxuanwaimai.com": 1,
+    "xinhuanet.com": 1,
+    "xinrenxinshi.com": 1,
+    "xinshipu.com": 1,
+    "xinwengood.com": 1,
+    "xinzhi.com": 1,
+    "xishanju.com": 1,
+    "xitek.com": 1,
+    "xitong8.com": 1,
+    "xitu.com": 1,
+    "xitu.io": 1,
+    "xiu8.com": 1,
+    "xiucai.com": 1,
+    "xiziwang.net": 1,
+    "xjietiao.com": 1,
+    "xjoycity.com": 1,
+    "xlaomi.net": 1,
+    "xlxba.com": 1,
+    "xmcdn.com": 1,
+    "xmhouse.com": 1,
+    "xmindchina.net": 1,
+    "xn--fiq53l6wcx3kp9bc7joo6apn8a.xn--fiqs8s": 1,
+    "xn--kprv4ewxfr9cpxcc7joo6apn8a.xn--fiqs8s": 1,
+    "xn--r70as2s.xn--fiqs8s": 1,
+    "xnpic.com": 1,
+    "xoyo.com": 1,
+    "xoyobox.com": 1,
+    "xoyocdn.com": 1,
+    "xpgod.com": 1,
+    "xppgsx.com": 1,
+    "xpsy3q9e5kr4.com": 1,
+    "xqfunds.com": 1,
+    "xqymuy.com": 1,
+    "xrqorv.com": 1,
+    "xsa239.com": 1,
+    "xshellcn.com": 1,
+    "xsjom.com": 1,
+    "xslb.net": 1,
+    "xsyeli.com": 1,
+    "xuanchuanyi.com": 1,
+    "xue51.com": 1,
+    "xueersi.com": 1,
+    "xuekanba.com": 1,
+    "xueqiu.com": 1,
+    "xuetangx.com": 1,
+    "xuexi365.com": 1,
+    "xuexi365.net": 1,
+    "xuexicha.com": 1,
+    "xueyuanjun.com": 1,
+    "xundupdf.com": 1,
+    "xunfeixxj.com": 1,
+    "xunlei.com": 1,
+    "xunvision.com": 1,
+    "xunxi.com": 1,
+    "xunyou.com": 1,
+    "xwbank.com": 1,
+    "xxsy.com": 1,
+    "xxsy.net": 1,
+    "xxtmail.com": 1,
+    "xycdn.com": 1,
+    "xycloud.com": 1,
+    "xylofh.com": 1,
+    "xyous.com": 1,
+    "xywy.com": 1,
+    "xyzele.com": 1,
+    "xzking.com": 1,
+    "xzsec.com": 1,
+    "y4rwk6v8s41kr.com": 1,
+    "y5api.com": 1,
+    "y5news.com": 1,
+    "y5store.com": 1,
+    "y78r.com": 1,
+    "yach.me": 1,
+    "yahui.cc": 1,
+    "yanchupiaojia.com": 1,
+    "yangkeduo.com": 1,
+    "yaodu365.com": 1,
+    "yaolan.com": 1,
+    "yaoluu.com": 1,
+    "yaoyl.com": 1,
+    "yaozh.com": 1,
+    "yayagushi.com": 1,
+    "ybccode.com": 1,
+    "ybtianshantu.com": 1,
+    "yccdn.com": 1,
+    "ycgame.com": 1,
+    "ycrx360.com": 1,
+    "ydamc.com": 1,
+    "ydstatic.com": 1,
+    "ydvip00aa.com": 1,
+    "ydvip00ab.com": 1,
+    "ydvip00ac.com": 1,
+    "ydvip00ad.com": 1,
+    "ydvip00ae.com": 1,
+    "ydvip00af.com": 1,
+    "ydvip00ag.com": 1,
+    "ydvip00ah.com": 1,
+    "ydvip00ai.com": 1,
+    "ydvip00aj.com": 1,
+    "ydvip00ak.com": 1,
+    "ydvip00al.com": 1,
+    "ydvip00am.com": 1,
+    "ydvip00an.com": 1,
+    "ydvip00ao.com": 1,
+    "ydvip00ap.com": 1,
+    "ydvip00aq.com": 1,
+    "ydvip00ar.com": 1,
+    "ydvip00as.com": 1,
+    "ydvip00at.com": 1,
+    "yeah.net": 1,
+    "yeepay.com": 1,
+    "yeshen.com": 1,
+    "yeshj.com": 1,
+    "yesky.com": 1,
+    "yeyingkf.com": 1,
+    "yeyoucdn.com": 1,
+    "yeyousg.com": 1,
+    "yfcache.com": 1,
+    "yfcalc.com": 1,
+    "yfcdn.net": 1,
+    "yfcloud.com": 1,
+    "yfcloud.io": 1,
+    "yfcloud.work": 1,
+    "yfdns.net": 1,
+    "yfdts.net": 1,
+    "yflive.net": 1,
+    "yfp2p.net": 1,
+    "yfscdn.com": 1,
+    "yfscdn.net": 1,
+    "yh31.com": 1,
+    "yhd.com": 1,
+    "yhgfb-cn-static.com": 1,
+    "yicai.com": 1,
+    "yiche.com": 1,
+    "yidianliulan.com": 1,
+    "yifubao.com": 1,
+    "yigao.com": 1,
+    "yigoonet.com": 1,
+    "yihaodian.com": 1,
+    "yihaodianimg.com": 1,
+    "yihaomall.com": 1,
+    "yihedoors.com": 1,
+    "yiigle.com": 1,
+    "yikaochacha.com": 1,
+    "yikexue.com": 1,
+    "yiliao.hupan.com": 1,
+    "yillionbank.com": 1,
+    "yingjia360.com": 1,
+    "yingjiesheng.com": 1,
+    "yingjiesheng.net": 1,
+    "yingyongso.com": 1,
+    "yinhang123.net": 1,
+    "yinxiang.com": 1,
+    "yinyuetai.com": 1,
+    "yinzhaowang.com": 1,
+    "yiqianbao.net": 1,
+    "yiqifa.com": 1,
+    "yiqifa.org": 1,
+    "yiqihuihui.com": 1,
+    "yiqioffice.com": 1,
+    "yiqixie.com": 1,
+    "yisu.com": 1,
+    "yitaifang.com": 1,
+    "yitao.com": 1,
+    "yiwan.com": 1,
+    "yiwanzhushou.com": 1,
+    "yixi.tv": 1,
+    "yixia.com": 1,
+    "yixun.com": 1,
+    "yiyaojd.com": 1,
+    "yizhibo.com": 1,
+    "yizhitou.com": 1,
+    "yjbys.com": 1,
+    "yjs-cdn.com": 1,
+    "yjs-cdn1.com": 1,
+    "yjs-cdn10.com": 1,
+    "yjs-cdn2.com": 1,
+    "yjs-cdn3.com": 1,
+    "yjs-cdn4.com": 1,
+    "yjs-cdn5.com": 1,
+    "yjs-cdn6.com": 1,
+    "yjs-cdn7.com": 1,
+    "yjs-cdn8.com": 1,
+    "yjs-cdn9.com": 1,
+    "yjsops.com": 1,
+    "yk72e.com": 1,
+    "ykimg.com": 1,
+    "ykzq.com": 1,
+    "ylike.net": 1,
+    "ym.run": 1,
+    "ymbank.com": 1,
+    "ynet.com": 1,
+    "ynhr.com": 1,
+    "yo9.com": 1,
+    "yocajr.com": 1,
+    "yodao.com": 1,
+    "yodao.info": 1,
+    "yodao.net": 1,
+    "yodao.org": 1,
+    "yodou.com": 1,
+    "yongjiu7.com": 1,
+    "yoqoo.com": 1,
+    "yoqoo.net": 1,
+    "yoqoo.tv": 1,
+    "youba.com": 1,
+    "youboy.com": 1,
+    "youdao.com": 1,
+    "youdianyisi.com": 1,
+    "youhua.com": 1,
+    "youjiao.com": 1,
+    "youke.co": 1,
+    "youku.com": 1,
+    "youku.org": 1,
+    "youlian.fun": 1,
+    "youqoo.net": 1,
+    "your360loans.com": 1,
+    "youshang.com": 1,
+    "youxiake.com": 1,
+    "youxigt.com": 1,
+    "youxihezi.net": 1,
+    "youxila.com": 1,
+    "youxiniao.com": 1,
+    "youyou.com": 1,
+    "youyou001.com": 1,
+    "youzan.com": 1,
+    "youzanyun.com": 1,
+    "youzu.com": 1,
+    "yowhale.com": 1,
+    "yoyojie.com": 1,
+    "yoyou.com": 1,
+    "yparse.com": 1,
+    "ypppt.com": 1,
+    "yqacg.com": 1,
+    "yqb.com": 1,
+    "yqbimg.com": 1,
+    "yqbimg.net": 1,
+    "yqkk.link": 1,
+    "yqqqbm.com": 1,
+    "yrz.name": 1,
+    "ysepay.com": 1,
+    "yslyhr.com": 1,
+    "ysten.com": 1,
+    "yt98w.com": 1,
+    "ytzq.com": 1,
+    "yuanchengxiezuo.com": 1,
+    "yuanfudao.com": 1,
+    "yuanshen.com": 1,
+    "yuansouti.com": 1,
+    "yuantiku.com": 1,
+    "yuewen.com": 1,
+    "yufuid.com": 1,
+    "yufuid.net": 1,
+    "yukhj.com": 1,
+    "yunaq.com": 1,
+    "yunba.io": 1,
+    "yunchanggame.com": 1,
+    "yundaex.com": 1,
+    "yundasys.com": 1,
+    "yundun.com": 1,
+    "yunduncc.com": 1,
+    "yundunddos.com": 1,
+    "yundunwaf.com": 1,
+    "yundzh.com": 1,
+    "yunfancdn.com": 1,
+    "yunfancdn.net": 1,
+    "yunfandns.com": 1,
+    "yunify.com": 1,
+    "yunjiasu-cdn-dnssec.net": 1,
+    "yunjiasu-cdn.com": 1,
+    "yunjiasu-cdn.net": 1,
+    "yunjiasu-dns.com": 1,
+    "yunjiasu-dns.net": 1,
+    "yunjiasu-test.com": 1,
+    "yunjiasu.com": 1,
+    "yunjiasucdn.info": 1,
+    "yunjiasucdn.net": 1,
+    "yunjiasudns.com": 1,
+    "yunjiasudns.net": 1,
+    "yunjiasupreview.com": 1,
+    "yunjiasussl.com": 1,
+    "yunjitele.com": 1,
+    "yunkanpan.com": 1,
+    "yunos-inc.com": 1,
+    "yunos.com": 1,
+    "yunpan.com": 1,
+    "yunqi.org": 1,
+    "yunqishi.net": 1,
+    "yunshipei.com": 1,
+    "yunxiao.com": 1,
+    "yunxin163.com": 1,
+    "yunxinapi.com": 1,
+    "yunxindns.com": 1,
+    "yunxinfw.com": 1,
+    "yunxingslb.com": 1,
+    "yunxinhi.com": 1,
+    "yunxinhy.com": 1,
+    "yunxinrtc.com": 1,
+    "yunxinsvip.com": 1,
+    "yunxinsvr.com": 1,
+    "yunxinvcloud.com": 1,
+    "yunxinvideo.com": 1,
+    "yunzhijia.com": 1,
+    "yupoo.com": 1,
+    "yuque.com": 1,
+    "yushanfang.com": 1,
+    "yushiyan.net": 1,
+    "yux.team": 1,
+    "yuzua.com": 1,
+    "ywurl.com": 1,
+    "yxbao.com": 1,
+    "yxdmgame.com": 1,
+    "yxdown.com": 1,
+    "yxhhdl.com": 1,
+    "yximgs.com": 1,
+    "yxixy.com": 1,
+    "yxwsgame.com": 1,
+    "yy.com": 1,
+    "yyds.co": 1,
+    "yystatic.com": 1,
+    "yytcdn.com": 1,
+    "yzlngi.com": 1,
+    "yzsnen.com": 1,
+    "yzyxgame.com": 1,
+    "z-bank.com": 1,
+    "z211.top": 1,
+    "z211.vip": 1,
+    "z28j.com": 1,
+    "z4gwsoqmcvxt.com": 1,
+    "zaifan.com": 1,
+    "zaixiankaoshi.com": 1,
+    "zampda.net": 1,
+    "zampdsp.com": 1,
+    "zamplus.com": 1,
+    "zastatic.com": 1,
+    "zbjimg.com": 1,
+    "zbrushcn.com": 1,
+    "zcjbgame.com": 1,
+    "zczj.com": 1,
+    "zdfans.com": 1,
+    "zdm.net": 1,
+    "zdmimg.com": 1,
+    "zdnscloud.biz": 1,
+    "zdnscloud.com": 1,
+    "zdnscloud.info": 1,
+    "zdnscloud.net": 1,
+    "zealer.com": 1,
+    "zeekrlife.com": 1,
+    "zeku.com": 1,
+    "zenmen.com": 1,
+    "zgcbank.com": 1,
+    "zgh.com": 1,
+    "zgjm.org": 1,
+    "zgjsks.com": 1,
+    "zglxw.com": 1,
+    "zgslb.net": 1,
+    "zgzcw.com": 1,
+    "zhaiba.com": 1,
+    "zhanbuba.com": 1,
+    "zhangle.com": 1,
+    "zhangyoubao.com": 1,
+    "zhangzishi.cc": 1,
+    "zhanqi.tv": 1,
+    "zhanzhang.net": 1,
+    "zhaodanji.com": 1,
+    "zhaokao.net": 1,
+    "zhaopin.com": 1,
+    "zhcw.com": 1,
+    "zhenai.com": 1,
+    "zhfund.com": 1,
+    "zhhainiao.com": 1,
+    "zhibo8.cc": 1,
+    "zhidemai.com": 1,
+    "zhidx.com": 1,
+    "zhifang.com": 1,
+    "zhihang100.com": 1,
+    "zhihu.com": 1,
+    "zhihuichuzhou.com": 1,
+    "zhihuishu.com": 1,
+    "zhimg.com": 1,
+    "zhinvnetwork.com": 1,
+    "zhipin.com": 1,
+    "zhisheng.com": 1,
+    "zhishifanli.com": 1,
+    "zhixue.com": 1,
+    "zhiziyun.com": 1,
+    "zhongcaisuo.com": 1,
+    "zhongkao.com": 1,
+    "zhuancorp.com": 1,
+    "zhuangjiba.com": 1,
+    "zhuanspirit.com": 1,
+    "zhuanyewanjia.com": 1,
+    "zhuanzfx.com": 1,
+    "zhuanzhuan.com": 1,
+    "zhuayoukong.com": 1,
+    "zhubajie.com": 1,
+    "zhugeapi.net": 1,
+    "zhugeio.com": 1,
+    "zhuihd.com": 1,
+    "zhuoyuegame.com": 1,
+    "zhutidasai.com": 1,
+    "zhzzx.com": 1,
+    "zijieapi.com": 1,
+    "zijiecdn.com": 1,
+    "zijiecdn.net": 1,
+    "zijieimg.com": 1,
+    "zijieimg.net": 1,
+    "zijieurl.com": 1,
+    "zijieurl.net": 1,
+    "zijiewap.com": 1,
+    "zijiewap.net": 1,
+    "zilrms.com": 1,
+    "zimuzu.io": 1,
+    "zimuzu.tv": 1,
+    "ziroom.com": 1,
+    "ziroomapartment.com": 1,
+    "zixiaomao.com": 1,
+    "zixuntop.com": 1,
+    "ziyrta.com": 1,
+    "zj8t5.com": 1,
+    "zjbuc.com": 1,
+    "zjbyte.com": 1,
+    "zjbyte.net": 1,
+    "zjcarnet.com": 1,
+    "zjcdn.com": 1,
+    "zjgslb.com": 1,
+    "zjstv.com": 1,
+    "zmengzhu.com": 1,
+    "zmnxbc.com": 1,
+    "zmz002.com": 1,
+    "zmz2019.com": 1,
+    "zmzapi.com": 1,
+    "zmzapi.net": 1,
+    "zmzfile.com": 1,
+    "znstartups.com": 1,
+    "zofund.com": 1,
+    "zongheng.com": 1,
+    "zoom3g.com": 1,
+    "zpb365.com": 1,
+    "zrblog.net": 1,
+    "zsxq.com": 1,
+    "zszq.com": 1,
+    "ztcexam.com": 1,
+    "ztfsec.com": 1,
+    "zuche.com": 1,
+    "zuchecdn.com": 1,
+    "zuhaowan.com": 1,
+    "zui.com": 1,
+    "zuidaima.com": 1,
+    "zuihuimai.com": 1,
+    "zuk.com": 1,
+    "zuodao.com": 1,
+    "zuowen8.com": 1,
+    "zuowenwang.net": 1,
+    "zuoyebang.cc": 1,
+    "zuoyebang.com": 1,
+    "zvryuq7xg31x5g.com": 1,
+    "zwmrxd.com": 1,
+    "zwtianshangm.com": 1,
+    "zybang.com": 1,
+    "zyh365.com": 1,
+    "zzdtec.com": 1
+};
+
 function FindProxyForURL(url, host) {
-    if (dnsDomainIs(host, '..00cdn.com') || host === '.00cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..0123456789.com') || host === '.0123456789.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..0379home.com') || host === '.0379home.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..055110.com') || host === '.055110.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..05sun.com') || host === '.05sun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..0759job.com') || host === '.0759job.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..10010.com') || host === '.10010.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..100bt.com') || host === '.100bt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..100offer.com') || host === '.100offer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..11467.com') || host === '.11467.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..114chn.com') || host === '.114chn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..114menhu.com') || host === '.114menhu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..114piaowu.com') || host === '.114piaowu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..114shouji.com') || host === '.114shouji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..115.com') || host === '.115.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..115cdn.com') || host === '.115cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..115cdn.net') || host === '.115cdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..115img.com') || host === '.115img.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..116cd.com') || host === '.116cd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..116cd.net') || host === '.116cd.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..119you.com') || host === '.119you.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..12306.com') || host === '.12306.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..123juzi.com') || host === '.123juzi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..123juzi.net') || host === '.123juzi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..123pan.com') || host === '.123pan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..123u.com') || host === '.123u.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..126.com') || host === '.126.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..126.link') || host === '.126.link') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..126.net') || host === '.126.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..127.com') || host === '.127.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..127.net') || host === '.127.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..139.com') || host === '.139.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..163.com') || host === '.163.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..1637.com') || host === '.1637.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..163cn.tv') || host === '.163cn.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..163industry.com') || host === '.163industry.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..163mail.com') || host === '.163mail.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..163qiyukf.com') || host === '.163qiyukf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..163yun.com') || host === '.163yun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..166.com') || host === '.166.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..166.net') || host === '.166.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..1688.com') || host === '.1688.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..16888.com') || host === '.16888.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..16rd.com') || host === '.16rd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17173.com') || host === '.17173.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..178.com') || host === '.178.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..178linux.com') || host === '.178linux.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17989.com') || host === '.17989.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17cdn.com') || host === '.17cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17house.com') || host === '.17house.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17jita.com') || host === '.17jita.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17roco.com') || host === '.17roco.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17u.net') || host === '.17u.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17usoft.com') || host === '.17usoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17usoft.net') || host === '.17usoft.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17zuoye.com') || host === '.17zuoye.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..17zuoye.net') || host === '.17zuoye.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..18183.com') || host === '.18183.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..188.com') || host === '.188.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..1905.com') || host === '.1905.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..19yxw.com') || host === '.19yxw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..1huizhan.com') || host === '.1huizhan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..1nongjing.com') || host === '.1nongjing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..1ting.com') || host === '.1ting.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..1zhe.com') || host === '.1zhe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..21cn.com') || host === '.21cn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..21jingji.com') || host === '.21jingji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..2265.com') || host === '.2265.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..2288.org') || host === '.2288.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..2345.com') || host === '.2345.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..258.com') || host === '.258.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..25pp.com') || host === '.25pp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..263.net') || host === '.263.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..289.com') || host === '.289.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..2cto.com') || host === '.2cto.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3000.com') || host === '.3000.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..300hu.com') || host === '.300hu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..310win.com') || host === '.310win.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..315che.com') || host === '.315che.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3234.com') || host === '.3234.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..32r.com') || host === '.32r.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3304399.com') || host === '.3304399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3304399.net') || host === '.3304399.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3322.org') || host === '.3322.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3387.com') || host === '.3387.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..33lc.com') || host === '.33lc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..343480.com') || host === '.343480.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3454.com') || host === '.3454.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3456.cc') || host === '.3456.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..35.com') || host === '.35.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3533.com') || host === '.3533.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..356884.com') || host === '.356884.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360-jr.com') || host === '.360-jr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360.com') || host === '.360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360.net') || host === '.360.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360aiyi.com') || host === '.360aiyi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360buy.com') || host === '.360buy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360buyimg.com') || host === '.360buyimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360buyinternational.com') || host === '.360buyinternational.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360chou.com') || host === '.360chou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360daikuan.com') || host === '.360daikuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360doc.com') || host === '.360doc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360huzhubao.com') || host === '.360huzhubao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360in.com') || host === '.360in.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360jie.com') || host === '.360jie.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360jinrong.net') || host === '.360jinrong.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360jq.com') || host === '.360jq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360kan.com') || host === '.360kan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360kuai.com') || host === '.360kuai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360os.com') || host === '.360os.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360safe.com') || host === '.360safe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360shouji.com') || host === '.360shouji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360taojin.com') || host === '.360taojin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360top.com') || host === '.360top.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360totalsecurity.com') || host === '.360totalsecurity.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360tpcdn.com') || host === '.360tpcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360tres.com') || host === '.360tres.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360webcache.com') || host === '.360webcache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360zhyx.com') || host === '.360zhyx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..360zqaq.com') || host === '.360zqaq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..365azw.com') || host === '.365azw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..365dmp.com') || host === '.365dmp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..365yg.com') || host === '.365yg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..36dianping.com') || host === '.36dianping.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..36kr.com') || host === '.36kr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..36krcdn.com') || host === '.36krcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..36krcnd.com') || host === '.36krcnd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..37.com') || host === '.37.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3733.com') || host === '.3733.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3839.com') || host === '.3839.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3839apk.com') || host === '.3839apk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3839app.com') || host === '.3839app.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3839app.net') || host === '.3839app.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3839img.com') || host === '.3839img.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3839pay.com') || host === '.3839pay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3839pic.com') || host === '.3839pic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3839vc.com') || host === '.3839vc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3839video.com') || host === '.3839video.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..39.net') || host === '.39.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3conline.com') || host === '.3conline.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3d66.com') || host === '.3d66.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3dmgame.com') || host === '.3dmgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3elife.net') || host === '.3elife.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3h3.com') || host === '.3h3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3songshu.com') || host === '.3songshu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..3yx.com') || host === '.3yx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..40407.com') || host === '.40407.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399.com') || host === '.4399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399.net') || host === '.4399.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399api.com') || host === '.4399api.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399api.net') || host === '.4399api.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399biule.com') || host === '.4399biule.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399dmw.com') || host === '.4399dmw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399er.com') || host === '.4399er.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399hhh.com') || host === '.4399hhh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399inc.com') || host === '.4399inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399mail.com') || host === '.4399mail.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399pk.com') || host === '.4399pk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399sj.com') || host === '.4399sj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399swf.com') || host === '.4399swf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399wanju.com') || host === '.4399wanju.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399youpai.com') || host === '.4399youpai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399youxi.com') || host === '.4399youxi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4399yyy.com') || host === '.4399yyy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..4paradigm.com') || host === '.4paradigm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..500.com') || host === '.500.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..500d.me') || host === '.500d.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5054399.com') || host === '.5054399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5054399.net') || host === '.5054399.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..50bang.org') || host === '.50bang.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51.com') || host === '.51.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51.la') || host === '.51.la') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..510you.com') || host === '.510you.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..517lppz.com') || host === '.517lppz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51ccd.com') || host === '.51ccd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51cdn.com') || host === '.51cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51credit.com') || host === '.51credit.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51cto.com') || host === '.51cto.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51dzt.com') || host === '.51dzt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51eshop.com') || host === '.51eshop.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51gaifang.com') || host === '.51gaifang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51hejia.com') || host === '.51hejia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51jingying.com') || host === '.51jingying.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51job.com') || host === '.51job.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51jobcdn.com') || host === '.51jobcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51meishu.com') || host === '.51meishu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51nod.com') || host === '.51nod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51sole.com') || host === '.51sole.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51wendang.com') || host === '.51wendang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51yes.com') || host === '.51yes.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..51ym.me') || host === '.51ym.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5253.com') || host === '.5253.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..52hxw.com') || host === '.52hxw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..52miji.com') || host === '.52miji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..52pk.com') || host === '.52pk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..52z.com') || host === '.52z.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..53kf.com') || host === '.53kf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..55.com') || host === '.55.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5566ua.com') || host === '.5566ua.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5577.com') || host === '.5577.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..55bbs.com') || host === '.55bbs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..56.com') || host === '.56.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..56che.com') || host === '.56che.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58.com') || host === '.58.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5858.com') || host === '.5858.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58antenna.com') || host === '.58antenna.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58che.com') || host === '.58che.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58corp.com') || host === '.58corp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58dns.org') || host === '.58dns.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58ganji-corp.com') || host === '.58ganji-corp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58ganji.com') || host === '.58ganji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58lovepet.com') || host === '.58lovepet.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58pic.com') || host === '.58pic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58uxd.com') || host === '.58uxd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58xinghuo.com') || host === '.58xinghuo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..58xueche.com') || host === '.58xueche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5bite.com') || host === '.5bite.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5fun.com') || host === '.5fun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5gzm.net') || host === '.5gzm.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5ifund.com') || host === '.5ifund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5khouse.com') || host === '.5khouse.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5read.com') || host === '.5read.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..5you.com') || host === '.5you.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..61.com') || host === '.61.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..6655.com') || host === '.6655.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..66wz.com') || host === '.66wz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..68h5.com') || host === '.68h5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..6rooms.com') || host === '.6rooms.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..71.am') || host === '.71.am') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..71.am.com') || host === '.71.am.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..714.com') || host === '.714.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..71acg.com') || host === '.71acg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..71acg.net') || host === '.71acg.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..71edge.com') || host === '.71edge.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..7230.com') || host === '.7230.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..72byte.com') || host === '.72byte.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..72whys.com') || host === '.72whys.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..75.team') || host === '.75.team') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..75team.com') || host === '.75team.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..7down.com') || host === '.7down.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..7fresh.com') || host === '.7fresh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..7k7k.com') || host === '.7k7k.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..7moor.com') || host === '.7moor.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..7po.com') || host === '.7po.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..7x24cc.com') || host === '.7x24cc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..7xdown.com') || host === '.7xdown.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..8008205555.com') || host === '.8008205555.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..818ps.com') || host === '.818ps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..8264.com') || host === '.8264.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..84399.com') || host === '.84399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..8686c.com') || host === '.8686c.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..885.com') || host === '.885.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..88cdn.com') || host === '.88cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..8btc.com') || host === '.8btc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..900.la') || host === '.900.la') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..91.com') || host === '.91.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..917.com') || host === '.917.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..91danji.com') || host === '.91danji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..91yunxiao.com') || host === '.91yunxiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..95095.com') || host === '.95095.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..95508.com') || host === '.95508.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..95516.com') || host === '.95516.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..95516.net') || host === '.95516.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..9553.com') || host === '.9553.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..95588.com') || host === '.95588.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..962.net') || host === '.962.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..9718.com') || host === '.9718.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..97973.com') || host === '.97973.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..99166.com') || host === '.99166.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..998.com') || host === '.998.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..999d.com') || host === '.999d.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..99danji.com') || host === '.99danji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..99fund.com') || host === '.99fund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..9ht.com') || host === '.9ht.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..9xgame.com') || host === '.9xgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..9xu.com') || host === '.9xu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..a9vg.com') || host === '.a9vg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aaplimg.com') || host === '.aaplimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aardio.com') || host === '.aardio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..abc-ca.com') || host === '.abc-ca.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..abchina.com') || host === '.abchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..abercrombie.com') || host === '.abercrombie.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..abhouses.com') || host === '.abhouses.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acadn.com') || host === '.acadn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acctdns.com') || host === '.acctdns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acctdns.net') || host === '.acctdns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acetaffy.club') || host === '.acetaffy.club') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acfun.tv') || host === '.acfun.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acg.tv') || host === '.acg.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acgvideo.com') || host === '.acgvideo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acm.org') || host === '.acm.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acplay.net') || host === '.acplay.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acs.org') || host === '.acs.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..acwing.com') || host === '.acwing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..adimages.sina.com.hk') || host === '.adimages.sina.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..admin5.com') || host === '.admin5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..adobesc.com') || host === '.adobesc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..adxvip.com') || host === '.adxvip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..af-south-1.myhuaweicloud.com') || host === '.af-south-1.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..afdian.net') || host === '.afdian.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..afdiancdn.com') || host === '.afdiancdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..afp.adchina.com') || host === '.afp.adchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..afzhan.com') || host === '.afzhan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..agconnect.link') || host === '.agconnect.link') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..agora.io') || host === '.agora.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..agoralab.co') || host === '.agoralab.co') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..agrantsem.com') || host === '.agrantsem.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ahitv.com') || host === '.ahitv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aiaa.org') || host === '.aiaa.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aicdn.com') || host === '.aicdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aichaoxing.com') || host === '.aichaoxing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aicoinstorge.com') || host === '.aicoinstorge.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aiemy.com') || host === '.aiemy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aiganggu.com') || host === '.aiganggu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aiketour.com') || host === '.aiketour.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aiops.com') || host === '.aiops.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aip.org') || host === '.aip.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aipage.com') || host === '.aipage.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aipai.com') || host === '.aipai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..air-matters.com') || host === '.air-matters.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..air-matters.io') || host === '.air-matters.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..airchangan.com') || host === '.airchangan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..airchinacargo.com') || host === '.airchinacargo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..airguilin.com') || host === '.airguilin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aisee.tv') || host === '.aisee.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aiskycn.com') || host === '.aiskycn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aitransfy.com') || host === '.aitransfy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aixcoder.com') || host === '.aixcoder.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aixifan.com') || host === '.aixifan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aiyunxiao.com') || host === '.aiyunxiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aizhan.com') || host === '.aizhan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ajzq.com') || host === '.ajzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..akadns.net') || host === '.akadns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aldwx.com') || host === '.aldwx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ali213.net') || host === '.ali213.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliapp.org') || host === '.aliapp.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibaba-inc.com') || host === '.alibaba-inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibaba.com') || host === '.alibaba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabacapital.com') || host === '.alibabacapital.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabacloud.co.in') || host === '.alibabacloud.co.in') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabacloud.com') || host === '.alibabacloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabacloud.com.au') || host === '.alibabacloud.com.au') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabacloud.com.hk') || host === '.alibabacloud.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabacloud.com.my') || host === '.alibabacloud.com.my') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabacloud.com.sg') || host === '.alibabacloud.com.sg') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabacloud.com.tw') || host === '.alibabacloud.com.tw') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabacorp.com') || host === '.alibabacorp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabadns.com') || host === '.alibabadns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabadoctor.com') || host === '.alibabadoctor.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabafuturehotel.com') || host === '.alibabafuturehotel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabagroup.com') || host === '.alibabagroup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabaplanet.com') || host === '.alibabaplanet.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabaued.com') || host === '.alibabaued.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alibabausercontent.com') || host === '.alibabausercontent.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alicdn.com') || host === '.alicdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alicloud.com') || host === '.alicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alicloudapi.com') || host === '.alicloudapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alicloudccp.com') || host === '.alicloudccp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alidayu.com') || host === '.alidayu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alidns.com') || host === '.alidns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliexpress.com') || host === '.aliexpress.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliexpress.ru') || host === '.aliexpress.ru') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alifanyi.com') || host === '.alifanyi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alihealth.hk') || host === '.alihealth.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliimg.com') || host === '.aliimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alikmd.com') || host === '.alikmd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alikunlun.com') || host === '.alikunlun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alimama.com') || host === '.alimama.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alimebot.com') || host === '.alimebot.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alimei.com') || host === '.alimei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alipan.com') || host === '.alipan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alipay.com') || host === '.alipay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alipay.hk') || host === '.alipay.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alipaydns.com') || host === '.alipaydns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alipaylog.com') || host === '.alipaylog.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alipaymo.com') || host === '.alipaymo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alipayobjects.com') || host === '.alipayobjects.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alipayplus.com') || host === '.alipayplus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliplus.com') || host === '.aliplus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliresearch.com') || host === '.aliresearch.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alisoft.com') || host === '.alisoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alisports.com') || host === '.alisports.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alitianji.com') || host === '.alitianji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alitrip.com') || host === '.alitrip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alittle-tea.com') || host === '.alittle-tea.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliunicorn.com') || host === '.aliunicorn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliway.com') || host === '.aliway.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliwork.com') || host === '.aliwork.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alixiaomi.com') || host === '.alixiaomi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliyun-inc.com') || host === '.aliyun-inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliyun-iot-share.com') || host === '.aliyun-iot-share.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliyun.com') || host === '.aliyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliyuncdn.com') || host === '.aliyuncdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliyuncs.com') || host === '.aliyuncs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliyundrive.com') || host === '.aliyundrive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aliyundrive.net') || host === '.aliyundrive.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alizhaopin.com') || host === '.alizhaopin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alloyteam.com') || host === '.alloyteam.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..allyes.com') || host === '.allyes.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..alphassl.com') || host === '.alphassl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..amap.com') || host === '.amap.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..amapauto.com') || host === '.amapauto.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..amd.com') || host === '.amd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..amemv.com') || host === '.amemv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ams.org') || host === '.ams.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..andfx.net') || host === '.andfx.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..anfensi.com') || host === '.anfensi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..animebytes.tv') || host === '.animebytes.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..animetamashi.com') || host === '.animetamashi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..animetorrents.me') || host === '.animetorrents.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..anitama.net') || host === '.anitama.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..anjuke.com') || host === '.anjuke.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..anjukestatic.com') || host === '.anjukestatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..annualreviews.org') || host === '.annualreviews.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..anquan.org') || host === '.anquan.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..anquanke.com') || host === '.anquanke.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..anruan.com') || host === '.anruan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..antfin.com') || host === '.antfin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..antfortune.com') || host === '.antfortune.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..antgroup.com') || host === '.antgroup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..anticheatexpert.com') || host === '.anticheatexpert.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..antutu.com') || host === '.antutu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..anxia.com') || host === '.anxia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aotrip.net') || host === '.aotrip.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aoyou.com') || host === '.aoyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ap-southeast-1.myhuaweicloud.com') || host === '.ap-southeast-1.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ap-southeast-2.myhuaweicloud.com') || host === '.ap-southeast-2.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ap-southeast-3.myhuaweicloud.com') || host === '.ap-southeast-3.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..apaas-zone-test.com') || host === '.apaas-zone-test.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..apabi.com') || host === '.apabi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..apcdns.net') || host === '.apcdns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..api.crisp.chat') || host === '.api.crisp.chat') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..apifox.com') || host === '.apifox.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..apigwtencent.com') || host === '.apigwtencent.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..apimkt.net') || host === '.apimkt.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..apk3.com') || host === '.apk3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..apk8.com') || host === '.apk8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aplaybox.com') || host === '.aplaybox.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..apollo.auto') || host === '.apollo.auto') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..appchina.com') || host === '.appchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..appeeres.com') || host === '.appeeres.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..appinn.com') || host === '.appinn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..applysquare.com') || host === '.applysquare.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..applysquare.net') || host === '.applysquare.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..appshike.com') || host === '.appshike.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..aps.org') || host === '.aps.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..arpun.com') || host === '.arpun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ascelibrary.org') || host === '.ascelibrary.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..asczwa.com') || host === '.asczwa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..asczxcefsv.com') || host === '.asczxcefsv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..asm.org') || host === '.asm.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..asme.org') || host === '.asme.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..astm.org') || host === '.astm.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..atatech.org') || host === '.atatech.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..autonavi.com') || host === '.autonavi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..avicsec.com') || host === '.avicsec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..awesome-hd.me') || host === '.awesome-hd.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..b23.tv') || host === '.b23.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..b2byao.com') || host === '.b2byao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..b3log.org') || host === '.b3log.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..b612.net') || host === '.b612.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bababian.com') || host === '.bababian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..babytree.com') || host === '.babytree.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..babytreeimg.com') || host === '.babytreeimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baduziyuan.com') || host === '.baduziyuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baidu.com') || host === '.baidu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baidubce.com') || host === '.baidubce.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baidubcr.com') || host === '.baidubcr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baiducontent.com') || host === '.baiducontent.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baidufree.com') || host === '.baidufree.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baidupan.com') || host === '.baidupan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baidupcs.com') || host === '.baidupcs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baidustatic.com') || host === '.baidustatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baifae.com') || host === '.baifae.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baifendian.com') || host === '.baifendian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baifubao.com') || host === '.baifubao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baihe.com') || host === '.baihe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baijiayun.com') || host === '.baijiayun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baike.com') || host === '.baike.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baitiao.com') || host === '.baitiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baixing.com') || host === '.baixing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baixing.net') || host === '.baixing.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baltamatica.com') || host === '.baltamatica.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bamenzhushou.com') || host === '.bamenzhushou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bangongziyuan.com') || host === '.bangongziyuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bank-of-china.com') || host === '.bank-of-china.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bankcomm.com') || host === '.bankcomm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bankofchina.com') || host === '.bankofchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..banmaaike.com') || host === '.banmaaike.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baofeng.com') || host === '.baofeng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baomitu.com') || host === '.baomitu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baoxianshichang.com') || host === '.baoxianshichang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..battlecare.net') || host === '.battlecare.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..baydn.com') || host === '.baydn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bazai.com') || host === '.bazai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bbbcdns.com') || host === '.bbbcdns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bcebos.com') || host === '.bcebos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bcfmglobal.com') || host === '.bcfmglobal.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bcvbw.com') || host === '.bcvbw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bcy.net') || host === '.bcy.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bcyimg.com') || host === '.bcyimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bdatu.com') || host === '.bdatu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bdcloudapi.com') || host === '.bdcloudapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bdimg.com') || host === '.bdimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bdstatic.com') || host === '.bdstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bdtjrcv.com') || host === '.bdtjrcv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bdxiguaimg.com') || host === '.bdxiguaimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bdxiguastatic.com') || host === '.bdxiguastatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bdydns.com') || host === '.bdydns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bdydns.net') || host === '.bdydns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bearychat.com') || host === '.bearychat.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..beatsbydre.com') || host === '.beatsbydre.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..beihaidc.com') || host === '.beihaidc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..beijing-lipin.com') || host === '.beijing-lipin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..beitaichufang.com') || host === '.beitaichufang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bengbeng.com') || host === '.bengbeng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..benghuai.com') || host === '.benghuai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..benmi.com') || host === '.benmi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..berui.com') || host === '.berui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bestopview.com') || host === '.bestopview.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bh3.com') || host === '.bh3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bhsr.com') || host === '.bhsr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biancheng.net') || host === '.biancheng.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bianews.com') || host === '.bianews.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bibaodao.com') || host === '.bibaodao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bidchance.com') || host === '.bidchance.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biddingx.com') || host === '.biddingx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bihu.com') || host === '.bihu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biji.com') || host === '.biji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biliapi.com') || host === '.biliapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biliapi.net') || host === '.biliapi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilibili.cc') || host === '.bilibili.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilibili.com') || host === '.bilibili.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilibili.net') || host === '.bilibili.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilibili.tv') || host === '.bilibili.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilibiligame.co') || host === '.bilibiligame.co') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilibiligame.net') || host === '.bilibiligame.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilibilipay.com') || host === '.bilibilipay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilicdn1.com') || host === '.bilicdn1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilicdn2.com') || host === '.bilicdn2.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilicdn3.com') || host === '.bilicdn3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilicdn4.com') || host === '.bilicdn4.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilicdn5.com') || host === '.bilicdn5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilicomics.com') || host === '.bilicomics.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biligame.co') || host === '.biligame.co') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biligame.com') || host === '.biligame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biligame.net') || host === '.biligame.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biligo.com') || host === '.biligo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biliintl.com') || host === '.biliintl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilivideo.com') || host === '.bilivideo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bilivideo.net') || host === '.bilivideo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bio-equip.com') || host === '.bio-equip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bio360.net') || host === '.bio360.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bio4p.com') || host === '.bio4p.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biodiscover.com') || host === '.biodiscover.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bishijie.com') || host === '.bishijie.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bitauto.com') || host === '.bitauto.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bitautoimg.com') || host === '.bitautoimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bitecoin.com') || host === '.bitecoin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..biyehome.net') || host === '.biyehome.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bjango.com') || host === '.bjango.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bjcathay.com') || host === '.bjcathay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bjinfobank.com') || host === '.bjinfobank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bjyouth.net') || host === '.bjyouth.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bkapigw.com') || host === '.bkapigw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bkapps.com') || host === '.bkapps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bkclouds.cc') || host === '.bkclouds.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bktencent.com') || host === '.bktencent.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..blackdragon.com') || host === '.blackdragon.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..blogjava.net') || host === '.blogjava.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..blyun.com') || host === '.blyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bmj.com') || host === '.bmj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bobbns.com') || host === '.bobbns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bobo.com') || host === '.bobo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bocamchina.com') || host === '.bocamchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bocaviation.com') || host === '.bocaviation.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..boccfc.cc') || host === '.boccfc.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bocfullertonbank.com') || host === '.bocfullertonbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bocgi.com') || host === '.bocgi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bocgins.com') || host === '.bocgins.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bochk.com') || host === '.bochk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bocichina.com') || host === '.bocichina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bocifunds.com') || host === '.bocifunds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bocigroup.com') || host === '.bocigroup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bocim.com') || host === '.bocim.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bohejiasuqi.com') || host === '.bohejiasuqi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bojianger.com') || host === '.bojianger.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bokecc.com') || host === '.bokecc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..boosj.com') || host === '.boosj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bootcdn.net') || host === '.bootcdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bootcss.com') || host === '.bootcss.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bosera.com') || host === '.bosera.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bosszhipin.com') || host === '.bosszhipin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..broadcasthe.net') || host === '.broadcasthe.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..browserleaks.com') || host === '.browserleaks.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bstatic.com') || host === '.bstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..btcfans.com') || host === '.btcfans.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..btgtravel.com') || host === '.btgtravel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bthhotels.com') || host === '.bthhotels.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..btime.com') || host === '.btime.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..build9s.io') || host === '.build9s.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bx1k.com') || host === '.bx1k.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..byodonline.com') || host === '.byodonline.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bystack.com') || host === '.bystack.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..byted-static.com') || host === '.byted-static.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..byted.org') || host === '.byted.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytedance.com') || host === '.bytedance.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytedance.net') || host === '.bytedance.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytedanceapi.com') || host === '.bytedanceapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytedapm.com') || host === '.bytedapm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytedns.net') || host === '.bytedns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytedns1.com') || host === '.bytedns1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytednsdoc.com') || host === '.bytednsdoc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytefcdn.com') || host === '.bytefcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytegecko.com') || host === '.bytegecko.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytegoofy.com') || host === '.bytegoofy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytegslb.com') || host === '.bytegslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytehwm.com') || host === '.bytehwm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..byteimg.com') || host === '.byteimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..byteintl.net') || host === '.byteintl.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytelb.net') || host === '.bytelb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytescm.com') || host === '.bytescm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytetcc.com') || host === '.bytetcc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytetos.com') || host === '.bytetos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..bytexservice.com') || host === '.bytexservice.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..c-ctrip.com') || host === '.c-ctrip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..c-t.work') || host === '.c-t.work') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cabbagebox.com') || host === '.cabbagebox.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..caijingwu.com') || host === '.caijingwu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cailianpress.com') || host === '.cailianpress.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cainiao-inc.com') || host === '.cainiao-inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cainiao.com') || host === '.cainiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..caixin.com') || host === '.caixin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..caiyu.com') || host === '.caiyu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..caiyun.com') || host === '.caiyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..caiyunai.com') || host === '.caiyunai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..caiyunapp.com') || host === '.caiyunapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cambridge.org') || host === '.cambridge.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..camera360.com') || host === '.camera360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cang.com') || host === '.cang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cankaoxiaoxi.com') || host === '.cankaoxiaoxi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..capitalonline.net') || host === '.capitalonline.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cardbaobao.com') || host === '.cardbaobao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..carnoc.com') || host === '.carnoc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cas.org') || host === '.cas.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccb.com') || host === '.ccb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccbcos.com') || host === '.ccbcos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccbfund.com') || host === '.ccbfund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccbfutures.com') || host === '.ccbfutures.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccbintl.com.hk') || host === '.ccbintl.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccbleasing.com') || host === '.ccbleasing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccbseoul.com') || host === '.ccbseoul.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccbxt.com') || host === '.ccbxt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccgslb.com') || host === '.ccgslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccgslb.net') || host === '.ccgslb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ccnew.com') || host === '.ccnew.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cctalk.com') || host === '.cctalk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cctv.com') || host === '.cctv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cctvpic.com') || host === '.cctvpic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cczq.com') || host === '.cczq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cczq.net') || host === '.cczq.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdn20.com') || host === '.cdn20.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdn30.org') || host === '.cdn30.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdncl.net') || host === '.cdncl.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdndo.com') || host === '.cdndo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdndoctor.com') || host === '.cdndoctor.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdngot.com') || host === '.cdngot.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdngslb.com') || host === '.cdngslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcajk17.com') || host === '.cdnhwcajk17.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcatq08.com') || host === '.cdnhwcatq08.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcbni108.com') || host === '.cdnhwcbni108.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcbqs106.com') || host === '.cdnhwcbqs106.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcbzj102.com') || host === '.cdnhwcbzj102.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcchh18.com') || host === '.cdnhwcchh18.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwccmz121.com') || host === '.cdnhwccmz121.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcead111.com') || host === '.cdnhwcead111.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcedi10.com') || host === '.cdnhwcedi10.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcedt124.com') || host === '.cdnhwcedt124.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcggk22.com') || host === '.cdnhwcggk22.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcgnc118.com') || host === '.cdnhwcgnc118.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcgqa21.com') || host === '.cdnhwcgqa21.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwchcg02.com') || host === '.cdnhwchcg02.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcibv122.com') || host === '.cdnhwcibv122.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcick110.com') || host === '.cdnhwcick110.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcjlg112.com') || host === '.cdnhwcjlg112.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcjog12.com') || host === '.cdnhwcjog12.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcjsb120.com') || host === '.cdnhwcjsb120.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwckfz116.com') || host === '.cdnhwckfz116.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwckon103.com') || host === '.cdnhwckon103.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcljk104.com') || host === '.cdnhwcljk104.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcllh11.com') || host === '.cdnhwcllh11.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwclxu105.com') || host === '.cdnhwclxu105.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwclxw05.com') || host === '.cdnhwclxw05.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcoem01.com') || host === '.cdnhwcoem01.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcohm19.com') || host === '.cdnhwcohm19.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcoph123.com') || host === '.cdnhwcoph123.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcprh113.com') || host === '.cdnhwcprh113.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcpsd13.com') || host === '.cdnhwcpsd13.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcqgw115.com') || host === '.cdnhwcqgw115.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcqir15.com') || host === '.cdnhwcqir15.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcqve117.com') || host === '.cdnhwcqve117.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcqwg14.com') || host === '.cdnhwcqwg14.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwctnm107.com') || host === '.cdnhwctnm107.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwctxz24.com') || host === '.cdnhwctxz24.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcuim119.com') || host === '.cdnhwcuim119.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcupf06.com') || host === '.cdnhwcupf06.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcurq03.com') || host === '.cdnhwcurq03.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcvix16.com') || host === '.cdnhwcvix16.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcxcy07.com') || host === '.cdnhwcxcy07.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwczba04.com') || host === '.cdnhwczba04.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwczjt20.com') || host === '.cdnhwczjt20.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwczks109.com') || host === '.cdnhwczks109.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwczmn114.com') || host === '.cdnhwczmn114.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwczth23.com') || host === '.cdnhwczth23.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwcztu09.com') || host === '.cdnhwcztu09.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdnhwczxh101.com') || host === '.cdnhwczxh101.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdntip.com') || host === '.cdntip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdntips.com') || host === '.cdntips.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cdntips.net') || host === '.cdntips.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ceair.com') || host === '.ceair.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cebbank.com') || host === '.cebbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ceblease.com') || host === '.ceblease.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cecdc.com') || host === '.cecdc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cecport.com') || host === '.cecport.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..centanet.com') || host === '.centanet.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cerambath.org') || host === '.cerambath.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cf-ns.com') || host === '.cf-ns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cf-ns.net') || host === '.cf-ns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cf-ns.site') || host === '.cf-ns.site') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cf-ns.tech') || host === '.cf-ns.tech') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cftest7.com') || host === '.cftest7.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cftest8.com') || host === '.cftest8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cfund108.com') || host === '.cfund108.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cfzq.com') || host === '.cfzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cgws.com') || host === '.cgws.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ch.com') || host === '.ch.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chachaba.com') || host === '.chachaba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chaindd.com') || host === '.chaindd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chainnode.com') || host === '.chainnode.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..changanfunds.com') || host === '.changanfunds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..changba.com') || host === '.changba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..changdunovel.com') || host === '.changdunovel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..changyan.com') || host === '.changyan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chaojituzi.net') || host === '.chaojituzi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chaoxing.cc') || host === '.chaoxing.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chaoxing.com') || host === '.chaoxing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chaoxingv.com') || host === '.chaoxingv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chashebao.com') || host === '.chashebao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chazhengla.com') || host === '.chazhengla.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..che168.com') || host === '.che168.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..checkzeit.com') || host === '.checkzeit.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cheng.xin') || host === '.cheng.xin') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cheyisou.com') || host === '.cheyisou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..china-chair.com') || host === '.china-chair.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..china-nengyuan.com') || host === '.china-nengyuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..china.com') || host === '.china.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaamc.com') || host === '.chinaamc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinabooktrading.com') || host === '.chinabooktrading.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinacache.com') || host === '.chinacache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinacache.net') || host === '.chinacache.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinachugui.com') || host === '.chinachugui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinadongchu.com') || host === '.chinadongchu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaexpressair.com') || host === '.chinaexpressair.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinafph.com') || host === '.chinafph.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinahr.com') || host === '.chinahr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinakaoyan.com') || host === '.chinakaoyan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinalawedu.com') || host === '.chinalawedu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinalions.com') || host === '.chinalions.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinalive.com') || host === '.chinalive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinamobile.com') || host === '.chinamobile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinamobileltd.com') || host === '.chinamobileltd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinanetcenter.com') || host === '.chinanetcenter.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinanews.com') || host === '.chinanews.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinapay.com') || host === '.chinapay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinapp.net') || host === '.chinapp.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinapubmed.net') || host === '.chinapubmed.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaso.com') || host === '.chinaso.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinasspp.com') || host === '.chinasspp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinatelecom-h.com') || host === '.chinatelecom-h.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinatelecomglobal.com') || host === '.chinatelecomglobal.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinatranslation.net') || host === '.chinatranslation.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaunicom.com') || host === '.chinaunicom.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaunicom.com.hk') || host === '.chinaunicom.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaunicomglobal.com') || host === '.chinaunicomglobal.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaunionpay.com') || host === '.chinaunionpay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaunionpay.net') || host === '.chinaunionpay.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaunix.net') || host === '.chinaunix.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinauos.com') || host === '.chinauos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaweiyu.com') || host === '.chinaweiyu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinawutong.com') || host === '.chinawutong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaz.com') || host === '.chinaz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinaz.net') || host === '.chinaz.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinazns.com') || host === '.chinazns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chinesemooc.org') || host === '.chinesemooc.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chiphell.com') || host === '.chiphell.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chntel.com') || host === '.chntel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chongdiantou.com') || host === '.chongdiantou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chouti.com') || host === '.chouti.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chrstatic.com') || host === '.chrstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chua.pro') || host === '.chua.pro') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chuangxin.com') || host === '.chuangxin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chuanke.com') || host === '.chuanke.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chuansong.me') || host === '.chuansong.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chuansongme.com') || host === '.chuansongme.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chugou360.com') || host === '.chugou360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chuimg.com') || host === '.chuimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chunbo.com') || host === '.chunbo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chunboimg.com') || host === '.chunboimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chunyu.mobi') || host === '.chunyu.mobi') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chushou.tv') || host === '.chushou.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..chuyu.me') || host === '.chuyu.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cibntv.net') || host === '.cibntv.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cicc.com') || host === '.cicc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ciccwm.com') || host === '.ciccwm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cignacmb-ipmi.com') || host === '.cignacmb-ipmi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cignacmb.com') || host === '.cignacmb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cignacmbamc.com') || host === '.cignacmbamc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cindasc.com') || host === '.cindasc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..citicbank.com') || host === '.citicbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..citiccapital.com') || host === '.citiccapital.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..citiciam.com') || host === '.citiciam.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..citicifh.com') || host === '.citicifh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..citics.com.hk') || host === '.citics.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..citicsf.com') || host === '.citicsf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..city8.com') || host === '.city8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ciweimao.com') || host === '.ciweimao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cjol.com') || host === '.cjol.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cjsc.com') || host === '.cjsc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..clarivate.com') || host === '.clarivate.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..clashroyaleapp.com') || host === '.clashroyaleapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..classix-unlimited.co.uk') || host === '.classix-unlimited.co.uk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..click.qianqian.com') || host === '.click.qianqian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..clk1.top') || host === '.clk1.top') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-beijing.com') || host === '.cloud-beijing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-hebi.com') || host === '.cloud-hebi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-industry-delivery.site') || host === '.cloud-industry-delivery.site') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-ningbo.com') || host === '.cloud-ningbo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-ordos.com') || host === '.cloud-ordos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-shenzhen.com') || host === '.cloud-shenzhen.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-shiyan.com') || host === '.cloud-shiyan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-wuhan.com') || host === '.cloud-wuhan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-xian.com') || host === '.cloud-xian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-xm.com') || host === '.cloud-xm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-zhaoqing.com') || host === '.cloud-zhaoqing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloud-zhongwei.com') || host === '.cloud-zhongwei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudanqing.com') || host === '.cloudanqing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudbaoshan.com') || host === '.cloudbaoshan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudbase.net') || host === '.cloudbase.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudbeibei.com') || host === '.cloudbeibei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudbinzhou.com') || host === '.cloudbinzhou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudchangde.com') || host === '.cloudchangde.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudchangsha.com') || host === '.cloudchangsha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudchangzhou.com') || host === '.cloudchangzhou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudchaozhou.com') || host === '.cloudchaozhou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudchengde.com') || host === '.cloudchengde.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudchengdu.com') || host === '.cloudchengdu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudchuzhou.com') || host === '.cloudchuzhou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudczs.com') || host === '.cloudczs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..clouddalian.com') || host === '.clouddalian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..clouddatong.com') || host === '.clouddatong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..clouddn.com') || host === '.clouddn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..clouddongying.com') || host === '.clouddongying.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudflare-cn.com') || host === '.cloudflare-cn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudflarecn.net') || host === '.cloudflarecn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudflareinsights-cn.com') || host === '.cloudflareinsights-cn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudflareprod.com') || host === '.cloudflareprod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudflarestaging.com') || host === '.cloudflarestaging.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudflarestoragegw.com') || host === '.cloudflarestoragegw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudfoshan.com') || host === '.cloudfoshan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudfront-cn.net') || host === '.cloudfront-cn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudfuqing.com') || host === '.cloudfuqing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudganzhou.com') || host === '.cloudganzhou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudguangzhou.com') || host === '.cloudguangzhou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudhaidong.com') || host === '.cloudhaidong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudhefei.com') || host === '.cloudhefei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudhengshui.com') || host === '.cloudhengshui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudhuaihua.com') || host === '.cloudhuaihua.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudhuizhou.com') || host === '.cloudhuizhou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudidaas.com') || host === '.cloudidaas.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudjinan.com') || host === '.cloudjinan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudjinchang.com') || host === '.cloudjinchang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudjingzhou.com') || host === '.cloudjingzhou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudjining.com') || host === '.cloudjining.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudjiujiang.com') || host === '.cloudjiujiang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudkunming.com') || host === '.cloudkunming.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudleshan.com') || host === '.cloudleshan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudlijiang.com') || host === '.cloudlijiang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudlishui.com') || host === '.cloudlishui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudluohe.com') || host === '.cloudluohe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudluoyang.com') || host === '.cloudluoyang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudmeishan.com') || host === '.cloudmeishan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudnanan.com') || host === '.cloudnanan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudnanjing.com') || host === '.cloudnanjing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudnanning.com') || host === '.cloudnanning.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudnantong.com') || host === '.cloudnantong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudquanzhou.com') || host === '.cloudquanzhou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudsanya.com') || host === '.cloudsanya.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudshanghai.com') || host === '.cloudshanghai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudshaoyang.com') || host === '.cloudshaoyang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudshenfuxingqu.com') || host === '.cloudshenfuxingqu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudsigma.com') || host === '.cloudsigma.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudsiping.com') || host === '.cloudsiping.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudsite.vip') || host === '.cloudsite.vip') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudsuqian.com') || host === '.cloudsuqian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudtangshan.com') || host === '.cloudtangshan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudtianjin.com') || host === '.cloudtianjin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudtongchuan.com') || host === '.cloudtongchuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudtongliang.com') || host === '.cloudtongliang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudweinan.com') || host === '.cloudweinan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudxiangtan.com') || host === '.cloudxiangtan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudxianyou.com') || host === '.cloudxianyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudxining.com') || host === '.cloudxining.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudxns.com') || host === '.cloudxns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudxns.net') || host === '.cloudxns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudyanan.com') || host === '.cloudyanan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudyancheng.com') || host === '.cloudyancheng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudyantai.com') || host === '.cloudyantai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudyinchuan.com') || host === '.cloudyinchuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudyueyang.com') || host === '.cloudyueyang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudyuncheng.com') || host === '.cloudyuncheng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudyuxi.com') || host === '.cloudyuxi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudzhongshan.com') || host === '.cloudzhongshan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cloudzhuhai.com') || host === '.cloudzhuhai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..clsa.com') || host === '.clsa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmb-leasing.com') || host === '.cmb-leasing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmbchina.biz') || host === '.cmbchina.biz') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmbchina.com') || host === '.cmbchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmbi.com.hk') || host === '.cmbi.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmbimg.com') || host === '.cmbimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmbuat.com') || host === '.cmbuat.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmbwinglungbank.com') || host === '.cmbwinglungbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmcm.com') || host === '.cmcm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmcmcdn.com') || host === '.cmcmcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmct.tv') || host === '.cmct.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmechina.net') || host === '.cmechina.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmf.biz') || host === '.cmf.biz') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmf.ltd') || host === '.cmf.ltd') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmfchina.com') || host === '.cmfchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmfu.com') || host === '.cmfu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cmpassport.com') || host === '.cmpassport.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-east-2.myhuaweicloud.com') || host === '.cn-east-2.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-east-3.myhuaweicloud.com') || host === '.cn-east-3.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-north-1.myhuaweicloud.com') || host === '.cn-north-1.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-north-2.myhuaweicloud.com') || host === '.cn-north-2.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-north-3.myhuaweicloud.com') || host === '.cn-north-3.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-north-4.myhuaweicloud.com') || host === '.cn-north-4.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-north-5.myhuaweicloud.com') || host === '.cn-north-5.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-north-6.myhuaweicloud.com') || host === '.cn-north-6.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-north-9.myhuaweicloud.com') || host === '.cn-north-9.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-northeast-1.myhuaweicloud.com') || host === '.cn-northeast-1.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-south-1.myhuaweicloud.com') || host === '.cn-south-1.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-south-2.myhuaweicloud.com') || host === '.cn-south-2.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-south-4.myhuaweicloud.com') || host === '.cn-south-4.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn-southwest-2.myhuaweicloud.com') || host === '.cn-southwest-2.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cn88.net') || host === '.cn88.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnanzhi.com') || host === '.cnanzhi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnbeta.com') || host === '.cnbeta.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnbetacdn.com') || host === '.cnbetacdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnbksy.com') || host === '.cnbksy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnblogs.com') || host === '.cnblogs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cncbinternational.com') || host === '.cncbinternational.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cncqcloud.com') || host === '.cncqcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnepub.com') || host === '.cnepub.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnfol.com') || host === '.cnfol.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnfolimg.com') || host === '.cnfolimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnhbstock.com') || host === '.cnhbstock.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnitblog.com') || host === '.cnitblog.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnki.net') || host === '.cnki.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnlang.org') || host === '.cnlang.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnlaw.net') || host === '.cnlaw.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnmooc.org') || host === '.cnmooc.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnmstl.net') || host === '.cnmstl.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnsciedu.com') || host === '.cnsciedu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnstock.com') || host === '.cnstock.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnsuning.com') || host === '.cnsuning.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnthinkers.com') || host === '.cnthinkers.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnweblog.com') || host === '.cnweblog.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cnzz.com') || host === '.cnzz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cocodiy.com') || host === '.cocodiy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..code666.com') || host === '.code666.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..codechina.net') || host === '.codechina.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..coding.me') || host === '.coding.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..coding.net') || host === '.coding.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..codm.com') || host === '.codm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cofeed.com') || host === '.cofeed.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cofool.com') || host === '.cofool.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..coindog.com') || host === '.coindog.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..colinker.com') || host === '.colinker.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..coloros.com') || host === '.coloros.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..com-hs-hkdy.com') || host === '.com-hs-hkdy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..computeinit.com') || host === '.computeinit.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..comsenz.com') || host === '.comsenz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..contentchina.com') || host === '.contentchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..coolapk.com') || host === '.coolapk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..coolapkmarket.com') || host === '.coolapkmarket.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..coolapkmarket.net') || host === '.coolapkmarket.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..coolbuy.com') || host === '.coolbuy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cooldock.com') || host === '.cooldock.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..coolsite.vip') || host === '.coolsite.vip') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cootekservice.com') || host === '.cootekservice.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cowlevel.net') || host === '.cowlevel.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cowtransfer.com') || host === '.cowtransfer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cppblog.com') || host === '.cppblog.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cpppf.org') || host === '.cpppf.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cqccn.com') || host === '.cqccn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cqvip.com') || host === '.cqvip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cr173.com') || host === '.cr173.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..crggcn.com') || host === '.crggcn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..crsky.com') || host === '.crsky.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cryuantafund.com') || host === '.cryuantafund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csair.com') || host === '.csair.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csbew.com') || host === '.csbew.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csc108.com') || host === '.csc108.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csci.hk') || host === '.csci.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csdn.com') || host === '.csdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csdn.net') || host === '.csdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csfounder.com') || host === '.csfounder.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csmjzs.com') || host === '.csmjzs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cspro.org') || host === '.cspro.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csslcloud.net') || host === '.csslcloud.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csto.com') || host === '.csto.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..csxbank.com') || host === '.csxbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctexcel.ca') || host === '.ctexcel.ca') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctexcel.com') || host === '.ctexcel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctexcel.com.hk') || host === '.ctexcel.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctexcel.fr') || host === '.ctexcel.fr') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctexcel.us') || host === '.ctexcel.us') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctfile.com') || host === '.ctfile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctfund.com') || host === '.ctfund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctiforum.com') || host === '.ctiforum.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctobsnssdk.com') || host === '.ctobsnssdk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctoutiao.com') || host === '.ctoutiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctrip.co.id') || host === '.ctrip.co.id') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctrip.co.kr') || host === '.ctrip.co.kr') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctrip.co.th') || host === '.ctrip.co.th') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctrip.com') || host === '.ctrip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctrip.com.hk') || host === '.ctrip.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctrip.my') || host === '.ctrip.my') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctrip.sg') || host === '.ctrip.sg') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctripbiz.com') || host === '.ctripbiz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctripbuy.hk') || host === '.ctripbuy.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctripteam.com') || host === '.ctripteam.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctsbw.com') || host === '.ctsbw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ctsec.com') || host === '.ctsec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cubead.com') || host === '.cubead.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cwxzx.com') || host === '.cwxzx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cxbiji.com') || host === '.cxbiji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cyagen.com') || host === '.cyagen.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cybtc.com') || host === '.cybtc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cyol.com') || host === '.cyol.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cyts.com') || host === '.cyts.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cz88.net') || host === '.cz88.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cztv.com') || host === '.cztv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..cztvcloud.com') || host === '.cztvcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..czybjz.com') || host === '.czybjz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dadajiasu.com') || host === '.dadajiasu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dadighost.com') || host === '.dadighost.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..daguzhe.com') || host === '.daguzhe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dajiabao.com') || host === '.dajiabao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dajie.com') || host === '.dajie.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dajieimg.com') || host === '.dajieimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dalongyun.com') || host === '.dalongyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dandanplay.com') || host === '.dandanplay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dandanzan.com') || host === '.dandanzan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dangbei.com') || host === '.dangbei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dangdang.com') || host === '.dangdang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..danji100.com') || host === '.danji100.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..danji6.com') || host === '.danji6.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..danjuanfunds.com') || host === '.danjuanfunds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dao123.com') || host === '.dao123.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..daocloud.io') || host === '.daocloud.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..daojia.com') || host === '.daojia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..daovoice.io') || host === '.daovoice.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dayu.com') || host === '.dayu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dayukaoshi.com') || host === '.dayukaoshi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dazijia.com') || host === '.dazijia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dbank.com') || host === '.dbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dbankcdn.com') || host === '.dbankcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dbankcloud.com') || host === '.dbankcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dcarapi.com') || host === '.dcarapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dcarimg.com') || host === '.dcarimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dcarlive.com') || host === '.dcarlive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dcarstatic.com') || host === '.dcarstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dcarvod.com') || host === '.dcarvod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dcdapp.com') || host === '.dcdapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dcdkjx.com') || host === '.dcdkjx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dct-cloud.com') || host === '.dct-cloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dd373.com') || host === '.dd373.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ddmogo.com') || host === '.ddmogo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ddooo.com') || host === '.ddooo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ddurl.to') || host === '.ddurl.to') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dedecms.com') || host === '.dedecms.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..deepin.com') || host === '.deepin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..deepin.io') || host === '.deepin.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..deepin.org') || host === '.deepin.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..deepinos.org') || host === '.deepinos.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dengguobi.com') || host === '.dengguobi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..develenv.com') || host === '.develenv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..devui.design') || host === '.devui.design') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dfcfw.com') || host === '.dfcfw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dfham.com') || host === '.dfham.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dfkhgj.com') || host === '.dfkhgj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dginfo.com') || host === '.dginfo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dgjy.net') || host === '.dgjy.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dgphospital.com') || host === '.dgphospital.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dgtle.com') || host === '.dgtle.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dianchacha.com') || host === '.dianchacha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..diandao.org') || host === '.diandao.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..diandian.com') || host === '.diandian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..diandianqi.com') || host === '.diandianqi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dianping.com') || host === '.dianping.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dianwannan.com') || host === '.dianwannan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dida365.com') || host === '.dida365.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..didi-food.com') || host === '.didi-food.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..didialift.com') || host === '.didialift.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..didiaustralia.blog') || host === '.didiaustralia.blog') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..didichuxing.com') || host === '.didichuxing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..didiglobal.com') || host === '.didiglobal.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..didimobility.co.jp') || host === '.didimobility.co.jp') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..didistatic.com') || host === '.didistatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dig.bdurl.net') || host === '.dig.bdurl.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dingding.xin') || host === '.dingding.xin') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dingtalk.com') || host === '.dingtalk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dingtalk.net') || host === '.dingtalk.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dingtalkapps.com') || host === '.dingtalkapps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dingxiang-inc.com') || host === '.dingxiang-inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..diopic.net') || host === '.diopic.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..discuz.net') || host === '.discuz.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..discuz.org') || host === '.discuz.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..diyiyou.com') || host === '.diyiyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dj99.com') || host === '.dj99.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dl-vip.pcfaster.baidu.co.th') || host === '.dl-vip.pcfaster.baidu.co.th') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dl.delivery.mp.microsoft.com') || host === '.dl.delivery.mp.microsoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dler.cloud') || host === '.dler.cloud') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dlgslb.net') || host === '.dlgslb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dlnel.com') || host === '.dlnel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dlnel.org') || host === '.dlnel.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dmzj.com') || host === '.dmzj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dns.pub') || host === '.dns.pub') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dnspod.com') || host === '.dnspod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dnspod.mobi') || host === '.dnspod.mobi') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dnspod.net') || host === '.dnspod.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dnspod.org') || host === '.dnspod.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dnsv1.com') || host === '.dnsv1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dnsv2.com') || host === '.dnsv2.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dnsv3.com') || host === '.dnsv3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dnsv4.com') || host === '.dnsv4.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dnsv5.com') || host === '.dnsv5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..doc88.com') || host === '.doc88.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..docer.com') || host === '.docer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..docin.com') || host === '.docin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dockerone.com') || host === '.dockerone.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dockone.io') || host === '.dockone.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..docschina.org') || host === '.docschina.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..doctoryou.ai') || host === '.doctoryou.ai') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dogedoge.com') || host === '.dogedoge.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..doh.pub') || host === '.doh.pub') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..donews.com') || host === '.donews.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dongao.com') || host === '.dongao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dongchedi.com') || host === '.dongchedi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dongchediapp.com') || host === '.dongchediapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dongguantoday.com') || host === '.dongguantoday.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dongting.com') || host === '.dongting.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dopa.com') || host === '.dopa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..doticloud.com') || host === '.doticloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douban.com') || host === '.douban.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douban.fm') || host === '.douban.fm') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..doubanio.com') || host === '.doubanio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douxie.com') || host === '.douxie.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyin.com') || host === '.douyin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyincdn.com') || host === '.douyincdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyinliving.com') || host === '.douyinliving.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyinpic.com') || host === '.douyinpic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyinstatic.com') || host === '.douyinstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyinvod.com') || host === '.douyinvod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyu.com') || host === '.douyu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyu.tv') || host === '.douyu.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyuscdn.com') || host === '.douyuscdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..douyutv.com') || host === '.douyutv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..downcc.com') || host === '.downcc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..downxia.com') || host === '.downxia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..downyi.com') || host === '.downyi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dpfile.com') || host === '.dpfile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dratio.com') || host === '.dratio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dreamcast.hk') || host === '.dreamcast.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dreams-travel.com') || host === '.dreams-travel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..drivergenius.com') || host === '.drivergenius.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dtstatic.com') || host === '.dtstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duapps.com') || host === '.duapps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duba.com') || host === '.duba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duba.net') || host === '.duba.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dui.ai') || host === '.dui.ai') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duiopen.com') || host === '.duiopen.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duitang.com') || host === '.duitang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duoduocdn.com') || host === '.duoduocdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duokan.com') || host === '.duokan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duokanbox.com') || host === '.duokanbox.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duolabao.com') || host === '.duolabao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duomai.com') || host === '.duomai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duoshuo.com') || host === '.duoshuo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duote.com') || host === '.duote.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duowan.com') || host === '.duowan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..duxiu.com') || host === '.duxiu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dwion.com') || host === '.dwion.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dwstatic.com') || host === '.dwstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dxpmedia.com') || host === '.dxpmedia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dxycdn.com') || host === '.dxycdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dxzq.net') || host === '.dxzq.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dyhjw.com') || host === '.dyhjw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dytt8.net') || host === '.dytt8.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dzdvip.com') || host === '.dzdvip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dzsc.com') || host === '.dzsc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dzw3.com') || host === '.dzw3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..dzwww.com') || host === '.dzwww.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..easesale.com') || host === '.easesale.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..easiu.com') || host === '.easiu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..easou.com') || host === '.easou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eastday.com') || host === '.eastday.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eastmoney.com') || host === '.eastmoney.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eastmoneyfutures.com') || host === '.eastmoneyfutures.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eastsoo.com') || host === '.eastsoo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..easytrip.com') || host === '.easytrip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eayyou.com') || host === '.eayyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eb-ind.com') || host === '.eb-ind.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebasset.com') || host === '.ebasset.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebchina.com') || host === '.ebchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebchinaintl.com') || host === '.ebchinaintl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebfcn.com') || host === '.ebfcn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebfortune.com') || host === '.ebfortune.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebico.com') || host === '.ebico.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebrun.com') || host === '.ebrun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebscn-am.com') || host === '.ebscn-am.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebscn.com') || host === '.ebscn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebscohost.com') || host === '.ebscohost.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ebtrust.com') || host === '.ebtrust.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ecitic.com') || host === '.ecitic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ecitic.net') || host === '.ecitic.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ecjobhome.com') || host === '.ecjobhome.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ecloud-gdu.com') || host === '.ecloud-gdu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ecombdapi.com') || host === '.ecombdapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..edu4399.com') || host === '.edu4399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eduei.com') || host === '.eduei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eeyy.com') || host === '.eeyy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eflycloud.com') || host === '.eflycloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ele.me') || host === '.ele.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..elecfans.com') || host === '.elecfans.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..elemecdn.com') || host === '.elemecdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..elong.com') || host === '.elong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..emarbox.com') || host === '.emarbox.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..emas-poc.com') || host === '.emas-poc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..emerald.com') || host === '.emerald.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..empornium.me') || host === '.empornium.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..emsec.hk') || host === '.emsec.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..emumax.com') || host === '.emumax.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..engineeringvillage.com') || host === '.engineeringvillage.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..enterdesk.com') || host === '.enterdesk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eoeandroid.com') || host === '.eoeandroid.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eolink.com') || host === '.eolink.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..er07.com') || host === '.er07.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..erji.net') || host === '.erji.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ersjk.com') || host === '.ersjk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..essurl.com') || host === '.essurl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..etao.com') || host === '.etao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ets100.com') || host === '.ets100.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eu-west-0.myhuaweicloud.com') || host === '.eu-west-0.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..eudic.net') || host === '.eudic.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..everbright.com') || host === '.everbright.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ewqcxz.com') || host === '.ewqcxz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ex.puata.info') || host === '.ex.puata.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..excelhome.net') || host === '.excelhome.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..exmailgz.com') || host === '.exmailgz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..expreview.com') || host === '.expreview.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..extfans.com') || host === '.extfans.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ezpro.pro') || host === '.ezpro.pro') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..f.cx') || host === '.f.cx') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..faceu.com') || host === '.faceu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..faceu.mobi') || host === '.faceu.mobi') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fadfunds.com') || host === '.fadfunds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..faloo.com') || host === '.faloo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..famulei.com') || host === '.famulei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fang.com') || host === '.fang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fangxiaoer.com') || host === '.fangxiaoer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fanli.com') || host === '.fanli.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fanqienovel.com') || host === '.fanqienovel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fanxian.com') || host === '.fanxian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fastapi.net') || host === '.fastapi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fastcdn.com') || host === '.fastcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fbank.com') || host === '.fbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fdcyun.com') || host === '.fdcyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feidee.com') || host === '.feidee.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feidee.net') || host === '.feidee.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feihuo.com') || host === '.feihuo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feiliao.com') || host === '.feiliao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feimaoyun.com') || host === '.feimaoyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feiniaomy.com') || host === '.feiniaomy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feishu.net') || host === '.feishu.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feishucdn.com') || host === '.feishucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feishupkg.com') || host === '.feishupkg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feizhu.com') || host === '.feizhu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feng.com') || host === '.feng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..feng1.com') || host === '.feng1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fengcx.com') || host === '.fengcx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fengedu.com') || host === '.fengedu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fengimg.com') || host === '.fengimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fengkongcloud.com') || host === '.fengkongcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fengniao.com') || host === '.fengniao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fengxian110.com') || host === '.fengxian110.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fenxi.com') || host === '.fenxi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fetion-portal.com') || host === '.fetion-portal.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fetionpic.com') || host === '.fetionpic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ffbuddy.com') || host === '.ffbuddy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fgo.wiki') || host === '.fgo.wiki') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fhldns.com') || host === '.fhldns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fimmu.com') || host === '.fimmu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..finchina.com') || host === '.finchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..finzfin.com') || host === '.finzfin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fir.im') || host === '.fir.im') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fixdown.com') || host === '.fixdown.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fjhps.com') || host === '.fjhps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fliggy.com') || host === '.fliggy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fliggy.hk') || host === '.fliggy.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..flxdns.com') || host === '.flxdns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..flycua.com') || host === '.flycua.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..flyert.com') || host === '.flyert.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fm3838.com') || host === '.fm3838.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fofa.info') || host === '.fofa.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fofa.so') || host === '.fofa.so') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ford.com') || host === '.ford.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..foresightfund.com') || host === '.foresightfund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..founderff.com') || host === '.founderff.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..foundertype.com') || host === '.foundertype.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..foxmail.com') || host === '.foxmail.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fqjob.net') || host === '.fqjob.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fqnovel.com') || host === '.fqnovel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fqnovelpic.com') || host === '.fqnovelpic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fqnovelvod.com') || host === '.fqnovelvod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..frdic.com') || host === '.frdic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..freebuf.com') || host === '.freebuf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fresh-ideas.cc') || host === '.fresh-ideas.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..freshhema.com') || host === '.freshhema.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..frontjs.com') || host === '.frontjs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..frontwize.com') || host === '.frontwize.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fsfund.com') || host === '.fsfund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fspcdn.com') || host === '.fspcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ftfund.com') || host === '.ftfund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fugetech.com') || host === '.fugetech.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fun.tv') || host === '.fun.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..funcdn.com') || host === '.funcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..funnycore.com') || host === '.funnycore.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..funshion.com') || host === '.funshion.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..funshion.net') || host === '.funshion.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fuwai.com') || host === '.fuwai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fuwj.com') || host === '.fuwj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fxxz.com') || host === '.fxxz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds.com') || host === '.fyeds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds0.com') || host === '.fyeds0.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds1.com') || host === '.fyeds1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds3.com') || host === '.fyeds3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds4.com') || host === '.fyeds4.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds5.com') || host === '.fyeds5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds6.com') || host === '.fyeds6.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds7.com') || host === '.fyeds7.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds8.com') || host === '.fyeds8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fyeds9.com') || host === '.fyeds9.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymall0.com') || host === '.fymall0.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymall1.com') || host === '.fymall1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymall4.com') || host === '.fymall4.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymall7.com') || host === '.fymall7.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymall9.com') || host === '.fymall9.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymallqa0.com') || host === '.fymallqa0.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymallqa1.com') || host === '.fymallqa1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymallqa2.com') || host === '.fymallqa2.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymallqa3.com') || host === '.fymallqa3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymallqa4.com') || host === '.fymallqa4.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymallqa7.com') || host === '.fymallqa7.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fymallqa9.com') || host === '.fymallqa9.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fzaqjy.com') || host === '.fzaqjy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..fzfinancing.com') || host === '.fzfinancing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..g-cores.com') || host === '.g-cores.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gaapqcloud.com') || host === '.gaapqcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..galaxyasset.com') || host === '.galaxyasset.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..game234.com') || host === '.game234.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gameabc.com') || host === '.gameabc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gamebonfire.com') || host === '.gamebonfire.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gameitop.com') || host === '.gameitop.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gameloop.com') || host === '.gameloop.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gamemei.com') || host === '.gamemei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gamersky.com') || host === '.gamersky.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gandi.net') || host === '.gandi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ganji.com') || host === '.ganji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ganjistatic1.com') || host === '.ganjistatic1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gaode.com') || host === '.gaode.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gaodun.com') || host === '.gaodun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gaoshouyou.com') || host === '.gaoshouyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gaoxiaojob.com') || host === '.gaoxiaojob.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..garmin.com') || host === '.garmin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gazellegames.net') || host === '.gazellegames.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gcloudcs.com') || host === '.gcloudcs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gcloudcstest.com') || host === '.gcloudcstest.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gcloudcstestonly.com') || host === '.gcloudcstestonly.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gclouddolphin.com') || host === '.gclouddolphin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gcloudsdk.com') || host === '.gcloudsdk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gcores.com') || host === '.gcores.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gdjdxy.com') || host === '.gdjdxy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gdliontech.com') || host === '.gdliontech.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gdrc.com') || host === '.gdrc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gdtimg.com') || host === '.gdtimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..geekpark.net') || host === '.geekpark.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..geetest.com') || host === '.geetest.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..geilicdn.com') || host === '.geilicdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..getui.com') || host === '.getui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gezida.com') || host === '.gezida.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gfan.com') || host === '.gfan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gfund.com') || host === '.gfund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gifshow.com') || host === '.gifshow.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..giocdn.com') || host === '.giocdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gitcode.com') || host === '.gitcode.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gitcode.net') || host === '.gitcode.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gitee.com') || host === '.gitee.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gitee.io') || host === '.gitee.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gitv.tv') || host === '.gitv.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..globrand.com') || host === '.globrand.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gm86.com') || host === '.gm86.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gmz88.com') || host === '.gmz88.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gneec.com') || host === '.gneec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gneec3.com') || host === '.gneec3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gneec4.com') || host === '.gneec4.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gneec7.com') || host === '.gneec7.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..go2map.com') || host === '.go2map.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gobasearcher.com') || host === '.gobasearcher.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..godic.net') || host === '.godic.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gogokid.com') || host === '.gogokid.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gold678.com') || host === '.gold678.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..golue.com') || host === '.golue.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gongxiangcj.com') || host === '.gongxiangcj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gongyi.xin') || host === '.gongyi.xin') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..goodread.com') || host === '.goodread.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..goofish.com') || host === '.goofish.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..goosail.com') || host === '.goosail.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..goproxy.io') || host === '.goproxy.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..goselling.com') || host === '.goselling.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..goto-game.com') || host === '.goto-game.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..goto-game.mobi') || host === '.goto-game.mobi') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..goto-game.org') || host === '.goto-game.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gotokeep.com') || host === '.gotokeep.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gotolink.net') || host === '.gotolink.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..goufw.com') || host === '.goufw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..govqcloud.com') || host === '.govqcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gowinamc.com') || host === '.gowinamc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gracg.com') || host === '.gracg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gree.com') || host === '.gree.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..greenxiazai.com') || host === '.greenxiazai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..growingio.com') || host === '.growingio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..grzq.com') || host === '.grzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gsadds.com') || host === '.gsadds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gszq.com') || host === '.gszq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gtags.net') || host === '.gtags.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gtarsc.com') || host === '.gtarsc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gtgres.com') || host === '.gtgres.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gtimg.com') || host === '.gtimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gtja.com') || host === '.gtja.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gtm.pub') || host === '.gtm.pub') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guabu.com') || host === '.guabu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guaiguai.com') || host === '.guaiguai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guanaitong.com') || host === '.guanaitong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guanhaobio.com') || host === '.guanhaobio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gucheng.com') || host === '.gucheng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guigu.org') || host === '.guigu.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guodu.com') || host === '.guodu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guokr.com') || host === '.guokr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guoping123.com') || host === '.guoping123.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guoxinmac.com') || host === '.guoxinmac.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guoxuedashi.com') || host === '.guoxuedashi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guoxuemi.com') || host === '.guoxuemi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gupzs.com') || host === '.gupzs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gushiwen.org') || host === '.gushiwen.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..guzhangting.com') || host === '.guzhangting.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gwdang.com') || host === '.gwdang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gxairlines.com') || host === '.gxairlines.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gxb.io') || host === '.gxb.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..gzwanju.com') || host === '.gzwanju.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..h2os.com') || host === '.h2os.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..h5uc.com') || host === '.h5uc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hack520.com') || host === '.hack520.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hackhome.com') || host === '.hackhome.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hackinn.com') || host === '.hackinn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hacpai.com') || host === '.hacpai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haibian.com') || host === '.haibian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haidilao.com') || host === '.haidilao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hainanairlines.com') || host === '.hainanairlines.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haishun.com') || host === '.haishun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hanboshi.com') || host === '.hanboshi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..handanjob.com') || host === '.handanjob.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hangjiayun.com') || host === '.hangjiayun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hao123.com') || host === '.hao123.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hao123img.com') || host === '.hao123img.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hao222.com') || host === '.hao222.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haofenshu.com') || host === '.haofenshu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haokan.com') || host === '.haokan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haolietou.com') || host === '.haolietou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haoso.com') || host === '.haoso.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haosou.com') || host === '.haosou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haosou.net') || host === '.haosou.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haote.com') || host === '.haote.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haowu.link') || host === '.haowu.link') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haoyisheng.com') || host === '.haoyisheng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..haoyouyinxiang.com') || host === '.haoyouyinxiang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..happyhlddz.com') || host === '.happyhlddz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..harmonyos.com') || host === '.harmonyos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hazq.com') || host === '.hazq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hbooker.com') || host === '.hbooker.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hczq.com') || host === '.hczq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hdbits.org') || host === '.hdbits.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hdchina.org') || host === '.hdchina.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hdcmct.org') || host === '.hdcmct.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hddolby.com') || host === '.hddolby.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hdhome.org') || host === '.hdhome.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hdslb.com') || host === '.hdslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hdslb.org') || host === '.hdslb.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hdyxgame.com') || host === '.hdyxgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..healthjd.com') || host === '.healthjd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..heavenlywind.cc') || host === '.heavenlywind.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hefei.cc') || host === '.hefei.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..heisha.net') || host === '.heisha.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hello-inc.com') || host === '.hello-inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hellobike.com') || host === '.hellobike.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hellowebfont.com') || host === '.hellowebfont.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hemamax.com') || host === '.hemamax.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hemaos.com') || host === '.hemaos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..henha.com') || host === '.henha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..henkuai.com') || host === '.henkuai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..herostart.com') || host === '.herostart.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hexun.com') || host === '.hexun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..heytap.com') || host === '.heytap.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..heytapcs.com') || host === '.heytapcs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..heytapdownload.com') || host === '.heytapdownload.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..heytapimage.com') || host === '.heytapimage.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..heytapmobi.com') || host === '.heytapmobi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..heytea-co.com') || host === '.heytea-co.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..heytea.com') || host === '.heytea.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hftfund.com') || host === '.hftfund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hhtravel.com') || host === '.hhtravel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hhtravel.com.tw') || host === '.hhtravel.com.tw') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hiascend.com') || host === '.hiascend.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hichina.com') || host === '.hichina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hiclc.com') || host === '.hiclc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hicloud.com') || host === '.hicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hihocoder.com') || host === '.hihocoder.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hihonor.com') || host === '.hihonor.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hiido.com') || host === '.hiido.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hikunpeng.com') || host === '.hikunpeng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hikunpeng.net') || host === '.hikunpeng.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hisilicon.com') || host === '.hisilicon.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hitv.com') || host === '.hitv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hiyd.com') || host === '.hiyd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hjapi.com') || host === '.hjapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hkgcloudcs.com') || host === '.hkgcloudcs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hkserversolution.com') || host === '.hkserversolution.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hktheone.com') || host === '.hktheone.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hlzqgs.com') || host === '.hlzqgs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hn-cbec.com') || host === '.hn-cbec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hnacargo.com') || host === '.hnacargo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hnair.com') || host === '.hnair.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hnrcsc.com') || host === '.hnrcsc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hntv.tv') || host === '.hntv.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hnyuyuhui.com') || host === '.hnyuyuhui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hollisterco.com') || host === '.hollisterco.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hollycrm.com') || host === '.hollycrm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..homeinns.com') || host === '.homeinns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..homekoo.com') || host === '.homekoo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hongbo100.com') || host === '.hongbo100.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hongdefund.com') || host === '.hongdefund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hongen.com') || host === '.hongen.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hongsanban.com') || host === '.hongsanban.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hongtastock.com') || host === '.hongtastock.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hongxiu.com') || host === '.hongxiu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hongyuanqh.com') || host === '.hongyuanqh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hori-gz.com') || host === '.hori-gz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hostbuf.com') || host === '.hostbuf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hotmail.com') || host === '.hotmail.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..houdao.com') || host === '.houdao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..houyicaiji.com') || host === '.houyicaiji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..houyuantuan.com') || host === '.houyuantuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..howbuy.com') || host === '.howbuy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hr-welink.com') || host === '.hr-welink.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hsfund.com') || host === '.hsfund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..htcases.com') || host === '.htcases.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hteacher.net') || host === '.hteacher.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..htsec.com') || host === '.htsec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huajingsec.com') || host === '.huajingsec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huangyuhui.net') || host === '.huangyuhui.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huanqiu.com') || host === '.huanqiu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huashengdaili.com') || host === '.huashengdaili.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huatu.com') || host === '.huatu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huawei.com') || host === '.huawei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweiacad.com') || host === '.huaweiacad.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweiapaas.com') || host === '.huaweiapaas.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweicloud-dns.com') || host === '.huaweicloud-dns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweicloud-dns.net') || host === '.huaweicloud-dns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweicloud-dns.org') || host === '.huaweicloud-dns.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweicloud-smn.com') || host === '.huaweicloud-smn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweicloud-smn.net') || host === '.huaweicloud-smn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweicloud.com') || host === '.huaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweicloudapis.com') || host === '.huaweicloudapis.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweicloudlive.com') || host === '.huaweicloudlive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweiief.com') || host === '.huaweiief.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweimarketplace.com') || host === '.huaweimarketplace.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweistatic.com') || host === '.huaweistatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaweiyun.com') || host === '.huaweiyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huaxiong.com') || host === '.huaxiong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huayingsc.com') || host === '.huayingsc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huijistatic.com') || host === '.huijistatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huijiwiki.com') || host === '.huijiwiki.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huize.com') || host === '.huize.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hujia.org') || host === '.hujia.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hujiang.com') || host === '.hujiang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hunantv.com') || host === '.hunantv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huochepiao.com') || host === '.huochepiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huocheso.com') || host === '.huocheso.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huoshan.com') || host === '.huoshan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huoshanstatic.com') || host === '.huoshanstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huoshanzhibo.com') || host === '.huoshanzhibo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hupu.com') || host === '.hupu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hupucdn.com') || host === '.hupucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huxiu.com') || host === '.huxiu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huxiucdn.com') || host === '.huxiucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..huya.com') || host === '.huya.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hwccpc.com') || host === '.hwccpc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hwcdnsre.com') || host === '.hwcdnsre.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hwclouds-dns.com') || host === '.hwclouds-dns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hwclouds-dns.net') || host === '.hwclouds-dns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hwclouds.mobi') || host === '.hwclouds.mobi') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hwcloudvis.com') || host === '.hwcloudvis.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hwocloud.com') || host === '.hwocloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hwshu.com') || host === '.hwshu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hwtrip.com') || host === '.hwtrip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hxcdn.net') || host === '.hxcdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hxfy888.com') || host === '.hxfy888.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hxsd.com') || host === '.hxsd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hz.pre.tbusergw.taobao.net') || host === '.hz.pre.tbusergw.taobao.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..hz.tbusergw.taobao.net') || host === '.hz.tbusergw.taobao.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..i360mall.com') || host === '.i360mall.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..i3839.com') || host === '.i3839.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ialicdn.com') || host === '.ialicdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iask.com') || host === '.iask.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ibaotu.com') || host === '.ibaotu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ibcet.org') || host === '.ibcet.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ibidian.com') || host === '.ibidian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ibuychem.com') || host === '.ibuychem.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ibytedapm.com') || host === '.ibytedapm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ica-alliance.org') || host === '.ica-alliance.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icaidao.com') || host === '.icaidao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc-at.com') || host === '.icbc-at.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc-cz.com') || host === '.icbc-cz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc-ltd.com') || host === '.icbc-ltd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc-uk.com') || host === '.icbc-uk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc-us.com') || host === '.icbc-us.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.ae') || host === '.icbc.ae') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.be') || host === '.icbc.be') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.co.id') || host === '.icbc.co.id') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.co.jp') || host === '.icbc.co.jp') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.co.kr') || host === '.icbc.co.kr') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.co.nl') || host === '.icbc.co.nl') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.au') || host === '.icbc.com.au') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.es') || host === '.icbc.com.es') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.kh') || host === '.icbc.com.kh') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.kw') || host === '.icbc.com.kw') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.la') || host === '.icbc.com.la') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.mm') || host === '.icbc.com.mm') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.mo') || host === '.icbc.com.mo') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.mx') || host === '.icbc.com.mx') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.pe') || host === '.icbc.com.pe') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.pk') || host === '.icbc.com.pk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.qa') || host === '.icbc.com.qa') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.sg') || host === '.icbc.com.sg') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.com.vn') || host === '.icbc.com.vn') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.de') || host === '.icbc.de') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.eu') || host === '.icbc.eu') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbc.lu') || host === '.icbc.lu') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcalmaty.kz') || host === '.icbcalmaty.kz') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcasia.com') || host === '.icbcasia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcbr.com.br') || host === '.icbcbr.com.br') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbci.com.hk') || host === '.icbci.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcina.com') || host === '.icbcina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcindia.com') || host === '.icbcindia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcit.com') || host === '.icbcit.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbclondon.com') || host === '.icbclondon.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcme.ae') || host === '.icbcme.ae') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcmoscow.ru') || host === '.icbcmoscow.ru') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcmy.com') || host === '.icbcmy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcnz.com') || host === '.icbcnz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcpanama.com') || host === '.icbcpanama.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcparis.fr') || host === '.icbcparis.fr') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcpl.com') || host === '.icbcpl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcstandard.com') || host === '.icbcstandard.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcstandardbank.com') || host === '.icbcstandardbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcstandardresources.com') || host === '.icbcstandardresources.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcstandardsecurities.com') || host === '.icbcstandardsecurities.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcswiss.com') || host === '.icbcswiss.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbcthai.com') || host === '.icbcthai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbkfs.com') || host === '.icbkfs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icbkus.com') || host === '.icbkus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icedropper.com') || host === '.icedropper.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icetorrent.org') || host === '.icetorrent.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icevirtuallibrary.com') || host === '.icevirtuallibrary.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ichangtou.com') || host === '.ichangtou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iciba.com') || host === '.iciba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..icourse163.org') || host === '.icourse163.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ics.design') || host === '.ics.design') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..idcgcloudcs.com') || host === '.idcgcloudcs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..idcquan.com') || host === '.idcquan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..idongdong.com') || host === '.idongdong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..idqqimg.com') || host === '.idqqimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ieee.org') || host === '.ieee.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iemiq.com') || host === '.iemiq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iesdouyin.com') || host === '.iesdouyin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ifanr.com') || host === '.ifanr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ifanr.in') || host === '.ifanr.in') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ifanrusercontent.com') || host === '.ifanrusercontent.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ifanrx.com') || host === '.ifanrx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ifeng.com') || host === '.ifeng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ifengimg.com') || host === '.ifengimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ifengweekly.com') || host === '.ifengweekly.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iflytek.com') || host === '.iflytek.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..igamecj.com') || host === '.igamecj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..igao7.com') || host === '.igao7.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..igetget.com') || host === '.igetget.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..igtm.pub') || host === '.igtm.pub') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..igwfmc.com') || host === '.igwfmc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ihappystudio.com') || host === '.ihappystudio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iheima.com') || host === '.iheima.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ihuman.com') || host === '.ihuman.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ihykb.com') || host === '.ihykb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ijiandao.com') || host === '.ijiandao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ijinshan.com') || host === '.ijinshan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ikafan.com') || host === '.ikafan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..im-cc.com') || host === '.im-cc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..im2maker.com') || host === '.im2maker.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..im9.com') || host === '.im9.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..images-amazon.com') || host === '.images-amazon.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..imcapptest.com') || host === '.imcapptest.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..imedao.com') || host === '.imedao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..imf.org') || host === '.imf.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..img4399.com') || host === '.img4399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..img4me.com') || host === '.img4me.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..imgo.tv') || host === '.imgo.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..imooc.com') || host === '.imooc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..imqq.com') || host === '.imqq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..imweb.io') || host === '.imweb.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..in.th') || host === '.in.th') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..incopat.com') || host === '.incopat.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..indienova.com') || host === '.indienova.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..infinitynewtab.com') || host === '.infinitynewtab.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..infoq.com') || host === '.infoq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..infoqstatic.com') || host === '.infoqstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..inftab.com') || host === '.inftab.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..intltencentcos.com') || host === '.intltencentcos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iop.org') || host === '.iop.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ip-cdn.com') || host === '.ip-cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ip.la') || host === '.ip.la') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ip138.com') || host === '.ip138.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ipanda.com') || host === '.ipanda.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ipanda.net') || host === '.ipanda.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ipapark.com') || host === '.ipapark.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ipinyou.com') || host === '.ipinyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ipip.net') || host === '.ipip.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ipplus360.com') || host === '.ipplus360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iprdp.net') || host === '.iprdp.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ipssh.net') || host === '.ipssh.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iq.com') || host === '.iq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iqiyi.com') || host === '.iqiyi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iqiyipic.com') || host === '.iqiyipic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iranshao.com') || host === '.iranshao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..irs01.com') || host === '.irs01.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..isd.com') || host === '.isd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ishumei.com') || host === '.ishumei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ispqcloud.com') || host === '.ispqcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..isvjcloud.com') || host === '.isvjcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..isvjd.com') || host === '.isvjd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..isxtv.com') || host === '.isxtv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..it165.net') || host === '.it165.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..it168.com') || host === '.it168.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..it610.com') || host === '.it610.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iteye.com') || host === '.iteye.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ithome.com') || host === '.ithome.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..itjuzi.com') || host === '.itjuzi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..itmop.com') || host === '.itmop.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..itopsdk.com') || host === '.itopsdk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..itsk.com') || host === '.itsk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iuynfg.com') || host === '.iuynfg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ivweb.io') || host === '.ivweb.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ixdzs.com') || host === '.ixdzs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ixgvideo.com') || host === '.ixgvideo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ixigua.com') || host === '.ixigua.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ixiguavideo.com') || host === '.ixiguavideo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iyingdi.com') || host === '.iyingdi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iyiou.com') || host === '.iyiou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iyunxiao.com') || host === '.iyunxiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..iztzq.com') || host === '.iztzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..izuche.com') || host === '.izuche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..izuchebao.com') || host === '.izuchebao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..j-test.com') || host === '.j-test.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jamanetwork.com') || host === '.jamanetwork.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jandan.net') || host === '.jandan.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..java.com') || host === '.java.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jb51.com') || host === '.jb51.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jbcz.tv') || host === '.jbcz.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jchat.io') || host === '.jchat.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloud-cache.com') || host === '.jcloud-cache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloud-cache.net') || host === '.jcloud-cache.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloud-cdn.com') || host === '.jcloud-cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloud-live.com') || host === '.jcloud-live.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloud-oss.com') || host === '.jcloud-oss.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloud.com') || host === '.jcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudcache.com') || host === '.jcloudcache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudcache.net') || host === '.jcloudcache.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudcs.com') || host === '.jcloudcs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jclouddn.com') || host === '.jclouddn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jclouddns.com') || host === '.jclouddns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jclouddns.net') || host === '.jclouddns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudec.com') || host === '.jcloudec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudedge.com') || host === '.jcloudedge.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudedge.net') || host === '.jcloudedge.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudgslb.com') || host === '.jcloudgslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudgslb.net') || host === '.jcloudgslb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudimg.com') || host === '.jcloudimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudimg.net') || host === '.jcloudimg.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudlb.com') || host === '.jcloudlb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudlb.net') || host === '.jcloudlb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudlive.com') || host === '.jcloudlive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudlv.com') || host === '.jcloudlv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudoss.com') || host === '.jcloudoss.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudresolve.com') || host === '.jcloudresolve.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudresolve.net') || host === '.jcloudresolve.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudss.com') || host === '.jcloudss.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudstatic.com') || host === '.jcloudstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudstatic.net') || host === '.jcloudstatic.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudvideo.com') || host === '.jcloudvideo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jcloudvideo.net') || host === '.jcloudvideo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jclps.com') || host === '.jclps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jd-app.com') || host === '.jd-app.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jd-ex.com') || host === '.jd-ex.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jd-ex.net') || host === '.jd-ex.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jd.co.th') || host === '.jd.co.th') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jd.com') || host === '.jd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jd.hk') || host === '.jd.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jd.id') || host === '.jd.id') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jd.ru') || host === '.jd.ru') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jd.shop') || host === '.jd.shop') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdair.net') || host === '.jdair.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdbusiness.com') || host === '.jdbusiness.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcache.com') || host === '.jdcache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcdn.com') || host === '.jdcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud-api.com') || host === '.jdcloud-api.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud-api.net') || host === '.jdcloud-api.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud-edu.com') || host === '.jdcloud-edu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud-elite.com') || host === '.jdcloud-elite.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud-elive.com') || host === '.jdcloud-elive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud-livebuy.com') || host === '.jdcloud-livebuy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud-mail.com') || host === '.jdcloud-mail.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud-openapi.com') || host === '.jdcloud-openapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud-oss.com') || host === '.jdcloud-oss.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloud.com') || host === '.jdcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudcache.com') || host === '.jdcloudcache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudcache.net') || host === '.jdcloudcache.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudcdn.com') || host === '.jdcloudcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudcdn.net') || host === '.jdcloudcdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudcs.com') || host === '.jdcloudcs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdclouddns.com') || host === '.jdclouddns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdclouddns.net') || host === '.jdclouddns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudedge.com') || host === '.jdcloudedge.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudedge.net') || host === '.jdcloudedge.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudlb.com') || host === '.jdcloudlb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudlb.net') || host === '.jdcloudlb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudlive.com') || host === '.jdcloudlive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudlive.net') || host === '.jdcloudlive.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudresolve.com') || host === '.jdcloudresolve.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudresolve.net') || host === '.jdcloudresolve.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudsite.com') || host === '.jdcloudsite.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudstatic.com') || host === '.jdcloudstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudstatic.net') || host === '.jdcloudstatic.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudstatus.com') || host === '.jdcloudstatus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudstatus.net') || host === '.jdcloudstatus.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudvideo.com') || host === '.jdcloudvideo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudvideo.net') || host === '.jdcloudvideo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdcloudwaf.com') || host === '.jdcloudwaf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jddapeigou.com') || host === '.jddapeigou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jddebug.com') || host === '.jddebug.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jddglobal.com') || host === '.jddglobal.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdemall.com') || host === '.jdemall.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdfw1.com') || host === '.jdfw1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdgslb.com') || host === '.jdgslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdgslb.net') || host === '.jdgslb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdh.com') || host === '.jdh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdjinrong.com') || host === '.jdjinrong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdl.com') || host === '.jdl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdpay.com') || host === '.jdpay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdpaydns.com') || host === '.jdpaydns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdwl.com') || host === '.jdwl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jdx.com') || host === '.jdx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jhgtgb.com') || host === '.jhgtgb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jhscm.com') || host === '.jhscm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jhu.edu') || host === '.jhu.edu') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jia.com') || host === '.jia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiameng.com') || host === '.jiameng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jianbihua.com') || host === '.jianbihua.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jianguoyun.com') || host === '.jianguoyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jianshu.com') || host === '.jianshu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jianshu.io') || host === '.jianshu.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jianshuapi.com') || host === '.jianshuapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jianyuweb.com') || host === '.jianyuweb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jianzhi8.com') || host === '.jianzhi8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiaodong.net') || host === '.jiaodong.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiaoyimao.com') || host === '.jiaoyimao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiasu.bohe.com') || host === '.jiasu.bohe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiasuhui.com') || host === '.jiasuhui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiasule.com') || host === '.jiasule.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiathis.com') || host === '.jiathis.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiayuan.com') || host === '.jiayuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiazhao.com') || host === '.jiazhao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jibencaozuo.com') || host === '.jibencaozuo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jidian.im') || host === '.jidian.im') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiemeng8.com') || host === '.jiemeng8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiemian.com') || host === '.jiemian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jikeiot.cloud') || host === '.jikeiot.cloud') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jikexueyuan.com') || host === '.jikexueyuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jikipedia.com') || host === '.jikipedia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jindidata.com') || host === '.jindidata.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jingdong.com') || host === '.jingdong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jingdongjinrong.com') || host === '.jingdongjinrong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jinglingbiaozhu.com') || host === '.jinglingbiaozhu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jingpinhui.com') || host === '.jingpinhui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jingxi.com') || host === '.jingxi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jinianbi.com') || host === '.jinianbi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jinrishici.com') || host === '.jinrishici.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jinrongren.net') || host === '.jinrongren.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jinse.com') || host === '.jinse.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jinshuju.net') || host === '.jinshuju.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jinshujucdn.com') || host === '.jinshujucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jinti.com') || host === '.jinti.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiqizhixin.com') || host === '.jiqizhixin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jisuanke.com') || host === '.jisuanke.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jisuxia.com') || host === '.jisuxia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jiuzhilan.com') || host === '.jiuzhilan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jj20.com') || host === '.jj20.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jjwxc.net') || host === '.jjwxc.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jkbl.com') || host === '.jkbl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jkcsjd.com') || host === '.jkcsjd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jmlk.co') || host === '.jmlk.co') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jmstatic.com') || host === '.jmstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..job5588.com') || host === '.job5588.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..job910.com') || host === '.job910.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jobjm.com') || host === '.jobjm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jomocdn.net') || host === '.jomocdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jomodns.com') || host === '.jomodns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..joybuy.com') || host === '.joybuy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..joybuy.es') || host === '.joybuy.es') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jpmorganchina.com') || host === '.jpmorganchina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jpopsuki.eu') || host === '.jpopsuki.eu') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jpush.io') || host === '.jpush.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jpushoa.com') || host === '.jpushoa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jsbc.com') || host === '.jsbc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jsboxbbs.com') || host === '.jsboxbbs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jsrdgg.com') || host === '.jsrdgg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jstor.org') || host === '.jstor.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jstucdn.com') || host === '.jstucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jstv.com') || host === '.jstv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jsyks.com') || host === '.jsyks.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jtamc.com') || host === '.jtamc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..juefeng.com') || host === '.juefeng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..juejin.im') || host === '.juejin.im') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..juhuasuan.com') || host === '.juhuasuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..julive.com') || host === '.julive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jumei.com') || host === '.jumei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..juneyaoair.com') || host === '.juneyaoair.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..juwan.com') || host === '.juwan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..juxia.com') || host === '.juxia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jxedt.com') || host === '.jxedt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jxksw.net') || host === '.jxksw.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jxlog.istreamsche.com') || host === '.jxlog.istreamsche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jyimg.com') || host === '.jyimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jzfz.net') || host === '.jzfz.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..jzsec.com') || host === '.jzsec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..k366.com') || host === '.k366.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kaifayun.com') || host === '.kaifayun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kaifubiao.com') || host === '.kaifubiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kaixin001.com') || host === '.kaixin001.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kaiyanapp.com') || host === '.kaiyanapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kameng98.com') || host === '.kameng98.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kanbox.com') || host === '.kanbox.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kanimg.com') || host === '.kanimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kankanews.com') || host === '.kankanews.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kantianqi.net') || host === '.kantianqi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kanzhun.com') || host === '.kanzhun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kaola.com') || host === '.kaola.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kaopu001.com') || host === '.kaopu001.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..karger.com') || host === '.karger.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kaspersky-labs.com') || host === '.kaspersky-labs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kcbebank.com') || host === '.kcbebank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..keboyunxiao.com') || host === '.keboyunxiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kechuang.org') || host === '.kechuang.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..keepcdn.com') || host === '.keepcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..keepfrds.com') || host === '.keepfrds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kejet.net') || host === '.kejet.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ketangpai.com') || host === '.ketangpai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kf5.com') || host === '.kf5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kgimg.com') || host === '.kgimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kimiss.com') || host === '.kimiss.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kingdee.com') || host === '.kingdee.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kingsoft.com') || host === '.kingsoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kiyuu.club') || host === '.kiyuu.club') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kkmh.com') || host === '.kkmh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kkzj.com') || host === '.kkzj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..klpbbs.com') || host === '.klpbbs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..knewone.com') || host === '.knewone.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kongfz.com') || host === '.kongfz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..koocdn.com') || host === '.koocdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..koolearn.com') || host === '.koolearn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..koopass.com') || host === '.koopass.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..koubei.com') || host === '.koubei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kouclo.com') || host === '.kouclo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..koudai.com') || host === '.koudai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..koudai8.com') || host === '.koudai8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kq7.com') || host === '.kq7.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ks-cdn.com') || host === '.ks-cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ks-cdn1.com') || host === '.ks-cdn1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ksapisrv.com') || host === '.ksapisrv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ksmobile.com') || host === '.ksmobile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ksord.com') || host === '.ksord.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ksosoft.com') || host === '.ksosoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ksyun.com') || host === '.ksyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ksyuncdn.com') || host === '.ksyuncdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ksyungslb.com') || host === '.ksyungslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ku6.com') || host === '.ku6.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ku6cdn.com') || host === '.ku6cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ku6img.com') || host === '.ku6img.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuaaa.com') || host === '.kuaaa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuaidi100.com') || host === '.kuaidi100.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuaiduizuoye.com') || host === '.kuaiduizuoye.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuaihou.com') || host === '.kuaihou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuaikanmanhua.com') || host === '.kuaikanmanhua.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuaishou.com') || host === '.kuaishou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuaishouzt.com') || host === '.kuaishouzt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuaizhan.com') || host === '.kuaizhan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuangxiangit.com') || host === '.kuangxiangit.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kugou.com') || host === '.kugou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kumiao.com') || host === '.kumiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunaq.com') || host === '.kunlunaq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunar.com') || host === '.kunlunar.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunca.com') || host === '.kunlunca.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunluncan.com') || host === '.kunluncan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunea.com') || host === '.kunlunea.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlungem.com') || host === '.kunlungem.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlungr.com') || host === '.kunlungr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunhuf.com') || host === '.kunlunhuf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunle.com') || host === '.kunlunle.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunli.com') || host === '.kunlunli.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunno.com') || host === '.kunlunno.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunpi.com') || host === '.kunlunpi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunra.com') || host === '.kunlunra.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunsa.com') || host === '.kunlunsa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunsc.com') || host === '.kunlunsc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunsl.com') || host === '.kunlunsl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunso.com') || host === '.kunlunso.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunta.com') || host === '.kunlunta.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunvi.com') || host === '.kunlunvi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kunlunwe.com') || host === '.kunlunwe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuqin.com') || host === '.kuqin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuyiso.com') || host === '.kuyiso.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kuyunbo.club') || host === '.kuyunbo.club') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..kwaizt.com') || host === '.kwaizt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..la-north-2.myhuaweicloud.com') || host === '.la-north-2.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..la-south-2.myhuaweicloud.com') || host === '.la-south-2.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lady8844.com') || host === '.lady8844.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lagou.com') || host === '.lagou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..laiwang.com') || host === '.laiwang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lancdn.com') || host === '.lancdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..landian.vip') || host === '.landian.vip') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..landiannews.com') || host === '.landiannews.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanhuapp.com') || host === '.lanhuapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzou.com') || host === '.lanzou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzoub.com') || host === '.lanzoub.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouc.com') || host === '.lanzouc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzoue.com') || host === '.lanzoue.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouf.com') || host === '.lanzouf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzoug.com') || host === '.lanzoug.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouh.com') || host === '.lanzouh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzoui.com') || host === '.lanzoui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouj.com') || host === '.lanzouj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouk.com') || host === '.lanzouk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzoul.com') || host === '.lanzoul.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzoum.com') || host === '.lanzoum.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouo.com') || host === '.lanzouo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzoup.com') || host === '.lanzoup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouq.com') || host === '.lanzouq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzous.com') || host === '.lanzous.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzout.com') || host === '.lanzout.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouu.com') || host === '.lanzouu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouv.com') || host === '.lanzouv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouw.com') || host === '.lanzouw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzoux.com') || host === '.lanzoux.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lanzouy.com') || host === '.lanzouy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..laomaotao.net') || host === '.laomaotao.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..laomaotao.org') || host === '.laomaotao.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lapin365.com') || host === '.lapin365.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..larksuite.com') || host === '.larksuite.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..larksuitecdn.com') || host === '.larksuitecdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..larsonlimited.com') || host === '.larsonlimited.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lascn.net') || host === '.lascn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lawxp.com') || host === '.lawxp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lawyee.org') || host === '.lawyee.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lazada.com') || host === '.lazada.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lczq.com') || host === '.lczq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ld246.com') || host === '.ld246.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ldmnq.com') || host === '.ldmnq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..le.com') || host === '.le.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..leangoo.com') || host === '.leangoo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..leanote.com') || host === '.leanote.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lecloud.com') || host === '.lecloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ledu.com') || host === '.ledu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..leetcode-cn.com') || host === '.leetcode-cn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..leigod.com') || host === '.leigod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..leikeji.com') || host === '.leikeji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..leiphone.com') || host === '.leiphone.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..leiting.com') || host === '.leiting.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..leju.com') || host === '.leju.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lemall.com') || host === '.lemall.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lemicp.com') || host === '.lemicp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..leturich.org') || host === '.leturich.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..letv.com') || host === '.letv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..letvcdn.com') || host === '.letvcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..letvcloud.com') || host === '.letvcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..letvimg.com') || host === '.letvimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lf-rc1.yhgfb-cn-static.com') || host === '.lf-rc1.yhgfb-cn-static.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lhzq.com') || host === '.lhzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liangxinyao.com') || host === '.liangxinyao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lianjia.com') || host === '.lianjia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lianmishu.com') || host === '.lianmishu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liantu.com') || host === '.liantu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lianzhuli.com') || host === '.lianzhuli.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liaoxuefeng.com') || host === '.liaoxuefeng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liba.com') || host === '.liba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..libaclub.com') || host === '.libaclub.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..libguides.com') || host === '.libguides.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liepin.com') || host === '.liepin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lietou-static.com') || host === '.lietou-static.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lietou.com') || host === '.lietou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lieyunwang.com') || host === '.lieyunwang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lightonus.com') || host === '.lightonus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..likuso.com') || host === '.likuso.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lingkou.com') || host === '.lingkou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..linglonglife.com') || host === '.linglonglife.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lingshoujia.com') || host === '.lingshoujia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..linkvans.com') || host === '.linkvans.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..linsn.com') || host === '.linsn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..linuxidc.com') || host === '.linuxidc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liqucn.com') || host === '.liqucn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liulanqi.net') || host === '.liulanqi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liulishuo.com') || host === '.liulishuo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liuxiaoer.com') || host === '.liuxiaoer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..live800.com') || host === '.live800.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..livechina.com') || host === '.livechina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..liweijia.com') || host === '.liweijia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lixinger.com') || host === '.lixinger.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lizhi.fm') || host === '.lizhi.fm') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lizhi.io') || host === '.lizhi.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lizhifm.com') || host === '.lizhifm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ljcdn.com') || host === '.ljcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lkcoffee.com') || host === '.lkcoffee.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lkkbrand.com') || host === '.lkkbrand.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..llsapp.com') || host === '.llsapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..llscdn.com') || host === '.llscdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..llsserver.com') || host === '.llsserver.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lnlib.net') || host === '.lnlib.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..localizecdn.com') || host === '.localizecdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lofter.com') || host === '.lofter.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..logiseasy.com') || host === '.logiseasy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..loli.net') || host === '.loli.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..longhoo.net') || host === '.longhoo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..longre.com') || host === '.longre.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..longtugame.com') || host === '.longtugame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..longzhu.com') || host === '.longzhu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lotpc.com') || host === '.lotpc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..loupan.com') || host === '.loupan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lppz.com') || host === '.lppz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lppzimg.com') || host === '.lppzimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lrts.me') || host === '.lrts.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lsplayer.com') || host === '.lsplayer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lu.com') || host === '.lu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lucifr.com') || host === '.lucifr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..luckincdn.com') || host === '.luckincdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..luckincoffee.com') || host === '.luckincoffee.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..luckincoffeecdn.com') || host === '.luckincoffeecdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..luckyair.net') || host === '.luckyair.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ludashi.com') || host === '.ludashi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ludoworld.net') || host === '.ludoworld.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lufax.com') || host === '.lufax.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lufaxcdn.com') || host === '.lufaxcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lufunds.com') || host === '.lufunds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lunwengo.net') || host === '.lunwengo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..luojilab.com') || host === '.luojilab.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..luoo.net') || host === '.luoo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..luyouqi.com') || host === '.luyouqi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lvmama.com') || host === '.lvmama.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lvsexitong.com') || host === '.lvsexitong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lvtds.com') || host === '.lvtds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lwurl.to') || host === '.lwurl.to') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lxdns.com') || host === '.lxdns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lxdns.info') || host === '.lxdns.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lxdns.org') || host === '.lxdns.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lxjapp.com') || host === '.lxjapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..lxway.com') || host === '.lxway.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ly.com') || host === '.ly.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..m-team.cc') || host === '.m-team.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..m1.run') || host === '.m1.run') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..m6.run') || host === '.m6.run') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..m9.run') || host === '.m9.run') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ma.run') || host === '.ma.run') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..madsrevolution.net') || host === '.madsrevolution.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mafengwo.com') || host === '.mafengwo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mafengwo.net') || host === '.mafengwo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..magedu.com') || host === '.magedu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mahjongai.net') || host === '.mahjongai.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mahjongcup.com') || host === '.mahjongcup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mahjongcup.net') || host === '.mahjongcup.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mai.tn') || host === '.mai.tn') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mail4399.com') || host === '.mail4399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..maisanqi.com') || host === '.maisanqi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..maitix.com') || host === '.maitix.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mamecn.com') || host === '.mamecn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..manhuatai.com') || host === '.manhuatai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..manmanbuy.com') || host === '.manmanbuy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..manmankan.com') || host === '.manmankan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..maoercdn.com') || host === '.maoercdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..maoyan.com') || host === '.maoyan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..maoyun.com') || host === '.maoyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..maoyun.tv') || host === '.maoyun.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..maoyuncloud.com') || host === '.maoyuncloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mapbar.com') || host === '.mapbar.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..material.istreamsche.com') || host === '.material.istreamsche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..matpool.com') || host === '.matpool.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..matpool.net') || host === '.matpool.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mayi.com') || host === '.mayi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mayihr.com') || host === '.mayihr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mayshijia.com') || host === '.mayshijia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mbalib.com') || host === '.mbalib.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mbcloud.com') || host === '.mbcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mcbang.com') || host === '.mcbang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mcbbs.net') || host === '.mcbbs.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mdeer.com') || host === '.mdeer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mdpda.com') || host === '.mdpda.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..me.com') || host === '.me.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..me1.ltd') || host === '.me1.ltd') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..me4399.com') || host === '.me4399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mechina.org') || host === '.mechina.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..media.paperclipclub.net') || host === '.media.paperclipclub.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mediav.com') || host === '.mediav.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..medicexam.net') || host === '.medicexam.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mei.com') || host === '.mei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meifang.com') || host === '.meifang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meika360.com') || host === '.meika360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meilishuo.com') || host === '.meilishuo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meimingteng.com') || host === '.meimingteng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meipai.com') || host === '.meipai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meiqia.com') || host === '.meiqia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meishichina.com') || host === '.meishichina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meishij.net') || host === '.meishij.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meitu.com') || host === '.meitu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meituan.com') || host === '.meituan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meituan.net') || host === '.meituan.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meitudata.com') || host === '.meitudata.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meitustat.com') || host === '.meitustat.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meixincdn.com') || host === '.meixincdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..meizu.com') || host === '.meizu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mengtuoshi.wang') || host === '.mengtuoshi.wang') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..metalrevolution.com') || host === '.metalrevolution.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..metatrader4.com') || host === '.metatrader4.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..metatrader5.com') || host === '.metatrader5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mfcteda.com') || host === '.mfcteda.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mgtv.com') || host === '.mgtv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mi-img.com') || host === '.mi-img.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mi.com') || host === '.mi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miaobolive.com') || host === '.miaobolive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miaomiaoz.com') || host === '.miaomiaoz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miaomiaozhe.com') || host === '.miaomiaozhe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miaopai.com') || host === '.miaopai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miaostreet.com') || host === '.miaostreet.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miaozhen.com') || host === '.miaozhen.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..microsoftonline.com') || host === '.microsoftonline.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..midasbuy.com') || host === '.midasbuy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miercn.com') || host === '.miercn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..migucloud.com') || host === '.migucloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miguvideo.com') || host === '.miguvideo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mihayo.com') || host === '.mihayo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mihayou.com') || host === '.mihayou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mihoyo.com') || host === '.mihoyo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mihoyocg.com') || host === '.mihoyocg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mihoyogift.com') || host === '.mihoyogift.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mihoyomall.com') || host === '.mihoyomall.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mihuashi.com') || host === '.mihuashi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mijisou.com') || host === '.mijisou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mikecrm.com') || host === '.mikecrm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..minapp.com') || host === '.minapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mincdn.com') || host === '.mincdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mingyuanyun.com') || host === '.mingyuanyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..minhangshi.com') || host === '.minhangshi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..minitiao.com') || host === '.minitiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mipcdn.com') || host === '.mipcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mirrors.yun-idc.com') || host === '.mirrors.yun-idc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..missjia.net') || host === '.missjia.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miui.com') || host === '.miui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miusi.co') || host === '.miusi.co') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miwifi.com') || host === '.miwifi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..miyoushe.com') || host === '.miyoushe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mjia.cc') || host === '.mjia.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mlt01.com') || host === '.mlt01.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mmarket.com') || host === '.mmarket.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mmarket6.com') || host === '.mmarket6.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mmbang.com') || host === '.mmbang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mmbang.info') || host === '.mmbang.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mmstat.com') || host === '.mmstat.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mndqlib.net') || host === '.mndqlib.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mob.com') || host === '.mob.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mobike.com') || host === '.mobike.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mobmore.com') || host === '.mobmore.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mofang.com') || host === '.mofang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mofazhu.com') || host === '.mofazhu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mogoo.com') || host === '.mogoo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mogu.com') || host === '.mogu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mogucdn.com') || host === '.mogucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mogujie.com') || host === '.mogujie.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..moji.com') || host === '.moji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mojichina.com') || host === '.mojichina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mojidict.com') || host === '.mojidict.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mokahr.com') || host === '.mokahr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..moke.com') || host === '.moke.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..moleecel.com') || host === '.moleecel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..moocollege.com') || host === '.moocollege.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mop.com') || host === '.mop.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..morethan.tv') || host === '.morethan.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..morganstanleyhuaxin.com') || host === '.morganstanleyhuaxin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..moulem.com') || host === '.moulem.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mpg.de') || host === '.mpg.de') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..msanjia.com') || host === '.msanjia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..msauth.net') || host === '.msauth.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mscbsc.com') || host === '.mscbsc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..msecnd.net') || host === '.msecnd.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mshare.cc') || host === '.mshare.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..msocdn.com') || host === '.msocdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..msstatic.com') || host === '.msstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mszdld.com') || host === '.mszdld.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mszdld.net') || host === '.mszdld.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mszq.com') || host === '.mszq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mti100.com') || host === '.mti100.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mtyun.com') || host === '.mtyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mubu.com') || host === '.mubu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mukewang.com') || host === '.mukewang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mumayi.com') || host === '.mumayi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..muomou.com') || host === '.muomou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..muwai.com') || host === '.muwai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..muyewx.com') || host === '.muyewx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..muzhiwan.com') || host === '.muzhiwan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mxhichina.com') || host === '.mxhichina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..my-qcloud.com') || host === '.my-qcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..my4399.com') || host === '.my4399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myalicdn.com') || host === '.myalicdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myanonamouse.net') || host === '.myanonamouse.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myapp.com') || host === '.myapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mychinaunicom.com') || host === '.mychinaunicom.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mydown.com') || host === '.mydown.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mydrivers.com') || host === '.mydrivers.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myelasticsearch.com') || host === '.myelasticsearch.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myhwcdn.com') || host === '.myhwcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myhwcloudlive.com') || host === '.myhwcloudlive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myhwclouds.com') || host === '.myhwclouds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myilibrary.com') || host === '.myilibrary.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myip.la') || host === '.myip.la') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myoppo.com') || host === '.myoppo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mypaas.com') || host === '.mypaas.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myqcloud.com') || host === '.myqcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myshow360.net') || host === '.myshow360.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mysiteres.com') || host === '.mysiteres.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myunlu.com') || host === '.myunlu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myypark.com') || host === '.myypark.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myyx618.com') || host === '.myyx618.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..myzaker.com') || host === '.myzaker.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mzres.com') || host === '.mzres.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..mzstatic.com') || host === '.mzstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..na-mexico-1.myhuaweicloud.com') || host === '.na-mexico-1.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nagcloudcs.com') || host === '.nagcloudcs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..naixuecha.com') || host === '.naixuecha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nanyangpt.com') || host === '.nanyangpt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nattest-china.com') || host === '.nattest-china.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nature.com') || host === '.nature.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ncore.cc') || host === '.ncore.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nease.net') || host === '.nease.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..neohytung.com') || host === '.neohytung.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..netbian.com') || host === '.netbian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..netease-inc.com') || host === '.netease-inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..netease.com') || host === '.netease.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..netease.im') || host === '.netease.im') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..newasp.net') || host === '.newasp.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..newbandeng.com') || host === '.newbandeng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..newcoder.com') || host === '.newcoder.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..newupbank.com') || host === '.newupbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..newyx.net') || host === '.newyx.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nextstudios.com') || host === '.nextstudios.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nextworkshop.net') || host === '.nextworkshop.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nffund.com') || host === '.nffund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nfoservers.com') || host === '.nfoservers.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ngabbs.com') || host === '.ngabbs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ngacn.cc') || host === '.ngacn.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nic.xin') || host === '.nic.xin') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nicaifu.com') || host === '.nicaifu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nihaoafrica.org') || host === '.nihaoafrica.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nim-lang-cn.org') || host === '.nim-lang-cn.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nmrdata.com') || host === '.nmrdata.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nnthink.com') || host === '.nnthink.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nomuraoi-sec.com') || host === '.nomuraoi-sec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..novipnoad.com') || host === '.novipnoad.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nowcoder.com') || host === '.nowcoder.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nowcoder.net') || host === '.nowcoder.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nowcoder.org') || host === '.nowcoder.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nowscore.com') || host === '.nowscore.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..npmmirror.com') || host === '.npmmirror.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nruan.com') || host === '.nruan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ntalker.com') || host === '.ntalker.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nuomi.com') || host === '.nuomi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nvsheng.com') || host === '.nvsheng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nx-sc.com') || host === '.nx-sc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nzbdw.com') || host === '.nzbdw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nzsiteres.com') || host === '.nzsiteres.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..nzwgs.com') || host === '.nzwgs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oadz.com') || host === '.oadz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oascentral.sina.com.hk') || host === '.oascentral.sina.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ocwms.com') || host === '.ocwms.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oecd-ilibrary.org') || host === '.oecd-ilibrary.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oeeee.com') || host === '.oeeee.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..offcn.com') || host === '.offcn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..office.com') || host === '.office.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..office.net') || host === '.office.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..office365.com') || host === '.office365.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..officese.com') || host === '.officese.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oi-wiki.com') || host === '.oi-wiki.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oicq88.com') || host === '.oicq88.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..okooo.com') || host === '.okooo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ol-cdn.com') || host === '.ol-cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ol-img.com') || host === '.ol-img.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oldboyedu.com') || host === '.oldboyedu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oncdp.com') || host === '.oncdp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oneapm.com') || host === '.oneapm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..onegreen.net') || host === '.onegreen.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..onenote.net') || host === '.onenote.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oneplus.com') || host === '.oneplus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oneplus.net') || host === '.oneplus.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oneplusbbs.com') || host === '.oneplusbbs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..onexmail.com') || host === '.onexmail.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oneyac.com') || host === '.oneyac.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..onlinedown.net') || host === '.onlinedown.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..onlinesjtu.com') || host === '.onlinesjtu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..onlylady.com') || host === '.onlylady.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..opdown.com') || host === '.opdown.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..open.cd') || host === '.open.cd') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..openapp.run') || host === '.openapp.run') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..openkylin.top') || host === '.openkylin.top') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..openlearning.com') || host === '.openlearning.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..openmidas.com') || host === '.openmidas.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oppo.com') || host === '.oppo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oppo.mobi') || host === '.oppo.mobi') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oppodigital.com') || host === '.oppodigital.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oppoer.me') || host === '.oppoer.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oppomobile.com') || host === '.oppomobile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oppopay.com') || host === '.oppopay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..opstatics.com') || host === '.opstatics.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oracle-tencent.com') || host === '.oracle-tencent.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oracle-tencent.net') || host === '.oracle-tencent.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oracle.com') || host === '.oracle.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oray.com') || host === '.oray.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..orient-fund.com') || host === '.orient-fund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..osapublishing.org') || host === '.osapublishing.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oschina.net') || host === '.oschina.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ottcn.com') || host === '.ottcn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oup.com') || host === '.oup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oupeng.com') || host === '.oupeng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ourbits.club') || host === '.ourbits.club') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ourdvs.com') || host === '.ourdvs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ourdvsss.com') || host === '.ourdvsss.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..outlook.com') || host === '.outlook.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ovid.com') || host === '.ovid.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ovscdns.com') || host === '.ovscdns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ovscdns.net') || host === '.ovscdns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..owsgo.com') || host === '.owsgo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oxfordartonline.com') || host === '.oxfordartonline.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oxfordbibliographies.com') || host === '.oxfordbibliographies.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..oxfordmusiconline.com') || host === '.oxfordmusiconline.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..p2cdn.com') || host === '.p2cdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..p2peye.com') || host === '.p2peye.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..p4pfile.com') || host === '.p4pfile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..p5w.net') || host === '.p5w.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pagescube.com') || host === '.pagescube.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pailitao.com') || host === '.pailitao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..paipai.com') || host === '.paipai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..paipaibang.com') || host === '.paipaibang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pangolin-sdk-toutiao.com') || host === '.pangolin-sdk-toutiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..paopaoche.net') || host === '.paopaoche.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..papocket.com') || host === '.papocket.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..passthepopcorn.me') || host === '.passthepopcorn.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pc6.com') || host === '.pc6.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pcbeta.com') || host === '.pcbeta.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pchome.net') || host === '.pchome.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pcpop.com') || host === '.pcpop.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pddpic.com') || host === '.pddpic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..peccn.com') || host === '.peccn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pglstatp-toutiao.com') || host === '.pglstatp-toutiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pgyer.com') || host === '.pgyer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pgzs.com') || host === '.pgzs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pharmacodia.com') || host === '.pharmacodia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..philanthropy.xin') || host === '.philanthropy.xin') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..phpcomposer.com') || host === '.phpcomposer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..phpweblog.net') || host === '.phpweblog.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..phpwind.com') || host === '.phpwind.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..phpwind.net') || host === '.phpwind.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..piaoliang.com') || host === '.piaoliang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pigai.org') || host === '.pigai.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pinduoduo.com') || host === '.pinduoduo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pinduoduo.net') || host === '.pinduoduo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pingan.com') || host === '.pingan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pingan.com.hk') || host === '.pingan.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pingplusplus.com') || host === '.pingplusplus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pingwest.com') || host === '.pingwest.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pingxx.com') || host === '.pingxx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pintu360.com') || host === '.pintu360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pipaw.com') || host === '.pipaw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pipaw.net') || host === '.pipaw.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pipix.com') || host === '.pipix.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pkoplink.com') || host === '.pkoplink.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pkulaw.com') || host === '.pkulaw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pmphmooc.com') || host === '.pmphmooc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pn1waq.com') || host === '.pn1waq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pnas.org') || host === '.pnas.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pniao.com') || host === '.pniao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..polyv.net') || host === '.polyv.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..powerapp.io') || host === '.powerapp.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pplive.com') || host === '.pplive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pps.tv') || host === '.pps.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ppsimg.com') || host === '.ppsimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pptbest.com') || host === '.pptbest.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pptv.com') || host === '.pptv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..prestodb-china.com') || host === '.prestodb-china.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..privatehd.to') || host === '.privatehd.to') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..proquest.com') || host === '.proquest.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..proximabeta.com') || host === '.proximabeta.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..psbc.com') || host === '.psbc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pstatp.com') || host === '.pstatp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pterclub.com') || host === '.pterclub.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pubghelper.com') || host === '.pubghelper.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pubgtool.com') || host === '.pubgtool.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pubyun.com') || host === '.pubyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..pushcfg.com') || host === '.pushcfg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..py-axa.com') || host === '.py-axa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qbox.me') || host === '.qbox.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qc188.com') || host === '.qc188.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcc.com') || host === '.qcc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcds.com') || host === '.qcds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloud-edumall.com') || host === '.qcloud-edumall.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloud.com') || host === '.qcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloud.la') || host === '.qcloud.la') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudapps.com') || host === '.qcloudapps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudcdn.com') || host === '.qcloudcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudclass.com') || host === '.qcloudclass.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudcos.com') || host === '.qcloudcos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qclouder.com') || host === '.qclouder.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudgme.com') || host === '.qcloudgme.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudimg.com') || host === '.qcloudimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudipv6.com') || host === '.qcloudipv6.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudmarket.com') || host === '.qcloudmarket.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudns.com') || host === '.qcloudns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudsmartiot.com') || host === '.qcloudsmartiot.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudtcic.com') || host === '.qcloudtcic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudtiw.com') || host === '.qcloudtiw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudtrip.com') || host === '.qcloudtrip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudtt.com') || host === '.qcloudtt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qcloudwaf.com') || host === '.qcloudwaf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qd-metro.com') || host === '.qd-metro.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qd8.com') || host === '.qd8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qdaily.com') || host === '.qdaily.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qdmm.com') || host === '.qdmm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qdwebim.com') || host === '.qdwebim.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qeodns.com') || host === '.qeodns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qeodns.net') || host === '.qeodns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qh24.com') || host === '.qh24.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhimg.com') || host === '.qhimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhimgs0.com') || host === '.qhimgs0.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhimgs1.com') || host === '.qhimgs1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhimgs2.com') || host === '.qhimgs2.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhimgs3.com') || host === '.qhimgs3.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhimgs4.com') || host === '.qhimgs4.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhimgs5.com') || host === '.qhimgs5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhimgs6.com') || host === '.qhimgs6.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhmsg.com') || host === '.qhmsg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhres.com') || host === '.qhres.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhres2.com') || host === '.qhres2.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhstatic.com') || host === '.qhstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qhupdate.com') || host === '.qhupdate.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiangbus.com') || host === '.qiangbus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qianjia.com') || host === '.qianjia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qianlima.com') || host === '.qianlima.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qianxun.com') || host === '.qianxun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qianzhan.com') || host === '.qianzhan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiaobutang.com') || host === '.qiaobutang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qichacha.com') || host === '.qichacha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qichamao.com') || host === '.qichamao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qidian.com') || host === '.qidian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qie.tv') || host === '.qie.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qifeiye.com') || host === '.qifeiye.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qihoo.com') || host === '.qihoo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qihoo.net') || host === '.qihoo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qihucdn.com') || host === '.qihucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qijiayoudao.net') || host === '.qijiayoudao.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qikucdn.com') || host === '.qikucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qin.io') || host === '.qin.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingcache.com') || host === '.qingcache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingcloud.com') || host === '.qingcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingdaochina.org') || host === '.qingdaochina.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingdaonews.com') || host === '.qingdaonews.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingmang.me') || host === '.qingmang.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingmang.mobi') || host === '.qingmang.mobi') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingsongchou.com') || host === '.qingsongchou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingstor.com') || host === '.qingstor.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingting.fm') || host === '.qingting.fm') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingtingtrip.com') || host === '.qingtingtrip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qingzhouip.com') || host === '.qingzhouip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiniu.com') || host === '.qiniu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiniucdn.com') || host === '.qiniucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiniudn.com') || host === '.qiniudn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiniudns.com') || host === '.qiniudns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiniup.com') || host === '.qiniup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiumibao.com') || host === '.qiumibao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiuwen.wiki') || host === '.qiuwen.wiki') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qixin.com') || host === '.qixin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiyi.com') || host === '.qiyi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiyipic.com') || host === '.qiyipic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qiyukf.com') || host === '.qiyukf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qizuang.com') || host === '.qizuang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qnsdk.com') || host === '.qnsdk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qnssl.com') || host === '.qnssl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qq.cn.com') || host === '.qq.cn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qq.com') || host === '.qq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qq.design') || host === '.qq.design') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qq.net') || host === '.qq.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qq.wang') || host === '.qq.wang') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qq.xn--fiqs8s') || host === '.qq.xn--fiqs8s') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qq163.com') || host === '.qq163.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qq163.net') || host === '.qq163.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qqddc.com') || host === '.qqddc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qqgameapp.com') || host === '.qqgameapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qqgamedesign.com') || host === '.qqgamedesign.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qqgexingqianming.com') || host === '.qqgexingqianming.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qqmail.com') || host === '.qqmail.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qqmra.com') || host === '.qqmra.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qqrizhi.com') || host === '.qqrizhi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qqshuoshuo.com') || host === '.qqshuoshuo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qqurl.com') || host === '.qqurl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qschou.com') || host === '.qschou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qtmojo.com') || host === '.qtmojo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qudong.com') || host === '.qudong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qugame.com') || host === '.qugame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qunar.com') || host === '.qunar.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qunarzz.com') || host === '.qunarzz.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qunjielong.com') || host === '.qunjielong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..quumibao.com') || host === '.quumibao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..quyaoya.com') || host === '.quyaoya.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qy.net') || host === '.qy.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qyer.com') || host === '.qyer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qyerstatic.com') || host === '.qyerstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qyunapp.com') || host === '.qyunapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..qzone.com') || host === '.qzone.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rainclassroom.com') || host === '.rainclassroom.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rarbg.to') || host === '.rarbg.to') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..raychase.net') || host === '.raychase.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rdfybk.com') || host === '.rdfybk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..readnovel.com') || host === '.readnovel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..realcybertron.com') || host === '.realcybertron.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..realme.com') || host === '.realme.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..realmebbs.com') || host === '.realmebbs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..realmemobile.com') || host === '.realmemobile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..redacted.ch') || host === '.redacted.ch') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..renren-inc.com') || host === '.renren-inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..renren.com') || host === '.renren.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..resset.com') || host === '.resset.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rfchost.com') || host === '.rfchost.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rj.m.taobao.co') || host === '.rj.m.taobao.co') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rmwxgame.com') || host === '.rmwxgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rockyenglish.com') || host === '.rockyenglish.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rong360.com') || host === '.rong360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rongechain.com') || host === '.rongechain.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ronghub.com') || host === '.ronghub.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..routewize.com') || host === '.routewize.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rrmj.tv') || host === '.rrmj.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rsc.org') || host === '.rsc.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rtbasia.com') || host === '.rtbasia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ru-northwest-2.myhuaweicloud.com') || host === '.ru-northwest-2.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ruan8.com') || host === '.ruan8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ruanmei.com') || host === '.ruanmei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ruby-china.org') || host === '.ruby-china.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rubyconfchina.org') || host === '.rubyconfchina.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ruguoapp.com') || host === '.ruguoapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..runoob.com') || host === '.runoob.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..runsheng.com') || host === '.runsheng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..rzrc114.com') || host === '.rzrc114.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..s-microsoft.com') || host === '.s-microsoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..s-reader.com') || host === '.s-reader.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sa-brazil-1.myhuaweicloud.com') || host === '.sa-brazil-1.myhuaweicloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..saasops.tech') || host === '.saasops.tech') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..saayaa.com') || host === '.saayaa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sagepub.com') || host === '.sagepub.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..saibo.com') || host === '.saibo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sandai.net') || host === '.sandai.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sanguosha.com') || host === '.sanguosha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sankuai.com') || host === '.sankuai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sanwen.net') || host === '.sanwen.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..saolife.com') || host === '.saolife.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..saraba1st.com') || host === '.saraba1st.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sbsjk.com') || host === '.sbsjk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sc96655.com') || host === '.sc96655.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..scdng.com') || host === '.scdng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sciencedirect.com') || host === '.sciencedirect.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..scomper.me') || host === '.scomper.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..scopus.com') || host === '.scopus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..scoregg.com') || host === '.scoregg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sczsxx.com') || host === '.sczsxx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sdgdwljt.com') || host === '.sdgdwljt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sdo.com') || host === '.sdo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..seafile.com') || host === '.seafile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..seasungames.com') || host === '.seasungames.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sec-wiki.com') || host === '.sec-wiki.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..secec.com') || host === '.secec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..segmentfault.com') || host === '.segmentfault.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sencdn.com') || host === '.sencdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..seniverse.com') || host === '.seniverse.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..senlinjimore.com') || host === '.senlinjimore.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..servicewechat.com') || host === '.servicewechat.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sf-airlines.com') || host === '.sf-airlines.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sf-cityrush.com') || host === '.sf-cityrush.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sf-express.com') || host === '.sf-express.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sf-financial.com') || host === '.sf-financial.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sf-saas.com') || host === '.sf-saas.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sfacg.com') || host === '.sfacg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sfcar.hk') || host === '.sfcar.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sfgy.org') || host === '.sfgy.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sgamer.com') || host === '.sgamer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sgsic.com') || host === '.sgsic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shanbay.com') || host === '.shanbay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shang360.com') || host === '.shang360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shangc.net') || host === '.shangc.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shanghairc.com') || host === '.shanghairc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shangshi360.com') || host === '.shangshi360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shangzhibo.tv') || host === '.shangzhibo.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shanhaitujian.com') || host === '.shanhaitujian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shanshuihotel.com') || host === '.shanshuihotel.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sharejs.com') || host === '.sharejs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sharepoint.com') || host === '.sharepoint.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shebiaotm.com') || host === '.shebiaotm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shelter-china.com') || host === '.shelter-china.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shelterdome.net') || host === '.shelterdome.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shengdaosoft.com') || host === '.shengdaosoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shenjing.com') || host === '.shenjing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shenmayouxi.com') || host === '.shenmayouxi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sheui.com') || host === '.sheui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shgsec.com') || host === '.shgsec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shhxzq.com') || host === '.shhxzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shidianbaike.com') || host === '.shidianbaike.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shifen.com') || host === '.shifen.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shijiexia.com') || host === '.shijiexia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shimo.im') || host === '.shimo.im') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shixiseng.com') || host === '.shixiseng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shmetro.com') || host === '.shmetro.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shoujihuifu.com') || host === '.shoujihuifu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shouyoubus.com') || host === '.shouyoubus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shrbank.com') || host === '.shrbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shssp.org') || host === '.shssp.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shuidichou.com') || host === '.shuidichou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shuidihuzhu.com') || host === '.shuidihuzhu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shumensy.com') || host === '.shumensy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shuoshuokong.com') || host === '.shuoshuokong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shuqi.com') || host === '.shuqi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shuqireader.com') || host === '.shuqireader.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shutcm.com') || host === '.shutcm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shyhhema.com') || host === '.shyhhema.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..shzq.com') || host === '.shzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..siam.org') || host === '.siam.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sichuanair.com') || host === '.sichuanair.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sifou.com') || host === '.sifou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..simei8.com') || host === '.simei8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..simuwang.com') || host === '.simuwang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sina.com') || host === '.sina.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sina.net') || host === '.sina.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sinaapp.com') || host === '.sinaapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sinaedge.com') || host === '.sinaedge.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sinaimg.com') || host === '.sinaimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sinajs.com') || host === '.sinajs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sinesafe.com') || host === '.sinesafe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sinopec-usa.com') || host === '.sinopec-usa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sinopec.com') || host === '.sinopec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sinopecgroup.com') || host === '.sinopecgroup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sinopecsales.com') || host === '.sinopecsales.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sjwyx.com') || host === '.sjwyx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..skycn.com') || host === '.skycn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..skysea.com') || host === '.skysea.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..slk1.net') || host === '.slk1.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sllssrq.com') || host === '.sllssrq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..smartisan.com') || host === '.smartisan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..smtcdns.com') || host === '.smtcdns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..smtcdns.net') || host === '.smtcdns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..smzdm.com') || host === '.smzdm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..snapdrop.net') || host === '.snapdrop.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..snimay.com') || host === '.snimay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..snodehome.com') || host === '.snodehome.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..snowballsecurities.com') || host === '.snowballsecurities.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..snssdk.com') || host === '.snssdk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..snwx.com') || host === '.snwx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..so.com') || host === '.so.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sobot.com') || host === '.sobot.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sofreight.com') || host === '.sofreight.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..softwhy.com') || host === '.softwhy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sofun.com') || host === '.sofun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sogo.com') || host === '.sogo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sogou.com') || host === '.sogou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sogoucdn.com') || host === '.sogoucdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sohu-inc.com') || host === '.sohu-inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sohu.com') || host === '.sohu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sohucs.com') || host === '.sohucs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sojson.com') || host === '.sojson.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sojump.com') || host === '.sojump.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..soku.com') || host === '.soku.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..solidot.org') || host === '.solidot.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..somode.com') || host === '.somode.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sony.com') || host === '.sony.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sonyentertainmentnetwork.com') || host === '.sonyentertainmentnetwork.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..soso.com') || host === '.soso.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sou.com') || host === '.sou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..soufunimg.com') || host === '.soufunimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..souqian.com') || host === '.souqian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..southmoney.com') || host === '.southmoney.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sparenode.com') || host === '.sparenode.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sparkletour.com') || host === '.sparkletour.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..spcdntip.com') || host === '.spcdntip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..spcdntipbak.com') || host === '.spcdntipbak.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..spcloudhw.com') || host === '.spcloudhw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..spcloudhw.net') || host === '.spcloudhw.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..speedws.info') || host === '.speedws.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..speedws.org') || host === '.speedws.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..speiyou.com') || host === '.speiyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..spiedigitallibrary.org') || host === '.spiedigitallibrary.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..springer.com') || host === '.springer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..springerlink.com') || host === '.springerlink.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..springsunday.net') || host === '.springsunday.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..springtour.com') || host === '.springtour.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sq.cc') || host === '.sq.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sqqnh.org') || host === '.sqqnh.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sseinfo.com') || host === '.sseinfo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ssjlicai.com') || host === '.ssjlicai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sslawy.com') || host === '.sslawy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sslibrary.com') || host === '.sslibrary.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sspai.com') || host === '.sspai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ssports.com') || host === '.ssports.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..starbaby.cc') || host === '.starbaby.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..starbaby.com') || host === '.starbaby.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..starlakelab.com') || host === '.starlakelab.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..startssl.com') || host === '.startssl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..staticdn.net') || host === '.staticdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..staticfile.org') || host === '.staticfile.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..stcn.com') || host === '.stcn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..steampp.net') || host === '.steampp.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..stockstar.com') || host === '.stockstar.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..suanya.com') || host === '.suanya.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sui.com') || host === '.sui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sumkoo.com') || host === '.sumkoo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sumkoo.net') || host === '.sumkoo.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sun0769.com') || host === '.sun0769.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..suning.com') || host === '.suning.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..suningbank.com') || host === '.suningbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..suningcloud.com') || host === '.suningcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..suningestate.com') || host === '.suningestate.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..suningholdings.com') || host === '.suningholdings.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sunlife-everbright.com') || host === '.sunlife-everbright.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sunrtb.com') || host === '.sunrtb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..supercell.com') || host === '.supercell.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..superlib.com') || host === '.superlib.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..superlib.net') || host === '.superlib.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..supermap.com') || host === '.supermap.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..supermapcloud.com') || host === '.supermapcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..supet.com') || host === '.supet.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..suzuki-china.com') || host === '.suzuki-china.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..swhysc.com') || host === '.swhysc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..swsmu.com') || host === '.swsmu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..sys321.com') || host === '.sys321.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..syxlgame.com') || host === '.syxlgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..szbdyd.com') || host === '.szbdyd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..szfw.org') || host === '.szfw.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..szhk.com') || host === '.szhk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..szzfgjj.com') || host === '.szzfgjj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..t.tt') || host === '.t.tt') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..t00ls.cc') || host === '.t00ls.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..t00ls.net') || host === '.t00ls.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..t1y5.com') || host === '.t1y5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taihe.com') || host === '.taihe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taihuoniao.com') || host === '.taihuoniao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taikang.com') || host === '.taikang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taikanglife.com') || host === '.taikanglife.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taikangzhijia.com') || host === '.taikangzhijia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..takungpao.com') || host === '.takungpao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tamaegis.com') || host === '.tamaegis.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tandfonline.com') || host === '.tandfonline.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tangeche.com') || host === '.tangeche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tanx.com') || host === '.tanx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tanxlog.istreamsche.com') || host === '.tanxlog.istreamsche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tao123.com') || host === '.tao123.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taobao.com') || host === '.taobao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taobao.org') || host === '.taobao.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taobaocdn.com') || host === '.taobaocdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taobizhong.com') || host === '.taobizhong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taoche.com') || host === '.taoche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taomee.com') || host === '.taomee.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taopiaopiao.com') || host === '.taopiaopiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tapimg.com') || host === '.tapimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..taptap.com') || host === '.taptap.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tawk.link') || host === '.tawk.link') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tawk.to') || host === '.tawk.to') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tbcache.com') || host === '.tbcache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tburl.in') || host === '.tburl.in') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdlive.com') || host === '.tcdlive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdnhw.com') || host === '.tcdnhw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdnkcbak.com') || host === '.tcdnkcbak.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdnlive.com') || host === '.tcdnlive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdnlivebak1.com') || host === '.tcdnlivebak1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdnlivebak2.com') || host === '.tcdnlivebak2.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdnos.com') || host === '.tcdnos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdnos.net') || host === '.tcdnos.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdntip.com') || host === '.tcdntip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdnvod.com') || host === '.tcdnvod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcdnvodbak.com') || host === '.tcdnvodbak.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcfmglobal.com') || host === '.tcfmglobal.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcloudbase.com') || host === '.tcloudbase.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcloudbase.net') || host === '.tcloudbase.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcloudbaseapp.com') || host === '.tcloudbaseapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcloudbi.com') || host === '.tcloudbi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tclouddrive.com') || host === '.tclouddrive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcloudedu.com') || host === '.tcloudedu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcloudhw.com') || host === '.tcloudhw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcloudhw.net') || host === '.tcloudhw.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcloudscdn.com') || host === '.tcloudscdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tcloudscdn.net') || host === '.tcloudscdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tdnsx1.com') || host === '.tdnsx1.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..te5.com') || host === '.te5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..teachblog.net') || host === '.teachblog.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..teambition.com') || host === '.teambition.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..teambition.net') || host === '.teambition.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..teambitionapis.com') || host === '.teambitionapis.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..techo.chat') || host === '.techo.chat') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tefscloud.com') || host === '.tefscloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tefscloud.net') || host === '.tefscloud.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..teleows.com') || host === '.teleows.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tenant-zone-dev.com') || host === '.tenant-zone-dev.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencdns.net') || host === '.tencdns.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencent-cloud.com') || host === '.tencent-cloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencent-cloud.net') || host === '.tencent-cloud.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencent-gcloud.com') || host === '.tencent-gcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencent.co.id') || host === '.tencent.co.id') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencent.com') || host === '.tencent.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencent.com.hk') || host === '.tencent.com.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencent.design') || host === '.tencent.design') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencent.net') || host === '.tencent.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentapps.com') || host === '.tencentapps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentbyod.com') || host === '.tencentbyod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcdb.com') || host === '.tencentcdb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentclb.com') || host === '.tencentclb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcloud-aiot.com') || host === '.tencentcloud-aiot.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcloudapi.com') || host === '.tencentcloudapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcloudclub.com') || host === '.tencentcloudclub.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcloudcr.com') || host === '.tencentcloudcr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcloudmarket.com') || host === '.tencentcloudmarket.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcloudns.com') || host === '.tencentcloudns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcloudsec.com') || host === '.tencentcloudsec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcloudses.com') || host === '.tencentcloudses.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcos.com') || host === '.tencentcos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentcs.com') || host === '.tencentcs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentdayu.com') || host === '.tencentdayu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentdb.com') || host === '.tencentdb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentdevices.com') || host === '.tencentdevices.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentdigitalassistant.com') || host === '.tencentdigitalassistant.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentdms.com') || host === '.tencentdms.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencenteiam.com') || host === '.tencenteiam.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentelasticsearch.com') || host === '.tencentelasticsearch.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentid.com') || host === '.tencentid.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentidentity.com') || host === '.tencentidentity.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentmusic.com') || host === '.tencentmusic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentproxy.com') || host === '.tencentproxy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentrio.com') || host === '.tencentrio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentstart.com') || host === '.tencentstart.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencenttid.com') || host === '.tencenttid.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentwemeet.club') || host === '.tencentwemeet.club') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentwepark.com') || host === '.tencentwepark.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tencentyun.com') || host === '.tencentyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tendbcluster.com') || host === '.tendbcluster.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tendis.net') || host === '.tendis.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tenpay.com') || host === '.tenpay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tenxcloud.com') || host === '.tenxcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..test-cignacmb.com') || host === '.test-cignacmb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..testwaf.com') || host === '.testwaf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..texasholdemcup.com') || host === '.texasholdemcup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..texasholdemcup.net') || host === '.texasholdemcup.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tfzq.com') || host === '.tfzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tgbus.com') || host === '.tgbus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tgovcloud.com') || host === '.tgovcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..themisweeps.com') || host === '.themisweeps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ths123.com') || host === '.ths123.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..thundercdn.com') || host === '.thundercdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..thunderurl.com') || host === '.thunderurl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tiancity.com') || host === '.tiancity.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tiancitycdn.com') || host === '.tiancitycdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tianjimedia.com') || host === '.tianjimedia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tianjin-air.com') || host === '.tianjin-air.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tianlailive.com') || host === '.tianlailive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tianqi.com') || host === '.tianqi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tianyancha.com') || host === '.tianyancha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tidaas.com') || host === '.tidaas.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tieba.com') || host === '.tieba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tiebaimg.com') || host === '.tiebaimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tietuku.com') || host === '.tietuku.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tiexue.net') || host === '.tiexue.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tieyou.com') || host === '.tieyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tiktokd.net') || host === '.tiktokd.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tiktokd.org') || host === '.tiktokd.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..timedoo.com') || host === '.timedoo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..timibase.com') || host === '.timibase.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..timmerse.com') || host === '.timmerse.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tingbook.com') || host === '.tingbook.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tingyun.com') || host === '.tingyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tipdim.org') || host === '.tipdim.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..titanar.com') || host === '.titanar.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tivitv.com') || host === '.tivitv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tjjt360.com') || host === '.tjjt360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tjstats.com') || host === '.tjstats.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tjupt.org') || host === '.tjupt.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tkhealthcare.com') || host === '.tkhealthcare.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tlgslb.com') || host === '.tlgslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tlivecdn.com') || host === '.tlivecdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmall.com') || host === '.tmall.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmall.hk') || host === '.tmall.hk') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmall.ru') || host === '.tmall.ru') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmalltv.com') || host === '.tmalltv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmcdn.net') || host === '.tmcdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmjiasuqi.com') || host === '.tmjiasuqi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmjl.ai') || host === '.tmjl.ai') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmtpost.com') || host === '.tmtpost.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmtsmartlife.com') || host === '.tmtsmartlife.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmtsmartrun.com') || host === '.tmtsmartrun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tmzvps.com') || host === '.tmzvps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tobosu.com') || host === '.tobosu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tom.com') || host === '.tom.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tongdun.net') || host === '.tongdun.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tongji.linezing.com') || host === '.tongji.linezing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tongtaiamc.com') || host === '.tongtaiamc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tongxianghuicn.com') || host === '.tongxianghuicn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tools.team') || host === '.tools.team') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tophub.today') || host === '.tophub.today') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toplife.com') || host === '.toplife.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..topthink.com') || host === '.topthink.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..totheglory.im') || host === '.totheglory.im') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..touqikan.com') || host === '.touqikan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toursbms.com') || host === '.toursbms.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiao.com') || host === '.toutiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaoapi.com') || host === '.toutiaoapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaocdn.com') || host === '.toutiaocdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaocloud.com') || host === '.toutiaocloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaocloud.net') || host === '.toutiaocloud.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaohao.com') || host === '.toutiaohao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaohao.net') || host === '.toutiaohao.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaoimg.com') || host === '.toutiaoimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaoimg.net') || host === '.toutiaoimg.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaopage.com') || host === '.toutiaopage.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaostatic.com') || host === '.toutiaostatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..toutiaovod.com') || host === '.toutiaovod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..touzid.com') || host === '.touzid.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tpyzq.com') || host === '.tpyzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tracup.com') || host === '.tracup.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..travelsky.com') || host === '.travelsky.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..trellocdn.com') || host === '.trellocdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..trip.com') || host === '.trip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tripcdn.com') || host === '.tripcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..trunktech.com') || host === '.trunktech.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..trustexporter.com') || host === '.trustexporter.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..trustutn.org') || host === '.trustutn.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tsparkling.com') || host === '.tsparkling.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ttmeiju.com') || host === '.ttmeiju.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ttpod.com') || host === '.ttpod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tudou.com') || host === '.tudou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tudouui.com') || host === '.tudouui.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tuer123.com') || host === '.tuer123.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tuicool.com') || host === '.tuicool.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tuiwen.net') || host === '.tuiwen.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tujia.com') || host === '.tujia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tuniu.com') || host === '.tuniu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tutuapp.com') || host === '.tutuapp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tuwan.com') || host === '.tuwan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tuwanjun.com') || host === '.tuwanjun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..twscholar.com') || host === '.twscholar.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..tx-exhibition.com') || host === '.tx-exhibition.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..txbyod.com') || host === '.txbyod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..txidc.wang') || host === '.txidc.wang') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..txrjy.com') || host === '.txrjy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..txtyxg.com') || host === '.txtyxg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..txyscdn.com') || host === '.txyscdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..txyscdn.net') || host === '.txyscdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..u-cdn.net') || host === '.u-cdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..u.tools') || host === '.u.tools') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..u17.com') || host === '.u17.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..u17i.com') || host === '.u17i.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..u17t.com') || host === '.u17t.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uat1.bfsspadserver.8le8le.com') || host === '.uat1.bfsspadserver.8le8le.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ubssdic.com') || host === '.ubssdic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ubuntukylin.com') || host === '.ubuntukylin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucbug.com') || host === '.ucbug.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucgslb.com') || host === '.ucgslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucgslb.info') || host === '.ucgslb.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucgslb.net') || host === '.ucgslb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucgslb.top') || host === '.ucgslb.top') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloud-edm.com') || host === '.ucloud-edm.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloud365.com') || host === '.ucloud365.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudadmin.com') || host === '.ucloudadmin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudapi.com') || host === '.ucloudapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudgda.com') || host === '.ucloudgda.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudnaming.com') || host === '.ucloudnaming.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudnaming.info') || host === '.ucloudnaming.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudnaming.net') || host === '.ucloudnaming.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudoss.com') || host === '.ucloudoss.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudstack.com') || host === '.ucloudstack.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudstack.net') || host === '.ucloudstack.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudstor.com') || host === '.ucloudstor.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucloudufile.com') || host === '.ucloudufile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucnaming.com') || host === '.ucnaming.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucnaming.info') || host === '.ucnaming.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucnaming.net') || host === '.ucnaming.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ucweb.com') || host === '.ucweb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..udache.com') || host === '.udache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..udacity.com') || host === '.udacity.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uewaf.com') || host === '.uewaf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ufileos.com') || host === '.ufileos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ugdtimg.com') || host === '.ugdtimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uggame.com') || host === '.uggame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ugslb.com') || host === '.ugslb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ugslb.info') || host === '.ugslb.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ugslb.net') || host === '.ugslb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ugslb.top') || host === '.ugslb.top') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ugslb2.net') || host === '.ugslb2.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uhasadmin.com') || host === '.uhasadmin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uiwow.com') || host === '.uiwow.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ulikecam.com') || host === '.ulikecam.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..um.run') || host === '.um.run') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..umajor.net') || host === '.umajor.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..umeng.com') || host === '.umeng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..umengcloud.com') || host === '.umengcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..umetrip.com') || host === '.umetrip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..umsns.com') || host === '.umsns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..umtrack.com') || host === '.umtrack.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..un.org') || host === '.un.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..unaming.info') || host === '.unaming.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..unaming.net') || host === '.unaming.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uni-bielefeld.de') || host === '.uni-bielefeld.de') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uning.com') || host === '.uning.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..unionpay.com') || host === '.unionpay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..unionpay.net') || host === '.unionpay.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..unionpayintl.com') || host === '.unionpayintl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..unionpaysecure.com') || host === '.unionpaysecure.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uniontech.com') || host === '.uniontech.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uoj.ac') || host === '.uoj.ac') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uoko.com') || host === '.uoko.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uonline-sh.com') || host === '.uonline-sh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uonline-sh.net') || host === '.uonline-sh.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..upai.com') || host === '.upai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..upaiyun.com') || host === '.upaiyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..upcdn.net') || host === '.upcdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..update.microsoft.com') || host === '.update.microsoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..upe.net') || host === '.upe.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..upyun.com') || host === '.upyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..urselect.com') || host === '.urselect.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..urumqi-air.com') || host === '.urumqi-air.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..useso.com') || host === '.useso.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uslk.net') || host === '.uslk.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uucl.vip') || host === '.uucl.vip') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uuu9.com') || host === '.uuu9.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uxengine.net') || host === '.uxengine.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uyunad.com') || host === '.uyunad.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..uzzf.com') || host === '.uzzf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..v-56.com') || host === '.v-56.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..v5875.com') || host === '.v5875.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..value500.com') || host === '.value500.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vamaker.com') || host === '.vamaker.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vancl.com') || host === '.vancl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vanclimg.com') || host === '.vanclimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vaptcha.com') || host === '.vaptcha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vaptcha.net') || host === '.vaptcha.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..variflight.com') || host === '.variflight.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vcimg.com') || host === '.vcimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vcloudstc.com') || host === '.vcloudstc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vcloudstc.net') || host === '.vcloudstc.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vcloudvod.com') || host === '.vcloudvod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vdolady.com') || host === '.vdolady.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..veeqi.net') || host === '.veeqi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..veryhuo.com') || host === '.veryhuo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..veryzhun.com') || host === '.veryzhun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vg.com') || host === '.vg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vgtime.com') || host === '.vgtime.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vic18.com') || host === '.vic18.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..videocc.net') || host === '.videocc.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..videojj.com') || host === '.videojj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..videoxiaoyouxi.com') || host === '.videoxiaoyouxi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vijos.org') || host === '.vijos.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vip.com') || host === '.vip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vipdlt.com') || host === '.vipdlt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vipexam.org') || host === '.vipexam.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vipmro.com') || host === '.vipmro.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vipmro.net') || host === '.vipmro.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..visualstudio.com') || host === '.visualstudio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vmall.com') || host === '.vmall.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vmallres.com') || host === '.vmallres.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vobao.com') || host === '.vobao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vodtcbk.com') || host === '.vodtcbk.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..volceapplog.com') || host === '.volceapplog.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..volces.com') || host === '.volces.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..volcvod.com') || host === '.volcvod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vpgame.com') || host === '.vpgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vxo7tu.com') || host === '.vxo7tu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..vzuu.com') || host === '.vzuu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wallstcn.com') || host === '.wallstcn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wallstreetcn.com') || host === '.wallstreetcn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wamawama.com') || host === '.wamawama.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wandoujia.com') || host === '.wandoujia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wangsu.com') || host === '.wangsu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wangyangyang.vip') || host === '.wangyangyang.vip') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wangyin.com') || host === '.wangyin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wannianli8.com') || host === '.wannianli8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wanplus.com') || host === '.wanplus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wanwan4399.com') || host === '.wanwan4399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wanwushuo.com') || host === '.wanwushuo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wanyiwang.com') || host === '.wanyiwang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wanyx.com') || host === '.wanyx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wbimg.com') || host === '.wbimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wcbygame.com') || host === '.wcbygame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wdfok.com') || host === '.wdfok.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wdjimg.com') || host === '.wdjimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wdzj.com') || host === '.wdzj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..we4399.com') || host === '.we4399.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weand.com') || host === '.weand.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weather.com') || host === '.weather.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..webank.com') || host === '.webank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..webankcdn.net') || host === '.webankcdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..webgame163.com') || host === '.webgame163.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..webofknowledge.com') || host === '.webofknowledge.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..webqxs.com') || host === '.webqxs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..webterren.com') || host === '.webterren.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wechat.com') || host === '.wechat.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wegame.com') || host === '.wegame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wegamedeveloper.com') || host === '.wegamedeveloper.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wegameplus.com') || host === '.wegameplus.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weibo.com') || host === '.weibo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weibocdn.com') || host === '.weibocdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weicaifu.com') || host === '.weicaifu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weico.cc') || host === '.weico.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weidian.com') || host === '.weidian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weilaicaijing.com') || host === '.weilaicaijing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weilaiyunxiao.com') || host === '.weilaiyunxiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weiphone.com') || host === '.weiphone.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weiphone.net') || host === '.weiphone.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weixinbridge.com') || host === '.weixinbridge.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weiyangx.com') || host === '.weiyangx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weiyun.com') || host === '.weiyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..welltrend-edu.com') || host === '.welltrend-edu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wenjuan.com') || host === '.wenjuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wenku8.net') || host === '.wenku8.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wenmingban.com') || host === '.wenmingban.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wenxin-ge.com') || host === '.wenxin-ge.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..werewolf.53site.com') || host === '.werewolf.53site.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..west95582.com') || host === '.west95582.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..westlaw.com') || host === '.westlaw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..weui.io') || host === '.weui.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wework-studio.com') || host === '.wework-studio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wf.pub') || host === '.wf.pub') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wfdata.club') || host === '.wfdata.club') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..whalecloud.com') || host === '.whalecloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..whatismyip.com') || host === '.whatismyip.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..whccb.com') || host === '.whccb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..whlovehome.com') || host === '.whlovehome.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wicresoft.com') || host === '.wicresoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wiley.com') || host === '.wiley.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..win007.com') || host === '.win007.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..win7china.com') || host === '.win7china.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..win8.net') || host === '.win8.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..win8china.com') || host === '.win8china.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..windows.com') || host === '.windows.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..windows.net') || host === '.windows.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..windows10zj.com') || host === '.windows10zj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..windows7en.com') || host === '.windows7en.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..windowsupdate.com') || host === '.windowsupdate.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..windowsupdate.microsoft.com') || host === '.windowsupdate.microsoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..windowszj.com') || host === '.windowszj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..winegame.net') || host === '.winegame.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..winwin7.com') || host === '.winwin7.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wishdown.com') || host === '.wishdown.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wiwide.com') || host === '.wiwide.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wjx.com') || host === '.wjx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wjx.top') || host === '.wjx.top') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wkcdn.com') || host === '.wkcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wmzhe.com') || host === '.wmzhe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wnhuifu.com') || host === '.wnhuifu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wo116114.com') || host === '.wo116114.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wo1wan.com') || host === '.wo1wan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wodingche.com') || host === '.wodingche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wol.tv') || host === '.wol.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wolai.com') || host === '.wolai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..womai.com') || host === '.womai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wondercv.com') || host === '.wondercv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wonnder.com') || host === '.wonnder.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wooyun.org') || host === '.wooyun.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..woozooo.com') || host === '.woozooo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..worktile.com') || host === '.worktile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..worldbank.org') || host === '.worldbank.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..worldscientific.com') || host === '.worldscientific.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..woyaogexing.com') || host === '.woyaogexing.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..woyoo.com') || host === '.woyoo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wps.com') || host === '.wps.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wqiis.com') || host === '.wqiis.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wrating.com') || host === '.wrating.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wscdns.com') || host === '.wscdns.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wscdns.info') || host === '.wscdns.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wscdns.org') || host === '.wscdns.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wsoso.com') || host === '.wsoso.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wtown.com') || host === '.wtown.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wukong.com') || host === '.wukong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wukongwenda.com') || host === '.wukongwenda.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wuliujie.com') || host === '.wuliujie.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wumii.com') || host === '.wumii.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wuming.com') || host === '.wuming.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wuximediaglobal.com') || host === '.wuximediaglobal.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wxsbank.com') || host === '.wxsbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wxzq.com') || host === '.wxzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..wywyx.com') || host === '.wywyx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..x-cloud.cc') || host === '.x-cloud.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..x315.com') || host === '.x315.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xa-bank.com') || host === '.xa-bank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xafc.com') || host === '.xafc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xbiao.com') || host === '.xbiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xbox.com') || host === '.xbox.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xboxlive.com') || host === '.xboxlive.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xcsc.com') || host === '.xcsc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xdrig.com') || host === '.xdrig.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xdwan.com') || host === '.xdwan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xesimg.com') || host === '.xesimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xf-fund.com') || host === '.xf-fund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xfdown.com') || host === '.xfdown.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xhaiwai.com') || host === '.xhaiwai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xhostfire.com') || host === '.xhostfire.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xhscdn.com') || host === '.xhscdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xhscdn.net') || host === '.xhscdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiachufang.com') || host === '.xiachufang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiamenair.com') || host === '.xiamenair.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiami.com') || host === '.xiami.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiami.fm') || host === '.xiami.fm') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiami.net') || host === '.xiami.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xianfae.com') || host === '.xianfae.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xianjiqun.com') || host === '.xianjiqun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaobaixitong.com') || host === '.xiaobaixitong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaodutv.com') || host === '.xiaodutv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaoe-tech.com') || host === '.xiaoe-tech.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaogouh5.com') || host === '.xiaogouh5.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaohongshu.com') || host === '.xiaohongshu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaojukeji.com') || host === '.xiaojukeji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaoka.tv') || host === '.xiaoka.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaokaxiu.com') || host === '.xiaokaxiu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaoluyouxuan.com') || host === '.xiaoluyouxuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaoluzhidian.com') || host === '.xiaoluzhidian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaomi.com') || host === '.xiaomi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaomi.net') || host === '.xiaomi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaomicp.com') || host === '.xiaomicp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaomiflash.com') || host === '.xiaomiflash.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaomingtaiji.com') || host === '.xiaomingtaiji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaomiyoupin.com') || host === '.xiaomiyoupin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaoxiongxitong.com') || host === '.xiaoxiongxitong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaoyuankousuan.com') || host === '.xiaoyuankousuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiaoyuxitong.com') || host === '.xiaoyuxitong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiayx.com') || host === '.xiayx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiazaiba.com') || host === '.xiazaiba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ximalaya.com') || host === '.ximalaya.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xin.xin') || host === '.xin.xin') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xinchong.com') || host === '.xinchong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xingjiesj.com') || host === '.xingjiesj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xingtan001.com') || host === '.xingtan001.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xinhuanet.com') || host === '.xinhuanet.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xinrenxinshi.com') || host === '.xinrenxinshi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xinshipu.com') || host === '.xinshipu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xishanju.com') || host === '.xishanju.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xitek.com') || host === '.xitek.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xitong8.com') || host === '.xitong8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xitu.com') || host === '.xitu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xitu.io') || host === '.xitu.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiu8.com') || host === '.xiu8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiucai.com') || host === '.xiucai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xiziwang.net') || host === '.xiziwang.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xjietiao.com') || host === '.xjietiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xjoycity.com') || host === '.xjoycity.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xmcdn.com') || host === '.xmcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xmhouse.com') || host === '.xmhouse.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xn--fiq53l6wcx3kp9bc7joo6apn8a.xn--fiqs8s') || host === '.xn--fiq53l6wcx3kp9bc7joo6apn8a.xn--fiqs8s') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xn--kprv4ewxfr9cpxcc7joo6apn8a.xn--fiqs8s') || host === '.xn--kprv4ewxfr9cpxcc7joo6apn8a.xn--fiqs8s') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xn--r70as2s.xn--fiqs8s') || host === '.xn--r70as2s.xn--fiqs8s') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xnpic.com') || host === '.xnpic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xoyo.com') || host === '.xoyo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xpgod.com') || host === '.xpgod.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xqfunds.com') || host === '.xqfunds.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xqymuy.com') || host === '.xqymuy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xsa239.com') || host === '.xsa239.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xslb.net') || host === '.xslb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xuanchuanyi.com') || host === '.xuanchuanyi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xue51.com') || host === '.xue51.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xueersi.com') || host === '.xueersi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xuekanba.com') || host === '.xuekanba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xueqiu.com') || host === '.xueqiu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xuetangx.com') || host === '.xuetangx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xuexi365.com') || host === '.xuexi365.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xuexi365.net') || host === '.xuexi365.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xuexicha.com') || host === '.xuexicha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xueyuanjun.com') || host === '.xueyuanjun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xundupdf.com') || host === '.xundupdf.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xunfeixxj.com') || host === '.xunfeixxj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xunlei.com') || host === '.xunlei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xunyou.com') || host === '.xunyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xwbank.com') || host === '.xwbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xxsy.net') || host === '.xxsy.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xxtmail.com') || host === '.xxtmail.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xycdn.com') || host === '.xycdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xycloud.com') || host === '.xycloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xywy.com') || host === '.xywy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..xzking.com') || host === '.xzking.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yach.me') || host === '.yach.me') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yahui.cc') || host === '.yahui.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yangkeduo.com') || host === '.yangkeduo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yaolan.com') || host === '.yaolan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yaoyl.com') || host === '.yaoyl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yaozh.com') || host === '.yaozh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ybccode.com') || host === '.ybccode.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yccdn.com') || host === '.yccdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ycgame.com') || host === '.ycgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ycrx360.com') || host === '.ycrx360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ydamc.com') || host === '.ydamc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ydstatic.com') || host === '.ydstatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yeah.net') || host === '.yeah.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yeepay.com') || host === '.yeepay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yeshen.com') || host === '.yeshen.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yeshj.com') || host === '.yeshj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yesky.com') || host === '.yesky.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yfcache.com') || host === '.yfcache.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yfcalc.com') || host === '.yfcalc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yfcdn.net') || host === '.yfcdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yfcloud.com') || host === '.yfcloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yfdts.net') || host === '.yfdts.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yfp2p.net') || host === '.yfp2p.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yfscdn.net') || host === '.yfscdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yh31.com') || host === '.yh31.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yhd.com') || host === '.yhd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yicai.com') || host === '.yicai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yiche.com') || host === '.yiche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yigao.com') || host === '.yigao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yigoonet.com') || host === '.yigoonet.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yihaodian.com') || host === '.yihaodian.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yihaodianimg.com') || host === '.yihaodianimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yihedoors.com') || host === '.yihedoors.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yiigle.com') || host === '.yiigle.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yikaochacha.com') || host === '.yikaochacha.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yikexue.com') || host === '.yikexue.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yiliao.hupan.com') || host === '.yiliao.hupan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yillionbank.com') || host === '.yillionbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yingjia360.com') || host === '.yingjia360.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yingjiesheng.com') || host === '.yingjiesheng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yingjiesheng.net') || host === '.yingjiesheng.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yinhang123.net') || host === '.yinhang123.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yinxiang.com') || host === '.yinxiang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yinyuetai.com') || host === '.yinyuetai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yinzhaowang.com') || host === '.yinzhaowang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yiqifa.com') || host === '.yiqifa.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yiqifa.org') || host === '.yiqifa.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yisu.com') || host === '.yisu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yitaifang.com') || host === '.yitaifang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yiwan.com') || host === '.yiwan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yixi.tv') || host === '.yixi.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yixia.com') || host === '.yixia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yiyaojd.com') || host === '.yiyaojd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yizhibo.com') || host === '.yizhibo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yizhitou.com') || host === '.yizhitou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yjbys.com') || host === '.yjbys.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ykimg.com') || host === '.ykimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ykzq.com') || host === '.ykzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ylike.net') || host === '.ylike.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ym.run') || host === '.ym.run') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ymbank.com') || host === '.ymbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ynet.com') || host === '.ynet.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ynhr.com') || host === '.ynhr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yo9.com') || host === '.yo9.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yocajr.com') || host === '.yocajr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youba.com') || host === '.youba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youboy.com') || host === '.youboy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youdao.com') || host === '.youdao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youhua.com') || host === '.youhua.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youjiao.com') || host === '.youjiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youke.co') || host === '.youke.co') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youku.com') || host === '.youku.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youlian.fun') || host === '.youlian.fun') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youshang.com') || host === '.youshang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youxiake.com') || host === '.youxiake.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youxigt.com') || host === '.youxigt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youxihezi.net') || host === '.youxihezi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youxila.com') || host === '.youxila.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youxiniao.com') || host === '.youxiniao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youzan.com') || host === '.youzan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youzanyun.com') || host === '.youzanyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..youzu.com') || host === '.youzu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yowhale.com') || host === '.yowhale.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yoyojie.com') || host === '.yoyojie.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yoyou.com') || host === '.yoyou.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ypppt.com') || host === '.ypppt.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yqb.com') || host === '.yqb.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yrz.name') || host === '.yrz.name') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ysepay.com') || host === '.ysepay.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yslyhr.com') || host === '.yslyhr.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ysten.com') || host === '.ysten.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ytzq.com') || host === '.ytzq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yuanfudao.com') || host === '.yuanfudao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yuanshen.com') || host === '.yuanshen.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yuansouti.com') || host === '.yuansouti.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yuantiku.com') || host === '.yuantiku.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yuewen.com') || host === '.yuewen.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yufuid.com') || host === '.yufuid.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yufuid.net') || host === '.yufuid.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunaq.com') || host === '.yunaq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunba.io') || host === '.yunba.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yundaex.com') || host === '.yundaex.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yundasys.com') || host === '.yundasys.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yundun.com') || host === '.yundun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yundzh.com') || host === '.yundzh.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunfancdn.com') || host === '.yunfancdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunify.com') || host === '.yunify.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunjiasu-cdn.net') || host === '.yunjiasu-cdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunjitele.com') || host === '.yunjitele.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunkanpan.com') || host === '.yunkanpan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunos-inc.com') || host === '.yunos-inc.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunos.com') || host === '.yunos.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunpan.com') || host === '.yunpan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunqishi.net') || host === '.yunqishi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunshipei.com') || host === '.yunshipei.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunxiao.com') || host === '.yunxiao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yunzhijia.com') || host === '.yunzhijia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yupoo.com') || host === '.yupoo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yuque.com') || host === '.yuque.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yushanfang.com') || host === '.yushanfang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yushiyan.net') || host === '.yushiyan.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yuzua.com') || host === '.yuzua.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yxbao.com') || host === '.yxbao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yxdmgame.com') || host === '.yxdmgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yxdown.com') || host === '.yxdown.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yxhhdl.com') || host === '.yxhhdl.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yximgs.com') || host === '.yximgs.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yxwsgame.com') || host === '.yxwsgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yy.com') || host === '.yy.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yyds.co') || host === '.yyds.co') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yystatic.com') || host === '.yystatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yytcdn.com') || host === '.yytcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..yzyxgame.com') || host === '.yzyxgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..z-bank.com') || host === '.z-bank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..z28j.com') || host === '.z28j.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zaifan.com') || host === '.zaifan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zampda.net') || host === '.zampda.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zampdsp.com') || host === '.zampdsp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zastatic.com') || host === '.zastatic.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zbjimg.com') || host === '.zbjimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zcjbgame.com') || host === '.zcjbgame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zczj.com') || host === '.zczj.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zdfans.com') || host === '.zdfans.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zdmimg.com') || host === '.zdmimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zdnscloud.biz') || host === '.zdnscloud.biz') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zdnscloud.com') || host === '.zdnscloud.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zdnscloud.info') || host === '.zdnscloud.info') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zdnscloud.net') || host === '.zdnscloud.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zealer.com') || host === '.zealer.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zgcbank.com') || host === '.zgcbank.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zgjm.org') || host === '.zgjm.org') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zgjsks.com') || host === '.zgjsks.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zglxw.com') || host === '.zglxw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zgslb.net') || host === '.zgslb.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zgzcw.com') || host === '.zgzcw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhanbuba.com') || host === '.zhanbuba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhangle.com') || host === '.zhangle.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhangyoubao.com') || host === '.zhangyoubao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhangzishi.cc') || host === '.zhangzishi.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhanqi.tv') || host === '.zhanqi.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhanzhang.net') || host === '.zhanzhang.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhaodanji.com') || host === '.zhaodanji.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhaokao.net') || host === '.zhaokao.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhaopin.com') || host === '.zhaopin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhcw.com') || host === '.zhcw.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhenai.com') || host === '.zhenai.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhfund.com') || host === '.zhfund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhibo8.cc') || host === '.zhibo8.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhidx.com') || host === '.zhidx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhifang.com') || host === '.zhifang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhihang100.com') || host === '.zhihang100.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhihu.com') || host === '.zhihu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhihuishu.com') || host === '.zhihuishu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhimg.com') || host === '.zhimg.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhipin.com') || host === '.zhipin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhisheng.com') || host === '.zhisheng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhixue.com') || host === '.zhixue.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhiziyun.com') || host === '.zhiziyun.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhongkao.com') || host === '.zhongkao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhuancorp.com') || host === '.zhuancorp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhuangjiba.com') || host === '.zhuangjiba.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhuanspirit.com') || host === '.zhuanspirit.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhuanyewanjia.com') || host === '.zhuanyewanjia.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhuanzfx.com') || host === '.zhuanzfx.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhuanzhuan.com') || host === '.zhuanzhuan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhuayoukong.com') || host === '.zhuayoukong.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhubajie.com') || host === '.zhubajie.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhugeapi.net') || host === '.zhugeapi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhugeio.com') || host === '.zhugeio.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhuihd.com') || host === '.zhuihd.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zhuoyuegame.com') || host === '.zhuoyuegame.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zijieapi.com') || host === '.zijieapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zijiecdn.com') || host === '.zijiecdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zijiecdn.net') || host === '.zijiecdn.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zimuzu.io') || host === '.zimuzu.io') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zimuzu.tv') || host === '.zimuzu.tv') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ziroom.com') || host === '.ziroom.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ziroomapartment.com') || host === '.ziroomapartment.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zixiaomao.com') || host === '.zixiaomao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zixuntop.com') || host === '.zixuntop.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zjcdn.com') || host === '.zjcdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zjstv.com') || host === '.zjstv.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zmengzhu.com') || host === '.zmengzhu.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zmz002.com') || host === '.zmz002.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zmz2019.com') || host === '.zmz2019.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zmzapi.com') || host === '.zmzapi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zmzapi.net') || host === '.zmzapi.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zmzfile.com') || host === '.zmzfile.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zofund.com') || host === '.zofund.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zongheng.com') || host === '.zongheng.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zoom3g.com') || host === '.zoom3g.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zpb365.com') || host === '.zpb365.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zrblog.net') || host === '.zrblog.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zsxq.com') || host === '.zsxq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zszq.com') || host === '.zszq.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..ztfsec.com') || host === '.ztfsec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zuche.com') || host === '.zuche.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zuchecdn.com') || host === '.zuchecdn.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zuhaowan.com') || host === '.zuhaowan.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zuidaima.com') || host === '.zuidaima.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zuodao.com') || host === '.zuodao.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zuowen8.com') || host === '.zuowen8.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zuowenwang.net') || host === '.zuowenwang.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zuoyebang.cc') || host === '.zuoyebang.cc') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zuoyebang.com') || host === '.zuoyebang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zybang.com') || host === '.zybang.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zyh365.com') || host === '.zyh365.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '..zzdtec.com') || host === '.zzdtec.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.analytics.strava.com') || host === 'analytics.strava.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.blzddist1-a.akamaihd.net') || host === 'blzddist1-a.akamaihd.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.cdn.angruo.com') || host === 'cdn.angruo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.client.amplifi.com') || host === 'client.amplifi.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.download.jetbrains.com') || host === 'download.jetbrains.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.download.microsoft.com') || host === 'download.microsoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.images-cn.ssl-images-amazon.com') || host === 'images-cn.ssl-images-amazon.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.ip.istatmenus.app') || host === 'ip.istatmenus.app') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.kc.kexinshe.com') || host === 'kc.kexinshe.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.ntservicepack.microsoft.com') || host === 'ntservicepack.microsoft.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.origin-a.akamaihd.ne') || host === 'origin-a.akamaihd.ne') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.origin-a.akamaihd.net') || host === 'origin-a.akamaihd.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.sms.imagetasks.com') || host === 'sms.imagetasks.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.steamcommunity-a.akamaihd.net') || host === 'steamcommunity-a.akamaihd.net') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.weixin.com') || host === 'weixin.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.www.libvideo.com') || host === 'www.libvideo.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    if (dnsDomainIs(host, '.www.yxssp.com') || host === 'www.yxssp.com') return 'PROXY 127.0.0.1:7890; DIRECT';
-    return 'DIRECT';
+    if (isPlainHostName(host) || /^\d+\.\d+\.\d+\.\d+$/.test(host)) {
+        return "DIRECT";
+    }
+
+    var suffix = host;
+    while (suffix) {
+        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {
+            return "DIRECT";
+        }
+        var pos = suffix.indexOf('.');
+        if (pos === -1) break;
+        suffix = suffix.substring(pos + 1);
+    }
+
+    return PROXY_METHOD;
 }

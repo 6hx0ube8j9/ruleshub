@@ -1,33 +1,6 @@
-# AUTHOR: blackmatrix7
-# DOMAIN-KEYWORD: 3
-# DOMAIN-SUFFIX: 7
-# DOMAIN: 3
-# NAME: Gemini
-# REPO: https://github.com/blackmatrix7/ios_rule_script
-# TOTAL: 13
-# UPDATED: 2025-06-06 09:20:02
-DOMAIN,ai.google.dev
-DOMAIN,alkalimakersuite-pa.clients6.google.com
-DOMAIN,makersuite.google.com
-DOMAIN-KEYWORD,colab
-DOMAIN-KEYWORD,developerprofiles
-DOMAIN-KEYWORD,generativelanguage
-DOMAIN-SUFFIX,apis.google.com
-DOMAIN-SUFFIX,bard.google.com
-DOMAIN-SUFFIX,deepmind.com
-DOMAIN-SUFFIX,deepmind.google
-DOMAIN-SUFFIX,gemini.google.com
-DOMAIN-SUFFIX,generativeai.google
-DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
-full,ai.google.dev
-full,alkalimakersuite-pa.clients6.google.com
-full,alkalimessages-pa.googleapis.com
-full,gemini-user-content.googleusercontent.com
-full,gemini.gstatic.com
-full,makersuite.google.com
-keyword,colab
-keyword,developerprofiles
-keyword,generativelanguage
+# === GEMINI Original Rules ===
+
+# --- TYPE: SUFFIX ---
 suffix,apis.google.com
 suffix,bard.google.com
 suffix,deepmind.com
@@ -35,3 +8,17 @@ suffix,deepmind.google
 suffix,gemini.google.com
 suffix,generativeai.google
 suffix,proactivebackend-pa.googleapis.com
+
+# --- TYPE: FULL ---
+full,ai.google.dev
+full,alkalimakersuite-pa.clients6.google.com
+full,alkalimessages-pa.googleapis.com
+full,gemini-user-content.googleusercontent.com
+full,gemini.gstatic.com
+full,makersuite.google.com
+
+# --- TYPE: KEYWORD ---
+keyword,colab
+keyword,developerprofiles
+keyword,generativelanguage
+
