@@ -15,6 +15,7 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR, PAC_DIR, SIN
 
 def clean_and_parse_line(line):
     line = line.strip()
+    # 原则 1：严格保持现有的注释过滤逻辑不变
     if not line or line.startswith('#') or line.startswith('//') or line.startswith(';'):
         return None, None
         
@@ -43,9 +44,11 @@ def clean_and_parse_line(line):
     if '/' in line and any(c.isdigit() for c in line):
         return 'ip6' if ':' in line else 'ip', line
 
+    # 修改要求 1：以 . 开头一律剥离并归类为 'suffix'
     if line.startswith('.'):
         return 'suffix', line.lstrip('.').lower()
             
+    # 修改要求 2：剔除点数计算死板逻辑，无标签纯域名默认向下兼容作为 'suffix'
     return 'suffix', line.lower()
 
 def optimize_domains(rules):
@@ -177,23 +180,46 @@ def process_file(file_name):
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
+    # 7. 全新精修：多模式二机制规则编译引擎
+    # 原则 1：名称内包含 'classic' 则 100% 拒绝转换二进制
     if 'classic' in file_keyword:
-        print(f"Skipping binary ruleset compilation for classical rule: {file_name}")
+        print(f"--> [CLASSIC SKIP] Fulfill matrix rule: {file_name} has NO binary output.")
         return
 
+    # 原则 2：只有名称内包含 'ip' 或 'IP'，才执行纯 IP-CIDR 转换
     if 'ip' in file_keyword:
         combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
         if combined_ips:
-            with open(os.path.join(CLASH_DIR, f"tmp_{base_name}.yaml"), 'w', encoding='utf-8') as f:
+            # 建立带有分类前缀的临时文件，给下游 Actions 识别编译类别
+            with open(os.path.join(CLASH_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                 f.write("payload:\n")
                 for item in combined_ips: f.write(f"  - '{item}'\n")
             
             sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips}]}
-            with open(os.path.join(SINGBOX_DIR, f"tmp_{base_name}.json"), 'w', encoding='utf-8') as f:
+            with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{base_name}.json"), 'w', encoding='utf-8') as f:
                 json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
-            print(f"Prepared binary source for IP rule-set: {file_name}")
+            print(f"--> [IP MODE] Prepared binary template for: {file_name}")
+            
+    # 原则 3：其余所有普通规则（如 apple.txt），正常执行 Domain 模式转换（丢失/剥离IP段）
     else:
-        print(f"Skipped binary ruleset compilation for non-IP rule-set: {file_name}")
+        if rules['suffix'] or rules['full']:
+            # Mihomo Domain 规则集的 payload 必须是不带标签的纯域名列表
+            # 融合规则集内的有效后缀及全域名
+            combined_domains = sorted(list(rules['suffix'].union(rules['full'])))
+            with open(os.path.join(CLASH_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
+                f.write("payload:\n")
+                for item in combined_domains: f.write(f"  - '{item}'\n")
+            
+            # Sing-box Domain 模式 JSON（不包含任何 IP 规则字段）
+            sb_tmp_domain = {"version": 1, "rules": []}
+            sub_dm_rule = {}
+            if rules['suffix']: sub_dm_rule["domain_suffix"] = sorted(list(rules['suffix']))
+            if rules['full']: sub_dm_rule["domain"] = sorted(list(rules['full']))
+            if sub_dm_rule: sb_tmp_domain["rules"].append(sub_dm_rule)
+            
+            with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
+                json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
+            print(f"--> [DOMAIN MODE] Prepared binary template for: {file_name}")
 
 def main():
     if not os.path.exists(SOURCE_DIR):
