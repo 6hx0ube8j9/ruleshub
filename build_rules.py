@@ -31,27 +31,30 @@ def clean_and_parse_line(line):
         p1 = parts[0].upper()
         p2 = parts[1]
         
-        if p1 in ['HOST-WILDCARD', 'WILDCARD']:
+        if p1 in ['AND', 'OR', 'NOT']:
             return None, None
             
-        # 优化：清理上游不规范的写法（如 DOMAIN-SUFFIX, *.baidu.com）
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
             return 'suffix', p2.replace('*.', '', 1).lstrip('.').lower()
             
         if p1 in ['DOMAIN', 'HOST', 'FULL']: 
             p2 = p2.lower()
-            # 优化：把错写成 DOMAIN 的 *.baidu.com 纠正为 suffix
             if p2.startswith('*.'): return 'suffix', p2[2:].lstrip('.')
-            # 优化：把错写成 DOMAIN 的通配符纠正为 keyword
-            if '*' in p2 or '?' in p2: return 'keyword', p2
+            if '*' in p2 or '?' in p2: return 'wildcard', p2
             return 'full', p2
             
-        if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: return 'keyword', p2.lower()
+        if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: 
+            return 'keyword', p2.lower()
+            
+        if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
+            return 'wildcard', p2.lower()
+            
         if p1 in ['IP-CIDR', 'IP']: return 'ip', p2
         if p1 in ['IP-CIDR6', 'IP6-CIDR', 'IP6']: return 'ip6', p2
         if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', p2
-        # 注意：UA 往往大小写敏感，因此不执行 .lower()
         if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', p2
+        if p1 in ['DST-PORT', 'PORT']: return 'port', p2
+        if p1 in ['GEOIP']: return 'geoip', p2.upper()
         return None, None
 
     if '/' in line and any(c.isdigit() for c in line):
@@ -94,7 +97,11 @@ def process_file(file_name):
     base_name = os.path.splitext(file_name)[0]
     file_keyword = base_name.lower()
     
-    rules = {'suffix': set(), 'full': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set()}
+    rules = {
+        'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(),
+        'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set(),
+        'port': set(), 'geoip': set()
+    }
     
     with open(source_path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -104,28 +111,31 @@ def process_file(file_name):
                 
     optimize_domains(rules)
                 
-    # 1. Source Output
+    # 1. Source 备份输出
     with open(source_path, 'w', encoding='utf-8') as f_source:
-        f_source.write(f"# === {base_name.upper()} Original Rules ===\n\n")
-        for r_type in ['suffix', 'full', 'keyword', 'ip', 'ip6', 'process', 'useragent']:
+        f_source.write(f"# === {base_name.upper()} Sorted Rules ===\n\n")
+        for r_type in ['suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port', 'geoip']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
                 for val in sorted(rules[r_type]):
                     f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
                 
-    # 2. Shadowrocket Output
+    # 2. Shadowrocket 小火箭规范输出
     sr_path = os.path.join(SHADOWROCKET_DIR, f"{base_name}.list")
     with open(sr_path, 'w', encoding='utf-8') as f_sr:
         f_sr.write(f"# Shadowrocket Rule-Set: {base_name}\n\n")
         for val in sorted(rules['suffix']): f_sr.write(f"DOMAIN-SUFFIX,{val}\n")
         for val in sorted(rules['full']): f_sr.write(f"DOMAIN,{val}\n")
         for val in sorted(rules['keyword']): f_sr.write(f"DOMAIN-KEYWORD,{val}\n")
+        for val in sorted(rules['wildcard']): f_sr.write(f"DOMAIN-WILDCARD,{val}\n")
         for val in sorted(rules['useragent']): f_sr.write(f"USER-AGENT,{val}\n")
+        for val in sorted(rules['port']): f_sr.write(f"DST-PORT,{val}\n")
+        for val in sorted(rules['geoip']): f_sr.write(f"GEOIP,{val}\n")
         for val in sorted(rules['ip']): f_sr.write(f"IP-CIDR,{val},no-resolve\n")
         for val in sorted(rules['ip6']): f_sr.write(f"IP-CIDR6,{val},no-resolve\n")
 
-    # 3. QuantumultX Output
+    # 3. Quantumult X 规范输出
     qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
     if file_keyword == 'direct': qx_policy = 'direct'
     elif file_keyword == 'reject': qx_policy = 'reject'
@@ -135,35 +145,32 @@ def process_file(file_name):
         f_qx.write(f"# Quantumult X Rule-Set: {base_name}\n\n")
         for val in sorted(rules['suffix']): f_qx.write(f"host-suffix, {val}, {qx_policy}\n")
         for val in sorted(rules['full']): f_qx.write(f"host, {val}, {qx_policy}\n")
-        
-        # 【重要修复】动态区分 host-keyword 与 host-wildcard
-        for val in sorted(rules['keyword']): 
-            if '*' in val or '?' in val:
-                f_qx.write(f"host-wildcard, {val}, {qx_policy}\n")
-            else:
-                f_qx.write(f"host-keyword, {val}, {qx_policy}\n")
-                
-        # 【重要修复】强制 user-agent 补充通配符以实现包含匹配
+        for val in sorted(rules['keyword']): f_qx.write(f"host-keyword, {val}, {qx_policy}\n")
+        for val in sorted(rules['wildcard']): f_qx.write(f"host-wildcard, {val}, {qx_policy}\n")
+        for val in sorted(rules['port']): f_qx.write(f"dest-port, {val}, {qx_policy}\n")
+        for val in sorted(rules['geoip']): f_qx.write(f"geoip, {val}, {qx_policy}\n")
         for val in sorted(rules['useragent']): 
             qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
             f_qx.write(f"user-agent, {qx_ua}, {qx_policy}\n")
-            
         for val in sorted(rules['ip']): f_qx.write(f"ip-cidr, {val}, {qx_policy}, no-resolve\n")
         for val in sorted(rules['ip6']): f_qx.write(f"ip6-cidr, {val}, {qx_policy}, no-resolve\n")
 
-    # 4. Clash Output (Clash 核心原生不支持 USER-AGENT，故不输出)
+    # 4. Clash Classical 规则集输出（100% 还原官方明文无引号规范）
     clash_path = os.path.join(CLASH_DIR, f"{base_name}.yaml")
     with open(clash_path, 'w', encoding='utf-8') as f_clash:
         f_clash.write(f"# Clash Payload Rule-Set: {base_name}\n")
         f_clash.write("payload:\n")
-        for val in sorted(rules['suffix']): f_clash.write(f"  - 'DOMAIN-SUFFIX,{val}'\n")
-        for val in sorted(rules['full']): f_clash.write(f"  - 'DOMAIN,{val}'\n")
-        for val in sorted(rules['keyword']): f_clash.write(f"  - 'DOMAIN-KEYWORD,{val}'\n")
-        for val in sorted(rules['process']): f_clash.write(f"  - 'PROCESS-NAME,{val}'\n")
-        for val in sorted(rules['ip']): f_clash.write(f"  - 'IP-CIDR,{val},no-resolve'\n")
-        for val in sorted(rules['ip6']): f_clash.write(f"  - 'IP-CIDR6,{val},no-resolve'\n")
+        for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
+        for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
+        for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")
+        for val in sorted(rules['wildcard']): f_clash.write(f"  - DOMAIN,{val}\n") 
+        for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
+        for val in sorted(rules['port']): f_clash.write(f"  - DST-PORT,{val}\n")
+        for val in sorted(rules['geoip']): f_clash.write(f"  - GEOIP,{val}\n")
+        for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
+        for val in sorted(rules['ip6']): f_clash.write(f"  - IP-CIDR6,{val},no-resolve\n")
 
-    # 5. PAC Output
+    # 5. PAC 输出
     if file_keyword in ['direct', 'china']:
         pac_path = os.path.join(PAC_DIR, "direct.pac")
         with open(pac_path, 'w', encoding='utf-8') as f_pac:
@@ -189,7 +196,7 @@ def process_file(file_name):
             f_pac.write("    }\n\n")
             f_pac.write("    return PROXY_METHOD;\n}\n")
 
-    # 6. Sing-box Standard JSON Output
+    # 6. Sing-box JSON 规范输出
     sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
     sb_data = {"version": 1, "rules": []}
     sub_rule = {}
@@ -197,8 +204,23 @@ def process_file(file_name):
     if rules['full']: sub_rule["domain"] = sorted(list(rules['full']))
     if rules['keyword']: sub_rule["domain_keyword"] = sorted(list(rules['keyword']))
     if rules['process']: sub_rule["process_name"] = sorted(list(rules['process']))
-    # 顺手兼容：Sing-box 原生支持 user_agent 规则，补充写入
     if rules['useragent']: sub_rule["user_agent"] = sorted(list(rules['useragent']))
+    if rules['geoip']: sub_rule["country"] = sorted(list(rules['geoip']))
+    
+    if rules['port']:
+        ports_list = []
+        for p in rules['port']:
+            if '-' in p: ports_list.append(p)
+            elif p.isdigit(): ports_list.append(int(p))
+        if ports_list: sub_rule["port"] = ports_list
+        
+    if rules['wildcard']:
+        regex_list = []
+        for w in rules['wildcard']:
+            r = f"^{w.replace('.', '\\.').replace('*', '.*').replace('?', '.')}$"
+            regex_list.append(r)
+        sub_rule["domain_regex"] = regex_list
+
     combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
     if combined_ips: sub_rule["ip_cidr"] = combined_ips
     if sub_rule: sb_data["rules"].append(sub_rule)
@@ -206,30 +228,33 @@ def process_file(file_name):
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
-    # 7. 多模式二进制规则编译引擎
+    # 7. 二进制规则编译预处理引擎（保持包含 'ip' 关键字的安全分流逻辑）
     if 'classic' in file_keyword:
-        print(f"--> [CLASSIC SKIP] Fulfill matrix rule: {file_name} has NO binary output.")
         return
 
     if 'ip' in file_keyword:
         combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
         if combined_ips:
+            # 【完美对齐官方 ipcidr 规范】纯 IP 规则集必须加单引号
             with open(os.path.join(CLASH_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                 f.write("payload:\n")
                 for item in combined_ips: 
-                    f.write(f"  - 'IP-CIDR,{item},no-resolve'\n")
+                    f.write(f"  - '{item}'\n")
             
             sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips}]}
             with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{base_name}.json"), 'w', encoding='utf-8') as f:
                 json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
-            print(f"--> [IP MODE] Prepared binary template for: {file_name}")
+            print(f"--> [IP MODE] Created strict binary templates for: {file_name}")
             
     else:
         if rules['suffix'] or rules['full']:
-            combined_domains = sorted(list(rules['suffix'].union(rules['full'])))
+            # 【完美对齐官方 domain 规范】后缀强制前缀点号，不带前缀符号
             with open(os.path.join(CLASH_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                 f.write("payload:\n")
-                for item in combined_domains: f.write(f"  - '{item}'\n")
+                for item in sorted(rules['suffix']):
+                    f.write(f"  - '.{item}'\n")
+                for item in sorted(rules['full']):
+                    f.write(f"  - '{item}'\n")
             
             sb_tmp_domain = {"version": 1, "rules": []}
             sub_dm_rule = {}
@@ -239,7 +264,7 @@ def process_file(file_name):
             
             with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
                 json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
-            print(f"--> [DOMAIN MODE] Prepared binary template for: {file_name}")
+            print(f"--> [DOMAIN MODE] Created strict binary templates for: {file_name}")
 
 def main():
     if not os.path.exists(SOURCE_DIR):
