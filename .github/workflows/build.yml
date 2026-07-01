@@ -38,7 +38,6 @@ jobs:
           mkdir -p ~/.config/mihomo
           curl -L -o ~/.config/mihomo/Country.mmdb "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
           cp ~/.config/mihomo/Country.mmdb ./Country.mmdb
-          cp ~/.config/mihomo/Country.mmdb ./Country.mmdb
 
           SB_VERSION=$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
           curl -L -o sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/v${SB_VERSION}/sing-box-${SB_VERSION}-linux-amd64.tar.gz"
@@ -109,13 +108,19 @@ jobs:
           cd clash
           shopt -s nullglob
           
-          echo "Compiling Classified IP MRS rulesets..."
-          for ip_yaml in tmp_*.yaml; do
-            base_name=$(echo "$ip_yaml" | sed 's/tmp_//' | sed 's/.yaml//')
+          echo "Processing [IP Mode] MRS compilation..."
+          for ip_yaml in tmp_ip_*.yaml; do
+            base_name=$(echo "$ip_yaml" | sed 's/tmp_ip_//' | sed 's/.yaml//')
             ../mihomo convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}.mrs"
           done
           
-          rm -f tmp_*.yaml
+          echo "Processing [Domain Mode] MRS compilation..."
+          for dm_yaml in tmp_domain_*.yaml; do
+            base_name=$(echo "$dm_yaml" | sed 's/tmp_domain_//' | sed 's/.yaml//')
+            ../mihomo convert-ruleset domain yaml "$dm_yaml" "${base_name}.mrs"
+          done
+          
+          rm -f tmp_ip_*.yaml tmp_domain_*.yaml
           cd ..
 
       - name: Compile Sing-box SRS Rulesets
@@ -123,13 +128,19 @@ jobs:
           cd singbox
           shopt -s nullglob
           
-          echo "Compiling Classified IP Sing-box SRS rulesets..."
-          for tmp_json in tmp_*.json; do
-            base_name=$(echo "$tmp_json" | sed 's/tmp_//' | sed 's/.json//')
-            ../sing-box rule-set compile "$tmp_json" -o "${base_name}.srs"
+          echo "Processing [IP Mode] Sing-box SRS compilation..."
+          for ip_json in tmp_ip_*.json; do
+            base_name=$(echo "$ip_json" | sed 's/tmp_ip_//' | sed 's/.json//')
+            ../sing-box rule-set compile "$ip_json" -o "${base_name}.srs"
           done
           
-          rm -f tmp_*.json
+          echo "Processing [Domain Mode] Sing-box SRS compilation..."
+          for dm_json in tmp_domain_*.json; do
+            base_name=$(echo "$dm_json" | sed 's/tmp_domain_//' | sed 's/.json//')
+            ../sing-box rule-set compile "$dm_json" -o "${base_name}.srs"
+          done
+          
+          rm -f tmp_ip_*.json tmp_domain_*.json
           cd ..
 
       - name: Commit and Push Changes
@@ -142,7 +153,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No rules changes detected. Skipping commit."
           else
-            git commit -m "Automated build: sync platform rules and clean name binary sets [skip ci]"
+            git commit -m "Automated build: full domain/ip binary matrix compilation [skip ci]"
             git pull --rebase origin main
             git push
           fi
