@@ -109,7 +109,7 @@ def process_file(file_name):
         for val in sorted(rules['ip']): f_sr.write(f"IP-CIDR,{val},no-resolve\n")
         for val in sorted(rules['ip6']): f_sr.write(f"IP-CIDR6,{val},no-resolve\n")
 
-    # 3. QuantumultX Output (Restored Format Integrity)
+    # 3. QuantumultX Output
     qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
     if file_keyword == 'direct': qx_policy = 'DIRECT'
     elif file_keyword == 'reject': qx_policy = 'REJECT'
@@ -173,7 +173,8 @@ def process_file(file_name):
     combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
     if combined_ips: sub_rule["ip_cidr"] = combined_ips
     if sub_rule: sb_data["rules"].append(sub_rule)
-    with open(sb_path, 'utf-8', mode='w') as f_sb:
+    
+    with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
     # 7. Binary Rulesets Optimization Engine
