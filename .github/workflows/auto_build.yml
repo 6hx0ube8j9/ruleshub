@@ -91,19 +91,12 @@ jobs:
         done
         rm -rf sing-box sing-box.tar.gz sing-box-1.11.0-linux-amd64
 
-    - name: 6. Install Mihomo & Compile to MRS
+    - name: 6. Push compiled rules back to repo
       run: |
-        curl -Lo mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.18.3/mihomo-linux-amd64-v1.18.3.gz
-        gunzip mihomo.gz
-        chmod +x mihomo
-        
-        for yaml_file in clash/*.yaml; do
-          if [ -f "$yaml_file" ]; then
-            mrs_file="${yaml_file%.yaml}.mrs"
-            ./mihomo convert-ruleset classical "$yaml_file" "$mrs_file"
-          fi
-        done
-        rm -rf mihomo
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add source/ shadowrocket/ quantumultx/ clash/ pac/ singbox/
+        git diff --quiet && git diff --staged --quiet || (git commit -m "auto build: update rules" && git pull --rebase origin main && git push)
 
     - name: 7. Push compiled rules back to repo
       run: |
