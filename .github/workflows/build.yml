@@ -38,6 +38,7 @@ jobs:
           mkdir -p ~/.config/mihomo
           curl -L -o ~/.config/mihomo/Country.mmdb "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
           cp ~/.config/mihomo/Country.mmdb ./Country.mmdb
+          cp ~/.config/mihomo/Country.mmdb ./Country.mmdb
 
           SB_VERSION=$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
           curl -L -o sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/v${SB_VERSION}/sing-box-${SB_VERSION}-linux-amd64.tar.gz"
@@ -108,16 +109,10 @@ jobs:
           cd clash
           shopt -s nullglob
           
-          echo "Compiling Domain MRS rulesets..."
-          for domain_yaml in tmp_*_domain.yaml; do
-            base_name=$(echo "$domain_yaml" | sed 's/tmp_//' | sed 's/_domain.yaml//')
-            ../mihomo convert-ruleset domain yaml "$domain_yaml" "${base_name}_domain.mrs"
-          done
-          
-          echo "Compiling IPCIDR MRS rulesets..."
-          for ip_yaml in tmp_*_ipcidr.yaml; do
-            base_name=$(echo "$ip_yaml" | sed 's/tmp_//' | sed 's/_ipcidr.yaml//')
-            ../mihomo convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}_ipcidr.mrs"
+          echo "Compiling Classified IP MRS rulesets..."
+          for ip_yaml in tmp_*.yaml; do
+            base_name=$(echo "$ip_yaml" | sed 's/tmp_//' | sed 's/.yaml//')
+            ../mihomo convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}.mrs"
           done
           
           rm -f tmp_*.yaml
@@ -128,7 +123,7 @@ jobs:
           cd singbox
           shopt -s nullglob
           
-          echo "Compiling Sing-box SRS rulesets..."
+          echo "Compiling Classified IP Sing-box SRS rulesets..."
           for tmp_json in tmp_*.json; do
             base_name=$(echo "$tmp_json" | sed 's/tmp_//' | sed 's/.json//')
             ../sing-box rule-set compile "$tmp_json" -o "${base_name}.srs"
@@ -147,7 +142,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No rules changes detected. Skipping commit."
           else
-            git commit -m "Automated build: sync multi-platform rules and binary sets [skip ci]"
+            git commit -m "Automated build: sync platform rules and clean name binary sets [skip ci]"
             git pull --rebase origin main
             git push
           fi
