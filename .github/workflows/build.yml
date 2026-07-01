@@ -1,4 +1,4 @@
-name: Build Client and Binary Rules
+name: Build Matrix
 
 on:
   push:
@@ -20,15 +20,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python Environment
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Download and Setup Compilers
+      - name: Setup Tools
         run: |
           MIHOMO_VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4)
           curl -L -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
@@ -45,7 +45,7 @@ jobs:
           cp sing-box-*/sing-box ./sing-box
           chmod +x sing-box
 
-      - name: Fetch and Merge Upstream Rules
+      - name: Fetch Rules
         run: |
           mkdir -p source
           
@@ -67,54 +67,38 @@ jobs:
             rm "$tmp"
           }
 
-          echo "Syncing tracking upstream lists..."
+          echo "Fetch upstream"
 
-          merge_rules "direct.txt" \
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/China/China_Domain.list"
-
-          merge_rules "google.txt" \
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list"
-
-          merge_rules "steam.txt" \
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Steam/Steam.list"
-
-          merge_rules "epic.txt" \
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Epic/Epic.list"
-
-          merge_rules "dropbox.txt" \
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Dropbox/Dropbox.list"
-
-          merge_rules "gemini.txt" \
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Gemini/Gemini.list"
-
-          merge_rules "blizzard.txt" \
-            "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Blizzard/Blizzard.list"
-          
+          merge_rules "direct.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/China/China_Domain.list"
+          merge_rules "google.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list"
+          merge_rules "steam.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Steam/Steam.list"
+          merge_rules "epic.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Epic/Epic.list"
+          merge_rules "dropbox.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Dropbox/Dropbox.list"
+          merge_rules "gemini.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Gemini/Gemini.list"
+          merge_rules "blizzard.txt" "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Blizzard/Blizzard.list"
           merge_rules "block.txt" \
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list" \
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Privacy/Privacy.list" \
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list"
-          
           merge_rules "microsoft.txt" \
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list" \
             "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list"
 
-      - name: Run Python Script to Parse Rules
-        run: |
-          python build_rules.py
+      - name: Run Parser
+        run: python build_rules.py
 
-      - name: Compile Mihomo MRS Rulesets
+      - name: Build MRS
         run: |
           cd clash
           shopt -s nullglob
           
-          echo "Processing [IP Mode] MRS compilation..."
+          echo "IP MRS"
           for ip_yaml in tmp_ip_*.yaml; do
             base_name=$(echo "$ip_yaml" | sed 's/tmp_ip_//' | sed 's/.yaml//')
             ../mihomo convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}.mrs"
           done
           
-          echo "Processing [Domain Mode] MRS compilation..."
+          echo "Domain MRS"
           for dm_yaml in tmp_domain_*.yaml; do
             base_name=$(echo "$dm_yaml" | sed 's/tmp_domain_//' | sed 's/.yaml//')
             ../mihomo convert-ruleset domain yaml "$dm_yaml" "${base_name}.mrs"
@@ -123,18 +107,18 @@ jobs:
           rm -f tmp_ip_*.yaml tmp_domain_*.yaml
           cd ..
 
-      - name: Compile Sing-box SRS Rulesets
+      - name: Build SRS
         run: |
           cd singbox
           shopt -s nullglob
           
-          echo "Processing [IP Mode] Sing-box SRS compilation..."
+          echo "IP SRS"
           for ip_json in tmp_ip_*.json; do
             base_name=$(echo "$ip_json" | sed 's/tmp_ip_//' | sed 's/.json//')
             ../sing-box rule-set compile "$ip_json" -o "${base_name}.srs"
           done
           
-          echo "Processing [Domain Mode] Sing-box SRS compilation..."
+          echo "Domain SRS"
           for dm_json in tmp_domain_*.json; do
             base_name=$(echo "$dm_json" | sed 's/tmp_domain_//' | sed 's/.json//')
             ../sing-box rule-set compile "$dm_json" -o "${base_name}.srs"
@@ -143,7 +127,7 @@ jobs:
           rm -f tmp_ip_*.json tmp_domain_*.json
           cd ..
 
-      - name: Commit and Push Changes
+      - name: Commit
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -151,9 +135,9 @@ jobs:
           git add source/ shadowrocket/ quantumultx/ clash/ pac/ singbox/
           
           if git diff --staged --quiet; then
-            echo "No rules changes detected. Skipping commit."
+            echo "No changes"
           else
-            git commit -m "Automated build: full domain/ip binary matrix compilation [skip ci]"
+            git commit -m "Build: auto matrix update [skip ci]"
             git pull --rebase origin main
             git push
           fi
