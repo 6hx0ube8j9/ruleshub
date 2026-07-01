@@ -61,24 +61,26 @@ jobs:
           gunzip -c mihomo.gz > mihomo-bin
           chmod +x mihomo-bin
           
-          # 创建一个完全空白的本地配置文件，强制终止内核任何向外的初始化企图
+          # 1. 建立极其严格的本地隔离沙盒配置
           mkdir -p .config/mihomo
           echo -e "mixed-port: 0\nmode: rule\nlog-level: silent" > .config/mihomo/config.yaml
+          touch .config/mihomo/Country.mmdb
 
-          # 遍历由 Python 剥离出来的临时 yaml 格式进行无痛MRS封装编译
+          # 2. 遍历由 Python 剥离出来的临时 yaml 格式进行无痛MRS封装编译
           for file in clash/tmp_*.yaml; do
             if [ -f "$file" ]; then
-              # 转换为输出路径
               if [[ "$file" == *"_domain.yaml" ]]; then
-                # 去掉 tmp_ 和 _domain.yaml
                 base=$(basename "$file" _domain.yaml | sed 's/tmp_//')
-                ./mihomo-bin -d . convert-ruleset domain yaml "$file" "clash/${base}.mrs" mrs || true
+                # 🔥 核心修正 1：显式注入 -d .config/mihomo 阻止其乱找路径
+                # 🔥 核心修正 2：头部追加 timeout 15s 熔断保护，防止主进程监听卡死
+                timeout 15s ./mihomo-bin -d .config/mihomo convert-ruleset domain yaml "$file" "clash/${base}.mrs" mrs || true
               elif [[ "$file" == *"_ip.yaml" ]]; then
                 base=$(basename "$file" _ip.yaml | sed 's/tmp_//')
-                ./mihomo-bin -d . convert-ruleset ipcidr yaml "$file" "clash/${base}_IP.mrs" mrs || true
+                timeout 15s ./mihomo-bin -d .config/mihomo convert-ruleset ipcidr yaml "$file" "clash/${base}_IP.mrs" mrs || true
               fi
             fi
           done
+          
           # 清理全部中间临时数据
           rm -f clash/tmp_*.yaml mihomo-bin mihomo.gz
           rm -rf .config
