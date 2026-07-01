@@ -25,9 +25,14 @@ jobs:
 
       - name: Download and Setup Mihomo
         run: |
-          MIHOMO_VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4)
+          # 1. 获取最新 Tag (例如 v1.19.27) 并通过 sed 过滤掉开头的 v 变成 1.19.27
+          MIHOMO_VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/^v//')
           echo "Latest Mihomo Version: $MIHOMO_VERSION"
-          curl -L -o mihomo.tar.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.tar.gz"
+          
+          # 2. 这里的 Release 目录通常需要带 v (v${MIHOMO_VERSION})，而实际文件名不带 v
+          curl -L -o mihomo.tar.gz "https://github.com/MetaCubeX/mihomo/releases/download/v${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.tar.gz"
+          
+          # 3. 解压并赋予执行权限
           tar -xzf mihomo.tar.gz
           mv mihomo-linux-amd64 mihomo
           chmod +x mihomo
