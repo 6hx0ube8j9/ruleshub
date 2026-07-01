@@ -53,14 +53,15 @@ def clean_and_parse_line(line):
     return 'suffix', line.lstrip('.').lower()
 
 def optimize_domains(rules):
-
-    sorted_suffixes = sorted(list(rules['suffix']), key=len)
+    sorted_suffixes = sorted(list(rules['suffix']), key=lambda x: (x.count('.'), len(x)))
     clean_suffixes = set()
     
     for domain in sorted_suffixes:
+        parts = domain.split('.')
         is_subdomain = False
-        for clean in clean_suffixes:
-            if domain == clean or domain.endswith('.' + clean):
+        for i in range(1, len(parts)):
+            parent_candidate = '.'.join(parts[i:])
+            if parent_candidate in clean_suffixes:
                 is_subdomain = True
                 break
         if not is_subdomain:
@@ -70,9 +71,11 @@ def optimize_domains(rules):
     
     clean_full = set()
     for domain in rules['full']:
+        parts = domain.split('.')
         is_covered = False
-        for clean in rules['suffix']:
-            if domain == clean or domain.endswith('.' + clean):
+        for i in range(len(parts) - 1):
+            suffix_candidate = '.'.join(parts[i:])
+            if suffix_candidate in rules['suffix']:
                 is_covered = True
                 break
         if not is_covered:
