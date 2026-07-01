@@ -1,11 +1,11 @@
-name: sync-rules
+name: ruleshub
 
 on:
   push:
     paths:
       - 'source/**'
       - 'build_rules.py'
-      - '.github/workflows/sync-rules.yml'
+      - '.github/workflows/build.yml'
   schedule:
     - cron: '0 22 */6 * *'
   workflow_dispatch:
@@ -14,9 +14,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-  steps:
-    - name: 1. Checkout repository
-      uses: actions/checkout@v4
+    steps:
+      - name: 1. Checkout repository
+        uses: actions/checkout@v4
 
     - name: 2. Setup Python environment
       uses: actions/setup-python@v5
