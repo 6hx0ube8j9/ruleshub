@@ -25,19 +25,18 @@ jobs:
 
       - name: Download and Setup Mihomo
         run: |
-          # 1. 获取最新 Tag (例如 v1.19.27) 并通过 sed 过滤掉开头的 v 变成 1.19.27
-          MIHOMO_VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/^v//')
+          # 1. 获取最新 Tag (例如 v1.19.27)，注意保留 v 前缀，因为官方文件名里带 v
+          MIHOMO_VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4)
           echo "Latest Mihomo Version: $MIHOMO_VERSION"
           
-          # 2. 这里的 Release 目录通常需要带 v (v${MIHOMO_VERSION})，而实际文件名不带 v
-          curl -L -o mihomo.tar.gz "https://github.com/MetaCubeX/mihomo/releases/download/v${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.tar.gz"
+          # 2. Mihomo 官方发布的是单文件 .gz 压缩包，直接使用完整的带 v 变量下载
+          curl -L -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
           
-          # 3. 解压并赋予执行权限
-          tar -xzf mihomo.tar.gz
-          mv mihomo-linux-amd64 mihomo
+          # 3. 使用 gunzip 解压提取单文件，并赋予执行权限
+          gunzip -c mihomo.gz > mihomo
           chmod +x mihomo
           
-          # 提前创建配置文件夹并下载轻量级国家数据库，防止内核因缺少 GeoIP 数据库初始化而卡死挂起
+          # 4. 提前创建配置文件夹并下载轻量级国家数据库，防止内核因缺少 GeoIP 数据库初始化而卡死挂起
           mkdir -p ~/.config/mihomo
           curl -L -o ~/.config/mihomo/Country.mmdb "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
           cp ~/.config/mihomo/Country.mmdb ./Country.mmdb
