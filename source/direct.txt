@@ -1,4 +1,4 @@
-# === DIRECT Original Rules ===
+# === DIRECT Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,001wifi.com

@@ -1,4 +1,4 @@
-# === EPIC Original Rules ===
+# === EPIC Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,battlebreakers.com

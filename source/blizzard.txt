@@ -1,4 +1,4 @@
-# === BLIZZARD Original Rules ===
+# === BLIZZARD Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,battle.net

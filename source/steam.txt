@@ -1,4 +1,4 @@
-# === STEAM Original Rules ===
+# === STEAM Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,cdn-ali.content.steamchina.com

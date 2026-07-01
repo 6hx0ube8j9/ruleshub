@@ -1,4 +1,4 @@
-# === GEMINI Original Rules ===
+# === GEMINI Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,apis.google.com

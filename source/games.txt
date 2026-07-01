@@ -1,4 +1,4 @@
-# === GAMES Original Rules ===
+# === GAMES Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,brawlstars.com

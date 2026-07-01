@@ -1,4 +1,4 @@
-# === X Original Rules ===
+# === X Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,ads-twitter.com

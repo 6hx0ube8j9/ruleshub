@@ -1,4 +1,4 @@
-# === MIHOYO Original Rules ===
+# === MIHOYO Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,domain-keyword

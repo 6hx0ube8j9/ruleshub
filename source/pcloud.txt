@@ -1,4 +1,4 @@
-# === PCLOUD Original Rules ===
+# === PCLOUD Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,pcloud.com
