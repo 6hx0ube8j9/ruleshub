@@ -93,16 +93,19 @@ jobs:
       - name: 6. Install Mihomo & Compile to MRS
         run: |
           curl -Lo mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.18.3/mihomo-linux-amd64-v1.18.3.gz
-          gunzip mihomo.gz
-          chmod +x mihomo
+          gunzip -c mihomo.gz > mihomo-bin
+          chmod +x mihomo-bin
           
           for yaml_file in clash/*.yaml; do
             if [ -f "$yaml_file" ]; then
               mrs_file="${yaml_file%.yaml}.mrs"
-              ./mihomo convert-ruleset classical "$yaml_file" "$mrs_file"
+              echo "正在转换: $yaml_file -> $mrs_file"
+              ./mihomo-bin convert-ruleset classical "$yaml_file" "$mrs_file"
             fi
           done
-          rm -rf mihomo
+          
+          rm -f mihomo.gz mihomo-bin
+
 
       - name: 7. Push compiled rules back to repo
         run: |
