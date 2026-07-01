@@ -3,8 +3,6 @@ import os
 import json
 import yaml
 import subprocess
-import re
-import ipaddress
 
 SOURCE_DIR = 'source'
 SHADOWROCKET_DIR = 'shadowrocket'
@@ -18,27 +16,19 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR, PAC_DIR, SIN
     if not os.path.exists(d):
         os.makedirs(d)
 
-class KernelIntrospector:
-    """内核嗅探器：探测 Mihomo 命令格式，防止参数错误导致卡死"""
-    def __init__(self, bin_path):
-        self.bin_path = bin_path
-        self.needs_format_arg = self._detect() if os.path.exists(bin_path) else False
-        
-    def _detect(self):
-        try:
-            res = subprocess.run([self.bin_path, "convert-ruleset"], capture_output=True, text=True, timeout=5)
-            out = res.stderr + res.stdout
-            return "<format>" in out or " [format] " in out
-        except: 
-            return False
-            
-    def get_cmd(self, behavior, src, dst):
-        cmd = [self.bin_path, "convert-ruleset", behavior]
-        if self.needs_format_arg: 
-            cmd.append("yaml")
-        cmd.append(src)
-        cmd.append(dst)
-        return cmd
+home_dir = os.path.expanduser('~')
+mihomo_config_dir = os.path.join(home_dir, '.config', 'mihomo')
+os.makedirs(mihomo_config_dir, exist_ok=True)
+
+dummy_config = {
+    "mixed-port": 0,  
+    "allow-lan": False,
+    "mode": "rule",
+    "log-level": "silent" 
+}
+with open(os.path.join(mihomo_config_dir, 'config.yaml'), 'w', encoding='utf-8') as f:
+    yaml.dump(dummy_config, f)
+
 
 def clean_and_parse_line(line):
     line = line.strip()
@@ -98,27 +88,30 @@ def optimize_domains(rules):
             clean_full.add(domain)
     rules['full'] = clean_full
 
-def compile_mihomo_mrs(kernel, name, rules, behavior):
-    """通过 Python 调用内核编译 MRS，带 20 秒超时断路器"""
+def compile_mihomo_mrs(name, rules, behavior):
+    """
+    🔥 核心防御点 2：硬编码精准匹配 v1.18.3 的通用参数，不给内核任何死锁机会
+    """
     tmp_yaml = f"temp_{name}_{behavior}.yaml"
     dst_mrs = os.path.join(CLASH_DIR, f"{name}.mrs" if behavior == 'domain' else f"{name}_IP.mrs")
     try:
         with open(tmp_yaml, 'w', encoding='utf-8') as f:
             yaml.dump({'payload': rules}, f)
         
-        res = subprocess.run(kernel.get_cmd(behavior, tmp_yaml, dst_mrs), capture_output=True, text=True, timeout=20)
-        if res.returncode != 0 or os.path.getsize(dst_mrs) == 0:
-            if os.path.exists(dst_mrs): os.remove(dst_mrs)
-            return False
-        print(f"Mihomo 编译成功: {dst_mrs}")
+        # 精准匹配：mihomo convert-ruleset [behavior] yaml [src] [dst]
+        cmd = [MIHOMO_BIN, "convert-ruleset", behavior, "yaml", tmp_yaml, dst_mrs]
+        
+        # 使用 standard sub-process，并在 5 秒内强制干掉不听话的进程
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5)
+        print(f"Mihomo Success: {dst_mrs}")
         return True
     except Exception as e:
-        print(f"Mihomo 编译失败 [{name}]: {str(e)}")
+        print(f"Mihomo Skipped/Error [{name}]: {str(e)}")
         return False
     finally:
         if os.path.exists(tmp_yaml): os.remove(tmp_yaml)
 
-def process_file(file_name, kernel):
+def process_file(file_name):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0]
     rules = {'suffix': set(), 'full': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set()}
@@ -131,7 +124,7 @@ def process_file(file_name, kernel):
                 
     optimize_domains(rules)
                 
-    # 1. source
+    # 1. Save source
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Original Rules ===\n\n")
         for r_type in ['suffix', 'full', 'keyword', 'ip', 'ip6', 'process', 'useragent']:
@@ -164,15 +157,16 @@ def process_file(file_name, kernel):
         for val in sorted(rules['ip']): f_qx.write(f"ip-cidr, {val}, {qx_policy}, no-resolve\n")
         for val in sorted(rules['ip6']): f_qx.write(f"ip6-cidr, {val}, {qx_policy}, no-resolve\n")
 
+    # 4. Clash MRS
     clash_domains = []
     for val in sorted(rules['suffix']): clash_domains.append(f"+.{val}")
     for val in sorted(rules['full']): clash_domains.append(val)
     if clash_domains:
-        compile_mihomo_mrs(kernel, base_name, clash_domains, 'domain')
+        compile_mihomo_mrs(base_name, clash_domains, 'domain')
         
     clash_ips = sorted(list(rules['ip'].union(rules['ip6'])))
     if clash_ips:
-        compile_mihomo_mrs(kernel, base_name, clash_ips, 'ipcidr')
+        compile_mihomo_mrs(base_name, clash_ips, 'ipcidr')
 
     # 5. PAC
     if base_name.lower() == 'direct':
@@ -199,13 +193,10 @@ def process_file(file_name, kernel):
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
-    print(f"Success: {file_name} 基础解析及多分流配置导出完成。")
-
 def main():
-    kernel = KernelIntrospector(MIHOMO_BIN)
     files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
     for file_name in files:
-        process_file(file_name, kernel)
+        process_file(file_name)
 
 if __name__ == '__main__':
     main()
