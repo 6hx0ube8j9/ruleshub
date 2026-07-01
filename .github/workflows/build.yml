@@ -98,16 +98,8 @@ jobs:
           
           for yaml_file in clash/*.yaml; do
             if [ -f "$yaml_file" ]; then
-              filename=$(basename "$yaml_file" .yaml)
-              echo "Compiling: $yaml_file"
-              ./mihomo cli ruleset compile "$yaml_file"
-              if [ -f "${filename}.mrs" ]; then
-                mv "${filename}.mrs" "clash/${filename}.mrs"
-                echo "Success: clash/${filename}.mrs"
-              else
-                echo "Error: Failed to generate ${filename}.mrs"
-                exit 1
-              fi
+              mrs_file="${yaml_file%.yaml}.mrs"
+              ./mihomo convert-ruleset classical "$yaml_file" "$mrs_file"
             fi
           done
           rm -rf mihomo
