@@ -53,9 +53,6 @@ def clean_and_parse_line(line):
     return 'suffix', line.lstrip('.').lower()
 
 def optimize_domains(rules):
-    """
-    核心：树状层级去重
-    """
 
     sorted_suffixes = sorted(list(rules['suffix']), key=len)
     clean_suffixes = set()
