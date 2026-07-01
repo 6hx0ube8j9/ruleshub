@@ -30,19 +30,23 @@ jobs:
           local tmp="source/temp_merge.txt"
           > "$tmp"
           
+          # 1. 安全拉取远程链接 (加了 -f 参数，遇到 404 直接跳过，不污染)
           for url in "$@"; do
             curl -sSLf "$url" >> "$tmp" || true
             echo "" >> "$tmp"
           done
           
+          # 2. 清理本地旧底稿的注释 (防止注释陷入无限叠加套娃)
           if [ -f "source/$target" ]; then
             grep -v "^#" "source/$target" >> "$tmp" || true
           fi
           
+          # 3. 去重并剔除空行
           sort -u "$tmp" | sed '/^$/d' > "source/$target"
           rm "$tmp"
         }
 
+        # --- 在下方添加你的远程链接，一行一个，注意首尾双引号 ---
         
         merge_rules "direct.txt" \
           "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/China/China_Domain.list"
@@ -91,12 +95,26 @@ jobs:
         done
         rm -rf sing-box sing-box.tar.gz sing-box-1.11.0-linux-amd64
 
-    - name: 6. Push compiled rules back to repo
+    - name: 6. Install Mihomo & Compile to MRS
       run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add source/ shadowrocket/ quantumultx/ clash/ pac/ singbox/
-        git diff --quiet && git diff --staged --quiet || (git commit -m "auto build: update rules" && git pull --rebase origin main && git push)
+        curl -Lo mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.18.3/mihomo-linux-amd64-v1.18.3.gz
+        gunzip mihomo.gz
+        chmod +x mihomo
+        
+        for yaml_file in clash/*.yaml; do
+          if [ -f "$yaml_file" ]; then
+            base_name="${yaml_file%.yaml}"
+            
+            grep -E "DOMAIN|KEYWORD" "$yaml_file" > "${base_name}_domain.yaml"
+            ./mihomo convert-ruleset domain "${base_name}_domain.yaml" "${base_name}_domain.mrs"
+            
+            grep -E "IP-CIDR" "$yaml_file" > "${base_name}_ip.yaml"
+            ./mihomo convert-ruleset ipcidr "${base_name}_ip.yaml" "${base_name}_ip.mrs"
+            
+            rm "${base_name}_domain.yaml" "${base_name}_ip.yaml"
+          fi
+        done
+        rm -rf mihomo
 
     - name: 7. Push compiled rules back to repo
       run: |
