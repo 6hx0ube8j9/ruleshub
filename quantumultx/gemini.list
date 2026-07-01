@@ -11,10 +11,8 @@ host, ai.google.dev, Gemini
 host, alkalimakersuite-pa.clients6.google.com, Gemini
 host, alkalimessages-pa.googleapis.com, Gemini
 host, gemini-user-content.googleusercontent.com, Gemini
-host, gemini.google.com, Gemini
 host, gemini.gstatic.com, Gemini
 host, makersuite.google.com, Gemini
-host, proactivebackend-pa.googleapis.com, Gemini
 host-keyword, colab, Gemini
 host-keyword, developerprofiles, Gemini
 host-keyword, generativelanguage, Gemini

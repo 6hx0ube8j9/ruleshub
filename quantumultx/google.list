@@ -49,9 +49,6 @@ host-suffix, baselinestudy.com, Google
 host-suffix, baselinestudy.org, Google
 host-suffix, bazel.build, Google
 host-suffix, bdn.dev, Google
-host-suffix, beacons.gvt2.com, Google
-host-suffix, beacons2.gvt2.com, Google
-host-suffix, beacons3.gvt2.com, Google
 host-suffix, beatthatquote.com, Google
 host-suffix, blink.org, Google
 host-suffix, blog.google, Google
@@ -194,11 +191,9 @@ host-suffix, dialogflow.com, Google
 host-suffix, digisfera.com, Google
 host-suffix, digitalassetlinks.org, Google
 host-suffix, digitalattackmap.com, Google
-host-suffix, docs.google.com, Google
 host-suffix, doubleclick-cn.net, Google
 host-suffix, doubleclick.com, Google
 host-suffix, doubleclick.net, Google
-host-suffix, drive.google.com, Google
 host-suffix, episodic.com, Google
 host-suffix, fastlane.ci, Google
 host-suffix, fastlane.tools, Google
@@ -218,7 +213,6 @@ host-suffix, g.co, Google
 host-suffix, g.dev, Google
 host-suffix, g.page, Google
 host-suffix, gateway.dev, Google
-host-suffix, gcp.gvt2.com, Google
 host-suffix, gcr.io, Google
 host-suffix, gerritcodereview.com, Google
 host-suffix, get.app, Google
@@ -606,10 +600,6 @@ host-suffix, quiksee.com, Google
 host-suffix, recaptcha-cn.net, Google
 host-suffix, recaptcha.net, Google
 host-suffix, redhotlabs.com, Google
-host-suffix, redirector.gcpcdn.gvt1.com, Google
-host-suffix, redirector.gvt1.com, Google
-host-suffix, redirector.offline-maps.gvt1.com, Google
-host-suffix, redirector.snap.gvt1.com, Google
 host-suffix, registry.google, Google
 host-suffix, revolv.com, Google
 host-suffix, ridepenguin.com, Google
@@ -857,7 +847,6 @@ host-suffix, youtubego.com, Google
 host-suffix, youtubego.com.br, Google
 host-suffix, youtubego.id, Google
 host-suffix, youtubego.in, Google
-host-suffix, youtubei.googleapis.com, Google
 host-suffix, youtubekids.com, Google
 host-suffix, youtubemobilesupport.com, Google
 host-suffix, yt.be, Google
@@ -868,10 +857,6 @@ host-suffix, はじめよう.みんな, Google
 host-suffix, 古博.com, Google
 host-suffix, 咕果.com, Google
 host-suffix, 谷歌.com, Google
-host, lens.l.google.com, Google
-host, voice.telephony.goog, Google
-host, youtubei.googleapis.com, Google
-host, yt3.ggpht.com, Google
 host-keyword, appspot, Google
 host-keyword, blogspot, Google
 host-keyword, gmail, Google

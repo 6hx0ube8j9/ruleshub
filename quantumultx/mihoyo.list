@@ -22,12 +22,10 @@ host, api-tw.mihoyo.com, Mihoyo
 host, apkdownload.mihoyo.com, Mihoyo
 host, assets-ios.hsod2.mihoyo.com, Mihoyo
 host, assets.hsod2.mihoyo.com, Mihoyo
-host, autopatchhk.yuanshen.com, Mihoyo
 host, cdp.cloud.unity3d.com, Mihoyo
 host, cms.esa01.mihoyo.com, Mihoyo
 host, content-static-sea.mihoyo.com, Mihoyo
 host, devapi-static.mihoyo.com, Mihoyo
-host, dispatchosglobal.yuanshen.com, Mihoyo
 host, download-sea.mihoyo.com, Mihoyo
 host, forums.mihoyo.com, Mihoyo
 host, genshin.mihoyo.com, Mihoyo
@@ -39,7 +37,6 @@ host, hk4e-sdk-os.mihoyo.com, Mihoyo
 host, honkaiimpact3.mihoyo.com, Mihoyo
 host, hsod-us1.mihoyo.com, Mihoyo
 host, imap.mihoyo.com, Mihoyo
-host, img-os-static.hoyolab.com, Mihoyo
 host, img-os-static.hoyolab.com.w.cdngslb.com, Mihoyo
 host, img-os-static.mihoyo.com, Mihoyo
 host, img-static.mihoyo.com, Mihoyo
@@ -53,8 +50,6 @@ host, n0va-static.mihoyo.com, Mihoyo
 host, n0vadp.mihoyo.com, Mihoyo
 host, oa.mihoyo.com, Mihoyo
 host, op-os-takumi.mihoyo.com, Mihoyo
-host, osasiadispatch.yuanshen.com, Mihoyo
-host, overseauspider.yuanshen.com, Mihoyo
 host, pay.esa01.mihoyo.com, Mihoyo
 host, preapi-os-community.mihoyo.com, Mihoyo
 host, preapi-os-takumi.mihoyo.com, Mihoyo

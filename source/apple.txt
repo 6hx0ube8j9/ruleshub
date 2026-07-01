@@ -699,7 +699,6 @@ suffix,bestshoesale2014.net
 suffix,biitii.com
 suffix,blackfridaydrebeatsnew.com
 suffix,blackfridaydrebeatsshop.com
-suffix,blobstore.apple.com
 suffix,bloommicroventures.com
 suffix,bookonsky.net
 suffix,bossae.com
@@ -1287,8 +1286,6 @@ suffix,macreach.net
 suffix,macruby.com
 suffix,macruby.net
 suffix,macruby.org
-suffix,mail.icloud.com.cn
-suffix,mail.me.com
 suffix,mairbeats.com
 suffix,makeeu.com
 suffix,mallheadphone.com
@@ -1363,7 +1360,6 @@ suffix,monstershopcheapbeats.net
 suffix,moreheadphones.com
 suffix,mr-apple.com.tw
 suffix,ms4dre.com
-suffix,music.apple.com
 suffix,musickit.net
 suffix,myappleid.com
 suffix,mybeatsbydrestudio.com
@@ -1502,7 +1498,6 @@ suffix,tradevip1.com
 suffix,truedepth3d.com
 suffix,tryrating.com
 suffix,tteshop.com
-suffix,tv.apple.com
 suffix,tvappstore.net
 suffix,ubnw.net
 suffix,ukipad.com
@@ -1553,41 +1548,18 @@ suffix,xn--ruq8a011kt6y.xn--hxt814e
 suffix,yourmonsterbeats.com
 
 # --- TYPE: FULL ---
-full,aod.itunes.apple.com
-full,api.smoot.apple.cn
 full,appldnld.apple.com.edgesuite.net
 full,apple-events.akamaized.net
-full,apple.comscoreresearch.com
 full,appleworldwidedeveloper.hb-api.omtrdc.net
 full,appleworldwidedeveloper.sc.omtrdc.net
-full,audio-ssl.itunes.apple.com
-full,audio.itunes.apple.com
 full,beatselectronicsllc.tt.omtrdc.net
-full,crl.apple.com
 full,crl.entrust.net
-full,crl3.digicert.com
-full,crl4.digicert.com
 full,e16991.b.akamaiedge.net
-full,gateway.icloud.com
-full,gspe1-ssl.ls.apple.com
-full,hls-amt.itunes.apple.com
-full,hls.itunes.apple.com
 full,icons.axm-usercontent-apple.com
 full,lookup-api.apple.com.edgekey.net
-full,mvod.itunes.apple.com
-full,news-assets.apple.com
-full,news-client.apple.com
-full,news-edge.apple.com
-full,news-events.apple.com
-full,np-edge.itunes.apple.com
-full,ocsp.apple.com
-full,ocsp.digicert.com
 full,ocsp.entrust.net
 full,ocsp.verisign.net
 full,p-events-delivery.akamaized.net
-full,play-edge.itunes.apple.com
-full,streamingaudio.itunes.apple.com
-full,valid.apple.com
 
 # --- TYPE: KEYWORD ---
 keyword,apple-support.akadns.net

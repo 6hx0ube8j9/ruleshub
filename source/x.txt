@@ -1,15 +1,9 @@
 # === X Original Rules ===
 
 # --- TYPE: SUFFIX ---
-suffix,abs.twimg.com
 suffix,ads-twitter.com
-suffix,ads.twitter.com
-suffix,api.twitter.com
-suffix,api.x.ai
 suffix,cms-twdigitalassets.com
 suffix,grok.com
-suffix,grok.x.ai
-suffix,pbs.twimg.com
 suffix,periscope.tv
 suffix,pscp.tv
 suffix,t.co
@@ -31,7 +25,6 @@ suffix,twtrdns.net
 suffix,twttr.com
 suffix,twttr.net
 suffix,twvid.com
-suffix,video.twimg.com
 suffix,vine.co
 suffix,x.ai
 suffix,x.com

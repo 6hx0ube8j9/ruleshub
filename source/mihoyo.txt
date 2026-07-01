@@ -25,12 +25,10 @@ full,api-tw.mihoyo.com
 full,apkdownload.mihoyo.com
 full,assets-ios.hsod2.mihoyo.com
 full,assets.hsod2.mihoyo.com
-full,autopatchhk.yuanshen.com
 full,cdp.cloud.unity3d.com
 full,cms.esa01.mihoyo.com
 full,content-static-sea.mihoyo.com
 full,devapi-static.mihoyo.com
-full,dispatchosglobal.yuanshen.com
 full,download-sea.mihoyo.com
 full,forums.mihoyo.com
 full,genshin.mihoyo.com
@@ -42,7 +40,6 @@ full,hk4e-sdk-os.mihoyo.com
 full,honkaiimpact3.mihoyo.com
 full,hsod-us1.mihoyo.com
 full,imap.mihoyo.com
-full,img-os-static.hoyolab.com
 full,img-os-static.hoyolab.com.w.cdngslb.com
 full,img-os-static.mihoyo.com
 full,img-static.mihoyo.com
@@ -56,8 +53,6 @@ full,n0va-static.mihoyo.com
 full,n0vadp.mihoyo.com
 full,oa.mihoyo.com
 full,op-os-takumi.mihoyo.com
-full,osasiadispatch.yuanshen.com
-full,overseauspider.yuanshen.com
 full,pay.esa01.mihoyo.com
 full,preapi-os-community.mihoyo.com
 full,preapi-os-takumi.mihoyo.com

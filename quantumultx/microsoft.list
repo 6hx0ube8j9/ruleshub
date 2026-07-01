@@ -666,10 +666,6 @@ host-suffix, xboxstudios.com, Microsoft
 host-suffix, xbx.lv, Microsoft
 host-suffix, yammer.com, Microsoft
 host-suffix, yammerusercontent.com, Microsoft
-host, img-prod-cms-rt-microsoft-com.akamaized.net, Microsoft
-host, login.live.com, Microsoft
-host, logincdn.msauth.net, Microsoft
-host, store-images.s-microsoft.com, Microsoft
 host, vsmarketplacebadge.apphb.com, Microsoft
 host-keyword, 1drv, Microsoft
 host-keyword, microsoft, Microsoft

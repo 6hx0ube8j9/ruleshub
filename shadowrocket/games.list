@@ -8,12 +8,6 @@ DOMAIN-SUFFIX,nkstatic.com
 DOMAIN-SUFFIX,supercell.com
 DOMAIN-SUFFIX,unity3d.com
 DOMAIN,1681.engine.mobileapptracking.com
-DOMAIN,analytics.ninjakiwi.com
-DOMAIN,api.ninjakiwi.com
-DOMAIN,cdn.supercell.com
-DOMAIN,game.brawlstarsgame.com
-DOMAIN,inbox.brawlstars.com
-DOMAIN,ingame.id.supercell.com
 DOMAIN,supercell.helpshift.com
 IP-CIDR,139.180.0.0/16,no-resolve
 IP-CIDR,142.132.0.0/16,no-resolve

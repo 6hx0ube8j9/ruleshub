@@ -8,12 +8,6 @@ host-suffix, nkstatic.com, Games
 host-suffix, supercell.com, Games
 host-suffix, unity3d.com, Games
 host, 1681.engine.mobileapptracking.com, Games
-host, analytics.ninjakiwi.com, Games
-host, api.ninjakiwi.com, Games
-host, cdn.supercell.com, Games
-host, game.brawlstarsgame.com, Games
-host, inbox.brawlstars.com, Games
-host, ingame.id.supercell.com, Games
 host, supercell.helpshift.com, Games
 ip-cidr, 139.180.0.0/16, Games, no-resolve
 ip-cidr, 142.132.0.0/16, Games, no-resolve

@@ -50,9 +50,6 @@ suffix,baselinestudy.com
 suffix,baselinestudy.org
 suffix,bazel.build
 suffix,bdn.dev
-suffix,beacons.gvt2.com
-suffix,beacons2.gvt2.com
-suffix,beacons3.gvt2.com
 suffix,beatthatquote.com
 suffix,blink.org
 suffix,blog.google
@@ -195,11 +192,9 @@ suffix,dialogflow.com
 suffix,digisfera.com
 suffix,digitalassetlinks.org
 suffix,digitalattackmap.com
-suffix,docs.google.com
 suffix,doubleclick-cn.net
 suffix,doubleclick.com
 suffix,doubleclick.net
-suffix,drive.google.com
 suffix,episodic.com
 suffix,fastlane.ci
 suffix,fastlane.tools
@@ -219,7 +214,6 @@ suffix,g.co
 suffix,g.dev
 suffix,g.page
 suffix,gateway.dev
-suffix,gcp.gvt2.com
 suffix,gcr.io
 suffix,gerritcodereview.com
 suffix,get.app
@@ -607,10 +601,6 @@ suffix,quiksee.com
 suffix,recaptcha-cn.net
 suffix,recaptcha.net
 suffix,redhotlabs.com
-suffix,redirector.gcpcdn.gvt1.com
-suffix,redirector.gvt1.com
-suffix,redirector.offline-maps.gvt1.com
-suffix,redirector.snap.gvt1.com
 suffix,registry.google
 suffix,revolv.com
 suffix,ridepenguin.com
@@ -858,7 +848,6 @@ suffix,youtubego.com
 suffix,youtubego.com.br
 suffix,youtubego.id
 suffix,youtubego.in
-suffix,youtubei.googleapis.com
 suffix,youtubekids.com
 suffix,youtubemobilesupport.com
 suffix,yt.be
@@ -869,12 +858,6 @@ suffix,はじめよう.みんな
 suffix,古博.com
 suffix,咕果.com
 suffix,谷歌.com
-
-# --- TYPE: FULL ---
-full,lens.l.google.com
-full,voice.telephony.goog
-full,youtubei.googleapis.com
-full,yt3.ggpht.com
 
 # --- TYPE: KEYWORD ---
 keyword,appspot

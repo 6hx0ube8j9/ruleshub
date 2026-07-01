@@ -669,10 +669,6 @@ suffix,yammer.com
 suffix,yammerusercontent.com
 
 # --- TYPE: FULL ---
-full,img-prod-cms-rt-microsoft-com.akamaized.net
-full,login.live.com
-full,logincdn.msauth.net
-full,store-images.s-microsoft.com
 full,vsmarketplacebadge.apphb.com
 
 # --- TYPE: KEYWORD ---

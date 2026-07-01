@@ -204,7 +204,6 @@ suffix,zzd6.com
 # --- TYPE: FULL ---
 full,ad.10010.com
 full,app-measurement.com
-full,appservices.comcsoft.com
 full,clients3.google.com
 full,config.cmpassport.com
 full,config001.cmpassport.com
@@ -216,10 +215,8 @@ full,geo2.adobe.com
 full,log001.cmpassport.com
 full,mta.e.189.cn
 full,open.e.189.cn
-full,opencloud.wostore.cn
 full,play.googleapis.com
 full,s2.ax1x.com
-full,settings.crashlytics.com
 full,skype.gmw.cn
 full,ssp.kaiads.com
 full,www.cmpassport.com

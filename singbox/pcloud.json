@@ -6,24 +6,7 @@
         "pcloud.com"
       ],
       "domain": [
-        "api.pcloud.com",
-        "apipass.pcloud.com",
-        "bineapi.pcloud.com",
-        "bineapitok2.pcloud.com",
-        "def2.pcloud.com",
-        "e.pcloud.link",
-        "eapi.pcloud.com",
-        "edef12.pcloud.com",
-        "et2-b.pcloud.com",
-        "eth2.pcloud.com",
-        "my.pcloud.com",
-        "pass.pcloud.com",
-        "pcdn-my.pcloud.com",
-        "pcdn-pass.pcloud.com",
-        "t100.pcloud.com",
-        "th3.pcloud.com",
-        "th4.pcloud.com",
-        "webdav.pcloud.com"
+        "e.pcloud.link"
       ],
       "ip_cidr": [
         "185.62.236.0/22",

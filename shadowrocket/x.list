@@ -1,14 +1,8 @@
 # Shadowrocket Rule-Set: x
 
-DOMAIN-SUFFIX,abs.twimg.com
 DOMAIN-SUFFIX,ads-twitter.com
-DOMAIN-SUFFIX,ads.twitter.com
-DOMAIN-SUFFIX,api.twitter.com
-DOMAIN-SUFFIX,api.x.ai
 DOMAIN-SUFFIX,cms-twdigitalassets.com
 DOMAIN-SUFFIX,grok.com
-DOMAIN-SUFFIX,grok.x.ai
-DOMAIN-SUFFIX,pbs.twimg.com
 DOMAIN-SUFFIX,periscope.tv
 DOMAIN-SUFFIX,pscp.tv
 DOMAIN-SUFFIX,t.co
@@ -30,7 +24,6 @@ DOMAIN-SUFFIX,twtrdns.net
 DOMAIN-SUFFIX,twttr.com
 DOMAIN-SUFFIX,twttr.net
 DOMAIN-SUFFIX,twvid.com
-DOMAIN-SUFFIX,video.twimg.com
 DOMAIN-SUFFIX,vine.co
 DOMAIN-SUFFIX,x.ai
 DOMAIN-SUFFIX,x.com

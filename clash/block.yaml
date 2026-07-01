@@ -201,7 +201,6 @@ payload:
   - DOMAIN-SUFFIX,zzd6.com
   - DOMAIN,ad.10010.com
   - DOMAIN,app-measurement.com
-  - DOMAIN,appservices.comcsoft.com
   - DOMAIN,clients3.google.com
   - DOMAIN,config.cmpassport.com
   - DOMAIN,config001.cmpassport.com
@@ -213,10 +212,8 @@ payload:
   - DOMAIN,log001.cmpassport.com
   - DOMAIN,mta.e.189.cn
   - DOMAIN,open.e.189.cn
-  - DOMAIN,opencloud.wostore.cn
   - DOMAIN,play.googleapis.com
   - DOMAIN,s2.ax1x.com
-  - DOMAIN,settings.crashlytics.com
   - DOMAIN,skype.gmw.cn
   - DOMAIN,ssp.kaiads.com
   - DOMAIN,www.cmpassport.com

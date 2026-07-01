@@ -3,15 +3,9 @@
   "rules": [
     {
       "domain_suffix": [
-        "abs.twimg.com",
         "ads-twitter.com",
-        "ads.twitter.com",
-        "api.twitter.com",
-        "api.x.ai",
         "cms-twdigitalassets.com",
         "grok.com",
-        "grok.x.ai",
-        "pbs.twimg.com",
         "periscope.tv",
         "pscp.tv",
         "t.co",
@@ -33,7 +27,6 @@
         "twttr.com",
         "twttr.net",
         "twvid.com",
-        "video.twimg.com",
         "vine.co",
         "x.ai",
         "x.com"

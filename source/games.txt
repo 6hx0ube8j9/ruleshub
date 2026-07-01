@@ -11,12 +11,6 @@ suffix,unity3d.com
 
 # --- TYPE: FULL ---
 full,1681.engine.mobileapptracking.com
-full,analytics.ninjakiwi.com
-full,api.ninjakiwi.com
-full,cdn.supercell.com
-full,game.brawlstarsgame.com
-full,inbox.brawlstars.com
-full,ingame.id.supercell.com
 full,supercell.helpshift.com
 
 # --- TYPE: IP ---

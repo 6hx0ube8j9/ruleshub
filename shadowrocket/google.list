@@ -49,9 +49,6 @@ DOMAIN-SUFFIX,baselinestudy.com
 DOMAIN-SUFFIX,baselinestudy.org
 DOMAIN-SUFFIX,bazel.build
 DOMAIN-SUFFIX,bdn.dev
-DOMAIN-SUFFIX,beacons.gvt2.com
-DOMAIN-SUFFIX,beacons2.gvt2.com
-DOMAIN-SUFFIX,beacons3.gvt2.com
 DOMAIN-SUFFIX,beatthatquote.com
 DOMAIN-SUFFIX,blink.org
 DOMAIN-SUFFIX,blog.google
@@ -194,11 +191,9 @@ DOMAIN-SUFFIX,dialogflow.com
 DOMAIN-SUFFIX,digisfera.com
 DOMAIN-SUFFIX,digitalassetlinks.org
 DOMAIN-SUFFIX,digitalattackmap.com
-DOMAIN-SUFFIX,docs.google.com
 DOMAIN-SUFFIX,doubleclick-cn.net
 DOMAIN-SUFFIX,doubleclick.com
 DOMAIN-SUFFIX,doubleclick.net
-DOMAIN-SUFFIX,drive.google.com
 DOMAIN-SUFFIX,episodic.com
 DOMAIN-SUFFIX,fastlane.ci
 DOMAIN-SUFFIX,fastlane.tools
@@ -218,7 +213,6 @@ DOMAIN-SUFFIX,g.co
 DOMAIN-SUFFIX,g.dev
 DOMAIN-SUFFIX,g.page
 DOMAIN-SUFFIX,gateway.dev
-DOMAIN-SUFFIX,gcp.gvt2.com
 DOMAIN-SUFFIX,gcr.io
 DOMAIN-SUFFIX,gerritcodereview.com
 DOMAIN-SUFFIX,get.app
@@ -606,10 +600,6 @@ DOMAIN-SUFFIX,quiksee.com
 DOMAIN-SUFFIX,recaptcha-cn.net
 DOMAIN-SUFFIX,recaptcha.net
 DOMAIN-SUFFIX,redhotlabs.com
-DOMAIN-SUFFIX,redirector.gcpcdn.gvt1.com
-DOMAIN-SUFFIX,redirector.gvt1.com
-DOMAIN-SUFFIX,redirector.offline-maps.gvt1.com
-DOMAIN-SUFFIX,redirector.snap.gvt1.com
 DOMAIN-SUFFIX,registry.google
 DOMAIN-SUFFIX,revolv.com
 DOMAIN-SUFFIX,ridepenguin.com
@@ -857,7 +847,6 @@ DOMAIN-SUFFIX,youtubego.com
 DOMAIN-SUFFIX,youtubego.com.br
 DOMAIN-SUFFIX,youtubego.id
 DOMAIN-SUFFIX,youtubego.in
-DOMAIN-SUFFIX,youtubei.googleapis.com
 DOMAIN-SUFFIX,youtubekids.com
 DOMAIN-SUFFIX,youtubemobilesupport.com
 DOMAIN-SUFFIX,yt.be
@@ -868,10 +857,6 @@ DOMAIN-SUFFIX,はじめよう.みんな
 DOMAIN-SUFFIX,古博.com
 DOMAIN-SUFFIX,咕果.com
 DOMAIN-SUFFIX,谷歌.com
-DOMAIN,lens.l.google.com
-DOMAIN,voice.telephony.goog
-DOMAIN,youtubei.googleapis.com
-DOMAIN,yt3.ggpht.com
 DOMAIN-KEYWORD,appspot
 DOMAIN-KEYWORD,blogspot
 DOMAIN-KEYWORD,gmail

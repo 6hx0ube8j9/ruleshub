@@ -201,7 +201,6 @@ host-suffix, zunmi.cn, Block
 host-suffix, zzd6.com, Block
 host, ad.10010.com, Block
 host, app-measurement.com, Block
-host, appservices.comcsoft.com, Block
 host, clients3.google.com, Block
 host, config.cmpassport.com, Block
 host, config001.cmpassport.com, Block
@@ -213,10 +212,8 @@ host, geo2.adobe.com, Block
 host, log001.cmpassport.com, Block
 host, mta.e.189.cn, Block
 host, open.e.189.cn, Block
-host, opencloud.wostore.cn, Block
 host, play.googleapis.com, Block
 host, s2.ax1x.com, Block
-host, settings.crashlytics.com, Block
 host, skype.gmw.cn, Block
 host, ssp.kaiads.com, Block
 host, www.cmpassport.com, Block

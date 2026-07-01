@@ -1,24 +1,7 @@
 # Shadowrocket Rule-Set: pcloud
 
 DOMAIN-SUFFIX,pcloud.com
-DOMAIN,api.pcloud.com
-DOMAIN,apipass.pcloud.com
-DOMAIN,bineapi.pcloud.com
-DOMAIN,bineapitok2.pcloud.com
-DOMAIN,def2.pcloud.com
 DOMAIN,e.pcloud.link
-DOMAIN,eapi.pcloud.com
-DOMAIN,edef12.pcloud.com
-DOMAIN,et2-b.pcloud.com
-DOMAIN,eth2.pcloud.com
-DOMAIN,my.pcloud.com
-DOMAIN,pass.pcloud.com
-DOMAIN,pcdn-my.pcloud.com
-DOMAIN,pcdn-pass.pcloud.com
-DOMAIN,t100.pcloud.com
-DOMAIN,th3.pcloud.com
-DOMAIN,th4.pcloud.com
-DOMAIN,webdav.pcloud.com
 IP-CIDR,185.62.236.0/22,no-resolve
 IP-CIDR,45.131.244.0/22,no-resolve
 IP-CIDR,74.120.8.0/22,no-resolve

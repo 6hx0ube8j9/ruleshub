@@ -16,10 +16,8 @@
         "alkalimakersuite-pa.clients6.google.com",
         "alkalimessages-pa.googleapis.com",
         "gemini-user-content.googleusercontent.com",
-        "gemini.google.com",
         "gemini.gstatic.com",
-        "makersuite.google.com",
-        "proactivebackend-pa.googleapis.com"
+        "makersuite.google.com"
       ],
       "domain_keyword": [
         "colab",

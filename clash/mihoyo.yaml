@@ -22,12 +22,10 @@ payload:
   - DOMAIN,apkdownload.mihoyo.com
   - DOMAIN,assets-ios.hsod2.mihoyo.com
   - DOMAIN,assets.hsod2.mihoyo.com
-  - DOMAIN,autopatchhk.yuanshen.com
   - DOMAIN,cdp.cloud.unity3d.com
   - DOMAIN,cms.esa01.mihoyo.com
   - DOMAIN,content-static-sea.mihoyo.com
   - DOMAIN,devapi-static.mihoyo.com
-  - DOMAIN,dispatchosglobal.yuanshen.com
   - DOMAIN,download-sea.mihoyo.com
   - DOMAIN,forums.mihoyo.com
   - DOMAIN,genshin.mihoyo.com
@@ -39,7 +37,6 @@ payload:
   - DOMAIN,honkaiimpact3.mihoyo.com
   - DOMAIN,hsod-us1.mihoyo.com
   - DOMAIN,imap.mihoyo.com
-  - DOMAIN,img-os-static.hoyolab.com
   - DOMAIN,img-os-static.hoyolab.com.w.cdngslb.com
   - DOMAIN,img-os-static.mihoyo.com
   - DOMAIN,img-static.mihoyo.com
@@ -53,8 +50,6 @@ payload:
   - DOMAIN,n0vadp.mihoyo.com
   - DOMAIN,oa.mihoyo.com
   - DOMAIN,op-os-takumi.mihoyo.com
-  - DOMAIN,osasiadispatch.yuanshen.com
-  - DOMAIN,overseauspider.yuanshen.com
   - DOMAIN,pay.esa01.mihoyo.com
   - DOMAIN,preapi-os-community.mihoyo.com
   - DOMAIN,preapi-os-takumi.mihoyo.com
