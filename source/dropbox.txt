@@ -1,6 +1,31 @@
-# === DROPBOX Original Rules ===
-
-# --- TYPE: SUFFIX ---
+# AUTHOR: blackmatrix7
+# DOMAIN-SUFFIX: 17
+# NAME: Dropbox
+# REPO: https://github.com/blackmatrix7/ios_rule_script
+# TOTAL: 17
+# UPDATED: 2025-06-06 09:17:43
+DOMAIN-SUFFIX,db.tt
+DOMAIN-SUFFIX,dropbox-dns.com
+DOMAIN-SUFFIX,dropbox.com
+DOMAIN-SUFFIX,dropbox.tech
+DOMAIN-SUFFIX,dropbox.zendesk.com
+DOMAIN-SUFFIX,dropboxapi.com
+DOMAIN-SUFFIX,dropboxbusiness.com
+DOMAIN-SUFFIX,dropboxcaptcha.com
+DOMAIN-SUFFIX,dropboxforum.com
+DOMAIN-SUFFIX,dropboxforums.com
+DOMAIN-SUFFIX,dropboxinsiders.com
+DOMAIN-SUFFIX,dropboxmail.com
+DOMAIN-SUFFIX,dropboxpartners.com
+DOMAIN-SUFFIX,dropboxstatic.com
+DOMAIN-SUFFIX,dropboxusercontent.com
+DOMAIN-SUFFIX,getdropbox.com
+DOMAIN-SUFFIX,paper-attachments.s3.amazonaws.com
+full,dropbox-api.arkoselabs.com
+process,DbxSvc.exe
+process,Dropbox.exe
+process,DropboxUninstaller.exe
+process,DropboxUpdate.exe
 suffix,db.tt
 suffix,dropbox-dns.com
 suffix,dropbox.com
@@ -19,13 +44,3 @@ suffix,dropboxstatic.com
 suffix,dropboxusercontent.com
 suffix,getdropbox.com
 suffix,paper-attachments.s3.amazonaws.com
-
-# --- TYPE: FULL ---
-full,dropbox-api.arkoselabs.com
-
-# --- TYPE: PROCESS ---
-process,DbxSvc.exe
-process,Dropbox.exe
-process,DropboxUninstaller.exe
-process,DropboxUpdate.exe
-
