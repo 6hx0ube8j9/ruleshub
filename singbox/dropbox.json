@@ -21,10 +21,14 @@
         "dropboxusercontent.com",
         "getdropbox.com",
         "paper-attachments.s3.amazonaws.com"
-      ],
+      ]
+    },
+    {
       "domain": [
         "dropbox-api.arkoselabs.com"
-      ],
+      ]
+    },
+    {
       "process_name": [
         "DbxSvc.exe",
         "Dropbox.exe",

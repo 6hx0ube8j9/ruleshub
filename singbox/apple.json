@@ -1548,7 +1548,9 @@
         "xn--ohq11k7pl25iyo8a.cn",
         "xn--ruq8a011kt6y.xn--hxt814e",
         "yourmonsterbeats.com"
-      ],
+      ]
+    },
+    {
       "domain": [
         "appldnld.apple.com.edgesuite.net",
         "apple-events.akamaized.net",
@@ -1562,7 +1564,9 @@
         "ocsp.entrust.net",
         "ocsp.verisign.net",
         "p-events-delivery.akamaized.net"
-      ],
+      ]
+    },
+    {
       "domain_keyword": [
         "apple-support.akadns.net",
         "apple.com.akadns.net",
@@ -1572,7 +1576,9 @@
         "icoudo",
         "icoudos",
         "testflight"
-      ],
+      ]
+    },
+    {
       "ip_cidr": [
         "139.178.128.0/18",
         "144.178.0.0/19",

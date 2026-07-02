@@ -44,12 +44,16 @@
         "worldofwarcraft.com",
         "wow.nosdn.127.net",
         "wowchina.com"
-      ],
+      ]
+    },
+    {
       "domain": [
         "blz-contentstack-assets.akamaized.net",
         "blz-contentstack-images.akamaized.net",
         "bnetaccount.akamaized.net"
-      ],
+      ]
+    },
+    {
       "ip_cidr": [
         "103.4.114.233/32",
         "103.4.115.248/32",

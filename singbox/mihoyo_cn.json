@@ -4,7 +4,9 @@
     {
       "domain_suffix": [
         "benghuai.com"
-      ],
+      ]
+    },
+    {
       "domain": [
         "api-beta-sdk-static.mihoyo.com",
         "api-beta-sdk.mihoyo.com",

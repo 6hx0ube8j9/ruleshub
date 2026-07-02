@@ -54,12 +54,16 @@
         "underlords.com",
         "valvesoftware.com",
         "wmsjsteam.com"
-      ],
+      ]
+    },
+    {
       "domain_keyword": [
         "steambroadcast",
         "steamstore",
         "steamuserimages"
-      ],
+      ]
+    },
+    {
       "process_name": [
         "steam.exe",
         "steamservice.exe",

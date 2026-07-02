@@ -669,10 +669,14 @@
         "xbx.lv",
         "yammer.com",
         "yammerusercontent.com"
-      ],
+      ]
+    },
+    {
       "domain": [
         "vsmarketplacebadge.apphb.com"
-      ],
+      ]
+    },
+    {
       "domain_keyword": [
         "1drv",
         "microsoft",

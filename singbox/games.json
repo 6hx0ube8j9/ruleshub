@@ -10,17 +10,23 @@
         "nkstatic.com",
         "supercell.com",
         "unity3d.com"
-      ],
+      ]
+    },
+    {
       "domain": [
         "1681.engine.mobileapptracking.com",
         "supercell.helpshift.com"
-      ],
+      ]
+    },
+    {
       "process_name": [
         "BloonsTD6-Epic.exe",
         "BloonsTD6.exe",
         "Cleaner-BTD6.exe",
         "UnityCrashHandler64.exe"
-      ],
+      ]
+    },
+    {
       "ip_cidr": [
         "139.180.0.0/16",
         "142.132.0.0/16",
