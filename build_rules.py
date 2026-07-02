@@ -257,35 +257,31 @@ def process_file(file_name):
     # 6. Sing-box
     sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
     sb_data = {"version": 1, "rules": []}
-    sb_sub_rules = []
     
-    if rules['suffix']: sb_sub_rules.append({"domain_suffix": sorted(list(rules['suffix']))})
-    if rules['full']: sb_sub_rules.append({"domain": sorted(list(rules['full']))})
-    if rules['keyword']: sb_sub_rules.append({"domain_keyword": sorted(list(rules['keyword']))})
-    if rules['process']: sb_sub_rules.append({"process_name": sorted(list(rules['process']))})
+    if rules['suffix']: sb_data["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})
+    if rules['full']: sb_data["rules"].append({"domain": sorted(list(rules['full']))})
+    if rules['keyword']: sb_data["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
+    if rules['process']: sb_data["rules"].append({"process_name": sorted(list(rules['process']))})
     
     if rules['port']: 
         p_list, p_range = parse_ports_for_singbox(rules['port'])
-        if p_list: sb_sub_rules.append({"port": p_list})
-        if p_range: sb_sub_rules.append({"port_range": p_range})
+        if p_list: sb_data["rules"].append({"port": p_list})
+        if p_range: sb_data["rules"].append({"port_range": p_range})
         
     if rules['wildcard']:
         regex_list = []
         for w in rules['wildcard']:
             r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
             regex_list.append(r)
-        sb_sub_rules.append({"domain_regex": regex_list})
+        sb_data["rules"].append({"domain_regex": regex_list})
         
     combined_ips = sorted([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])
-    if combined_ips: sb_sub_rules.append({"ip_cidr": combined_ips})
-    
-    if sb_sub_rules:
-        sb_data["rules"].append({"rules": sb_sub_rules})
+    if combined_ips: sb_data["rules"].append({"ip_cidr": combined_ips})
         
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
-    # 7. Binary Templates 
+    # 7. Binary Templates
     if 'classic' in file_keyword:
         return
 
@@ -301,26 +297,24 @@ def process_file(file_name):
                 json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
     else:
         sb_tmp_domain = {"version": 1, "rules": []}
-        sb_dm_sub_rules = []
         
-        if rules['suffix']: sb_dm_sub_rules.append({"domain_suffix": sorted(list(rules['suffix']))})
-        if rules['full']: sb_dm_sub_rules.append({"domain": sorted(list(rules['full']))})
-        if rules['keyword']: sb_dm_sub_rules.append({"domain_keyword": sorted(list(rules['keyword']))})
+        if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})
+        if rules['full']: sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})
+        if rules['keyword']: sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
         
         if rules['port']: 
             p_list, p_range = parse_ports_for_singbox(rules['port'])
-            if p_list: sb_dm_sub_rules.append({"port": p_list})
-            if p_range: sb_dm_sub_rules.append({"port_range": p_range})
+            if p_list: sb_tmp_domain["rules"].append({"port": p_list})
+            if p_range: sb_tmp_domain["rules"].append({"port_range": p_range})
             
         if rules['wildcard']:
             regex_list = []
             for w in rules['wildcard']:
                 r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
                 regex_list.append(r)
-            sb_dm_sub_rules.append({"domain_regex": regex_list})
+            sb_tmp_domain["rules"].append({"domain_regex": regex_list})
             
-        if sb_dm_sub_rules:
-            sb_tmp_domain["rules"].append({"rules": sb_dm_sub_rules})
+        if sb_tmp_domain["rules"]:
             with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
                 json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
 
