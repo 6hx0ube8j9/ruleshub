@@ -275,7 +275,7 @@ def process_file(file_name):
             regex_list.append(r)
         sb_data["rules"].append({"domain_regex": regex_list})
         
-    combined_ips = sorted([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])
+    combined_ips = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])))
     if combined_ips: sb_data["rules"].append({"ip_cidr": combined_ips})
         
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
