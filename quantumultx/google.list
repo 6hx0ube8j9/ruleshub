@@ -500,7 +500,6 @@ host-suffix, googlevideo.com, Google
 host-suffix, googlr.com, Google
 host-suffix, goolge.com, Google
 host-suffix, gooogle.com, Google
-host-suffix, goοglе.com, Google
 host-suffix, gridaware.app, Google
 host-suffix, gsrc.io, Google
 host-suffix, gstatic-cn.com, Google
@@ -520,8 +519,6 @@ host-suffix, gvt6.com, Google
 host-suffix, gvt7.com, Google
 host-suffix, gvt9.com, Google
 host-suffix, gwtproject.org, Google
-host-suffix, gοoglе.com, Google
-host-suffix, gооgle.com, Google
 host-suffix, hdrplusdata.org, Google
 host-suffix, hey.gle, Google
 host-suffix, hindiweb.com, Google
@@ -853,10 +850,6 @@ host-suffix, yt.be, Google
 host-suffix, ytimg.com, Google
 host-suffix, zukunftswerkstatt.de, Google
 host-suffix, zynamics.com, Google
-host-suffix, はじめよう.みんな, Google
-host-suffix, 古博.com, Google
-host-suffix, 咕果.com, Google
-host-suffix, 谷歌.com, Google
 host-keyword, appspot, Google
 host-keyword, blogspot, Google
 host-keyword, gmail, Google

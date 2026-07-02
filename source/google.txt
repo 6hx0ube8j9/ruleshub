@@ -501,7 +501,6 @@ suffix,googlevideo.com
 suffix,googlr.com
 suffix,goolge.com
 suffix,gooogle.com
-suffix,goοglе.com
 suffix,gridaware.app
 suffix,gsrc.io
 suffix,gstatic-cn.com
@@ -521,8 +520,6 @@ suffix,gvt6.com
 suffix,gvt7.com
 suffix,gvt9.com
 suffix,gwtproject.org
-suffix,gοoglе.com
-suffix,gооgle.com
 suffix,hdrplusdata.org
 suffix,hey.gle
 suffix,hindiweb.com
@@ -854,10 +851,6 @@ suffix,yt.be
 suffix,ytimg.com
 suffix,zukunftswerkstatt.de
 suffix,zynamics.com
-suffix,はじめよう.みんな
-suffix,古博.com
-suffix,咕果.com
-suffix,谷歌.com
 
 # --- TYPE: KEYWORD ---
 keyword,appspot
