@@ -1,42 +1,39 @@
-# === 极限压力测试专用规则集 (stress_test.txt) ===
-# 包含：各种前缀、不规范空格、混合大小写、中文域名、跨栏IP重复、带后缀的UA等
+# === STRESS_TEST Sorted Rules ===
 
-# 1. 域名与通配符测试（测试去重、重组与清洗）
-DOMAIN-SUFFIX,  GitHub.com  , Proxy
-host-suffix,github.com,Direct
-DOMAIN,sub.github.com
-host,*.apple.com
-*.google.com
-.microsoft.com
-+.netflix.com
-DOMAIN-KEYWORD,twitter
-host-keyword,Telegram
+# --- TYPE: SUFFIX ---
+suffix,apple.com
+suffix,github.com
+suffix,google.com
+suffix,microsoft.com
+suffix,netflix.com
+suffix,xn--9kr7l.com
+suffix,xn--flw351e.com
+suffix,xn--honj-0na6j.vn
 
-# 2. 国际化域名与特殊字符测试（测试 idna 智能转码与非法过滤）
-host-suffix, 谷歌.com, Google
-古博.com
-hàonôj.vn
-domain,invalid_domain/path/index.html
-domain,test space.com
+# --- TYPE: KEYWORD ---
+keyword,telegram
+keyword,twitter
 
-# 3. IP 与 跨栏重复测试（测试 no-resolve 剥离、IPv6智能归类、CIDR掩码补全）
+# --- TYPE: IP ---
 ip,172.110.32.0/21
-ip-cidr, 172.110.32.0/21, Proxy, no-resolve
-IP-CIDR,192.168.1.1
-ip,2620:120:e000::/40
-# 下面故意用错误的 'ip' 标签贴给 IPv6，以及不带掩码的裸 IPv6
-ip,2620:120:e000::/40
-ip6,2001:db8::1
-IP6-CIDR,2402:2a80::/32,no-resolve
+ip,192.168.1.1/32
 
-# 4. 端口与进程名测试（测试端口段切分、Clash/Singbox兼容）
-DST-PORT,80
-port,443
-PORT,8080-8090
-PROCESS-NAME,Telegram.exe
+# --- TYPE: IP6 ---
+ip6,2001:db8::1/128
+ip6,2402:2a80::/32
+ip6,2620:120:e000::/40
+
+# --- TYPE: PROCESS ---
+process,Telegram.exe
 process,com.apple.WebKit
 
-# 5. User-Agent 测试（测试特殊编码、圈X星号自动补全、Clash智能忽略）
-user-agent, *youtube*, Google
-USER-AGENT,Naver%20TV*
-user-agent, Instagram 123.0
+# --- TYPE: USERAGENT ---
+useragent,*youtube*
+useragent,Instagram 123.0
+useragent,Naver%20TV*
+
+# --- TYPE: PORT ---
+port,443
+port,80
+port,8080-8090
+
