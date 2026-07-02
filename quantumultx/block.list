@@ -575,7 +575,6 @@ ip-cidr, 223.87.182.52/32, Block, no-resolve
 ip-cidr, 23.235.156.167/32, Block, no-resolve
 ip-cidr, 23.42.186.24/32, Block, no-resolve
 ip-cidr, 23.66.147.48/32, Block, no-resolve
-ip-cidr, 2402:db40:5100:1011::5/128, Block, no-resolve
 ip-cidr, 27.255.67.120/32, Block, no-resolve
 ip-cidr, 34.215.155.61/32, Block, no-resolve
 ip-cidr, 35.194.26.233/32, Block, no-resolve
@@ -615,3 +614,4 @@ ip-cidr, 69.28.57.245/32, Block, no-resolve
 ip-cidr, 74.117.182.77/32, Block, no-resolve
 ip-cidr, 77.162.125.199/32, Block, no-resolve
 ip-cidr, 78.140.131.214/32, Block, no-resolve
+ip6-cidr, 2402:db40:5100:1011::5/128, Block, no-resolve
