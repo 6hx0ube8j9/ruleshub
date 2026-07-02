@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import json
+import re
 
 SOURCE_DIR = 'source'
 SHADOWROCKET_DIR = 'shadowrocket'
@@ -13,19 +14,53 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR, PAC_DIR, SIN
     if not os.path.exists(d):
         os.makedirs(d)
 
+IPV4_REGEX = re.compile(r'^(\d{1,3}\.){3}\d{1,3}(/\d{1,2})?$')
+IPV6_REGEX = re.compile(r'^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}(/\d{1,3})?$')
+DOMAIN_PATTERN = re.compile(r'^[a-z0-9\-]+\.[a-z0-9\-\.]+$')
+
+PUBLIC_SUFFIX_BLACKLIST = {
+    'com', 'net', 'org', 'gov', 'edu', 'mil', 'int', 'arpa', 'biz', 'info', 'name', 'pro',
+    'app', 'dev', 'shop', 'club', 'top', 'xyz', 'vip', 'fun', 'site', 'online', 'tech', 'store',
+    'work', 'live', 'link', 'icu', 'ltd', 'art', 'blog', 'news', 'wiki', 'chat', 'space', 'me',
+    'cn', 'hk', 'tw', 'mo', 'jp', 'kr', 'sg', 'my', 'us', 'uk', 'ca', 'au', 'de', 'fr', 'ru',
+    'ai', 'io', 'co', 'so', 'to', 'do', 'in', 'cc', 'tv', 'me', 'la', 'fm', 'am', 'im', 'gg',
+    'com.cn', 'net.cn', 'org.cn', 'gov.cn', 'edu.cn', 'mil.cn', 'ac.cn', 'ah.cn', 'bj.cn', 'cq.cn',
+    'fj.cn', 'gd.cn', 'gs.cn', 'gx.cn', 'gz.cn', 'ha.cn', 'hb.cn', 'he.cn', 'hi.cn', 'hl.cn',
+    'hn.cn', 'jl.cn', 'js.cn', 'jx.cn', 'ln.cn', 'nm.cn', 'nx.cn', 'qh.cn', 'sc.cn', 'sd.cn',
+    'sh.cn', 'sn.cn', 'sx.cn', 'tj.cn', 'xj.cn', 'xz.cn', 'yn.cn', 'zj.cn',
+    'com.hk', 'net.hk', 'org.hk', 'gov.hk', 'edu.hk', 'idv.hk',
+    'com.tw', 'net.tw', 'org.tw', 'gov.tw', 'edu.tw', 'idv.tw', 'club.tw',
+    'com.mo', 'net.mo', 'org.mo', 'gov.mo', 'edu.mo',
+    'co.uk', 'me.uk', 'org.uk', 'ltd.uk', 'plc.uk', 'gov.uk', 'sch.uk',
+    'co.jp', 'ne.jp', 'or.jp', 'go.jp', 'ac.jp', 'ed.jp', 'ad.jp',
+    'co.kr', 'ne.kr', 'or.kr', 're.kr', 'pe.kr', 'go.kr', 'mil.kr',
+    'com.sg', 'net.sg', 'org.sg', 'gov.sg', 'edu.sg', 'per.sg',
+    'com.my', 'net.my', 'org.my', 'gov.my', 'edu.my', 'co.id', 'web.id',
+    'com.au', 'net.au', 'org.au', 'asn.au', 'id.au', 'gov.au',
+    'co.nz', 'net.nz', 'org.nz', 'ac.nz', 'govt.nz',
+    'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za'
+}
+
 def clean_and_parse_line(line):
     line = line.strip()
-    if not line or line.startswith('#') or line.startswith('//') or line.startswith(';'):
+    if not line or line.startswith(('#', '//', ';')) or line == 'payload:':
         return None, None
+        
+    line = line.split('#')[0].split('//')[0].strip()
+    
     if line.startswith('-'):
         line = line.lstrip('-').strip()
     line = line.replace("'", "").replace('"', "")
+    if not line:
+        return None, None
+
     if ',' in line:
         parts = [p.strip() for p in line.split(',')]
         if len(parts) < 2:
             return None, None
         p1 = parts[0].upper()
         p2 = parts[1]
+        
         if p1 in ['AND', 'OR', 'NOT']:
             return None, None
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
@@ -46,13 +81,45 @@ def clean_and_parse_line(line):
         if p1 in ['DST-PORT', 'PORT']: return 'port', p2
         if p1 in ['GEOIP']: return 'geoip', p2.upper()
         return None, None
-    if '/' in line and any(c.isdigit() for c in line):
-        return 'ip6' if ':' in line else 'ip', line
-    if line.startswith('.'):
-        return 'suffix', line.lstrip('.').lower()
-    if line.startswith('*.'):
-        return 'suffix', line[2:].lstrip('.').lower()
-    return 'suffix', line.lower()
+
+    raw_val = line.lower()
+    
+    if IPV4_REGEX.match(raw_val):
+        return 'ip', raw_val
+    if IPV6_REGEX.match(raw_val):
+        return 'ip6', raw_val
+        
+    is_explicit_suffix = False
+    
+    if raw_val.startswith('+.'): 
+        raw_val = raw_val[2:]
+        is_explicit_suffix = True
+    elif raw_val.startswith('*.'): 
+        raw_val = raw_val[2:]
+        is_explicit_suffix = True
+    elif raw_val.startswith('.'): 
+        raw_val = raw_val[1:]
+        is_explicit_suffix = True
+    elif raw_val.startswith('+'): 
+        raw_val = raw_val[1:]
+        is_explicit_suffix = True
+    
+    raw_val = raw_val.lstrip('.')
+    if not raw_val:
+        return None, None
+        
+    if '*' in raw_val or '?' in raw_val:
+        return 'wildcard', raw_val
+        
+    if is_explicit_suffix:
+        return 'suffix', raw_val
+    else:
+        if DOMAIN_PATTERN.match(raw_val):
+            if raw_val in PUBLIC_SUFFIX_BLACKLIST:
+                return None, None
+            return 'suffix', raw_val
+        else:
+            return 'full', raw_val
 
 def optimize_domains(rules):
     sorted_suffixes = sorted(list(rules['suffix']), key=len)
@@ -143,8 +210,7 @@ def process_file(file_name):
         f_clash.write("payload:\n")
         for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
         for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
-        for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")
-        for val in sorted(rules['wildcard']): f_clash.write(f"  - DOMAIN,{val}\n") 
+        for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")       
         for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
         for val in sorted(rules['port']): f_clash.write(f"  - DST-PORT,{val}\n")
         for val in sorted(rules['geoip']): f_clash.write(f"  - GEOIP,{val}\n")
@@ -187,7 +253,7 @@ def process_file(file_name):
     if rules['process']: sub_rule["process_name"] = sorted(list(rules['process']))
     if rules['useragent']: sub_rule["user_agent"] = sorted(list(rules['useragent']))
     if rules['geoip']: sub_rule["country"] = sorted(list(rules['geoip']))
-    if rules['port']: sub_rule["port"] = sorted(list(rules['port']))
+    if rules['port']: sub_rule["port"] = sorted([int(p) for p in rules['port']])
     if rules['wildcard']:
         regex_list = []
         for w in rules['wildcard']:
@@ -220,7 +286,7 @@ def process_file(file_name):
         if rules['suffix']: sub_dm_rule["domain_suffix"] = sorted(list(rules['suffix']))
         if rules['full']: sub_dm_rule["domain"] = sorted(list(rules['full']))
         if rules['keyword']: sub_dm_rule["domain_keyword"] = sorted(list(rules['keyword']))
-        if rules['port']: sub_dm_rule["port"] = sorted(list(rules['port']))
+        if rules['port']: sub_dm_rule["port"] = sorted([int(p) for p in rules['port']])
         if rules['wildcard']:
             regex_list = []
             for w in rules['wildcard']:
@@ -239,10 +305,13 @@ def process_file(file_name):
 
 def main():
     if not os.path.exists(SOURCE_DIR):
+        print(f"Directory '{SOURCE_DIR}' not found. Please create it and add your .txt files.")
         return
     files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
     for file_name in files:
+        print(f"Processing {file_name}...")
         process_file(file_name)
+    print("Done! All rules have been parsed and generated.")
 
 if __name__ == '__main__':
     main()
