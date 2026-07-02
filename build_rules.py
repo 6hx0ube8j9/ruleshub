@@ -43,6 +43,15 @@ PUBLIC_SUFFIX_BLACKLIST = {
 
 global_pac_domains = set()
 
+def try_punycode_encode(domain_str):
+    """尝试将中文等国际化域名转换为标准的 Punycode (ASCII) 格式"""
+    if domain_str.isascii():
+        return domain_str
+    try:
+        return domain_str.encode('idna').decode('ascii').lower()
+    except Exception:
+        return None
+
 def clean_and_parse_line(line):
     line = line.strip()
     if not line or line.startswith(('#', '//', ';')) or line == 'payload:':
@@ -65,20 +74,28 @@ def clean_and_parse_line(line):
         
         if p1 in ['AND', 'OR', 'NOT']:
             return None, None
+            
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
-            return 'suffix', p2.replace('*.', '', 1).lstrip('.').lower()
+            encoded_d = try_punycode_encode(p2.replace('*.', '', 1).lstrip('.').lower())
+            return ('suffix', encoded_d) if encoded_d else (None, None)
+            
         if p1 in ['DOMAIN', 'HOST', 'FULL']: 
             p2 = p2.lower()
-            if p2.startswith('*.'): return 'suffix', p2[2:].lstrip('.')
-            if '*' in p2 or '?' in p2: return 'wildcard', p2
-            return 'full', p2
+            if p2.startswith('*.'): 
+                encoded_d = try_punycode_encode(p2[2:].lstrip('.'))
+                return ('suffix', encoded_d) if encoded_d else (None, None)
+            if '*' in p2 or '?' in p2: 
+                return 'wildcard', p2 
+            encoded_d = try_punycode_encode(p2)
+            return ('full', encoded_d) if encoded_d else (None, None)
+            
         if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: 
             return 'keyword', p2.lower()
         if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
             return 'wildcard', p2.lower()
             
         if p1 in ['IP-CIDR', 'IP', 'IP-CIDR6', 'IP6-CIDR', 'IP6']:
-            raw_ip = p2.split(',')[0].strip()
+            raw_ip = p2.split(',')[0].strip()  
             if IPV6_REGEX.match(raw_ip.lower()) or IPV6_REGEX.match(raw_ip.split('/')[0].lower()):
                 return 'ip6', raw_ip
             return 'ip', raw_ip
@@ -121,7 +138,8 @@ def clean_and_parse_line(line):
     if any(c in raw_val for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')']):
         return None, None
         
-    if not raw_val.isascii():
+    raw_val = try_punycode_encode(raw_val)
+    if not raw_val:
         return None, None
 
     if is_explicit_suffix:
@@ -201,7 +219,7 @@ def process_file(file_name):
                 rules[rule_type].add(value)
     optimize_domains(rules)
 
-    # 1. Source 
+    # 1. Source
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Sorted Rules ===\n\n")
         for r_type in ['suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port']:
