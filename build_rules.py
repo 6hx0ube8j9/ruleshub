@@ -271,14 +271,16 @@ def process_file(file_name):
     if rules['wildcard']:
         regex_list = []
         for w in rules['wildcard']:
-            r = f"^{w.replace('.', '\\.').replace('*', '.*').replace('?', '.')}$"
+            r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
             regex_list.append(r)
-        sub_rule["domain_regex"] = regex_list
+        sb_sub_rules.append({"domain_regex": regex_list})
         
     combined_ips = sorted([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])
-    if combined_ips: sub_rule["ip_cidr"] = combined_ips
+    if combined_ips: sb_sub_rules.append({"ip_cidr": combined_ips})
     
-    if sub_rule: sb_data["rules"].append(sub_rule)
+    if sb_sub_rules:
+        sb_data["rules"].append({"rules": sb_sub_rules})
+        
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
@@ -323,8 +325,8 @@ def process_file(file_name):
         if rules['suffix'] or rules['full']:
             with open(os.path.join(CLASH_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                 f.write("payload:\n")
-                for item in sorted(rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
-                for item in sorted(rules['full']): f.write(f"  - DOMAIN,{item}\n")
+                for item in sorted(rules['suffix']): f.write(f"  - '+.{item}'\n")
+                for item in sorted(rules['full']): f.write(f"  - '{item}'\n")
 
 def main():
     if not os.path.exists(SOURCE_DIR):
