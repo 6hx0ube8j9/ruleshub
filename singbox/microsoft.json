@@ -678,11 +678,6 @@
         "microsoft",
         "onedrive",
         "skydrive"
-      ],
-      "user_agent": [
-        "Microsoft*",
-        "OneDrive*",
-        "OneDriveiOSApp*"
       ]
     }
   ]
