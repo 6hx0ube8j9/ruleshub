@@ -639,7 +639,6 @@ suffix,txvia.com
 suffix,unfiltered.news
 suffix,urchin.com
 suffix,useplannr.com
-suffix,user-agent
 suffix,usvimosquito.com
 suffix,usvimosquitoproject.com
 suffix,v8.dev

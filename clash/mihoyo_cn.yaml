@@ -63,7 +63,6 @@ payload:
   - DOMAIN,op-takumi.mihoyo.com
   - DOMAIN,order.hsod2.tx.mihoyo.com
   - DOMAIN,pay.hsod2.tx.mihoyo.com
-  - DOMAIN,pay.hsod2.tx_new.mihoyo.com
   - DOMAIN,pay.hsod2.weixinbeta.mihoyo.com
   - DOMAIN,preapi-takumi.mihoyo.com
   - DOMAIN,qclcdn.mihoyo.com

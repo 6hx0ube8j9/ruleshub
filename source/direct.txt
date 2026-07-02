@@ -545,7 +545,6 @@ suffix,aliapp-inc.com
 suffix,aliapp.com
 suffix,aliapp.org
 suffix,aliappcdn.com
-suffix,alibaba
 suffix,alibaba-inc.com
 suffix,alibaba.com
 suffix,alibabacapital.com
@@ -612,7 +611,6 @@ suffix,alimebot.com
 suffix,alimei.com
 suffix,alimmdn.com
 suffix,alipan.com
-suffix,alipay
 suffix,alipay-corp.com
 suffix,alipay-eco.com
 suffix,alipay-inc.com
@@ -1430,7 +1428,6 @@ suffix,cignacmb.com
 suffix,cignacmbamc.com
 suffix,cindasc.com
 suffix,ciscon.org
-suffix,citic
 suffix,citic.com
 suffix,citicbank.com
 suffix,citicbank.net
@@ -1589,7 +1586,6 @@ suffix,cmfu.com
 suffix,cmpassport.com
 suffix,cmschina.com
 suffix,cmschina.com.hk
-suffix,cn
 suffix,cn88.net
 suffix,cnanzhi.com
 suffix,cnbeta.com
@@ -3146,7 +3142,6 @@ suffix,ibuychem.com
 suffix,ibytedapm.com
 suffix,ica-alliance.org
 suffix,icaidao.com
-suffix,icbc
 suffix,icbc-at.com
 suffix,icbc-cz.com
 suffix,icbc-ltd.com
@@ -5348,7 +5343,6 @@ suffix,tankeai.com
 suffix,tanx.com
 suffix,tanxlog.istreamsche.com
 suffix,tao123.com
-suffix,taobao
 suffix,taobao.com
 suffix,taobao.org
 suffix,taobao.wang
@@ -5530,7 +5524,6 @@ suffix,tjupt.org
 suffix,tkhealthcare.com
 suffix,tlgslb.com
 suffix,tlivecdn.com
-suffix,tmall
 suffix,tmall.com
 suffix,tmall.hk
 suffix,tmall.ru
@@ -5747,7 +5740,6 @@ suffix,urhimalayanak.com
 suffix,url7.me
 suffix,urselect.com
 suffix,urumqi-air.com
-suffix,user-agent
 suffix,useso.com
 suffix,uslk.net
 suffix,uucl.vip

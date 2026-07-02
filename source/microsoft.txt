@@ -36,7 +36,6 @@ suffix,azcrmc.cn
 suffix,azk8s.cn
 suffix,aznbcontent.cn
 suffix,aztask.cn
-suffix,azure
 suffix,azure-api.cn
 suffix,azure-apihub.cn
 suffix,azure-apim.net
@@ -107,7 +106,6 @@ suffix,biing.com
 suffix,binads.com
 suffix,binb.com
 suffix,binf.com
-suffix,bing
 suffix,bing.com
 suffix,bing.com.cn
 suffix,bing.net
@@ -212,7 +210,6 @@ suffix,here.net
 suffix,heremaps.cn
 suffix,hockeyapp.net
 suffix,hololens.com
-suffix,hotmail
 suffix,hotmail.co
 suffix,hotmail.com
 suffix,hotmail.eu
@@ -267,7 +264,6 @@ suffix,mepn.com
 suffix,mesh.com
 suffix,mgmt-azure-api.cn
 suffix,microbit.org
-suffix,microsoft
 suffix,microsoft-falcon.io
 suffix,microsoft-give.com
 suffix,microsoft-int.com
@@ -484,7 +480,6 @@ suffix,o365weve-dev.com
 suffix,o365weve-ppe.com
 suffix,o365weve.com
 suffix,oaspapps.com
-suffix,office
 suffix,office.com
 suffix,office.net
 suffix,office365-net.cn
@@ -560,7 +555,6 @@ suffix,sharepoint.cn
 suffix,sharepoint.com
 suffix,sharepointonline.com
 suffix,signalr.net
-suffix,skype
 suffix,skype.com
 suffix,skype.net
 suffix,skypeassets.com
@@ -619,7 +613,6 @@ suffix,vscode-webview.net
 suffix,vscode.dev
 suffix,wbd.ms
 suffix,what-fan.net
-suffix,windows
 suffix,windows-int.net
 suffix,windows-ppe.net
 suffix,windows.com

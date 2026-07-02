@@ -8,15 +8,13 @@ host-suffix, netflix.com, Stress_test
 host-suffix, xn--9kr7l.com, Stress_test
 host-suffix, xn--flw351e.com, Stress_test
 host-suffix, xn--honj-0na6j.vn, Stress_test
-host, invalid_domain/path/index.html, Stress_test
-host, test space.com, Stress_test
 host-keyword, telegram, Stress_test
 host-keyword, twitter, Stress_test
 user-agent, *youtube*, Stress_test
 user-agent, *Instagram 123.0*, Stress_test
 user-agent, Naver%20TV*, Stress_test
 ip-cidr, 172.110.32.0/21, Stress_test, no-resolve
-ip-cidr, 192.168.1.1, Stress_test, no-resolve
-ip6-cidr, 2001:db8::1, Stress_test, no-resolve
+ip-cidr, 192.168.1.1/32, Stress_test, no-resolve
+ip6-cidr, 2001:db8::1/128, Stress_test, no-resolve
 ip6-cidr, 2402:2a80::/32, Stress_test, no-resolve
 ip6-cidr, 2620:120:e000::/40, Stress_test, no-resolve

@@ -1,6 +1,5 @@
 # Quantumult X Rule-Set: mihoyo
 
-host-suffix, domain-keyword, Mihoyo
 host-suffix, domain-suffix.co.jp, Mihoyo
 host-suffix, domaindesktop.mihoyo.com, Mihoyo
 host-suffix, hoyo.link, Mihoyo

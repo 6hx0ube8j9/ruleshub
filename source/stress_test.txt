@@ -10,20 +10,16 @@ suffix,xn--9kr7l.com
 suffix,xn--flw351e.com
 suffix,xn--honj-0na6j.vn
 
-# --- TYPE: FULL ---
-full,invalid_domain/path/index.html
-full,test space.com
-
 # --- TYPE: KEYWORD ---
 keyword,telegram
 keyword,twitter
 
 # --- TYPE: IP ---
 ip,172.110.32.0/21
-ip,192.168.1.1
+ip,192.168.1.1/32
 
 # --- TYPE: IP6 ---
-ip6,2001:db8::1
+ip6,2001:db8::1/128
 ip6,2402:2a80::/32
 ip6,2620:120:e000::/40
 

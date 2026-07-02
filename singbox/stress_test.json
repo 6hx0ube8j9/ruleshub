@@ -14,12 +14,6 @@
       ]
     },
     {
-      "domain": [
-        "invalid_domain/path/index.html",
-        "test space.com"
-      ]
-    },
-    {
       "domain_keyword": [
         "telegram",
         "twitter"

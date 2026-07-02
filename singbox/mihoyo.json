@@ -3,7 +3,6 @@
   "rules": [
     {
       "domain_suffix": [
-        "domain-keyword",
         "domain-suffix.co.jp",
         "domaindesktop.mihoyo.com",
         "hoyo.link",

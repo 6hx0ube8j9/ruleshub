@@ -1,7 +1,6 @@
 # === MIHOYO Sorted Rules ===
 
 # --- TYPE: SUFFIX ---
-suffix,domain-keyword
 suffix,domain-suffix.co.jp
 suffix,domaindesktop.mihoyo.com
 suffix,hoyo.link

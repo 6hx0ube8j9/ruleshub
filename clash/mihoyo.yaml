@@ -1,6 +1,5 @@
 # Clash Payload Rule-Set: mihoyo
 payload:
-  - DOMAIN-SUFFIX,domain-keyword
   - DOMAIN-SUFFIX,domain-suffix.co.jp
   - DOMAIN-SUFFIX,domaindesktop.mihoyo.com
   - DOMAIN-SUFFIX,hoyo.link

@@ -35,7 +35,6 @@ host-suffix, azcrmc.cn, Microsoft
 host-suffix, azk8s.cn, Microsoft
 host-suffix, aznbcontent.cn, Microsoft
 host-suffix, aztask.cn, Microsoft
-host-suffix, azure, Microsoft
 host-suffix, azure-api.cn, Microsoft
 host-suffix, azure-apihub.cn, Microsoft
 host-suffix, azure-apim.net, Microsoft
@@ -106,7 +105,6 @@ host-suffix, biing.com, Microsoft
 host-suffix, binads.com, Microsoft
 host-suffix, binb.com, Microsoft
 host-suffix, binf.com, Microsoft
-host-suffix, bing, Microsoft
 host-suffix, bing.com, Microsoft
 host-suffix, bing.com.cn, Microsoft
 host-suffix, bing.net, Microsoft
@@ -211,7 +209,6 @@ host-suffix, here.net, Microsoft
 host-suffix, heremaps.cn, Microsoft
 host-suffix, hockeyapp.net, Microsoft
 host-suffix, hololens.com, Microsoft
-host-suffix, hotmail, Microsoft
 host-suffix, hotmail.co, Microsoft
 host-suffix, hotmail.com, Microsoft
 host-suffix, hotmail.eu, Microsoft
@@ -266,7 +263,6 @@ host-suffix, mepn.com, Microsoft
 host-suffix, mesh.com, Microsoft
 host-suffix, mgmt-azure-api.cn, Microsoft
 host-suffix, microbit.org, Microsoft
-host-suffix, microsoft, Microsoft
 host-suffix, microsoft-falcon.io, Microsoft
 host-suffix, microsoft-give.com, Microsoft
 host-suffix, microsoft-int.com, Microsoft
@@ -483,7 +479,6 @@ host-suffix, o365weve-dev.com, Microsoft
 host-suffix, o365weve-ppe.com, Microsoft
 host-suffix, o365weve.com, Microsoft
 host-suffix, oaspapps.com, Microsoft
-host-suffix, office, Microsoft
 host-suffix, office.com, Microsoft
 host-suffix, office.net, Microsoft
 host-suffix, office365-net.cn, Microsoft
@@ -559,7 +554,6 @@ host-suffix, sharepoint.cn, Microsoft
 host-suffix, sharepoint.com, Microsoft
 host-suffix, sharepointonline.com, Microsoft
 host-suffix, signalr.net, Microsoft
-host-suffix, skype, Microsoft
 host-suffix, skype.com, Microsoft
 host-suffix, skype.net, Microsoft
 host-suffix, skypeassets.com, Microsoft
@@ -618,7 +612,6 @@ host-suffix, vscode-webview.net, Microsoft
 host-suffix, vscode.dev, Microsoft
 host-suffix, wbd.ms, Microsoft
 host-suffix, what-fan.net, Microsoft
-host-suffix, windows, Microsoft
 host-suffix, windows-int.net, Microsoft
 host-suffix, windows-ppe.net, Microsoft
 host-suffix, windows.com, Microsoft
