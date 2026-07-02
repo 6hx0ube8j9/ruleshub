@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_suffix": [
+        "apple.com",
+        "github.com",
+        "google.com",
+        "microsoft.com",
+        "netflix.com",
+        "xn--9kr7l.com",
+        "xn--flw351e.com",
+        "xn--honj-0na6j.vn"
+      ]
+    },
+    {
+      "domain": [
+        "invalid_domain/path/index.html",
+        "test space.com"
+      ]
+    },
+    {
+      "domain_keyword": [
+        "telegram",
+        "twitter"
+      ]
+    },
+    {
+      "process_name": [
+        "Telegram.exe",
+        "com.apple.WebKit"
+      ]
+    },
+    {
+      "port": [
+        80,
+        443
+      ]
+    },
+    {
+      "port_range": [
+        "8080-8090"
+      ]
+    },
+    {
+      "ip_cidr": [
+        "172.110.32.0/21",
+        "192.168.1.1/32",
+        "2001:db8::1/128",
+        "2402:2a80::/32",
+        "2620:120:e000::/40"
+      ]
+    }
+  ]
+}
