@@ -48,6 +48,7 @@ def try_punycode_encode(domain_str):
     if domain_str.isascii():
         return domain_str
     try:
+        # 使用 Python 内置的 idna 库进行转码 (例如: 谷歌.com -> xn--flw351e.com)
         return domain_str.encode('idna').decode('ascii').lower()
     except Exception:
         return None
@@ -75,6 +76,7 @@ def clean_and_parse_line(line):
         if p1 in ['AND', 'OR', 'NOT']:
             return None, None
             
+        # 处理带标签的域名类型（先进行 Punycode 自动转码检测）
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
             encoded_d = try_punycode_encode(p2.replace('*.', '', 1).lstrip('.').lower())
             return ('suffix', encoded_d) if encoded_d else (None, None)
@@ -85,7 +87,7 @@ def clean_and_parse_line(line):
                 encoded_d = try_punycode_encode(p2[2:].lstrip('.'))
                 return ('suffix', encoded_d) if encoded_d else (None, None)
             if '*' in p2 or '?' in p2: 
-                return 'wildcard', p2 
+                return 'wildcard', p2 # 通配符维持原样
             encoded_d = try_punycode_encode(p2)
             return ('full', encoded_d) if encoded_d else (None, None)
             
@@ -106,6 +108,7 @@ def clean_and_parse_line(line):
         
         return None, None
 
+    # 处理无标签的裸行数据
     raw_val = line.lower()
     
     if IPV4_REGEX.match(raw_val):
@@ -138,6 +141,7 @@ def clean_and_parse_line(line):
     if any(c in raw_val for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')']):
         return None, None
         
+    # 执行智能转码逻辑
     raw_val = try_punycode_encode(raw_val)
     if not raw_val:
         return None, None
@@ -219,7 +223,7 @@ def process_file(file_name):
                 rules[rule_type].add(value)
     optimize_domains(rules)
 
-    # 1. Source
+    # 1. Source (写回的源文件也会同步被清洗转码为 xn-- 标准格式，实现全自动化)
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Sorted Rules ===\n\n")
         for r_type in ['suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port']:
