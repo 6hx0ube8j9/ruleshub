@@ -122,27 +122,29 @@ def clean_and_parse_line(line):
             return 'full', raw_val
 
 def optimize_domains(rules):
-    sorted_suffixes = sorted(list(rules['suffix']), key=len)
-    clean_suffixes = set()
-    for domain in sorted_suffixes:
-        is_subdomain = False
-        for clean in clean_suffixes:
-            if domain == clean or domain.endswith('.' + clean):
-                is_subdomain = True
-                break
-        if not is_subdomain:
-            clean_suffixes.add(domain)
-    rules['suffix'] = clean_suffixes
-    clean_full = set()
-    for domain in rules['full']:
-        is_covered = False
-        for clean in rules['suffix']:
-            if domain == clean or domain.endswith('.' + clean):
-                is_covered = True
-                break
-        if not is_covered:
-            clean_full.add(domain)
-    rules['full'] = clean_full
+    if rules['suffix']:
+        reversed_domains = sorted(['.'.join(reversed(d.split('.'))) + '.' for d in rules['suffix']])
+        
+        clean_reversed = []
+        for rd in reversed_domains:
+            if not clean_reversed or not rd.startswith(clean_reversed[-1]):
+                clean_reversed.append(rd)
+        
+        rules['suffix'] = {'.'.join(reversed(rd.rstrip('.').split('.'))) for rd in clean_reversed}
+
+    if rules['full'] and rules['suffix']:
+        clean_full = set()
+        for domain in rules['full']:
+            is_covered = False
+            parts = domain.split('.')
+            for i in range(len(parts)):
+                parent = '.'.join(parts[i:])
+                if parent in rules['suffix']:
+                    is_covered = True
+                    break
+            if not is_covered:
+                clean_full.add(domain)
+        rules['full'] = clean_full
 
 def process_file(file_name):
     source_path = os.path.join(SOURCE_DIR, file_name)
