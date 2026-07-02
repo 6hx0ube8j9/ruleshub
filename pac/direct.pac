@@ -6598,7 +6598,8 @@ function FindProxyForURL(url, host) {
         return "DIRECT";
     }
 
-    var suffix = host;
+    // 智能防御：统一强制转换为全小写，防止大小写域名漏网或报错
+    var suffix = host.toLowerCase();
     while (suffix) {
         if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {
             return "DIRECT";
