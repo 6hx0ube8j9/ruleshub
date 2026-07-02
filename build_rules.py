@@ -257,16 +257,17 @@ def process_file(file_name):
     # 6. Sing-box
     sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
     sb_data = {"version": 1, "rules": []}
-    sub_rule = {}
-    if rules['suffix']: sub_rule["domain_suffix"] = sorted(list(rules['suffix']))
-    if rules['full']: sub_rule["domain"] = sorted(list(rules['full']))
-    if rules['keyword']: sub_rule["domain_keyword"] = sorted(list(rules['keyword']))
-    if rules['process']: sub_rule["process_name"] = sorted(list(rules['process']))
+    sb_sub_rules = []
+    
+    if rules['suffix']: sb_sub_rules.append({"domain_suffix": sorted(list(rules['suffix']))})
+    if rules['full']: sb_sub_rules.append({"domain": sorted(list(rules['full']))})
+    if rules['keyword']: sb_sub_rules.append({"domain_keyword": sorted(list(rules['keyword']))})
+    if rules['process']: sb_sub_rules.append({"process_name": sorted(list(rules['process']))})
     
     if rules['port']: 
         p_list, p_range = parse_ports_for_singbox(rules['port'])
-        if p_list: sub_rule["port"] = p_list
-        if p_range: sub_rule["port_range"] = p_range
+        if p_list: sb_sub_rules.append({"port": p_list})
+        if p_range: sb_sub_rules.append({"port_range": p_range})
         
     if rules['wildcard']:
         regex_list = []
@@ -284,7 +285,7 @@ def process_file(file_name):
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
-    # 7. Binary Templates
+    # 7. Binary Templates 
     if 'classic' in file_keyword:
         return
 
@@ -300,25 +301,26 @@ def process_file(file_name):
                 json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
     else:
         sb_tmp_domain = {"version": 1, "rules": []}
-        sub_dm_rule = {}
-        if rules['suffix']: sub_dm_rule["domain_suffix"] = sorted(list(rules['suffix']))
-        if rules['full']: sub_dm_rule["domain"] = sorted(list(rules['full']))
-        if rules['keyword']: sub_dm_rule["domain_keyword"] = sorted(list(rules['keyword']))
+        sb_dm_sub_rules = []
+        
+        if rules['suffix']: sb_dm_sub_rules.append({"domain_suffix": sorted(list(rules['suffix']))})
+        if rules['full']: sb_dm_sub_rules.append({"domain": sorted(list(rules['full']))})
+        if rules['keyword']: sb_dm_sub_rules.append({"domain_keyword": sorted(list(rules['keyword']))})
         
         if rules['port']: 
             p_list, p_range = parse_ports_for_singbox(rules['port'])
-            if p_list: sub_dm_rule["port"] = p_list
-            if p_range: sub_dm_rule["port_range"] = p_range
+            if p_list: sb_dm_sub_rules.append({"port": p_list})
+            if p_range: sb_dm_sub_rules.append({"port_range": p_range})
             
         if rules['wildcard']:
             regex_list = []
             for w in rules['wildcard']:
-                r = f"^{w.replace('.', '\\.').replace('*', '.*').replace('?', '.')}$"
+                r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
                 regex_list.append(r)
-            sub_dm_rule["domain_regex"] = regex_list
+            sb_dm_sub_rules.append({"domain_regex": regex_list})
             
-        if sub_dm_rule:
-            sb_tmp_domain["rules"].append(sub_dm_rule)
+        if sb_dm_sub_rules:
+            sb_tmp_domain["rules"].append({"rules": sb_dm_sub_rules})
             with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
                 json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
 
