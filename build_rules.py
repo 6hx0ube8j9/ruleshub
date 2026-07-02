@@ -76,8 +76,13 @@ def clean_and_parse_line(line):
             return 'keyword', p2.lower()
         if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
             return 'wildcard', p2.lower()
-        if p1 in ['IP-CIDR', 'IP']: return 'ip', p2
-        if p1 in ['IP-CIDR6', 'IP6-CIDR', 'IP6']: return 'ip6', p2
+            
+        if p1 in ['IP-CIDR', 'IP', 'IP-CIDR6', 'IP6-CIDR', 'IP6']:
+            raw_ip = p2.split(',')[0].strip()
+            if IPV6_REGEX.match(raw_ip.lower()) or IPV6_REGEX.match(raw_ip.split('/')[0].lower()):
+                return 'ip6', raw_ip
+            return 'ip', raw_ip
+            
         if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', p2
         if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', p2
         if p1 in ['DST-PORT', 'PORT']: return 'port', p2        
@@ -196,7 +201,7 @@ def process_file(file_name):
                 rules[rule_type].add(value)
     optimize_domains(rules)
 
-    # 1. Source
+    # 1. Source 
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Sorted Rules ===\n\n")
         for r_type in ['suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port']:
@@ -275,13 +280,13 @@ def process_file(file_name):
             regex_list.append(r)
         sb_data["rules"].append({"domain_regex": regex_list})
         
-    combined_ips = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])))
+    combined_ips = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
     if combined_ips: sb_data["rules"].append({"ip_cidr": combined_ips})
         
     with open(sb_path, 'w', encoding='utf-8') as f_sb:
         json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
 
-    # 7. Binary Templates
+    # 7. Binary Templates 
     if 'classic' in file_keyword:
         return
 
