@@ -44,14 +44,16 @@ PUBLIC_SUFFIX_BLACKLIST = {
 global_pac_domains = set()
 
 def try_punycode_encode(domain_str):
-    """尝试将中文等国际化域名转换为标准的 Punycode (ASCII) 格式"""
     if domain_str.isascii():
         return domain_str
     try:
-        # 使用 Python 内置的 idna 库进行转码 (例如: 谷歌.com -> xn--flw351e.com)
         return domain_str.encode('idna').decode('ascii').lower()
     except Exception:
         return None
+
+def has_invalid_domain_chars(domain_str):
+    """拦截带有斜杠、空格、问号等绝对不属于域名的非法字符"""
+    return any(c in domain_str for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')'])
 
 def clean_and_parse_line(line):
     line = line.strip()
@@ -76,20 +78,24 @@ def clean_and_parse_line(line):
         if p1 in ['AND', 'OR', 'NOT']:
             return None, None
             
-        # 处理带标签的域名类型（先进行 Punycode 自动转码检测）
+        # 针对带标签域名注入强力字符安全拦截
+        if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL']:
+            if has_invalid_domain_chars(p2.lower()):
+                return None, None
+                
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
             encoded_d = try_punycode_encode(p2.replace('*.', '', 1).lstrip('.').lower())
-            return ('suffix', encoded_d) if encoded_d else (None, None)
+            return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if p1 in ['DOMAIN', 'HOST', 'FULL']: 
             p2 = p2.lower()
             if p2.startswith('*.'): 
                 encoded_d = try_punycode_encode(p2[2:].lstrip('.'))
-                return ('suffix', encoded_d) if encoded_d else (None, None)
+                return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             if '*' in p2 or '?' in p2: 
-                return 'wildcard', p2 # 通配符维持原样
+                return 'wildcard', p2
             encoded_d = try_punycode_encode(p2)
-            return ('full', encoded_d) if encoded_d else (None, None)
+            return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: 
             return 'keyword', p2.lower()
@@ -108,7 +114,6 @@ def clean_and_parse_line(line):
         
         return None, None
 
-    # 处理无标签的裸行数据
     raw_val = line.lower()
     
     if IPV4_REGEX.match(raw_val):
@@ -138,10 +143,9 @@ def clean_and_parse_line(line):
     if '*' in raw_val or '?' in raw_val:
         return 'wildcard', raw_val
         
-    if any(c in raw_val for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')']):
+    if has_invalid_domain_chars(raw_val):
         return None, None
         
-    # 执行智能转码逻辑
     raw_val = try_punycode_encode(raw_val)
     if not raw_val:
         return None, None
@@ -223,14 +227,19 @@ def process_file(file_name):
                 rules[rule_type].add(value)
     optimize_domains(rules)
 
-    # 1. Source (写回的源文件也会同步被清洗转码为 xn-- 标准格式，实现全自动化)
+    # 1. Source (IP 掩码这里自动补全，让最终生成的底稿无懈可击)
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Sorted Rules ===\n\n")
         for r_type in ['suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
                 for val in sorted(rules[r_type]):
-                    f_source.write(f"{r_type},{val}\n")
+                    if r_type == 'ip':
+                        f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
+                    elif r_type == 'ip6':
+                        f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
+                    else:
+                        f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
 
     # 2. Shadowrocket
@@ -243,8 +252,8 @@ def process_file(file_name):
         for val in sorted(rules['wildcard']): f_sr.write(f"DOMAIN-WILDCARD,{val}\n")
         for val in sorted(rules['useragent']): f_sr.write(f"USER-AGENT,{val}\n")
         for val in sorted(rules['port']): f_sr.write(f"DST-PORT,{val}\n")
-        for val in sorted(rules['ip']): f_sr.write(f"IP-CIDR,{val},no-resolve\n")
-        for val in sorted(rules['ip6']): f_sr.write(f"IP-CIDR6,{val},no-resolve\n")
+        for val in sorted(rules['ip']): f_sr.write(f"IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
+        for val in sorted(rules['ip6']): f_sr.write(f"IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
 
     # 3. QuantumultX
     qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
@@ -260,8 +269,8 @@ def process_file(file_name):
         for val in sorted(rules['useragent']): 
             qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
             f_qx.write(f"user-agent, {qx_ua}, {qx_policy}\n")
-        for val in sorted(rules['ip']): f_qx.write(f"ip-cidr, {val}, {qx_policy}, no-resolve\n")
-        for val in sorted(rules['ip6']): f_qx.write(f"ip6-cidr, {val}, {qx_policy}, no-resolve\n")
+        for val in sorted(rules['ip']): f_qx.write(f"ip-cidr, {ensure_ip_mask(val)}, {qx_policy}, no-resolve\n")
+        for val in sorted(rules['ip6']): f_qx.write(f"ip6-cidr, {ensure_ip_mask(val, True)}, {qx_policy}, no-resolve\n")
 
     # 4. Clash
     clash_path = os.path.join(CLASH_DIR, f"{base_name}.yaml")
@@ -273,8 +282,8 @@ def process_file(file_name):
         for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")       
         for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
         for val in sorted(rules['port']): f_clash.write(f"  - DST-PORT,{val}\n")
-        for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
-        for val in sorted(rules['ip6']): f_clash.write(f"  - IP-CIDR6,{val},no-resolve\n")
+        for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
+        for val in sorted(rules['ip6']): f_clash.write(f"  - IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
 
     # 5. PAC
     if file_keyword in ['direct', 'china']:
