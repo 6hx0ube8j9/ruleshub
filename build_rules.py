@@ -230,7 +230,6 @@ def process_file(file_name):
         for val in sorted(rules['full']): f_qx.write(f"host, {val}, {qx_policy}\n")
         for val in sorted(rules['keyword']): f_qx.write(f"host-keyword, {val}, {qx_policy}\n")
         for val in sorted(rules['wildcard']): f_qx.write(f"host-wildcard, {val}, {qx_policy}\n")
-        for val in sorted(rules['port']): f_qx.write(f"dest-port, {val}, {qx_policy}\n")
         for val in sorted(rules['useragent']): 
             qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
             f_qx.write(f"user-agent, {qx_ua}, {qx_policy}\n")
@@ -245,7 +244,6 @@ def process_file(file_name):
         for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
         for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
         for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")       
-        for val in sorted(rules['useragent']): f_clash.write(f"  - USER-AGENT,{val}\n") # Clash Meta支持
         for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
         for val in sorted(rules['port']): f_clash.write(f"  - DST-PORT,{val}\n")
         for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
@@ -264,7 +262,6 @@ def process_file(file_name):
     if rules['full']: sub_rule["domain"] = sorted(list(rules['full']))
     if rules['keyword']: sub_rule["domain_keyword"] = sorted(list(rules['keyword']))
     if rules['process']: sub_rule["process_name"] = sorted(list(rules['process']))
-    if rules['useragent']: sub_rule["user_agent"] = sorted(list(rules['useragent']))
     
     if rules['port']: 
         p_list, p_range = parse_ports_for_singbox(rules['port'])
