@@ -286,7 +286,7 @@ def process_file(file_name):
         return
 
     if 'ip' in file_keyword:
-        combined_ips_mrs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']]))))
+        combined_ips_mrs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
         if combined_ips_mrs:
             with open(os.path.join(CLASH_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                 f.write("payload:\n")
