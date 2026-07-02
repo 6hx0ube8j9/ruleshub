@@ -319,11 +319,12 @@ def process_file(file_name):
             sb_tmp_domain["rules"].append(sub_dm_rule)
             with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
                 json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
+
         if rules['suffix'] or rules['full']:
             with open(os.path.join(CLASH_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                 f.write("payload:\n")
-                for item in sorted(rules['suffix']): f.write(f"  - '.{item}'\n")
-                for item in sorted(rules['full']): f.write(f"  - '{item}'\n")
+                for item in sorted(rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
+                for item in sorted(rules['full']): f.write(f"  - DOMAIN,{item}\n")
 
 def main():
     if not os.path.exists(SOURCE_DIR):
