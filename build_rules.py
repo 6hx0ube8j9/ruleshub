@@ -16,7 +16,7 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR, PAC_DIR, SIN
 
 IPV4_REGEX = re.compile(r'^(\d{1,3}\.){3}\d{1,3}(/\d{1,2})?$')
 IPV6_REGEX = re.compile(r'^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}(/\d{1,3})?$')
-DOMAIN_PATTERN = re.compile(r'^[a-z0-9\-]+\.[a-z0-9\-\.]+$')
+DOMAIN_PATTERN = re.compile(r'^(?!-)[a-z0-9\-]+(?<!-)(\.(?!-)[a-z0-9\-]+(?<!-))+$')
 
 PUBLIC_SUFFIX_BLACKLIST = {
     'com', 'net', 'org', 'gov', 'edu', 'mil', 'int', 'arpa', 'biz', 'info', 'name', 'pro',
@@ -111,8 +111,16 @@ def clean_and_parse_line(line):
     if '*' in raw_val or '?' in raw_val:
         return 'wildcard', raw_val
         
+    if any(c in raw_val for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')']):
+        return None, None
+        
+    if not raw_val.isascii():
+        return None, None
+
     if is_explicit_suffix:
-        return 'suffix', raw_val
+        if DOMAIN_PATTERN.match(raw_val):
+            return 'suffix', raw_val
+        return None, None
     else:
         if DOMAIN_PATTERN.match(raw_val):
             if raw_val in PUBLIC_SUFFIX_BLACKLIST:
@@ -120,6 +128,7 @@ def clean_and_parse_line(line):
             
             parts = raw_val.split('.')
             parts_count = len(parts)
+            
             last_2_parts = '.'.join(parts[-2:]) if parts_count >= 2 else ''
             is_compound_public = last_2_parts in PUBLIC_SUFFIX_BLACKLIST
             
@@ -130,7 +139,7 @@ def clean_and_parse_line(line):
             else:
                 return 'full', raw_val
         else:
-            return 'full', raw_val
+            return None, None
 
 def optimize_domains(rules):
     if rules['suffix']:
