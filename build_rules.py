@@ -41,6 +41,8 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za'
 }
 
+global_pac_domains = set()
+
 def clean_and_parse_line(line):
     line = line.strip()
     if not line or line.startswith(('#', '//', ';')) or line == 'payload:':
@@ -78,8 +80,8 @@ def clean_and_parse_line(line):
         if p1 in ['IP-CIDR6', 'IP6-CIDR', 'IP6']: return 'ip6', p2
         if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', p2
         if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', p2
-        if p1 in ['DST-PORT', 'PORT']: return 'port', p2
-        if p1 in ['GEOIP']: return 'geoip', p2.upper()
+        if p1 in ['DST-PORT', 'PORT']: return 'port', p2        
+        
         return None, None
 
     raw_val = line.lower()
@@ -166,6 +168,18 @@ def optimize_domains(rules):
                 clean_full.add(domain)
         rules['full'] = clean_full
 
+def ensure_ip_mask(ip_str, is_ipv6=False):
+    if '/' in ip_str: return ip_str
+    if is_ipv6: return f"{ip_str}/128"
+    return f"{ip_str}/32"
+
+def parse_ports_for_singbox(port_set):
+    p_list, p_range = [], []
+    for p in port_set:
+        if '-' in p: p_range.append(p)
+        else: p_list.append(int(p))
+    return sorted(p_list), sorted(p_range)
+
 def process_file(file_name):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0]
@@ -173,7 +187,7 @@ def process_file(file_name):
     rules = {
         'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(),
         'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set(),
-        'port': set(), 'geoip': set()
+        'port': set()
     }
     with open(source_path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -185,7 +199,7 @@ def process_file(file_name):
     # 1. Source
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Sorted Rules ===\n\n")
-        for r_type in ['suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port', 'geoip']:
+        for r_type in ['suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
                 for val in sorted(rules[r_type]):
@@ -202,11 +216,10 @@ def process_file(file_name):
         for val in sorted(rules['wildcard']): f_sr.write(f"DOMAIN-WILDCARD,{val}\n")
         for val in sorted(rules['useragent']): f_sr.write(f"USER-AGENT,{val}\n")
         for val in sorted(rules['port']): f_sr.write(f"DST-PORT,{val}\n")
-        for val in sorted(rules['geoip']): f_sr.write(f"GEOIP,{val}\n")
         for val in sorted(rules['ip']): f_sr.write(f"IP-CIDR,{val},no-resolve\n")
         for val in sorted(rules['ip6']): f_sr.write(f"IP-CIDR6,{val},no-resolve\n")
 
-    # 3. Quantumult X
+    # 3. QuantumultX
     qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
     if file_keyword == 'direct': qx_policy = 'direct'
     elif file_keyword == 'reject': qx_policy = 'reject'
@@ -218,7 +231,6 @@ def process_file(file_name):
         for val in sorted(rules['keyword']): f_qx.write(f"host-keyword, {val}, {qx_policy}\n")
         for val in sorted(rules['wildcard']): f_qx.write(f"host-wildcard, {val}, {qx_policy}\n")
         for val in sorted(rules['port']): f_qx.write(f"dest-port, {val}, {qx_policy}\n")
-        for val in sorted(rules['geoip']): f_qx.write(f"geoip, {val}, {qx_policy}\n")
         for val in sorted(rules['useragent']): 
             qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
             f_qx.write(f"user-agent, {qx_ua}, {qx_policy}\n")
@@ -233,17 +245,103 @@ def process_file(file_name):
         for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
         for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
         for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")       
+        for val in sorted(rules['useragent']): f_clash.write(f"  - USER-AGENT,{val}\n") # Clash Meta支持
         for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
         for val in sorted(rules['port']): f_clash.write(f"  - DST-PORT,{val}\n")
-        for val in sorted(rules['geoip']): f_clash.write(f"  - GEOIP,{val}\n")
         for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{val},no-resolve\n")
         for val in sorted(rules['ip6']): f_clash.write(f"  - IP-CIDR6,{val},no-resolve\n")
 
     # 5. PAC
     if file_keyword in ['direct', 'china']:
+        global_pac_domains.update(rules['suffix'])
+        global_pac_domains.update(rules['full'])
+
+    # 6. Sing-box
+    sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
+    sb_data = {"version": 1, "rules": []}
+    sub_rule = {}
+    if rules['suffix']: sub_rule["domain_suffix"] = sorted(list(rules['suffix']))
+    if rules['full']: sub_rule["domain"] = sorted(list(rules['full']))
+    if rules['keyword']: sub_rule["domain_keyword"] = sorted(list(rules['keyword']))
+    if rules['process']: sub_rule["process_name"] = sorted(list(rules['process']))
+    if rules['useragent']: sub_rule["user_agent"] = sorted(list(rules['useragent']))
+    
+    if rules['port']: 
+        p_list, p_range = parse_ports_for_singbox(rules['port'])
+        if p_list: sub_rule["port"] = p_list
+        if p_range: sub_rule["port_range"] = p_range
+        
+    if rules['wildcard']:
+        regex_list = []
+        for w in rules['wildcard']:
+            r = f"^{w.replace('.', '\\.').replace('*', '.*').replace('?', '.')}$"
+            regex_list.append(r)
+        sub_rule["domain_regex"] = regex_list
+        
+    combined_ips = sorted([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])
+    if combined_ips: sub_rule["ip_cidr"] = combined_ips
+    
+    if sub_rule: sb_data["rules"].append(sub_rule)
+    with open(sb_path, 'w', encoding='utf-8') as f_sb:
+        json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
+
+    # 7. Binary Templates
+    if 'classic' in file_keyword:
+        return
+
+    if 'ip' in file_keyword:
+        combined_ips_mrs = sorted([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])
+        if combined_ips_mrs:
+            with open(os.path.join(CLASH_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
+                f.write("payload:\n")
+                for item in combined_ips_mrs: 
+                    f.write(f"  - '{item}'\n")
+            sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips_mrs}]}
+            with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{base_name}.json"), 'w', encoding='utf-8') as f:
+                json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
+    else:
+        sb_tmp_domain = {"version": 1, "rules": []}
+        sub_dm_rule = {}
+        if rules['suffix']: sub_dm_rule["domain_suffix"] = sorted(list(rules['suffix']))
+        if rules['full']: sub_dm_rule["domain"] = sorted(list(rules['full']))
+        if rules['keyword']: sub_dm_rule["domain_keyword"] = sorted(list(rules['keyword']))
+        
+        if rules['port']: 
+            p_list, p_range = parse_ports_for_singbox(rules['port'])
+            if p_list: sub_dm_rule["port"] = p_list
+            if p_range: sub_dm_rule["port_range"] = p_range
+            
+        if rules['wildcard']:
+            regex_list = []
+            for w in rules['wildcard']:
+                r = f"^{w.replace('.', '\\.').replace('*', '.*').replace('?', '.')}$"
+                regex_list.append(r)
+            sub_dm_rule["domain_regex"] = regex_list
+            
+        if sub_dm_rule:
+            sb_tmp_domain["rules"].append(sub_dm_rule)
+            with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
+                json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
+
+        if rules['suffix'] or rules['full']:
+            with open(os.path.join(CLASH_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
+                f.write("payload:\n")
+                for item in sorted(rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
+                for item in sorted(rules['full']): f.write(f"  - DOMAIN,{item}\n")
+
+def main():
+    if not os.path.exists(SOURCE_DIR):
+        print(f"Directory '{SOURCE_DIR}' not found. Please create it and add your .txt files.")
+        return
+    files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
+    for file_name in files:
+        print(f"Processing {file_name}...")
+        process_file(file_name)
+        
+    if global_pac_domains:
         pac_path = os.path.join(PAC_DIR, "direct.pac")
         with open(pac_path, 'w', encoding='utf-8') as f_pac:
-            direct_domains = sorted(list(rules['suffix'].union(rules['full'])))
+            direct_domains = sorted(list(global_pac_domains))
             f_pac.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
             f_pac.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';\n\n")
             f_pac.write("var DIRECT_DOMAINS = {\n")
@@ -264,76 +362,7 @@ def process_file(file_name):
             f_pac.write("        suffix = suffix.substring(pos + 1);\n")
             f_pac.write("    }\n\n")
             f_pac.write("    return PROXY_METHOD;\n}\n")
-
-    # 6. Sing-box
-    sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
-    sb_data = {"version": 1, "rules": []}
-    sub_rule = {}
-    if rules['suffix']: sub_rule["domain_suffix"] = sorted(list(rules['suffix']))
-    if rules['full']: sub_rule["domain"] = sorted(list(rules['full']))
-    if rules['keyword']: sub_rule["domain_keyword"] = sorted(list(rules['keyword']))
-    if rules['process']: sub_rule["process_name"] = sorted(list(rules['process']))
-    if rules['useragent']: sub_rule["user_agent"] = sorted(list(rules['useragent']))
-    if rules['geoip']: sub_rule["country"] = sorted(list(rules['geoip']))
-    if rules['port']: sub_rule["port"] = sorted([int(p) for p in rules['port']])
-    if rules['wildcard']:
-        regex_list = []
-        for w in rules['wildcard']:
-            r = f"^{w.replace('.', '\\.').replace('*', '.*').replace('?', '.')}$"
-            regex_list.append(r)
-        sub_rule["domain_regex"] = regex_list
-    combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
-    if combined_ips: sub_rule["ip_cidr"] = combined_ips
-    if sub_rule: sb_data["rules"].append(sub_rule)
-    with open(sb_path, 'w', encoding='utf-8') as f_sb:
-        json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
-
-    # 7. Binary Templates
-    if 'classic' in file_keyword:
-        return
-
-    if 'ip' in file_keyword:
-        combined_ips = sorted(list(rules['ip'].union(rules['ip6'])))
-        if combined_ips:
-            with open(os.path.join(CLASH_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
-                f.write("payload:\n")
-                for item in combined_ips: 
-                    f.write(f"  - '{item}'\n")
-            sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips}]}
-            with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{base_name}.json"), 'w', encoding='utf-8') as f:
-                json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
-    else:
-        sb_tmp_domain = {"version": 1, "rules": []}
-        sub_dm_rule = {}
-        if rules['suffix']: sub_dm_rule["domain_suffix"] = sorted(list(rules['suffix']))
-        if rules['full']: sub_dm_rule["domain"] = sorted(list(rules['full']))
-        if rules['keyword']: sub_dm_rule["domain_keyword"] = sorted(list(rules['keyword']))
-        if rules['port']: sub_dm_rule["port"] = sorted([int(p) for p in rules['port']])
-        if rules['wildcard']:
-            regex_list = []
-            for w in rules['wildcard']:
-                r = f"^{w.replace('.', '\\.').replace('*', '.*').replace('?', '.')}$"
-                regex_list.append(r)
-            sub_dm_rule["domain_regex"] = regex_list
-        if sub_dm_rule:
-            sb_tmp_domain["rules"].append(sub_dm_rule)
-            with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
-                json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
-
-        if rules['suffix'] or rules['full']:
-            with open(os.path.join(CLASH_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
-                f.write("payload:\n")
-                for item in sorted(rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
-                for item in sorted(rules['full']): f.write(f"  - DOMAIN,{item}\n")
-
-def main():
-    if not os.path.exists(SOURCE_DIR):
-        print(f"Directory '{SOURCE_DIR}' not found. Please create it and add your .txt files.")
-        return
-    files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
-    for file_name in files:
-        print(f"Processing {file_name}...")
-        process_file(file_name)
+            
     print("Done! All rules have been parsed and generated.")
 
 if __name__ == '__main__':
