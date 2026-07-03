@@ -114,9 +114,12 @@ def clean_and_parse_line(line):
         return None, None
         
     line = line.split('#')[0].split('//')[0].strip()
+    
+    line = line.strip("'").strip('"').strip()
     if line.startswith('-'):
         line = line.lstrip('-').strip()
-    line = line.replace("'", "").replace('"', "")
+    line = line.strip("'").strip('"').strip()
+    
     if not line:
         return None, None
 
@@ -172,7 +175,9 @@ def clean_and_parse_line(line):
                 raw_ip = raw_ip.split(':')[0] 
             if IPV6_REGEX.match(raw_ip) or IPV6_REGEX.match(raw_ip.split('/')[0]):
                 return 'ip6', raw_ip
-            return 'ip', raw_ip
+            if IPV4_REGEX.match(raw_ip) or IPV4_REGEX.match(raw_ip.split('/')[0]):
+                return 'ip', raw_ip
+            return None, None
             
         if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', parts[1]
         if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', parts[1]
@@ -552,6 +557,12 @@ def main():
             for val in sorted(g_rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{val}\n")
             for val in sorted(g_rules['full']): f.write(f"  - DOMAIN,{val}\n")
             for val in sorted(g_rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{val}\n")
+            if g_rules['wildcard']:
+                for w in sorted(g_rules['wildcard']):
+                    r = w.replace('*', '___STAR___').replace('?', '___QUESTION___')
+                    r = r.replace('.', '\\.')
+                    r = r.replace('___STAR___', '.*').replace('___QUESTION___', '.')
+                    f.write(f"  - DOMAIN-REGEX,^{r}$\n")                
             for val in sorted(g_rules['process']): f.write(f"  - PROCESS-NAME,{val}\n")
             for val in sorted(g_rules['port']): f.write(f"  - DST-PORT,{val}\n")
             for val in sorted(g_rules['ip']): f.write(f"  - IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
