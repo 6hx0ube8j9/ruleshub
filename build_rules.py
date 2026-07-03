@@ -38,7 +38,7 @@ FILE_POLICY_ROUTER = [
     },
 
     # 示例 3: 紧凑型单行本
-    {'name': 'apple987', 'url': 'https://remote.com/Apple.list', 'msr': False, 'pac': 'apple253', 'qx': 'apple123', 'sr': 'apple123', 'singbox': 'apple253', 'mihomo': 'apple253', 'qx_policy': 'proxy'},
+    {'name': 'test.txt'},
 
     # 示例 4: 空键名智能命名
     {'name': '', 'url': 'https://remote.com/Apple.list'},
