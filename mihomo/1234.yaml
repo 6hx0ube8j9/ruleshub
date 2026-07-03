@@ -9,9 +9,10 @@ payload:
   - DOMAIN-SUFFIX,xn--fiqs8s.xn--fiqs8s
   - DOMAIN,xn--0zwm56d.xn--0zwm56d.xn--fiqs8s
   - DOMAIN,xn--fiq228c.com
+  - DOMAIN-REGEX,^google\..*$
+  - DOMAIN-REGEX,^netflix\..om$
   - PROCESS-NAME,Telegram
   - IP-CIDR,10.0.0.1/32,no-resolve
   - IP-CIDR,172.16.0.0/12,no-resolve
   - IP-CIDR,192.168.1.1/32,no-resolve
-  - IP-CIDR,2001:db8:g::/64,no-resolve
   - IP-CIDR6,2001:db8::/128,no-resolve
