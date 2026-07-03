@@ -1,18 +1,17 @@
 # Mihomo Payload Rule-Set: 1234
 payload:
-  - DOMAIN-SUFFIX,github.com
+  - DOMAIN-SUFFIX,baidu.com
   - DOMAIN-SUFFIX,netflix.com
-  - DOMAIN-SUFFIX,telegram.org
+  - DOMAIN-SUFFIX,tiktok.com
   - DOMAIN,images.unsplash.com
-  - DOMAIN-KEYWORD,spotify
-  - DOMAIN-KEYWORD,youtube
-  - DOMAIN-REGEX,^.*-matrix\.tg\.me$
-  - DOMAIN-REGEX,^.*\.internal\.crop\.net$
+  - DOMAIN,mycompany.com.cn
+  - DOMAIN,test-lab.co.jp
+  - DOMAIN,www.google
+  - DOMAIN,www.microsoft.com
+  - DOMAIN-KEYWORD,hbogoasia
+  - DOMAIN-REGEX,^+.*\.apple\.com$
   - PROCESS-NAME,DownloadService
-  - PROCESS-NAME,com.tencent.xin
-  - DST-PORT,22
   - DST-PORT,443
   - IP-CIDR,10.10.10.10/32,no-resolve
   - IP-CIDR,192.168.1.1/24,no-resolve
   - IP-CIDR6,240e:97c:2f:1::/64,no-resolve
-  - IP-CIDR6,fe80::1/128,no-resolve

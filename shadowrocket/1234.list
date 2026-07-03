@@ -1,18 +1,17 @@
 # Shadowrocket Rule-Set: 1234
 
-DOMAIN-SUFFIX,github.com
+DOMAIN-SUFFIX,baidu.com
 DOMAIN-SUFFIX,netflix.com
-DOMAIN-SUFFIX,telegram.org
+DOMAIN-SUFFIX,tiktok.com
 DOMAIN,images.unsplash.com
-DOMAIN-KEYWORD,spotify
-DOMAIN-KEYWORD,youtube
-DOMAIN-WILDCARD,*-matrix.tg.me
-DOMAIN-WILDCARD,*.internal.crop.net
+DOMAIN,mycompany.com.cn
+DOMAIN,test-lab.co.jp
+DOMAIN,www.google
+DOMAIN,www.microsoft.com
+DOMAIN-KEYWORD,hbogoasia
+DOMAIN-WILDCARD,+*.apple.com
 USER-AGENT,Twitter*
-USER-AGENT,WhatsApp/2.23
-DST-PORT,22
 DST-PORT,443
 IP-CIDR,10.10.10.10/32,no-resolve
 IP-CIDR,192.168.1.1/24,no-resolve
 IP-CIDR6,240e:97c:2f:1::/64,no-resolve
-IP-CIDR6,fe80::1/128,no-resolve

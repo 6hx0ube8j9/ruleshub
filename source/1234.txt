@@ -1,36 +1,39 @@
-# === 1234 Combined Base Rules (Phase 4: Real-world Ultimate Spec) ===
+# === 1234 Combined Base Rules ===
 
-# --- 1. 粗心大意：末尾带点的破坏性测试 (验证刚刚加入的 .rstrip('.') 修复) ---
-keyword,hbogoasia.
-domain,www.google.
-suffix,netflix.com.
-full,images.unsplash.com.
-ip,10.10.10.10.
-port,443.
-
-# --- 2. 粗心大意：无前缀的纯域名末尾带点 ---
-www.microsoft.com.
-+*.apple.com.
-.tiktok.com.
-
-# --- 3. 多段深层域名边界测试 (验证 3段/4段/5段 域名是否能正确归类并去重) ---
-# 5段域名（应识别为 full）
-full,deep.sub.img.pan.baidu.com
-# 4段域名
-full,sub.img.pan.baidu.com
-# 3段域名（如果不在黑名单，应转换为 full）
-full,img.pan.baidu.com
-# 2段顶级后缀域名（应转换或识别为 suffix）
+# --- TYPE: SUFFIX ---
 suffix,baidu.com
+suffix,netflix.com
+suffix,tiktok.com
 
-# --- 4. 复合公共后缀边界测试 (验证 3段域名如果是 com.cn / co.jp 时的分类表现) ---
-# 虽然是3段，但因为结尾是复合公共后缀，它其实是个“2段”独立域名，应被解析为 suffix！
+# --- TYPE: FULL ---
+full,deep.sub.img.pan.baidu.com
+full,images.unsplash.com
+full,img.pan.baidu.com
 full,mycompany.com.cn
+full,sub.img.pan.baidu.com
 full,test-lab.co.jp
+full,www.google
+full,www.microsoft.com
 
-# --- 5. 传输层与网络层极限写法 ---
-# 畸形 IP 尾部带点或多重端口
-ip,192.168.1.1/24.
-ip6,240e:97c:2f:1::/64.
-process,DownloadService.
-useragent,Twitter*.
+# --- TYPE: KEYWORD ---
+keyword,hbogoasia
+
+# --- TYPE: WILDCARD ---
+wildcard,+*.apple.com
+
+# --- TYPE: IP ---
+ip,10.10.10.10/32
+ip,192.168.1.1/24
+
+# --- TYPE: IP6 ---
+ip6,240e:97c:2f:1::/64
+
+# --- TYPE: PROCESS ---
+process,DownloadService
+
+# --- TYPE: USERAGENT ---
+useragent,Twitter*
+
+# --- TYPE: PORT ---
+port,443
+

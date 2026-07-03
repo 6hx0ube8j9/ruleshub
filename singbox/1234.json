@@ -3,46 +3,45 @@
   "rules": [
     {
       "domain_suffix": [
-        "github.com",
+        "baidu.com",
         "netflix.com",
-        "telegram.org"
+        "tiktok.com"
       ]
     },
     {
       "domain": [
-        "images.unsplash.com"
+        "images.unsplash.com",
+        "mycompany.com.cn",
+        "test-lab.co.jp",
+        "www.google",
+        "www.microsoft.com"
       ]
     },
     {
       "domain_keyword": [
-        "spotify",
-        "youtube"
+        "hbogoasia"
       ]
     },
     {
       "process_name": [
-        "DownloadService",
-        "com.tencent.xin"
+        "DownloadService"
       ]
     },
     {
       "port": [
-        22,
         443
       ]
     },
     {
       "domain_regex": [
-        "^.*-matrix\\.tg\\.me$",
-        "^.*\\.internal\\.crop\\.net$"
+        "^+.*\\.apple\\.com$"
       ]
     },
     {
       "ip_cidr": [
         "10.10.10.10/32",
         "192.168.1.1/24",
-        "240e:97c:2f:1::/64",
-        "fe80::1/128"
+        "240e:97c:2f:1::/64"
       ]
     }
   ]
