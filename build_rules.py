@@ -113,7 +113,9 @@ def clean_and_parse_line(line):
     if line.startswith('-'):
         line = line.lstrip('-').strip()
     line = line.strip("'").strip('"').strip()
-    
+    if not any(k in line.upper() for k in ['REGEX', 'WILDCARD']):
+        line = line.rstrip('.')
+        
     if not line:
         return None, None
 
