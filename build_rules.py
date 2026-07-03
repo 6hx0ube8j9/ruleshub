@@ -2,7 +2,8 @@
 import os
 import json
 import re
-import requests
+import urllib.request
+import urllib.error
 
 SOURCE_DIR = 'source'
 SHADOWROCKET_DIR = 'shadowrocket'
@@ -291,17 +292,27 @@ def sync_remote_to_local_source(base_name, policy):
 
     for remote_url in url_list:
         print(f"  -> Syncing & Merging url [{remote_url}] into source/{base_name}.txt...")
+        
         try:
-            response = requests.get(remote_url, timeout=15)
-            response.raise_for_status()
-            lines = response.text.splitlines()
-            for line in lines:
-                r_type, payload = clean_and_parse_line(line)
-                if not payload or r_type not in rules or r_type == 'remove':
-                    continue
-                if payload in remove_set or payload in auth_set:
-                    continue
-                rules[r_type].add(payload)
+            req = urllib.request.Request(
+                remote_url, 
+                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+            )
+            with urllib.request.urlopen(req, timeout=15) as response:
+                content = response.read().decode('utf-8', errors='ignore')
+                lines = content.splitlines()
+                
+                for line in lines:
+                    r_type, payload = clean_and_parse_line(line)
+                    if not payload or r_type not in rules or r_type == 'remove':
+                        continue
+                    if payload in remove_set or payload in auth_set:
+                        continue
+                    rules[r_type].add(payload)
+        except urllib.error.HTTPError as e:
+            print(f"  -> [Warning] HTTP Error {e.code} for upstream url")
+        except urllib.error.URLError as e:
+            print(f"  -> [Warning] URL Error {e.reason} for upstream url")
         except Exception as e:
             print(f"  -> [Warning] Failed to fetch upstream url: {e}")
 
