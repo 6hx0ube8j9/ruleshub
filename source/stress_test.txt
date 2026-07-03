@@ -1,4 +1,4 @@
-# === STRESS_TEST Sorted Rules ===
+# === STRESS_TEST Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,apple.com

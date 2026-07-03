@@ -1,4 +1,4 @@
-# === MIHOYO_CN Sorted Rules ===
+# === MIHOYO_CN Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,benghuai.com

@@ -1,4 +1,4 @@
-# === MIHOYO Sorted Rules ===
+# === MIHOYO Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,domain-suffix.co.jp

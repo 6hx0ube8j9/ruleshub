@@ -1,4 +1,4 @@
-# === DROPBOX Sorted Rules ===
+# === DROPBOX Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,db.tt

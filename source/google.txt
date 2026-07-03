@@ -1,4 +1,4 @@
-# === GOOGLE Sorted Rules ===
+# === GOOGLE Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,0emm.com
