@@ -1,56 +1,44 @@
-# =========================================================
-# 压力测试：混乱域名与非法字符格式验证数据集
-# =========================================================
+# === 1234 Combined Base Rules ===
 
-# 1. 各种混乱大小写与前缀混合（验证剥离前缀与统一小写）
-+.GOOGLE.COM
-*.Microsoft.Com
-.Apple.Com
-+Netflix.com
-+.aMaZoN.co.Uk
-*.BiliBili.com
+# --- TYPE: SUFFIX ---
+suffix,amazon.co.uk
+suffix,apple.com
+suffix,bilibili.com
+suffix,cleanafterdash.com
+suffix,com.cn
+suffix,double-quoted.com
+suffix,facebook.com
+suffix,github.com
+suffix,google.com
+suffix,google.com.hk
+suffix,microsoft.com
+suffix,netflix.com
+suffix,openai.com
+suffix,quoted-domain.com
+suffix,stripspace.com
+suffix,www.sh.cn
+suffix,xn--0zwm56d.xn--ses554g
+suffix,xn--flw351e.com
+suffix,xn--gtvz22d.com
+suffix,xn--hs8h.com
+suffix,xn--o0uq09b.xn--fiqs8s
 
-# 2. 带标准逗号、但前缀和大小写极其混乱的规则（测试前半段修复逻辑）
-DOMAIN-SUFFIX,+.Twitter.com
-DOMAIN-SUFFIX,*.GitHub.com
-DOMAIN,+.YouTube.com
-DOMAIN,*.OpenAi.com
-DOMAIN-KEYWORD,TikTok
-HOST-SUFFIX,.FaceBook.com
+# --- TYPE: FULL ---
+full,1.1.1.1
+full,this.is.a.very.very.long.and.nested.subdomain.structure.example.com
 
-# 3. 国际化域名与中文域名（测试 Punycode 编码能力）
-+.提示.中国
-*.测试.网址
-+.💥.com
-苹果.com
-DOMAIN-SUFFIX,谷歌.com
-DOMAIN,+.微软.公司
+# --- TYPE: KEYWORD ---
+keyword,tiktok
 
-# 4. 极端超长域名与二级/多级公共后缀（测试公共后缀黑名单与 Full/Suffix 划分逻辑）
-this.is.a.very.very.long.and.nested.subdomain.structure.example.com
-+.com.cn
-net.hk
-www.sh.cn
-+.google.com.hk
+# --- TYPE: WILDCARD ---
+wildcard,*.wildcard.*.test.com
+wildcard,abc?.com
 
-# 5. 夹带通配符与非法字符的垃圾数据（验证拒绝与过滤能力，这些应该被优雅丢弃或分流到 wildcard）
-+.*.wildcard.*.test.com
-abc?.com
-domain/with/slash.com
-invalid_char@gmail.com
-spaces inside domain .com
-[brackets].com
+# --- TYPE: IP ---
+ip,10.0.0.1/24
+ip,192.168.1.1/32
 
-# 6. 边缘格式与多余空格/引号（测试行清洗与去重能力）
-  -  +.StripSpace.com   
-'quoted-domain.com'
-"double-quoted.com"
-payload:
-- DOMAIN-SUFFIX,CleanAfterDash.com # 带有横杠前缀和行尾注释
+# --- TYPE: IP6 ---
+ip6,2001:db8::/32
+ip6,2001:db8::1/128
 
-# 7. 纯 IP 混合测试（验证 IP 正则拦截）
-192.168.1.1
-10.0.0.1/24
-2001:db8::1
-2001:db8::/32
-DOMAIN,1.1.1.1

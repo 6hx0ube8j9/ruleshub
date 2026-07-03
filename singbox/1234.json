@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_suffix": [
+        "amazon.co.uk",
+        "apple.com",
+        "bilibili.com",
+        "cleanafterdash.com",
+        "com.cn",
+        "double-quoted.com",
+        "facebook.com",
+        "github.com",
+        "google.com",
+        "google.com.hk",
+        "microsoft.com",
+        "netflix.com",
+        "openai.com",
+        "quoted-domain.com",
+        "stripspace.com",
+        "www.sh.cn",
+        "xn--0zwm56d.xn--ses554g",
+        "xn--flw351e.com",
+        "xn--gtvz22d.com",
+        "xn--hs8h.com",
+        "xn--o0uq09b.xn--fiqs8s"
+      ]
+    },
+    {
+      "domain": [
+        "1.1.1.1",
+        "this.is.a.very.very.long.and.nested.subdomain.structure.example.com"
+      ]
+    },
+    {
+      "domain_keyword": [
+        "tiktok"
+      ]
+    },
+    {
+      "domain_regex": [
+        "abc.\\.com",
+        ".*\\.wildcard\\..*\\.test\\.com"
+      ]
+    },
+    {
+      "ip_cidr": [
+        "10.0.0.1/24",
+        "192.168.1.1/32",
+        "2001:db8::/32",
+        "2001:db8::1/128"
+      ]
+    }
+  ]
+}
