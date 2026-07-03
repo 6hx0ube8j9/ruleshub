@@ -145,9 +145,15 @@ def clean_and_parse_line(line):
             
         if p1 in ['DOMAIN', 'HOST', 'FULL']: 
             p2 = p2.lower()
-            if p2.startswith('*.'): 
-                encoded_d = try_punycode_encode(p2[2:].lstrip('.'))
-                return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
+            if IPV4_REGEX.match(p2): return 'ip', p2
+            if IPV6_REGEX.match(p2) or IPV6_REGEX.match(p2.split('/')[0]): return 'ip6', p2
+
+            if p2.startswith('+.'): p2 = p2[2:]
+            elif p2.startswith('*.'): p2 = p2[2:]
+            elif p2.startswith('.'): p2 = p2[1:]
+            elif p2.startswith('+'): p2 = p2[1:]
+            p2 = p2.lstrip('.')
+
             if '*' in p2 or '?' in p2: 
                 return 'wildcard', p2
             encoded_d = try_punycode_encode(p2)
@@ -439,9 +445,12 @@ def process_file_to_targets(file_name, global_matrix):
             if rules['wildcard']:
                 regex_list = []
                 for w in rules['wildcard']:
-                    r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
+                    r = w.replace('*', '___STAR___').replace('?', '___QUESTION___')
+                    r = r.replace('.', '\\.')
+                    r = r.replace('___STAR___', '.*').replace('___QUESTION___', '.')
                     regex_list.append(r)
                 sb_tmp_domain["rules"].append({"domain_regex": regex_list})
+                
             if sb_tmp_domain["rules"]:
                 with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
                     json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
@@ -552,7 +561,9 @@ def main():
         if g_rules['wildcard']:
             regex_list = []
             for w in g_rules['wildcard']:
-                r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
+                r = w.replace('*', '___STAR___').replace('?', '___QUESTION___')
+                r = r.replace('.', '\\.')
+                r = r.replace('___STAR___', '.*').replace('___QUESTION___', '.')
                 regex_list.append(r)
             sb_data["rules"].append({"domain_regex": regex_list})
         combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
