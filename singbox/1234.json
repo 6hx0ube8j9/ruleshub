@@ -21,8 +21,8 @@
       "domain_regex": [
         "abc..xyz\\.test\\.com",
         "double-wildcard\\.net",
-        ".\\.single-char\\.org",
-        "wildcard-with-dash-.-test\\..*\\.cn"
+        "wildcard-with-dash-.-test\\..*\\.cn",
+        ".\\.single-char\\.org"
       ]
     },
     {

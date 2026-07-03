@@ -20,9 +20,9 @@ full,amazon.co.uk
 full,xn--fiq228c.xn--io0a7i
 
 # --- TYPE: WILDCARD ---
-wildcard,*.double-wildcard.net
 wildcard,?.single-char.org
 wildcard,abc??xyz.test.com
+wildcard,double-wildcard.net
 wildcard,wildcard-with-dash-?-test.*.cn
 
 # --- TYPE: IP ---
