@@ -20,7 +20,7 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SI
 FILE_POLICY_ROUTER = [
     # 示例 1: 多合一
     {
-        'name': 'block', 'msr': False, 'srs': True, 'qx_policy': 'reject', 'qx': 'block', 'sr': 'block', 'singbox': 'block', 'mihomo': 'block',
+        'name': 'block', 'mrs': False, 'srs': True, 'qx_policy': 'reject', 'qx': 'block', 'sr': 'block', 'singbox': 'block', 'mihomo': 'block',
         'url': [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list',
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Privacy/Privacy.list',
@@ -30,7 +30,7 @@ FILE_POLICY_ROUTER = [
 
     # 示例 2: 跨境合流分发矩阵（字段保持单行，长 URL 垂直排开）
     {
-        'name': 'microsoft', 'msr': True, 'pac': 'productivity', 'qx': 'gaming', 'sr': 'gaming', 'singbox': 'productivity', 'mihomo': 'productivity', 'qx_policy': 'proxy',
+        'name': 'microsoft', 'mrs': True, 'pac': 'productivity', 'qx': 'gaming', 'sr': 'gaming', 'singbox': 'productivity', 'mihomo': 'productivity', 'qx_policy': 'proxy',
         'url': [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list',
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list'
@@ -44,7 +44,7 @@ FILE_POLICY_ROUTER = [
     {'name': '', 'url': 'https://remote.com/Apple.list'},
 
     # 示例 6: 读取本地 source/direct.txt 执行转换
-    {'name': 'direct', 'msr': True, 'qx': 'direct', 'sr': 'direct', 'singbox': 'direct', 'mihomo': 'direct', 'qx_policy': 'direct'}
+    {'name': 'direct', 'mrs': True, 'qx': 'direct', 'sr': 'direct', 'singbox': 'direct', 'mihomo': 'direct', 'qx_policy': 'direct'}
 ]
 
 IPV4_REGEX = re.compile(r'^(\d{1,3}\.){3}\d{1,3}(/\d{1,2})?$')
@@ -344,7 +344,7 @@ def process_file_to_targets(file_name, global_matrix):
     singbox_target = policy.get('singbox', base_name)
     pac_target = policy.get('pac', None)
     mihomo_target = policy.get('mihomo', base_name)
-    msr_enable = policy.get('msr', True)
+    mrs_enable = policy.get('mrs', True)
     srs_enable = policy.get('srs', True)
     
     if 'qx_policy' in policy:
@@ -354,7 +354,7 @@ def process_file_to_targets(file_name, global_matrix):
         elif file_keyword == 'reject': qx_policy_label = 'reject'
         else: qx_policy_label = base_name.capitalize()
         
-    msr_enable = policy.get('msr', True)
+    mrs_enable = policy.get('mrs', True)
     srs_enable = policy.get('srs', True)
     
     rules = {
@@ -406,7 +406,7 @@ def process_file_to_targets(file_name, global_matrix):
     if 'classic' in file_keyword:
         return
 
-    if msr_enable:
+    if mrs_enable:
         if 'ip' in file_keyword:
             combined_ips_mrs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
             if combined_ips_mrs:
