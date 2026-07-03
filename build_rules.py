@@ -47,8 +47,12 @@ FILE_POLICY_ROUTER = [
     {'name': 'direct', 'mrs': True, 'qx': 'direct', 'sr': 'direct', 'singbox': 'direct', 'mihomo': 'direct', 'qx_policy': 'direct'}
 ]
 
-IPV4_REGEX = re.compile(r'^(\d{1,3}\.){3}\d{1,3}(/\d{1,2})?$')
-IPV6_REGEX = re.compile(r'^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}(/\d{1,3})?$')
+IPV4_REGEX = re.compile(
+    r'^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)(\/([0-9]|[1-2][0-9]|3[0-2]))?$'
+)
+IPV6_REGEX = re.compile(
+    r'^\[?([0-9a-fA-F]{1,4}:){1,7}:?([0-9a-fA-F]{1,4})?\]?(\/(12[0-8]|1[0-1]\d|[1-9]?\d))?$'
+)
 DOMAIN_PATTERN = re.compile(r'^(?!-)[a-z0-9\-]+(?<!-)(\.(?!-)[a-z0-9\-]+(?<!-))+$')
 
 PUBLIC_SUFFIX_BLACKLIST = {
