@@ -31,7 +31,6 @@
     {
       "domain_regex": [
         "(bytedance|tiktok)\\.com$",
-        "^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0",
         "^.*\\.pan\\.baidu\\.com$",
         "^.*\\.sub\\.google\\.com$",
         "^.*~netflix\\.com$",

@@ -8,7 +8,6 @@ payload:
   - DOMAIN,very.long.sub.domain.structure.co.uk
   - DOMAIN,xn--2vra6db.com
   - DOMAIN-REGEX,(bytedance|tiktok)\.com$
-  - DOMAIN-REGEX,^([a-zA-Z0-9]([a-zA-Z0-9\-]{0
   - DOMAIN-REGEX,^https?:\/\/.*\.netflix\.com\/title\/.*$
   - DOMAIN-REGEX,^.*\.pan\.baidu\.com$
   - DOMAIN-REGEX,^.*\.sub\.google\.com$
