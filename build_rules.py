@@ -17,7 +17,7 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SI
         os.makedirs(d)
 
 FILE_POLICY_ROUTER = [
-    # 示例 1: 多合一
+    # 示例 1: 多合一广告与隐私拦截
     {
         'name': 'block', 'mrs': False, 'srs': True, 'qx_policy': 'reject', 'qx': 'block', 'sr': 'block', 'singbox': 'block', 'mihomo': 'block',
         'url': [
@@ -34,7 +34,7 @@ FILE_POLICY_ROUTER = [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list'
         ]
     },
-    {'name': '', 'url': 'https://remote.com/Apple.list'},
+    # 示例 3: 直连基础规则
     {'name': 'direct', 'mrs': True, 'qx': 'direct', 'sr': 'direct', 'singbox': 'direct', 'mihomo': 'direct', 'qx_policy': 'direct'}
 ]
 
@@ -133,7 +133,12 @@ def clean_and_parse_line(line):
             return 'remove', target_val
             
         if p1 in ['DOMAIN-REGEX', 'REGEX']:
-            return 'regex', p2
+            try:
+                re.compile(p2)
+                return 'regex', p2
+            except re.error:
+                print(f"  -> [跳过] 检测到断裂或非法的正则表达式: {p2}")
+                return None, None
 
         if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
             return 'wildcard', p2.lower()
@@ -459,7 +464,7 @@ def process_file_to_targets(file_name, global_matrix):
                 regex_list = []
                 for w in rules['wildcard']:
                     r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
-                    regex_list.append(f"^{r}$")
+                    regex_list.append(f"^{r}$") # 已经具有前后锚定，防止 Sing-box 泛化溢出匹配
                 for r in rules['regex']:
                     regex_list.append(r)
                 sb_tmp_domain["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
@@ -520,7 +525,7 @@ def main():
             for val in sorted(g_rules['full']): f.write(f"host, {val}, {qx_policy}\n")
             for val in sorted(g_rules['keyword']): f.write(f"host-keyword, {val}, {qx_policy}\n")
             for val in sorted(g_rules['wildcard']): f.write(f"host-wildcard, {val}, {qx_policy}\n")
-            for val in sorted(g_rules['regex']): f.write(f"host-regex, {val}, {qx_policy}\n")
+            for val in sorted(g_rules['regex']): f.write(f"host-regex, {val.strip()}, {qx_policy}\n")
             for val in sorted(g_rules['useragent']):
                 qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
                 f.write(f"user-agent, {qx_ua}, {qx_policy}\n")
