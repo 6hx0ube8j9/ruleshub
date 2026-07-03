@@ -103,6 +103,19 @@ def try_punycode_encode(domain_str):
 def has_invalid_domain_chars(domain_str):
     return any(c in domain_str for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')'])
 
+def validate_ip_mask(ip_str, is_ipv6=False):
+    if '/' in ip_str:
+        try:
+            parts = ip_str.split('/')
+            mask = int(parts[1])
+            if is_ipv6:
+                return 0 <= mask <= 128
+            else:
+                return 0 <= mask <= 32
+        except Exception:
+            return False
+    return True
+
 def clean_and_parse_line(line):
     line = line.strip()
     if not line or line.startswith(('#', '//', ';')) or line == 'payload:':
@@ -160,8 +173,10 @@ def clean_and_parse_line(line):
         if p1 in ['DOMAIN', 'HOST', 'FULL']: 
             if '*' in p2_clean or '?' in p2_clean: 
                 return 'wildcard', p2.lower()
-            if IPV4_REGEX.match(p2_clean): return 'ip', p2_clean
-            if IPV6_REGEX.match(p2_clean) or IPV6_REGEX.match(p2_clean.split('/')[0]): return 'ip6', p2_clean
+            if IPV4_REGEX.match(p2_clean): 
+                return ('ip', p2_clean) if validate_ip_mask(p2_clean, False) else (None, None)
+            if IPV6_REGEX.match(p2_clean) or IPV6_REGEX.match(p2_clean.split('/')[0]): 
+                return ('ip6', p2_clean) if validate_ip_mask(p2_clean, True) else (None, None)
             if has_invalid_domain_chars(p2_clean): return None, None
             encoded_d = try_punycode_encode(p2_clean)
             return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
@@ -174,9 +189,9 @@ def clean_and_parse_line(line):
             if ':' in raw_ip and '[' not in raw_ip and raw_ip.count(':') == 1:
                 raw_ip = raw_ip.split(':')[0] 
             if IPV6_REGEX.match(raw_ip) or IPV6_REGEX.match(raw_ip.split('/')[0]):
-                return 'ip6', raw_ip
+                return ('ip6', raw_ip) if validate_ip_mask(raw_ip, True) else (None, None)
             if IPV4_REGEX.match(raw_ip) or IPV4_REGEX.match(raw_ip.split('/')[0]):
-                return 'ip', raw_ip
+                return ('ip', raw_ip) if validate_ip_mask(raw_ip, False) else (None, None)
             return None, None
             
         if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', parts[1]
@@ -193,9 +208,9 @@ def clean_and_parse_line(line):
             raw_val = possible_ip
 
     if IPV4_REGEX.match(raw_val):
-        return 'ip', raw_val
+        return ('ip', raw_val) if validate_ip_mask(raw_val, False) else (None, None)
     if IPV6_REGEX.match(raw_val):
-        return 'ip6', raw_val
+        return ('ip6', raw_val) if validate_ip_mask(raw_val, True) else (None, None)
         
     if '*' in raw_val or '?' in raw_val:
         return 'wildcard', raw_val
