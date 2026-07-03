@@ -856,7 +856,7 @@ host-keyword, google, Google
 host-keyword, googlesource, Google
 host-keyword, gstatic, Google
 host-keyword, recaptcha, Google
-host-keyword, www.google., Google
+host-keyword, www.google, Google
 host-keyword, youtube, Google
 user-agent, %E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*, Google
 user-agent, *YouTubeMusic*, Google

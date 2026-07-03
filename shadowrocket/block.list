@@ -245,7 +245,7 @@ DOMAIN-KEYWORD,adsystem
 DOMAIN-KEYWORD,adtrack.ucweb.com
 DOMAIN-KEYWORD,adwords
 DOMAIN-KEYWORD,afpapi.alimama.com
-DOMAIN-KEYWORD,analytics.
+DOMAIN-KEYWORD,analytics
 DOMAIN-KEYWORD,android.bugly.qq.com
 DOMAIN-KEYWORD,ap.51y5.net
 DOMAIN-KEYWORD,api.freed.so
@@ -253,9 +253,9 @@ DOMAIN-KEYWORD,api.sobot.com
 DOMAIN-KEYWORD,apiinit.amap.com
 DOMAIN-KEYWORD,apimg.qunliao.info
 DOMAIN-KEYWORD,app-analytics
-DOMAIN-KEYWORD,app-log.
+DOMAIN-KEYWORD,app-log
 DOMAIN-KEYWORD,app.51y5.net
-DOMAIN-KEYWORD,applog.
+DOMAIN-KEYWORD,applog
 DOMAIN-KEYWORD,applogapi.autohome.com
 DOMAIN-KEYWORD,applovin
 DOMAIN-KEYWORD,appsflyer
@@ -314,8 +314,8 @@ DOMAIN-KEYWORD,image.bianxianmao.com
 DOMAIN-KEYWORD,img1.czb365.com
 DOMAIN-KEYWORD,in-page-push
 DOMAIN-KEYWORD,insurance.lianwifi.com
-DOMAIN-KEYWORD,ios-log.
-DOMAIN-KEYWORD,ioslog.
+DOMAIN-KEYWORD,ios-log
+DOMAIN-KEYWORD,ioslog
 DOMAIN-KEYWORD,js.union-wifi.com
 DOMAIN-KEYWORD,juruigj
 DOMAIN-KEYWORD,kepler.jd.com
@@ -360,9 +360,9 @@ DOMAIN-KEYWORD,pagespeed-mod
 DOMAIN-KEYWORD,pangolin-sdk-toutiao
 DOMAIN-KEYWORD,paradisestatic.vivo.com.cn
 DOMAIN-KEYWORD,partnerad
-DOMAIN-KEYWORD,pc-log.
+DOMAIN-KEYWORD,pc-log
 DOMAIN-KEYWORD,pc.suishenyun.net
-DOMAIN-KEYWORD,pclog.
+DOMAIN-KEYWORD,pclog
 DOMAIN-KEYWORD,pdds.ucweb.com
 DOMAIN-KEYWORD,pglstatp-toutiao
 DOMAIN-KEYWORD,pingfore

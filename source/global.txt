@@ -2235,7 +2235,7 @@ keyword,boxinc
 keyword,epicgames
 keyword,flexnode
 keyword,github
-keyword,hbogoasia.
+keyword,hbogoasia
 keyword,invidious
 keyword,itdmusic
 keyword,jooxweb-api

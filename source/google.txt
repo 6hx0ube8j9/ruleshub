@@ -859,7 +859,7 @@ keyword,google
 keyword,googlesource
 keyword,gstatic
 keyword,recaptcha
-keyword,www.google.
+keyword,www.google
 keyword,youtube
 
 # --- TYPE: IP ---

@@ -250,7 +250,7 @@ keyword,adsystem
 keyword,adtrack.ucweb.com
 keyword,adwords
 keyword,afpapi.alimama.com
-keyword,analytics.
+keyword,analytics
 keyword,android.bugly.qq.com
 keyword,ap.51y5.net
 keyword,api.freed.so
@@ -258,9 +258,9 @@ keyword,api.sobot.com
 keyword,apiinit.amap.com
 keyword,apimg.qunliao.info
 keyword,app-analytics
-keyword,app-log.
+keyword,app-log
 keyword,app.51y5.net
-keyword,applog.
+keyword,applog
 keyword,applogapi.autohome.com
 keyword,applovin
 keyword,appsflyer
@@ -319,8 +319,8 @@ keyword,image.bianxianmao.com
 keyword,img1.czb365.com
 keyword,in-page-push
 keyword,insurance.lianwifi.com
-keyword,ios-log.
-keyword,ioslog.
+keyword,ios-log
+keyword,ioslog
 keyword,js.union-wifi.com
 keyword,juruigj
 keyword,kepler.jd.com
@@ -365,9 +365,9 @@ keyword,pagespeed-mod
 keyword,pangolin-sdk-toutiao
 keyword,paradisestatic.vivo.com.cn
 keyword,partnerad
-keyword,pc-log.
+keyword,pc-log
 keyword,pc.suishenyun.net
-keyword,pclog.
+keyword,pclog
 keyword,pdds.ucweb.com
 keyword,pglstatp-toutiao
 keyword,pingfore
