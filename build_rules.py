@@ -16,7 +16,6 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SI
     if not os.path.exists(d):
         os.makedirs(d)
 
-
 FILE_POLICY_ROUTER = [
     # 示例 1: 多合一
     {
@@ -27,8 +26,7 @@ FILE_POLICY_ROUTER = [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list'
         ]
     },
-
-    # 示例 2: 跨境合流分发矩阵（字段保持单行，长 URL 垂直排开）
+    # 示例 2: 跨境合流分发矩阵
     {
         'name': 'microsoft', 'mrs': True, 'pac': 'productivity', 'qx': 'gaming', 'sr': 'gaming', 'singbox': 'productivity', 'mihomo': 'productivity', 'qx_policy': 'proxy',
         'url': [
@@ -36,14 +34,8 @@ FILE_POLICY_ROUTER = [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list'
         ]
     },
-
-    # 示例 3: 紧凑型单行本
     {'name': 'test'},
-
-    # 示例 4: 空键名智能命名
     {'name': '', 'url': 'https://remote.com/Apple.list'},
-
-    # 示例 6: 读取本地 source/direct.txt 执行转换
     {'name': 'direct', 'mrs': True, 'qx': 'direct', 'sr': 'direct', 'singbox': 'direct', 'mihomo': 'direct', 'qx_policy': 'direct'}
 ]
 
@@ -118,7 +110,6 @@ def clean_and_parse_line(line):
         return None, None
         
     line = line.split('#')[0].split('//')[0].strip()
-    
     line = line.strip("'").strip('"').strip()
     if line.startswith('-'):
         line = line.lstrip('-').strip()
@@ -132,56 +123,48 @@ def clean_and_parse_line(line):
         if len(parts) < 2:
             return None, None
         p1 = parts[0].upper()
-        p2 = parts[1].lower() 
+        p2 = parts[1]
         
         if p1 in ['AND', 'OR', 'NOT']:
             return None, None
             
         if p1 == 'REMOVE':
-            target_val = parts[2].lower() if len(parts) >= 3 else p2
-            if target_val.startswith('+.'): target_val = target_val[2:]
-            elif target_val.startswith('*.'): target_val = target_val[2:]
-            elif target_val.startswith('.'): target_val = target_val[1:]
-            elif target_val.startswith('+'): target_val = target_val[1:]
-            target_val = target_val.lstrip('.')
+            target_val = parts[2].lower() if len(parts) >= 3 else p2.lower()
+            target_val = target_val.lstrip('+.*')
             return 'remove', target_val
             
-        if p2.startswith('+.'): p2 = p2[2:]
-        elif p2.startswith('*.'): p2 = p2[2:]
-        elif p2.startswith('.'): p2 = p2[1:]
-        elif p2.startswith('+'): p2 = p2[1:]
-        p2 = p2.lstrip('.')
+        if p1 in ['DOMAIN-REGEX', 'REGEX']:
+            return 'regex', p2  
 
-        if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL']:
-            if has_invalid_domain_chars(p2):
-                return None, None
-                
+        if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
+            return 'wildcard', p2.lower() 
+
+        p2_clean = p2.lower()
+        if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
+        elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
+        elif p2_clean.startswith('.'): p2_clean = p2_clean[1:]
+        elif p2_clean.startswith('+'): p2_clean = p2_clean[1:]
+        p2_clean = p2_clean.lstrip('.')
+
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
-            p2 = p2.lstrip('+.*').lstrip('.') 
-            if has_invalid_domain_chars(p2): return None, None
-            encoded_d = try_punycode_encode(p2)
+            if has_invalid_domain_chars(p2_clean): return None, None
+            encoded_d = try_punycode_encode(p2_clean)
             return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if p1 in ['DOMAIN', 'HOST', 'FULL']: 
-            if '*' in p2 or '?' in p2: 
-                if has_invalid_domain_chars(p2): return None, None
-                return 'wildcard', p2
-            p2 = p2.lstrip('+.*').lstrip('.')
-            if IPV4_REGEX.match(p2): return 'ip', p2
-            if IPV6_REGEX.match(p2) or IPV6_REGEX.match(p2.split('/')[0]): return 'ip6', p2
-            if has_invalid_domain_chars(p2): return None, None
-            encoded_d = try_punycode_encode(p2)
+            if '*' in p2_clean or '?' in p2_clean: 
+                return 'wildcard', p2.lower()
+            if IPV4_REGEX.match(p2_clean): return 'ip', p2_clean
+            if IPV6_REGEX.match(p2_clean) or IPV6_REGEX.match(p2_clean.split('/')[0]): return 'ip6', p2_clean
+            if has_invalid_domain_chars(p2_clean): return None, None
+            encoded_d = try_punycode_encode(p2_clean)
             return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: 
-            return 'keyword', p2
-            
-        if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
-            p2 = p2.lstrip('+').lstrip('.') 
-            return 'wildcard', p2
+            return 'keyword', p2_clean
             
         if p1 in ['IP-CIDR', 'IP', 'IP-CIDR6', 'IP6-CIDR', 'IP6']:
-            raw_ip = p2.split(',')[0].strip()  
+            raw_ip = p2_clean.split(',')[0].strip()  
             if ':' in raw_ip and '[' not in raw_ip and raw_ip.count(':') == 1:
                 raw_ip = raw_ip.split(':')[0] 
             if IPV6_REGEX.match(raw_ip) or IPV6_REGEX.match(raw_ip.split('/')[0]):
@@ -207,6 +190,13 @@ def clean_and_parse_line(line):
         return 'ip', raw_val
     if IPV6_REGEX.match(raw_val):
         return 'ip6', raw_val
+        
+    if '*' in raw_val or '?' in raw_val:
+        return 'wildcard', raw_val
+        
+    if has_invalid_domain_chars(raw_val):
+        return None, None
+        
     is_explicit_suffix = False
     if raw_val.startswith('+.'): 
         raw_val = raw_val[2:]
@@ -223,11 +213,6 @@ def clean_and_parse_line(line):
         
     raw_val = raw_val.lstrip('.')
     if not raw_val:
-        return None, None
-        
-    if '*' in raw_val or '?' in raw_val:
-        return 'wildcard', raw_val
-    if has_invalid_domain_chars(raw_val):
         return None, None
         
     raw_val = try_punycode_encode(raw_val)
@@ -261,7 +246,7 @@ def clean_and_parse_line(line):
             return None, None
 
 def optimize_domains(rules):
-    if rules['suffix']:
+    if rules.get('suffix'):
         reversed_domains = sorted(['.'.join(reversed(d.split('.'))) + '.' for d in rules['suffix']])
         clean_reversed = []
         for rd in reversed_domains:
@@ -269,7 +254,7 @@ def optimize_domains(rules):
                 clean_reversed.append(rd)
         rules['suffix'] = {'.'.join(reversed(rd.rstrip('.').split('.'))) for rd in clean_reversed}
 
-    if rules['full'] and rules['suffix']:
+    if rules.get('full') and rules.get('suffix'):
         clean_full = set()
         for domain in rules['full']:
             is_covered = False
@@ -299,7 +284,7 @@ def sync_remote_to_local_source(base_name, policy):
     source_path = os.path.join(SOURCE_DIR, f"{base_name}.txt")
     
     rules = {
-        'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(),
+        'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(), 'regex': set(),
         'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set(),
         'port': set(), 'remove': set()
     }
@@ -326,7 +311,6 @@ def sync_remote_to_local_source(base_name, policy):
 
     for remote_url in url_list:
         print(f"  -> Syncing & Merging url [{remote_url}] into source/{base_name}.txt...")
-        
         try:
             req = urllib.request.Request(
                 remote_url, 
@@ -357,7 +341,7 @@ def sync_remote_to_local_source(base_name, policy):
 
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Combined Base Rules ===\n\n")
-        for r_type in ['remove', 'suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port']:
+        for r_type in ['remove', 'suffix', 'full', 'keyword', 'wildcard', 'regex', 'ip', 'ip6', 'process', 'useragent', 'port']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
                 for val in sorted(rules[r_type]):
@@ -392,7 +376,7 @@ def process_file_to_targets(file_name, global_matrix):
     srs_enable = policy.get('srs', True)
     
     rules = {
-        'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(),
+        'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(), 'regex': set(),
         'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set(),
         'port': set(), 'remove': set()
     }
@@ -410,10 +394,11 @@ def process_file_to_targets(file_name, global_matrix):
             if r_type != 'remove':
                 rules[r_type] -= rules['remove']
 
+    # 填充全局多维路由矩阵
     if qx_target not in global_matrix['qx']:
         global_matrix['qx'][qx_target] = {
             'policy_label': qx_policy_label,
-            'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(), 'ip': set(), 'ip6': set(), 'useragent': set()
+            'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(), 'regex': set(), 'ip': set(), 'ip6': set(), 'useragent': set()
         }
     for k in global_matrix['qx'][qx_target].keys():
         if k != 'policy_label': global_matrix['qx'][qx_target][k].update(rules[k])
@@ -448,11 +433,16 @@ def process_file_to_targets(file_name, global_matrix):
                     f.write("payload:\n")
                     for item in combined_ips_mrs: f.write(f"  - '{item}'\n")
         else:
-            if rules['suffix'] or rules['full']:
+            if rules['suffix'] or rules['full'] or rules['keyword'] or rules['wildcard'] or rules['regex']:
                 with open(os.path.join(MIHOMO_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                     f.write("payload:\n")
-                    for item in sorted(rules['suffix']): f.write(f"  - '+.{item}'\n")
-                    for item in sorted(rules['full']): f.write(f"  - '{item}'\n")
+                    for item in sorted(rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
+                    for item in sorted(rules['full']): f.write(f"  - DOMAIN,{item}\n")
+                    for item in sorted(rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{item}\n")
+                    for item in sorted(rules['regex']): f.write(f"  - DOMAIN-REGEX,{item}\n")
+                    for w in sorted(rules['wildcard']):
+                        r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
+                        f.write(f"  - DOMAIN-REGEX,^{r}$\n")
 
     if srs_enable:
         if 'ip' in file_keyword:
@@ -470,14 +460,14 @@ def process_file_to_targets(file_name, global_matrix):
                 p_list, p_range = parse_ports_for_singbox(rules['port'])
                 if p_list: sb_tmp_domain["rules"].append({"port": p_list})
                 if p_range: sb_tmp_domain["rules"].append({"port_range": p_range})
-            if rules['wildcard']:
+            if rules['wildcard'] or rules['regex']:
                 regex_list = []
                 for w in rules['wildcard']:
-                    r = w.replace('*', '___STAR___').replace('?', '___QUESTION___')
-                    r = r.replace('.', '\\.')
-                    r = r.replace('___STAR___', '.*').replace('___QUESTION___', '.')
+                    r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
                     regex_list.append(r)
-                sb_tmp_domain["rules"].append({"domain_regex": regex_list})
+                for r in rules['regex']:
+                    regex_list.append(r)
+                sb_tmp_domain["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
                 
             if sb_tmp_domain["rules"]:
                 with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
@@ -486,7 +476,6 @@ def process_file_to_targets(file_name, global_matrix):
 def main():
     global FILE_POLICY_ROUTER_CLEANED
     FILE_POLICY_ROUTER_CLEANED = {}
-    
     allocated_names = set()
     
     for policy_card in FILE_POLICY_ROUTER:
@@ -506,7 +495,6 @@ def main():
                     }
 
     print("Phase 1: Syncing remote rules into local source .txt documents...")
-
     for target_base_name, policy_card in FILE_POLICY_ROUTER_CLEANED.items():
         sync_remote_to_local_source(target_base_name, policy_card)
 
@@ -537,6 +525,7 @@ def main():
             for val in sorted(g_rules['full']): f.write(f"host, {val}, {qx_policy}\n")
             for val in sorted(g_rules['keyword']): f.write(f"host-keyword, {val}, {qx_policy}\n")
             for val in sorted(g_rules['wildcard']): f.write(f"host-wildcard, {val}, {qx_policy}\n")
+            for val in sorted(g_rules['regex']): f.write(f"host-regex, {val}, {qx_policy}\n")
             for val in sorted(g_rules['useragent']):
                 qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
                 f.write(f"user-agent, {qx_ua}, {qx_policy}\n")
@@ -553,6 +542,7 @@ def main():
             for val in sorted(g_rules['full']): f.write(f"DOMAIN,{val}\n")
             for val in sorted(g_rules['keyword']): f.write(f"DOMAIN-KEYWORD,{val}\n")
             for val in sorted(g_rules['wildcard']): f.write(f"DOMAIN-WILDCARD,{val}\n")
+            for val in sorted(g_rules['regex']): f.write(f"DOMAIN-REGEX,{val}\n")
             for val in sorted(g_rules['useragent']): f.write(f"USER-AGENT,{val}\n")
             for val in sorted(g_rules['port']): f.write(f"DST-PORT,{val}\n")
             for val in sorted(g_rules['ip']): f.write(f"IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
@@ -568,11 +558,10 @@ def main():
             for val in sorted(g_rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{val}\n")
             for val in sorted(g_rules['full']): f.write(f"  - DOMAIN,{val}\n")
             for val in sorted(g_rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{val}\n")
+            for val in sorted(g_rules['regex']): f.write(f"  - DOMAIN-REGEX,{val}\n")
             if g_rules['wildcard']:
                 for w in sorted(g_rules['wildcard']):
-                    r = w.replace('*', '___STAR___').replace('?', '___QUESTION___')
-                    r = r.replace('.', '\\.')
-                    r = r.replace('___STAR___', '.*').replace('___QUESTION___', '.')
+                    r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
                     f.write(f"  - DOMAIN-REGEX,^{r}$\n")                
             for val in sorted(g_rules['process']): f.write(f"  - PROCESS-NAME,{val}\n")
             for val in sorted(g_rules['port']): f.write(f"  - DST-PORT,{val}\n")
@@ -592,14 +581,14 @@ def main():
             p_list, p_range = parse_ports_for_singbox(g_rules['port'])
             if p_list: sb_data["rules"].append({"port": p_list})
             if p_range: sb_data["rules"].append({"port_range": p_range})
-        if g_rules['wildcard']:
+        if g_rules['wildcard'] or g_rules['regex']:
             regex_list = []
             for w in g_rules['wildcard']:
-                r = w.replace('*', '___STAR___').replace('?', '___QUESTION___')
-                r = r.replace('.', '\\.')
-                r = r.replace('___STAR___', '.*').replace('___QUESTION___', '.')
+                r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
                 regex_list.append(r)
-            sb_data["rules"].append({"domain_regex": regex_list})
+            for r in g_rules['regex']:
+                regex_list.append(r)
+            sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
         combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
         if combined_ips: sb_data["rules"].append({"ip_cidr": combined_ips})
         with open(sb_path, 'w', encoding='utf-8') as f:
@@ -621,7 +610,7 @@ def main():
             f.write("    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n")
             f.write("        return \"DIRECT\";\n    }\n\n")
             f.write("    var suffix = host.toLowerCase();\n")
-            f.write("    while (suffix) {\n")
+            f.write("    var while (suffix) {\n")
             f.write("        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {\n")
             f.write("            return \"DIRECT\";\n")
             f.write("        }\n")
