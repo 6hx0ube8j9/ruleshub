@@ -1,17 +1,13 @@
 # Mihomo Payload Rule-Set: 1234
 payload:
-  - DOMAIN-SUFFIX,baidu.com
-  - DOMAIN-SUFFIX,netflix.com
-  - DOMAIN-SUFFIX,tiktok.com
-  - DOMAIN,images.unsplash.com
-  - DOMAIN,mycompany.com.cn
-  - DOMAIN,test-lab.co.jp
-  - DOMAIN,www.google
-  - DOMAIN,www.microsoft.com
-  - DOMAIN-KEYWORD,hbogoasia
-  - DOMAIN-REGEX,^+.*\.apple\.com$
-  - PROCESS-NAME,DownloadService
-  - DST-PORT,443
-  - IP-CIDR,10.10.10.10/32,no-resolve
-  - IP-CIDR,192.168.1.1/24,no-resolve
-  - IP-CIDR6,240e:97c:2f:1::/64,no-resolve
+  - DOMAIN-SUFFIX,apple.com
+  - DOMAIN-SUFFIX,crazy-mixed-up-domain.co.uk
+  - DOMAIN-SUFFIX,google.com
+  - DOMAIN-SUFFIX,xn--4gqwa568jupw.com
+  - DOMAIN,xn--fiqs8sirgfmh.xn--zfr164b.cn
+  - DOMAIN-KEYWORD,google.com
+  - DOMAIN-REGEX,^+\..*\.google\.com$
+  - PROCESS-NAME,Clash.Meta.exe
+  - DST-PORT,80-443
+  - IP-CIDR,1.1.1.1/32,no-resolve
+  - IP-CIDR,192.168.1.1/99,no-resolve

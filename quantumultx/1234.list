@@ -1,16 +1,11 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
-host-suffix, baidu.com, 1234
-host-suffix, netflix.com, 1234
-host-suffix, tiktok.com, 1234
-host, images.unsplash.com, 1234
-host, mycompany.com.cn, 1234
-host, test-lab.co.jp, 1234
-host, www.google, 1234
-host, www.microsoft.com, 1234
-host-keyword, hbogoasia, 1234
-host-wildcard, +*.apple.com, 1234
-user-agent, Twitter*, 1234
-ip-cidr, 10.10.10.10/32, 1234, no-resolve
-ip-cidr, 192.168.1.1/24, 1234, no-resolve
-ip6-cidr, 240e:97c:2f:1::/64, 1234, no-resolve
+host-suffix, apple.com, 1234
+host-suffix, crazy-mixed-up-domain.co.uk, 1234
+host-suffix, google.com, 1234
+host-suffix, xn--4gqwa568jupw.com, 1234
+host, xn--fiqs8sirgfmh.xn--zfr164b.cn, 1234
+host-keyword, google.com, 1234
+host-wildcard, +.*.google.com, 1234
+ip-cidr, 1.1.1.1/32, 1234, no-resolve
+ip-cidr, 192.168.1.1/99, 1234, no-resolve

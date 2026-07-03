@@ -3,45 +3,41 @@
   "rules": [
     {
       "domain_suffix": [
-        "baidu.com",
-        "netflix.com",
-        "tiktok.com"
+        "apple.com",
+        "crazy-mixed-up-domain.co.uk",
+        "google.com",
+        "xn--4gqwa568jupw.com"
       ]
     },
     {
       "domain": [
-        "images.unsplash.com",
-        "mycompany.com.cn",
-        "test-lab.co.jp",
-        "www.google",
-        "www.microsoft.com"
+        "xn--fiqs8sirgfmh.xn--zfr164b.cn"
       ]
     },
     {
       "domain_keyword": [
-        "hbogoasia"
+        "google.com"
       ]
     },
     {
       "process_name": [
-        "DownloadService"
+        "Clash.Meta.exe"
       ]
     },
     {
-      "port": [
-        443
+      "port_range": [
+        "80-443"
       ]
     },
     {
       "domain_regex": [
-        "^+.*\\.apple\\.com$"
+        "^+\\..*\\.google\\.com$"
       ]
     },
     {
       "ip_cidr": [
-        "10.10.10.10/32",
-        "192.168.1.1/24",
-        "240e:97c:2f:1::/64"
+        "1.1.1.1/32",
+        "192.168.1.1/99"
       ]
     }
   ]

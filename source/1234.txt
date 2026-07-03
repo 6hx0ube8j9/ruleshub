@@ -1,26 +1,30 @@
-# === 1234 Combined Base Rules (Phase 5: The Doomsday Spec) ===
+# === 1234 Combined Base Rules ===
 
-# --- 1. 终极畸形：国际化中文域名（测试 try_punycode_encode 模块） ---
-# 正常维护者绝不会写中文，但摆烂的人会直接把中文域名贴进来！
-domain,中国政府.政务.cn.
-suffix,百度一下.com
-
-# --- 2. 彻底摆烂：前导、尾部、中段多重带点与空格的大杂烩 ---
-  -  DOMAIN-SUFFIX,  .crazy-mixed-up-domain.co.uk.  
-.apple.com...
-+.*.google.com..
-
-# --- 3. 语义冲突与溢出测试（测试树状去重的极限承受力） ---
-# 先给一个极大的 suffix 伞，再给一堆不同层级的子域名和重复项
+# --- TYPE: SUFFIX ---
+suffix,apple.com
+suffix,crazy-mixed-up-domain.co.uk
 suffix,google.com
-full,www.google.com
-full,mail.google.com.
+suffix,xn--4gqwa568jupw.com
+
+# --- TYPE: FULL ---
 full,deep.sub.blog.google.com
+full,mail.google.com
+full,www.google.com
+full,xn--fiqs8sirgfmh.xn--zfr164b.cn
+
+# --- TYPE: KEYWORD ---
 keyword,google.com
 
-# --- 4. 传输层与协议层大乱斗 ---
-# 带有非标端口的 IP、破损的 CIDR、以及奇葩大小写
-IP-CIDR,1.1.1.1/32:80.
+# --- TYPE: WILDCARD ---
+wildcard,+.*.google.com
+
+# --- TYPE: IP ---
+ip,1.1.1.1/32
 ip,192.168.1.1/99
-port,80-443
+
+# --- TYPE: PROCESS ---
 process,Clash.Meta.exe
+
+# --- TYPE: PORT ---
+port,80-443
+
