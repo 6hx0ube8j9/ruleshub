@@ -344,6 +344,8 @@ def process_file_to_targets(file_name, global_matrix):
     singbox_target = policy.get('singbox', base_name)
     pac_target = policy.get('pac', None)
     mihomo_target = policy.get('mihomo', base_name)
+    msr_enable = policy.get('msr', True)
+    srs_enable = policy.get('srs', True)
     
     if 'qx_policy' in policy:
         qx_policy_label = policy['qx_policy']
@@ -456,7 +458,18 @@ def main():
         allocated_names.add(real_name)
         FILE_POLICY_ROUTER_CLEANED[real_name] = policy_card
 
+    if os.path.exists(SOURCE_DIR):
+        for f in os.listdir(SOURCE_DIR):
+            if f.endswith('.txt'):
+                local_base_name = os.path.splitext(f)[0].lower()
+                if local_base_name not in FILE_POLICY_ROUTER_CLEANED:
+                    FILE_POLICY_ROUTER_CLEANED[local_base_name] = {
+                        'name': local_base_name,
+                        'url': []
+                    }
+
     print("Phase 1: Syncing remote rules into local source .txt documents...")
+
     for target_base_name, policy_card in FILE_POLICY_ROUTER_CLEANED.items():
         sync_remote_to_local_source(target_base_name, policy_card)
 
