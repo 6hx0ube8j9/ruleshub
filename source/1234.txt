@@ -1,33 +1,49 @@
-# === 1234 Combined Base Rules ===
+# === 1. 边缘注释与特殊空白字符测试 ===
+   # 前置空格注释
+// 双斜杠风格注释
+; 分号风格注释
+- DOMAIN,leading-dash-error.com # 带前置减号的复合行
+payload: # YAML 常见头部，应该被直接忽略
 
-# --- TYPE: SUFFIX ---
-suffix,fast.com
-suffix,github.com
-suffix,steamcommunity.com
+# === 2. 高级正则表达式与特殊符号测试 (压力核心) ===
+DOMAIN-REGEX,^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+edu\.cn$
+REGEX,^https?:\/\/.*\.netflix\.com\/title\/.*$
+DOMAIN-REGEX,(bytedance|tiktok)\.com$ # 内部带管道符和括号的正则
 
-# --- TYPE: FULL ---
-full,epicgames.com
-full,rules.example.com
-full,telemetry.microsoft.com
+# === 3. 通配符与单值泛解析测试 ===
+DOMAIN-WILDCARD,*.pan.baidu.com
+*.sub.google.com
++.microsoft.com
+.apple.com
+*~netflix.com
 
-# --- TYPE: KEYWORD ---
-keyword,spotify
-keyword,twitter
-keyword,ubisoft
+# === 4. 国际化域名 (IDN 中文域名 Punycode 测试) ===
+DOMAIN,哔哩哔哩.com
+DOMAIN-SUFFIX,腾讯网.cn
+阿里云.中国
 
-# --- TYPE: WILDCARD ---
-wildcard,discord.gg
+# === 5. 黑名单与公共后缀拦截测试 (应被脚本剔除) ===
+com
+net.cn
+gov.hk
 
-# --- TYPE: IP ---
-ip,100.64.0.0/10
-ip,114.114.114.114/32
-ip,172.16.0.0/12
+# === 6. 混合嵌套与四段式域名测试 ===
+DOMAIN-SUFFIX,music.internal.dev.apple.com
+DOMAIN,very.long.sub.domain.structure.co.uk
 
-# --- TYPE: IP6 ---
-ip6,2001:4860:4860::8888/128
-ip6,2400:da00::/32
-ip6,2606:4700:4700::1111/128
+# === 7. 端口与端口段边界测试 ===
+DST-PORT,80
+PORT,443
+DST-PORT,8080-8090
+PORT,10000-20000
 
-# --- TYPE: USERAGENT ---
-useragent,*TikTok*
+# === 8. IP 地址边界测试 (含端口溢出与掩码) ===
+192.168.1.1
+IP-CIDR,10.0.0.0/8
+192.168.1.100:8080 # 带单端口的 IPv4
+IP-CIDR6,2001:db8::/32
+[2001:db8:a0b:12f0::1]:443 # 带端口的 IPv6
 
+# === 9. 移除（反向流控）规则测试 ===
+REMOVE,*.pan.baidu.com
+REMOVE,ip,192.168.1.1
