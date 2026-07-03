@@ -3,17 +3,12 @@
   "rules": [
     {
       "domain_suffix": [
-        "microsoft.com"
+        "double-agent.com"
       ]
     },
     {
-      "port_range": [
-        "80-443"
-      ]
-    },
-    {
-      "ip_cidr": [
-        "1.1.1.1/32"
+      "domain_keyword": [
+        "netflix"
       ]
     }
   ]

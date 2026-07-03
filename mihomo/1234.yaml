@@ -1,5 +1,4 @@
 # Mihomo Payload Rule-Set: 1234
 payload:
-  - DOMAIN-SUFFIX,microsoft.com
-  - DST-PORT,80-443
-  - IP-CIDR,1.1.1.1/32,no-resolve
+  - DOMAIN-SUFFIX,double-agent.com
+  - DOMAIN-KEYWORD,netflix

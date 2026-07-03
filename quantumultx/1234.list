@@ -1,5 +1,4 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
-host-suffix, microsoft.com, 1234
-user-agent, *Telegram*📱🚀, 1234
-ip-cidr, 1.1.1.1/32, 1234, no-resolve
+host-suffix, double-agent.com, 1234
+host-keyword, netflix, 1234

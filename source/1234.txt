@@ -1,28 +1,8 @@
-# ===================================================
-# 🛸 异次元污染：代理节点与高级策略混杂压力测试集
-# ===================================================
+# === 1234 Combined Base Rules ===
 
-# 1. 误引入的原始节点链接 (URI 格式污染)
-ss://YWVzLTEyOC1nY206dGVzdA==@1.1.1.1:853#DefaultNode
-vmess://eyJ2IjogIjIiLCAicHMiOiAianVzdC5hLmRvbWFpbiIsICJwb3J0IjogNDQzLCAiaWQiOiAieXl5In0=
-trojan://pass@hk.node.com:443?peer=hk.node.com#HK_01
+# --- TYPE: SUFFIX ---
+suffix,double-agent.com
 
-# 2. Surge / Loon / QX 节点的声明配置行（带大量逗号和自定义参数）
-MyCustomNode = custom, 1.2.3.4, 443, chacha20-ietf-poly1305, mypassword, https://raw.githubusercontent.com
-shadowsocks-node = ss, 5.6.7.8, 1234, method=aes-256-gcm, password=123, fast-open=false, udp-relay=true
-香港节点 = http, 8.8.8.8, 8080, username, password, tls=true
+# --- TYPE: KEYWORD ---
+keyword,netflix
 
-# 3. Clash 节点定义切片 (YAML 格式节点污染)
-  - name: "Standard_SS_Node"
-    type: ss
-    server: node.clash.xyz
-    cipher: aes-128-gcm
-
-# 4. Surge / Loon 的高级逻辑规则 (多重嵌套)
-AND,((SRC-IP,192.168.1.10), (DOMAIN-SUFFIX,google.com)),PROXY
-OR,((DOMAIN-KEYWORD,torrent), (PROTOCOL,UDP)),REJECT
-
-# 5. 带有极其复杂的自定义策略组名称（包含空格、特殊符号、甚至没有逗号的畸形行）
-host-suffix, double-agent.com, 🛑 终极 拦截 策略 组!
-host-keyword, netflix, 🚀 Proxy [Netflix 特殊群组]
-just-a-lonely-string-without-any-meaning
