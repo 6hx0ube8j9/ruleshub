@@ -1,21 +1,16 @@
 # Mihomo Payload Rule-Set: 1234
 payload:
-  - DOMAIN-SUFFIX,apple.com
   - DOMAIN-SUFFIX,microsoft.com
-  - DOMAIN-SUFFIX,xn--9kqx25nv1c.xn--fiqs8s
-  - DOMAIN-SUFFIX,xn--ur0an8bw2p.cn
+  - DOMAIN-SUFFIX,xn--microsoft-z52rl613b.xn--fiqs8s
+  - DOMAIN-SUFFIX,xn--mnchen-airport-gsb.de
   - DOMAIN,leading-dash-error.com
-  - DOMAIN,very.long.sub.domain.structure.co.uk
   - DOMAIN,xn--2vra6db.com
-  - DOMAIN-REGEX,(bytedance|tiktok)\.com$
-  - DOMAIN-REGEX,^https?:\/\/.*\.netflix\.com\/title\/.*$
-  - DOMAIN-REGEX,^.*\.pan\.baidu\.com$
-  - DOMAIN-REGEX,^.*\.sub\.google\.com$
   - DOMAIN-REGEX,^.*~netflix\.com$
+  - DOMAIN-REGEX,^..._special_.*\.tw$
+  - DOMAIN-REGEX,^sub.*\.google\..*\.com$
   - DST-PORT,10000-20000
-  - DST-PORT,443
   - DST-PORT,80
   - DST-PORT,8080-8090
   - IP-CIDR,10.0.0.0/8,no-resolve
   - IP-CIDR,192.168.1.100/32,no-resolve
-  - IP-CIDR6,2001:db8::/32,no-resolve
+  - IP-CIDR6,2001:db8::/128,no-resolve

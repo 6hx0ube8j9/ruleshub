@@ -1,17 +1,13 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
-host-suffix, apple.com, 1234
 host-suffix, microsoft.com, 1234
-host-suffix, xn--9kqx25nv1c.xn--fiqs8s, 1234
-host-suffix, xn--ur0an8bw2p.cn, 1234
+host-suffix, xn--microsoft-z52rl613b.xn--fiqs8s, 1234
+host-suffix, xn--mnchen-airport-gsb.de, 1234
 host, leading-dash-error.com, 1234
-host, very.long.sub.domain.structure.co.uk, 1234
 host, xn--2vra6db.com, 1234
-host-wildcard, *.pan.baidu.com, 1234
-host-wildcard, *.sub.google.com, 1234
 host-wildcard, *~netflix.com, 1234
-host-regex, (bytedance|tiktok)\.com$, 1234
-host-regex, ^https?:\/\/.*\.netflix\.com\/title\/.*$, 1234
+host-wildcard, ???_special_*.tw, 1234
+host-wildcard, sub*.google.*.com, 1234
 ip-cidr, 10.0.0.0/8, 1234, no-resolve
 ip-cidr, 192.168.1.100/32, 1234, no-resolve
-ip6-cidr, 2001:db8::/32, 1234, no-resolve
+ip6-cidr, 2001:db8::/128, 1234, no-resolve

@@ -3,23 +3,20 @@
   "rules": [
     {
       "domain_suffix": [
-        "apple.com",
         "microsoft.com",
-        "xn--9kqx25nv1c.xn--fiqs8s",
-        "xn--ur0an8bw2p.cn"
+        "xn--microsoft-z52rl613b.xn--fiqs8s",
+        "xn--mnchen-airport-gsb.de"
       ]
     },
     {
       "domain": [
         "leading-dash-error.com",
-        "very.long.sub.domain.structure.co.uk",
         "xn--2vra6db.com"
       ]
     },
     {
       "port": [
-        80,
-        443
+        80
       ]
     },
     {
@@ -30,18 +27,16 @@
     },
     {
       "domain_regex": [
-        "(bytedance|tiktok)\\.com$",
-        "^.*\\.pan\\.baidu\\.com$",
-        "^.*\\.sub\\.google\\.com$",
         "^.*~netflix\\.com$",
-        "^https?:\\/\\/.*\\.netflix\\.com\\/title\\/.*$"
+        "^..._special_.*\\.tw$",
+        "^sub.*\\.google\\..*\\.com$"
       ]
     },
     {
       "ip_cidr": [
         "10.0.0.0/8",
         "192.168.1.100/32",
-        "2001:db8::/32"
+        "2001:db8::/128"
       ]
     }
   ]
