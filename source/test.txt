@@ -1,0 +1,28 @@
+# ==========================================
+# 压力测试：大杂烩乱码文本
+# ==========================================
+
+// 1. 各类奇葩空格、大小写和空行
+   dOMAIN-sUFFIX,   Apple.com   
+   
+- FULL,Google.com
+
+# 2. 乱入的 Clash / Surge / QX 格式（脚本需要自动兼容并提取）
+payload:
+  - '+.github.com'
+  - 'microsoft.com'
+host-suffix, netflix.com, proxy
+host, youtube.com, proxy
+IP-CIDR, 192.168.1.1/24, no-resolve
+
+# 3. 域名长短伞状“子域名包含关系”（测试优化去重功能）
+suffix,sub.github.com
+full,music.apple.com
+
+# 4. 冲突测试：同时出现并存，且带有大小写
+suffix,badad.com
+REMOVE,BadAd.com
+
+# 5. 奇葩非法输入（测试脚本的过滤防错能力）
+suffix,baidu.com/search?q=123
+full,123@qq.com
