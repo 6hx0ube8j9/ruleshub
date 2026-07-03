@@ -56,14 +56,15 @@ jobs:
           echo "IP MRS"
           for ip_yaml in tmp_ip_*.yaml; do
             base_name=$(echo "$ip_yaml" | sed 's/tmp_ip_//' | sed 's/.yaml//')
-            # 【修改点 2】调用上层目录的 ../mihomo-bin
             ../mihomo-bin convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}.mrs"
+            rm -f "$ip_yaml"
           done
           
           echo "Domain MRS"
           for dm_yaml in tmp_domain_*.yaml; do
             base_name=$(echo "$dm_yaml" | sed 's/tmp_domain_//' | sed 's/.yaml//')
             ../mihomo-bin convert-ruleset domain yaml "$dm_yaml" "${base_name}.mrs"
+            rm -f "$dm_yaml"
           done
           
           rm -f tmp_ip_*.yaml tmp_domain_*.yaml
