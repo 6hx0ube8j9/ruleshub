@@ -1,27 +1,25 @@
-# === 1234 Combined Base Rules ===
+# ===================================================
+# 🧬 维度崩塌：地狱级混沌压力测试集 (Chaos Pack v2)
+# ===================================================
 
-# --- TYPE: SUFFIX ---
-suffix,apple.com
-suffix,google.com
-suffix,netflix.com
-suffix,xn--2vra6db.xn--fiqs8s
+# 1. 连续逗号、极端空白与幽灵空 Token
+host-suffix,, google.com, proxy
+,,
+IP-CIDR,  ,direct
 
-# --- TYPE: FULL ---
-full,nested-dash.com
+# 2. 带有特殊尾部修饰、自定义策略与端口污染
+host-suffix, microsoft.com, DIRECT, force-remote-dns, tag=MS_Rule, notification-id=100
+ip-cidr, 1.1.1.1/32:443, proxy
 
-# --- TYPE: KEYWORD ---
-keyword,youtube
+# 3. 畸形域名边界（非法连字符、末尾藏点、纯符号乱舞）
+-domain-suffix, -bad-start.com
+host, trailing-dot.com.
++., google.com
 
-# --- TYPE: WILDCARD ---
-wildcard,my-wildcard.com
+# 4. 混合型高级规则、多范围端口与 Emoji 污染
+USER-AGENT, *Telegram*📱🚀, proxy
+dst-port, 80-443, direct
 
-# --- TYPE: IP ---
-ip,10.0.0.0/8
-ip,192.168.0.0/16
-
-# --- TYPE: IP6 ---
-ip6,2001:db8::/32
-
-# --- TYPE: USERAGENT ---
-useragent,*Streaming*
-
+# 5. IPv4-Mapped IPv6 与越界伪装 IP
+IP-CIDR6, ::ffff:192.168.1.1/128, direct
+ip, 999.999.999.999/32
