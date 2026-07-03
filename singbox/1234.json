@@ -3,40 +3,46 @@
   "rules": [
     {
       "domain_suffix": [
-        "microsoft.com",
-        "xn--microsoft-z52rl613b.xn--fiqs8s",
-        "xn--mnchen-airport-gsb.de"
+        "github.com",
+        "netflix.com",
+        "telegram.org"
       ]
     },
     {
       "domain": [
-        "leading-dash-error.com",
-        "xn--2vra6db.com"
+        "images.unsplash.com"
+      ]
+    },
+    {
+      "domain_keyword": [
+        "spotify",
+        "youtube"
+      ]
+    },
+    {
+      "process_name": [
+        "DownloadService",
+        "com.tencent.xin"
       ]
     },
     {
       "port": [
-        80
-      ]
-    },
-    {
-      "port_range": [
-        "10000-20000",
-        "8080-8090"
+        22,
+        443
       ]
     },
     {
       "domain_regex": [
-        "^.*~netflix\\.com$",
-        "^..._special_.*\\.tw$",
-        "^sub.*\\.google\\..*\\.com$"
+        "^.*-matrix\\.tg\\.me$",
+        "^.*\\.internal\\.crop\\.net$"
       ]
     },
     {
       "ip_cidr": [
-        "10.0.0.0/8",
-        "192.168.1.100/32",
-        "2001:db8::/128"
+        "10.10.10.10/32",
+        "192.168.1.1/24",
+        "240e:97c:2f:1::/64",
+        "fe80::1/128"
       ]
     }
   ]

@@ -1,16 +1,18 @@
 # Shadowrocket Rule-Set: 1234
 
-DOMAIN-SUFFIX,microsoft.com
-DOMAIN-SUFFIX,xn--microsoft-z52rl613b.xn--fiqs8s
-DOMAIN-SUFFIX,xn--mnchen-airport-gsb.de
-DOMAIN,leading-dash-error.com
-DOMAIN,xn--2vra6db.com
-DOMAIN-WILDCARD,*~netflix.com
-DOMAIN-WILDCARD,???_special_*.tw
-DOMAIN-WILDCARD,sub*.google.*.com
-DST-PORT,10000-20000
-DST-PORT,80
-DST-PORT,8080-8090
-IP-CIDR,10.0.0.0/8,no-resolve
-IP-CIDR,192.168.1.100/32,no-resolve
-IP-CIDR6,2001:db8::/128,no-resolve
+DOMAIN-SUFFIX,github.com
+DOMAIN-SUFFIX,netflix.com
+DOMAIN-SUFFIX,telegram.org
+DOMAIN,images.unsplash.com
+DOMAIN-KEYWORD,spotify
+DOMAIN-KEYWORD,youtube
+DOMAIN-WILDCARD,*-matrix.tg.me
+DOMAIN-WILDCARD,*.internal.crop.net
+USER-AGENT,Twitter*
+USER-AGENT,WhatsApp/2.23
+DST-PORT,22
+DST-PORT,443
+IP-CIDR,10.10.10.10/32,no-resolve
+IP-CIDR,192.168.1.1/24,no-resolve
+IP-CIDR6,240e:97c:2f:1::/64,no-resolve
+IP-CIDR6,fe80::1/128,no-resolve
