@@ -3,4 +3,3 @@ payload:
   - DOMAIN-SUFFIX,microsoft.com
   - DST-PORT,80-443
   - IP-CIDR,1.1.1.1/32,no-resolve
-  - IP-CIDR,999.999.999.999/32,no-resolve
