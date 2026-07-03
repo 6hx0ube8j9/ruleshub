@@ -34,7 +34,6 @@ FILE_POLICY_ROUTER = [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list'
         ]
     },
-    {'name': 'test'},
     {'name': '', 'url': 'https://remote.com/Apple.list'},
     {'name': 'direct', 'mrs': True, 'qx': 'direct', 'sr': 'direct', 'singbox': 'direct', 'mihomo': 'direct', 'qx_policy': 'direct'}
 ]
@@ -134,10 +133,10 @@ def clean_and_parse_line(line):
             return 'remove', target_val
             
         if p1 in ['DOMAIN-REGEX', 'REGEX']:
-            return 'regex', p2  
+            return 'regex', p2
 
         if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
-            return 'wildcard', p2.lower() 
+            return 'wildcard', p2.lower()
 
         p2_clean = p2.lower()
         if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
@@ -372,9 +371,6 @@ def process_file_to_targets(file_name, global_matrix):
         elif file_keyword == 'reject': qx_policy_label = 'reject'
         else: qx_policy_label = base_name.capitalize()
         
-    mrs_enable = policy.get('mrs', True)
-    srs_enable = policy.get('srs', True)
-    
     rules = {
         'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(), 'regex': set(),
         'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set(),
@@ -394,7 +390,6 @@ def process_file_to_targets(file_name, global_matrix):
             if r_type != 'remove':
                 rules[r_type] -= rules['remove']
 
-    # 填充全局多维路由矩阵
     if qx_target not in global_matrix['qx']:
         global_matrix['qx'][qx_target] = {
             'policy_label': qx_policy_label,
@@ -464,7 +459,7 @@ def process_file_to_targets(file_name, global_matrix):
                 regex_list = []
                 for w in rules['wildcard']:
                     r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
-                    regex_list.append(r)
+                    regex_list.append(f"^{r}$")
                 for r in rules['regex']:
                     regex_list.append(r)
                 sb_tmp_domain["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
@@ -585,7 +580,7 @@ def main():
             regex_list = []
             for w in g_rules['wildcard']:
                 r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
-                regex_list.append(r)
+                regex_list.append(f"^{r}$")
             for r in g_rules['regex']:
                 regex_list.append(r)
             sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
@@ -610,7 +605,7 @@ def main():
             f.write("    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n")
             f.write("        return \"DIRECT\";\n    }\n\n")
             f.write("    var suffix = host.toLowerCase();\n")
-            f.write("    var while (suffix) {\n")
+            f.write("    while (suffix) {\n")
             f.write("        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {\n")
             f.write("            return \"DIRECT\";\n")
             f.write("        }\n")
