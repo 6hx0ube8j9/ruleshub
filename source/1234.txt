@@ -1,8 +1,27 @@
-# === 1234 Combined Base Rules ===
+# ===================================================
+# 🎯 第四弹：跨平台标准格式交叉压力测试集 (Chaos Pack v4)
+# ===================================================
 
-# --- TYPE: SUFFIX ---
-suffix,double-agent.com
+# 1. Clash / Mihomo 标准 3 段与 4 段规则
+DOMAIN,rules.example.com,PROXY
+DOMAIN-SUFFIX,github.com,PROXY
+DOMAIN-KEYWORD,twitter,PROXY
+DOMAIN-REGEX,^.*\.tg\.me$,PROXY
+IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+IP-CIDR6,2606:4700:4700::1111/128,PROXY,no-resolve
 
-# --- TYPE: KEYWORD ---
-keyword,netflix
+# 2. Quantumult X 标准 3 段与 4 段规则
+host-suffix, fast.com, proxy
+host, telemetry.microsoft.com, reject
+host-keyword, spotify, proxy
+host-wildcard, *.discord.gg, proxy
+user-agent, *TikTok*, proxy
+ip-cidr, 100.64.0.0/10, direct, no-resolve
+ip6-cidr, 2001:4860:4860::8888/128, proxy
 
+# 3. Shadowrocket 标准 3 段与 4 段规则
+DOMAIN-SUFFIX,steamcommunity.com,PROXY
+DOMAIN,epicgames.com,DIRECT
+DOMAIN-KEYWORD,ubisoft,PROXY
+IP-CIDR,114.114.114.114/32,DIRECT,no-resolve
+IP-CIDR6,2400:da00::/32,PROXY,no-resolve
