@@ -1,35 +1,44 @@
-# === 1234 Combined Base Rules ===
+# =========================================================
+# 第三轮：全场景终极规则压力测试数据集 (2026 工业级边界验证)
+# =========================================================
 
-# --- TYPE: REMOVE ---
-remove,deleted-stub.com
+# 1. 验证：大写前缀与显式/隐式公共后缀黑名单防御
+DOMAIN-SUFFIX,+.GOOGLE.CO.JP
++.COM.TW
+NET.CN
+DOMAIN,*.AMAZON.CO.UK
+.MICROSOFT.COM
++APPLE.COM
 
-# --- TYPE: SUFFIX ---
-suffix,apple.com
-suffix,com.tw
-suffix,microsoft.com
-suffix,xn--fiq228c.xn--io0a7i
-suffix,xn--j6w193g.xn--55qx5d
-suffix,yaml-mix.com
+# 2. 验证：带有端口的 IPv4 和 IPv6（精准轰炸端口剥离器）
+1.1.1.1:443
+IP-CIDR,8.8.8.8:53
+2001:db8::1:80
+IP-CIDR6,240c::6666:8080
+DOMAIN,1.1.1.1:8443
+[2001:db8::1]:443
 
-# --- TYPE: FULL ---
-full,192.168.1.1.pcloud.com
-full,github.com
-full,openai.com
+# 3. 验证：REMOVE（删除）指令的各种变体对齐
+REMOVE,+.DELETED-STUB.COM
+REMOVE,DOMAIN-SUFFIX,*.bad-upstream.net
+REMOVE,DOMAIN,+.another-trash.org
+  - REMOVE,  spaces-trim.com  
 
-# --- TYPE: KEYWORD ---
-keyword,space-keyword
+# 4. 验证：通配符与 Sing-box 正则转换（点与符号的错配地狱）
+abc??xyz.test.com
+*.*.double-wildcard.net
+?.single-char.org
+*.wildcard-with-dash-?-test.*.cn
 
-# --- TYPE: WILDCARD ---
-wildcard,abc??.gallery.tw
-wildcard,dot-star-prefix.org
-wildcard,double-prefix.com
-wildcard,one?two*.org
-wildcard,wildcard-?-test.*.cn
+# 5. 验证：畸形格式、前后缀揉捏与特殊字符
+payload:
+  - 'DOMAIN-SUFFIX,yaml-mix-style.com'
+....too-many-dots.net....
++.-.+.-.garbage-prefix.io
+invalid_char^$#_test.com
+percent%sign-in-domain.com
 
-# --- TYPE: IP ---
-ip,1.1.1.1/32
-ip,8.8.8.8/32
-
-# --- TYPE: IP6 ---
-ip6,2001:db8::1:80/128
-
+# 6. 验证：国际化域名 (IDN) 与 Punycode 转换
++.中国.公司
+DOMAIN,中文.网络
++.xn--fiq228c.xn--io0a7i
