@@ -1,33 +1,35 @@
-# === 1234 Combined Base Rules ===
+# === 1234 Combined Base Rules (Phase 3: Full Field Standard Spec) ===
 
-# --- TYPE: REMOVE ---
-remove,192.168.1.1
-remove,ad-tracker.net
-remove,pan.baidu.com
+# --- 1. 标准域名与后缀 (全平台支持) ---
+domain-suffix,telegram.org
+domain,images.unsplash.com
 
-# --- TYPE: SUFFIX ---
-suffix,microsoft.com
-suffix,xn--microsoft-z52rl613b.xn--fiqs8s
-suffix,xn--mnchen-airport-gsb.de
+# --- 2. 各种非标、缩写域名字段 (检验 clean_and_parse_line 的多模态兼容) ---
+host-suffix,github.com
+host,api.github.com
+suffix,netflix.com
+full,www.netflix.com
 
-# --- TYPE: FULL ---
-full,leading-dash-error.com
-full,xn--2vra6db.com
+# --- 3. 关键字与通配符测试 (检验 跨平台降级/翻译) ---
+# QX 不支持 keyword -> 保持或丢弃；Sing-box 转换为 domain_keyword
+domain-keyword,spotify
+host-keyword,youtube
+# 通配符：Mihomo/Sing-box 转换成 regex，QX 转换成 host-wildcard
+wildcard,*.internal.crop.net
+host-wildcard,*-matrix.tg.me
 
-# --- TYPE: WILDCARD ---
-wildcard,*~netflix.com
-wildcard,???_special_*.tw
-wildcard,sub*.google.*.com
+# --- 4. 进程与用户代理 (高级应用层拦截) ---
+# QX/小火箭支持 UA；Mihomo/Sing-box 支持 Process-Name
+user-agent,Twitter*
+useragent,WhatsApp/2.23
+process-name,com.tencent.xin
+process,DownloadService
 
-# --- TYPE: IP ---
-ip,10.0.0.0/8
-ip,192.168.1.100/32
-
-# --- TYPE: IP6 ---
-ip6,2001:db8::/128
-
-# --- TYPE: PORT ---
-port,10000-20000
-port,80
-port,8080-8090
-
+# --- 5. 网络层与传输层字段 (IP/CIDR/PORT) ---
+# 检查是否会自动补全无掩码 IP，并追加 no-resolve
+ip-cidr,192.168.1.1/24
+ip,10.10.10.10
+ip6-cidr,240e:97c:2f:1::/64
+ip6,fe80::1
+port,443
+dst-port,22
