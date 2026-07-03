@@ -2,17 +2,49 @@
 import os
 import json
 import re
+import requests
 
 SOURCE_DIR = 'source'
 SHADOWROCKET_DIR = 'shadowrocket'
 QUANTUMULTX_DIR = 'quantumultx'
-CLASH_DIR = 'clash'
+MIHOMO_DIR = 'mihomo'
 PAC_DIR = 'pac'
 SINGBOX_DIR = 'singbox'
 
-for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, CLASH_DIR, PAC_DIR, SINGBOX_DIR]:
+for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SINGBOX_DIR]:
     if not os.path.exists(d):
         os.makedirs(d)
+
+
+FILE_POLICY_ROUTER = [
+    # 示例 1: 多合一
+    {
+        'name': 'block', 'msr': False, 'srs': True, 'qx_policy': 'reject', 'qx': 'block', 'sr': 'block', 'singbox': 'block', 'mihomo': 'block',
+        'url': [
+            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list',
+            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Privacy/Privacy.list',
+            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list'
+        ]
+    },
+
+    # 示例 2: 跨境合流分发矩阵（字段保持单行，长 URL 垂直排开）
+    {
+        'name': 'microsoft', 'msr': True, 'pac': 'productivity', 'qx': 'gaming', 'sr': 'gaming', 'singbox': 'productivity', 'mihomo': 'productivity', 'qx_policy': 'proxy',
+        'url': [
+            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list',
+            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list'
+        ]
+    },
+
+    # 示例 3: 紧凑型单行本
+    {'name': 'apple987', 'url': 'https://remote.com/Apple.list', 'msr': False, 'pac': 'apple253', 'qx': 'apple123', 'sr': 'apple123', 'singbox': 'apple253', 'mihomo': 'apple253', 'qx_policy': 'proxy'},
+
+    # 示例 4: 空键名智能命名
+    {'name': '', 'url': 'https://remote.com/Apple.list'},
+
+    # 示例 6: 读取本地 source/direct.txt 执行转换
+    {'name': 'direct', 'msr': True, 'qx': 'direct', 'sr': 'direct', 'singbox': 'direct', 'mihomo': 'direct', 'qx_policy': 'direct'}
+]
 
 IPV4_REGEX = re.compile(r'^(\d{1,3}\.){3}\d{1,3}(/\d{1,2})?$')
 IPV6_REGEX = re.compile(r'^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}(/\d{1,3})?$')
@@ -23,7 +55,7 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'app', 'dev', 'shop', 'club', 'top', 'xyz', 'vip', 'fun', 'site', 'online', 'tech', 'store',
     'work', 'live', 'link', 'icu', 'ltd', 'art', 'blog', 'news', 'wiki', 'chat', 'space', 'me',
     'cn', 'hk', 'tw', 'mo', 'jp', 'kr', 'sg', 'my', 'us', 'uk', 'ca', 'au', 'de', 'fr', 'ru',
-    'ai', 'io', 'co', 'so', 'to', 'do', 'in', 'cc', 'tv', 'me', 'la', 'fm', 'am', 'im', 'gg',
+    'ai', 'io', 'co', 'so', 'to', 'do', 'in', 'cc', 'tv', 'la', 'fm', 'am', 'im', 'gg',
     'com.cn', 'net.cn', 'org.cn', 'gov.cn', 'edu.cn', 'mil.cn', 'ac.cn', 'ah.cn', 'bj.cn', 'cq.cn',
     'fj.cn', 'gd.cn', 'gs.cn', 'gx.cn', 'gz.cn', 'ha.cn', 'hb.cn', 'he.cn', 'hi.cn', 'hl.cn',
     'hn.cn', 'jl.cn', 'js.cn', 'jx.cn', 'ln.cn', 'nm.cn', 'nx.cn', 'qh.cn', 'sc.cn', 'sd.cn',
@@ -41,7 +73,28 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za'
 }
 
-global_pac_domains = set()
+def get_smart_base_name(key_name, policy, existing_names):
+    if key_name.strip():
+        base = key_name.strip().lower()
+    else:
+        url = policy.get('url', '')
+        first_url = url[0] if isinstance(url, list) and url else url
+        base = 'apple'
+        if first_url:
+            try:
+                last_part = first_url.split('/')[-1]
+                extracted = os.path.splitext(last_part)[0]
+                if extracted.strip():
+                    base = extracted.strip().lower()
+            except Exception:
+                pass
+                
+    orig_base = base
+    counter = 1
+    while base in existing_names:
+        base = f"{orig_base}_{counter}"
+        counter += 1
+    return base
 
 def try_punycode_encode(domain_str):
     if domain_str.isascii():
@@ -52,7 +105,6 @@ def try_punycode_encode(domain_str):
         return None
 
 def has_invalid_domain_chars(domain_str):
-    """拦截带有斜杠、空格、问号等绝对不属于域名的非法字符"""
     return any(c in domain_str for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')'])
 
 def clean_and_parse_line(line):
@@ -61,7 +113,6 @@ def clean_and_parse_line(line):
         return None, None
         
     line = line.split('#')[0].split('//')[0].strip()
-    
     if line.startswith('-'):
         line = line.lstrip('-').strip()
     line = line.replace("'", "").replace('"', "")
@@ -78,7 +129,11 @@ def clean_and_parse_line(line):
         if p1 in ['AND', 'OR', 'NOT']:
             return None, None
             
-        # 针对带标签域名注入强力字符安全拦截
+        if p1 == 'REMOVE':
+            if len(parts) >= 3 and parts[1].upper() in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL', 'KEYWORD']:
+                return 'remove', parts[2].lower()
+            return 'remove', p2.lower()
+            
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL']:
             if has_invalid_domain_chars(p2.lower()):
                 return None, None
@@ -115,14 +170,12 @@ def clean_and_parse_line(line):
         return None, None
 
     raw_val = line.lower()
-    
     if IPV4_REGEX.match(raw_val):
         return 'ip', raw_val
     if IPV6_REGEX.match(raw_val):
         return 'ip6', raw_val
         
     is_explicit_suffix = False
-    
     if raw_val.startswith('+.'): 
         raw_val = raw_val[2:]
         is_explicit_suffix = True
@@ -135,14 +188,13 @@ def clean_and_parse_line(line):
     elif raw_val.startswith('+'): 
         raw_val = raw_val[1:]
         is_explicit_suffix = True
-    
+        
     raw_val = raw_val.lstrip('.')
     if not raw_val:
         return None, None
         
     if '*' in raw_val or '?' in raw_val:
         return 'wildcard', raw_val
-        
     if has_invalid_domain_chars(raw_val):
         return None, None
         
@@ -161,7 +213,6 @@ def clean_and_parse_line(line):
             
             parts = raw_val.split('.')
             parts_count = len(parts)
-            
             last_2_parts = '.'.join(parts[-2:]) if parts_count >= 2 else ''
             is_compound_public = last_2_parts in PUBLIC_SUFFIX_BLACKLIST
             
@@ -177,12 +228,10 @@ def clean_and_parse_line(line):
 def optimize_domains(rules):
     if rules['suffix']:
         reversed_domains = sorted(['.'.join(reversed(d.split('.'))) + '.' for d in rules['suffix']])
-        
         clean_reversed = []
         for rd in reversed_domains:
             if not clean_reversed or not rd.startswith(clean_reversed[-1]):
                 clean_reversed.append(rd)
-        
         rules['suffix'] = {'.'.join(reversed(rd.rstrip('.').split('.'))) for rd in clean_reversed}
 
     if rules['full'] and rules['suffix']:
@@ -211,191 +260,299 @@ def parse_ports_for_singbox(port_set):
         else: p_list.append(int(p))
     return sorted(p_list), sorted(p_range)
 
-def process_file(file_name):
-    source_path = os.path.join(SOURCE_DIR, file_name)
-    base_name = os.path.splitext(file_name)[0]
-    file_keyword = base_name.lower()
+def sync_remote_to_local_source(base_name, policy):
+    source_path = os.path.join(SOURCE_DIR, f"{base_name}.txt")
+    
     rules = {
         'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(),
         'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set(),
-        'port': set()
+        'port': set(), 'remove': set()
     }
+    
+    if not os.path.exists(source_path):
+        with open(source_path, 'w', encoding='utf-8') as f:
+            f.write(f"# === {base_name.upper()} Local Base Rules ===\n\n")
+            
     with open(source_path, 'r', encoding='utf-8') as f:
         for line in f:
             rule_type, value = clean_and_parse_line(line)
             if rule_type in rules:
                 rules[rule_type].add(value)
-    optimize_domains(rules)
 
-    # 1. Source (IP 掩码这里自动补全，让最终生成的底稿无懈可击)
+    remove_set = rules['remove']
+    auth_set = set().union(*[rules[k] for k in rules.keys() if k != 'remove'])
+    
+    remote_url_cfg = policy.get('url')
+    url_list = []
+    if isinstance(remote_url_cfg, list):
+        url_list = remote_url_cfg
+    elif isinstance(remote_url_cfg, str) and remote_url_cfg.strip():
+        url_list = [remote_url_cfg]
+
+    for remote_url in url_list:
+        print(f"  -> Syncing & Merging url [{remote_url}] into source/{base_name}.txt...")
+        try:
+            response = requests.get(remote_url, timeout=15)
+            response.raise_for_status()
+            lines = response.text.splitlines()
+            for line in lines:
+                r_type, payload = clean_and_parse_line(line)
+                if not payload or r_type not in rules or r_type == 'remove':
+                    continue
+                if payload in remove_set or payload in auth_set:
+                    continue
+                rules[r_type].add(payload)
+        except Exception as e:
+            print(f"  -> [Warning] Failed to fetch upstream url: {e}")
+
     with open(source_path, 'w', encoding='utf-8') as f_source:
-        f_source.write(f"# === {base_name.upper()} Sorted Rules ===\n\n")
-        for r_type in ['suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port']:
+        f_source.write(f"# === {base_name.upper()} Combined Base Rules ===\n\n")
+        for r_type in ['remove', 'suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
                 for val in sorted(rules[r_type]):
-                    if r_type == 'ip':
-                        f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
-                    elif r_type == 'ip6':
-                        f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
-                    else:
-                        f_source.write(f"{r_type},{val}\n")
+                    if r_type == 'ip': f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
+                    elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
+                    else: f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
 
-    # 2. Shadowrocket
-    sr_path = os.path.join(SHADOWROCKET_DIR, f"{base_name}.list")
-    with open(sr_path, 'w', encoding='utf-8') as f_sr:
-        f_sr.write(f"# Shadowrocket Rule-Set: {base_name}\n\n")
-        for val in sorted(rules['suffix']): f_sr.write(f"DOMAIN-SUFFIX,{val}\n")
-        for val in sorted(rules['full']): f_sr.write(f"DOMAIN,{val}\n")
-        for val in sorted(rules['keyword']): f_sr.write(f"DOMAIN-KEYWORD,{val}\n")
-        for val in sorted(rules['wildcard']): f_sr.write(f"DOMAIN-WILDCARD,{val}\n")
-        for val in sorted(rules['useragent']): f_sr.write(f"USER-AGENT,{val}\n")
-        for val in sorted(rules['port']): f_sr.write(f"DST-PORT,{val}\n")
-        for val in sorted(rules['ip']): f_sr.write(f"IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
-        for val in sorted(rules['ip6']): f_sr.write(f"IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
-
-    # 3. QuantumultX
-    qx_path = os.path.join(QUANTUMULTX_DIR, f"{base_name}.list")
-    if file_keyword == 'direct': qx_policy = 'direct'
-    elif file_keyword == 'reject': qx_policy = 'reject'
-    else: qx_policy = base_name.capitalize()
-    with open(qx_path, 'w', encoding='utf-8') as f_qx:
-        f_qx.write(f"# Quantumult X Rule-Set: {base_name}\n\n")
-        for val in sorted(rules['suffix']): f_qx.write(f"host-suffix, {val}, {qx_policy}\n")
-        for val in sorted(rules['full']): f_qx.write(f"host, {val}, {qx_policy}\n")
-        for val in sorted(rules['keyword']): f_qx.write(f"host-keyword, {val}, {qx_policy}\n")
-        for val in sorted(rules['wildcard']): f_qx.write(f"host-wildcard, {val}, {qx_policy}\n")
-        for val in sorted(rules['useragent']): 
-            qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
-            f_qx.write(f"user-agent, {qx_ua}, {qx_policy}\n")
-        for val in sorted(rules['ip']): f_qx.write(f"ip-cidr, {ensure_ip_mask(val)}, {qx_policy}, no-resolve\n")
-        for val in sorted(rules['ip6']): f_qx.write(f"ip6-cidr, {ensure_ip_mask(val, True)}, {qx_policy}, no-resolve\n")
-
-    # 4. Clash
-    clash_path = os.path.join(CLASH_DIR, f"{base_name}.yaml")
-    with open(clash_path, 'w', encoding='utf-8') as f_clash:
-        f_clash.write(f"# Clash Payload Rule-Set: {base_name}\n")
-        f_clash.write("payload:\n")
-        for val in sorted(rules['suffix']): f_clash.write(f"  - DOMAIN-SUFFIX,{val}\n")
-        for val in sorted(rules['full']): f_clash.write(f"  - DOMAIN,{val}\n")
-        for val in sorted(rules['keyword']): f_clash.write(f"  - DOMAIN-KEYWORD,{val}\n")       
-        for val in sorted(rules['process']): f_clash.write(f"  - PROCESS-NAME,{val}\n")
-        for val in sorted(rules['port']): f_clash.write(f"  - DST-PORT,{val}\n")
-        for val in sorted(rules['ip']): f_clash.write(f"  - IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
-        for val in sorted(rules['ip6']): f_clash.write(f"  - IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
-
-    # 5. PAC
-    if file_keyword in ['direct', 'china']:
-        global_pac_domains.update(rules['suffix'])
-        global_pac_domains.update(rules['full'])
-
-    # 6. Sing-box
-    sb_path = os.path.join(SINGBOX_DIR, f"{base_name}.json")
-    sb_data = {"version": 1, "rules": []}
+def process_file_to_targets(file_name, global_matrix):
+    source_path = os.path.join(SOURCE_DIR, file_name)
+    base_name = os.path.splitext(file_name)[0]
+    file_keyword = base_name.lower()
     
-    if rules['suffix']: sb_data["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})
-    if rules['full']: sb_data["rules"].append({"domain": sorted(list(rules['full']))})
-    if rules['keyword']: sb_data["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
-    if rules['process']: sb_data["rules"].append({"process_name": sorted(list(rules['process']))})
+    policy = FILE_POLICY_ROUTER_CLEANED.get(base_name, {})
     
-    if rules['port']: 
-        p_list, p_range = parse_ports_for_singbox(rules['port'])
-        if p_list: sb_data["rules"].append({"port": p_list})
-        if p_range: sb_data["rules"].append({"port_range": p_range})
+    qx_target = policy.get('qx', base_name)
+    sr_target = policy.get('sr', base_name)
+    singbox_target = policy.get('singbox', base_name)
+    pac_target = policy.get('pac', None)
+    mihomo_target = policy.get('mihomo', base_name)
+    
+    if 'qx_policy' in policy:
+        qx_policy_label = policy['qx_policy']
+    else:
+        if file_keyword == 'direct': qx_policy_label = 'direct'
+        elif file_keyword == 'reject': qx_policy_label = 'reject'
+        else: qx_policy_label = base_name.capitalize()
         
-    if rules['wildcard']:
-        regex_list = []
-        for w in rules['wildcard']:
-            r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
-            regex_list.append(r)
-        sb_data["rules"].append({"domain_regex": regex_list})
-        
-    combined_ips = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
-    if combined_ips: sb_data["rules"].append({"ip_cidr": combined_ips})
-        
-    with open(sb_path, 'w', encoding='utf-8') as f_sb:
-        json.dump(sb_data, f_sb, indent=2, ensure_ascii=False)
+    msr_enable = policy.get('msr', True)
+    srs_enable = policy.get('srs', True)
+    
+    rules = {
+        'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(),
+        'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set(),
+        'port': set(), 'remove': set()
+    }
+    
+    with open(source_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            rule_type, value = clean_and_parse_line(line)
+            if rule_type in rules:
+                rules[rule_type].add(value)
 
-    # 7. Binary Templates 
+    optimize_domains(rules)
+
+    if qx_target not in global_matrix['qx']:
+        global_matrix['qx'][qx_target] = {
+            'policy_label': qx_policy_label,
+            'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(), 'ip': set(), 'ip6': set(), 'useragent': set()
+        }
+    for k in global_matrix['qx'][qx_target].keys():
+        if k != 'policy_label': global_matrix['qx'][qx_target][k].update(rules[k])
+
+    if sr_target not in global_matrix['sr']:
+        global_matrix['sr'][sr_target] = {k: set() for k in rules.keys()}
+    for k in rules.keys(): global_matrix['sr'][sr_target][k].update(rules[k])
+
+    if mihomo_target not in global_matrix['mihomo']:
+        global_matrix['mihomo'][mihomo_target] = {k: set() for k in rules.keys()}
+    for k in rules.keys(): global_matrix['mihomo'][mihomo_target][k].update(rules[k])
+
+    if singbox_target not in global_matrix['singbox']:
+        global_matrix['singbox'][singbox_target] = {k: set() for k in rules.keys()}
+    for k in rules.keys(): global_matrix['singbox'][singbox_target][k].update(rules[k])
+
+    if file_keyword in ['direct', 'china'] or pac_target:
+        p_target = pac_target if pac_target else 'direct'
+        if p_target not in global_matrix['pac']:
+            global_matrix['pac'][p_target] = set()
+        global_matrix['pac'][p_target].update(rules['suffix'])
+        global_matrix['pac'][p_target].update(rules['full'])
+
     if 'classic' in file_keyword:
         return
 
-    if 'ip' in file_keyword:
-        combined_ips_mrs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
-        if combined_ips_mrs:
-            with open(os.path.join(CLASH_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
-                f.write("payload:\n")
-                for item in combined_ips_mrs: 
-                    f.write(f"  - '{item}'\n")
-            sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips_mrs}]}
-            with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{base_name}.json"), 'w', encoding='utf-8') as f:
-                json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
-    else:
-        sb_tmp_domain = {"version": 1, "rules": []}
-        
-        if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})
-        if rules['full']: sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})
-        if rules['keyword']: sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
-        
-        if rules['port']: 
-            p_list, p_range = parse_ports_for_singbox(rules['port'])
-            if p_list: sb_tmp_domain["rules"].append({"port": p_list})
-            if p_range: sb_tmp_domain["rules"].append({"port_range": p_range})
-            
-        if rules['wildcard']:
-            regex_list = []
-            for w in rules['wildcard']:
-                r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
-                regex_list.append(r)
-            sb_tmp_domain["rules"].append({"domain_regex": regex_list})
-            
-        if sb_tmp_domain["rules"]:
-            with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
-                json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
+    if msr_enable:
+        if 'ip' in file_keyword:
+            combined_ips_mrs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
+            if combined_ips_mrs:
+                with open(os.path.join(MIHOMO_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
+                    f.write("payload:\n")
+                    for item in combined_ips_mrs: f.write(f"  - '{item}'\n")
+        else:
+            if rules['suffix'] or rules['full']:
+                with open(os.path.join(MIHOMO_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
+                    f.write("payload:\n")
+                    for item in sorted(rules['suffix']): f.write(f"  - '+.{item}'\n")
+                    for item in sorted(rules['full']): f.write(f"  - '{item}'\n")
 
-        if rules['suffix'] or rules['full']:
-            with open(os.path.join(CLASH_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
-                f.write("payload:\n")
-                for item in sorted(rules['suffix']): f.write(f"  - '+.{item}'\n")
-                for item in sorted(rules['full']): f.write(f"  - '{item}'\n")
+    if srs_enable:
+        if 'ip' in file_keyword:
+            combined_ips_srs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
+            if combined_ips_srs:
+                sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips_srs}]}
+                with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{base_name}.json"), 'w', encoding='utf-8') as f:
+                    json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
+        else:
+            sb_tmp_domain = {"version": 1, "rules": []}
+            if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})
+            if rules['full']: sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})
+            if rules['keyword']: sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
+            if rules['port']: 
+                p_list, p_range = parse_ports_for_singbox(rules['port'])
+                if p_list: sb_tmp_domain["rules"].append({"port": p_list})
+                if p_range: sb_tmp_domain["rules"].append({"port_range": p_range})
+            if rules['wildcard']:
+                regex_list = []
+                for w in rules['wildcard']:
+                    r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
+                    regex_list.append(r)
+                sb_tmp_domain["rules"].append({"domain_regex": regex_list})
+            if sb_tmp_domain["rules"]:
+                with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
+                    json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
 
 def main():
+    global FILE_POLICY_ROUTER_CLEANED
+    FILE_POLICY_ROUTER_CLEANED = {}
+    
+    allocated_names = set()
+    
+    for policy_card in FILE_POLICY_ROUTER:
+        raw_name = policy_card.get('name', '')
+        real_name = get_smart_base_name(raw_name, policy_card, allocated_names)
+        allocated_names.add(real_name)
+        FILE_POLICY_ROUTER_CLEANED[real_name] = policy_card
+
+    print("Phase 1: Syncing remote rules into local source .txt documents...")
+    for target_base_name, policy_card in FILE_POLICY_ROUTER_CLEANED.items():
+        sync_remote_to_local_source(target_base_name, policy_card)
+
+    global_matrix = {
+        'qx': {}, 'sr': {}, 'mihomo': {}, 'singbox': {}, 'pac': {}
+    }
+
+    print("\nPhase 2: Translating fully combined base documents to target matrices...")
     if not os.path.exists(SOURCE_DIR):
-        print(f"Directory '{SOURCE_DIR}' not found. Please create it and add your .txt files.")
+        print(f"Directory '{SOURCE_DIR}' not found.")
         return
+        
     files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
     for file_name in files:
-        print(f"Processing {file_name}...")
-        process_file(file_name)
-        
-    if global_pac_domains:
-        pac_path = os.path.join(PAC_DIR, "direct.pac")
-        with open(pac_path, 'w', encoding='utf-8') as f_pac:
-            direct_domains = sorted(list(global_pac_domains))
-            f_pac.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
-            f_pac.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';\n\n")
-            f_pac.write("var DIRECT_DOMAINS = {\n")
+        print(f"Routing rule matrices for: {file_name}")
+        process_file_to_targets(file_name, global_matrix)
+
+    print("\nPhase 3: Exporting rule-sets to destination paths...")
+    
+    # QuantumultX
+    for g_name, g_rules in global_matrix['qx'].items():
+        qx_path = os.path.join(QUANTUMULTX_DIR, f"{g_name}.list")
+        qx_policy = g_rules['policy_label']
+        optimize_domains(g_rules)
+        with open(qx_path, 'w', encoding='utf-8') as f:
+            f.write(f"# Quantumult X Aggregated Rule-Set: {g_name.upper()}\n\n")
+            for val in sorted(g_rules['suffix']): f.write(f"host-suffix, {val}, {qx_policy}\n")
+            for val in sorted(g_rules['full']): f.write(f"host, {val}, {qx_policy}\n")
+            for val in sorted(g_rules['keyword']): f.write(f"host-keyword, {val}, {qx_policy}\n")
+            for val in sorted(g_rules['wildcard']): f.write(f"host-wildcard, {val}, {qx_policy}\n")
+            for val in sorted(g_rules['useragent']):
+                qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
+                f.write(f"user-agent, {qx_ua}, {qx_policy}\n")
+            for val in sorted(g_rules['ip']): f.write(f"ip-cidr, {ensure_ip_mask(val)}, {qx_policy}, no-resolve\n")
+            for val in sorted(g_rules['ip6']): f.write(f"ip6-cidr, {ensure_ip_mask(val, True)}, {qx_policy}, no-resolve\n")
+
+    # Shadowrocket
+    for g_name, g_rules in global_matrix['sr'].items():
+        sr_path = os.path.join(SHADOWROCKET_DIR, f"{g_name}.list")
+        optimize_domains(g_rules)
+        with open(sr_path, 'w', encoding='utf-8') as f:
+            f.write(f"# Shadowrocket Rule-Set: {g_name}\n\n")
+            for val in sorted(g_rules['suffix']): f.write(f"DOMAIN-SUFFIX,{val}\n")
+            for val in sorted(g_rules['full']): f.write(f"DOMAIN,{val}\n")
+            for val in sorted(g_rules['keyword']): f.write(f"DOMAIN-KEYWORD,{val}\n")
+            for val in sorted(g_rules['wildcard']): f.write(f"DOMAIN-WILDCARD,{val}\n")
+            for val in sorted(g_rules['useragent']): f.write(f"USER-AGENT,{val}\n")
+            for val in sorted(g_rules['port']): f.write(f"DST-PORT,{val}\n")
+            for val in sorted(g_rules['ip']): f.write(f"IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
+            for val in sorted(g_rules['ip6']): f.write(f"IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
+
+    # Mihomo 
+    for g_name, g_rules in global_matrix['mihomo'].items():
+        mihomo_path = os.path.join(MIHOMO_DIR, f"{g_name}.yaml")
+        optimize_domains(g_rules)
+        with open(mihomo_path, 'w', encoding='utf-8') as f:
+            f.write(f"# Mihomo Payload Rule-Set: {g_name}\n")
+            f.write("payload:\n")
+            for val in sorted(g_rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{val}\n")
+            for val in sorted(g_rules['full']): f.write(f"  - DOMAIN,{val}\n")
+            for val in sorted(g_rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{val}\n")
+            for val in sorted(g_rules['process']): f.write(f"  - PROCESS-NAME,{val}\n")
+            for val in sorted(g_rules['port']): f.write(f"  - DST-PORT,{val}\n")
+            for val in sorted(g_rules['ip']): f.write(f"  - IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
+            for val in sorted(g_rules['ip6']): f.write(f"  - IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
+
+    # Sing-box 
+    for g_name, g_rules in global_matrix['singbox'].items():
+        sb_path = os.path.join(SINGBOX_DIR, f"{g_name}.json")
+        optimize_domains(g_rules)
+        sb_data = {"version": 1, "rules": []}
+        if g_rules['suffix']: sb_data["rules"].append({"domain_suffix": sorted(list(g_rules['suffix']))})
+        if g_rules['full']: sb_data["rules"].append({"domain": sorted(list(g_rules['full']))})
+        if g_rules['keyword']: sb_data["rules"].append({"domain_keyword": sorted(list(g_rules['keyword']))})
+        if g_rules['process']: sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
+        if g_rules['port']: 
+            p_list, p_range = parse_ports_for_singbox(g_rules['port'])
+            if p_list: sb_data["rules"].append({"port": p_list})
+            if p_range: sb_data["rules"].append({"port_range": p_range})
+        if g_rules['wildcard']:
+            regex_list = []
+            for w in g_rules['wildcard']:
+                r = w.replace('.', '\\.').replace('*', '.*').replace('?', '.')
+                regex_list.append(r)
+            sb_data["rules"].append({"domain_regex": regex_list})
+        combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
+        if combined_ips: sb_data["rules"].append({"ip_cidr": combined_ips})
+        with open(sb_path, 'w', encoding='utf-8') as f:
+            json.dump(sb_data, f, indent=2, ensure_ascii=False)
+
+    # PAC
+    for g_name, g_domains in global_matrix['pac'].items():
+        pac_path = os.path.join(PAC_DIR, f"{g_name}.pac")
+        direct_domains = sorted(list(g_domains))
+        with open(pac_path, 'w', encoding='utf-8') as f:
+            f.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
+            f.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';\n\n")
+            f.write("var DIRECT_DOMAINS = {\n")
             for i, domain in enumerate(direct_domains):
                 comma = "," if i < len(direct_domains) - 1 else ""
-                f_pac.write(f'    "{domain}": 1{comma}\n')
-            f_pac.write("};\n\n")
-            f_pac.write("function FindProxyForURL(url, host) {\n")
-            f_pac.write("    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n")
-            f_pac.write("        return \"DIRECT\";\n    }\n\n")
-            f_pac.write("    // 智能防御：统一强制转换为全小写，防止大小写域名漏网或报错\n")
-            f_pac.write("    var suffix = host.toLowerCase();\n")
-            f_pac.write("    while (suffix) {\n")
-            f_pac.write("        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {\n")
-            f_pac.write("            return \"DIRECT\";\n")
-            f_pac.write("        }\n")
-            f_pac.write("        var pos = suffix.indexOf('.');\n")
-            f_pac.write("        if (pos === -1) break;\n")
-            f_pac.write("        suffix = suffix.substring(pos + 1);\n")
-            f_pac.write("    }\n\n")
-            f_pac.write("    return PROXY_METHOD;\n}\n")
-            
-    print("Done! All rules have been parsed and generated.")
+                f.write(f'    "{domain}": 1{comma}\n')
+            f.write("};\n\n")
+            f.write("function FindProxyForURL(url, host) {\n")
+            f.write("    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n")
+            f.write("        return \"DIRECT\";\n    }\n\n")
+            f.write("    var suffix = host.toLowerCase();\n")
+            f.write("    while (suffix) {\n")
+            f.write("        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {\n")
+            f.write("            return \"DIRECT\";\n")
+            f.write("        }\n")
+            f.write("        var pos = suffix.indexOf('.');\n")
+            f.write("        if (pos === -1) break;\n")
+            f.write("        suffix = suffix.substring(pos + 1);\n")
+            f.write("    }\n\n")
+            f.write("    return PROXY_METHOD;\n}\n")
+
+    print("\nSUCCESS: All global multi-routing matrix pipelines completed successfully!")
 
 if __name__ == '__main__':
     main()
