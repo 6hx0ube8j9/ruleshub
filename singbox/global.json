@@ -2234,7 +2234,6 @@
     },
     {
       "domain_keyword": [
-        ".hbogoasia.",
         "abematv.akamaized.net",
         "avoddashs",
         "bbcfmt",
@@ -2242,6 +2241,7 @@
         "epicgames",
         "flexnode",
         "github",
+        "hbogoasia.",
         "invidious",
         "itdmusic",
         "jooxweb-api",

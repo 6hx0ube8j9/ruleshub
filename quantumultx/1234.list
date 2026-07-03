@@ -10,11 +10,11 @@ host, 192.168.1.1.pcloud.com, 1234
 host, github.com, 1234
 host, openai.com, 1234
 host-keyword, space-keyword, 1234
-host-wildcard, *.dot-star-prefix.org, 1234
-host-wildcard, *.double-prefix.com, 1234
 host-wildcard, abc??.gallery.tw, 1234
+host-wildcard, dot-star-prefix.org, 1234
+host-wildcard, double-prefix.com, 1234
 host-wildcard, one?two*.org, 1234
 host-wildcard, wildcard-?-test.*.cn, 1234
-ip-cidr, 1.1.1.1:443/32, 1234, no-resolve
+ip-cidr, 1.1.1.1/32, 1234, no-resolve
 ip-cidr, 8.8.8.8/32, 1234, no-resolve
 ip6-cidr, 2001:db8::1:80/128, 1234, no-resolve

@@ -25,16 +25,16 @@
     },
     {
       "domain_regex": [
-        ".*\\.double-prefix\\.com",
-        ".*\\.dot-star-prefix\\.org",
+        "dot-star-prefix\\.org",
         "wildcard-.-test\\..*\\.cn",
-        "one.two.*\\.org",
-        "abc..\\.gallery\\.tw"
+        "abc..\\.gallery\\.tw",
+        "double-prefix\\.com",
+        "one.two.*\\.org"
       ]
     },
     {
       "ip_cidr": [
-        "1.1.1.1:443/32",
+        "1.1.1.1/32",
         "2001:db8::1:80/128",
         "8.8.8.8/32"
       ]

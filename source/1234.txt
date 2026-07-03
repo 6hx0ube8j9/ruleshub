@@ -1,7 +1,7 @@
 # === 1234 Combined Base Rules ===
 
 # --- TYPE: REMOVE ---
-remove,+.deleted-stub.com
+remove,deleted-stub.com
 
 # --- TYPE: SUFFIX ---
 suffix,apple.com
@@ -20,14 +20,14 @@ full,openai.com
 keyword,space-keyword
 
 # --- TYPE: WILDCARD ---
-wildcard,*.dot-star-prefix.org
-wildcard,*.double-prefix.com
 wildcard,abc??.gallery.tw
+wildcard,dot-star-prefix.org
+wildcard,double-prefix.com
 wildcard,one?two*.org
 wildcard,wildcard-?-test.*.cn
 
 # --- TYPE: IP ---
-ip,1.1.1.1:443/32
+ip,1.1.1.1/32
 ip,8.8.8.8/32
 
 # --- TYPE: IP6 ---

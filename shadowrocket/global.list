@@ -2223,7 +2223,6 @@ DOMAIN,xbs.andrewkdinh.com
 DOMAIN,xbs.eris.cc
 DOMAIN,xbs.xv.rs
 DOMAIN,xbsapi.cgrx.de
-DOMAIN-KEYWORD,.hbogoasia.
 DOMAIN-KEYWORD,abematv.akamaized.net
 DOMAIN-KEYWORD,avoddashs
 DOMAIN-KEYWORD,bbcfmt
@@ -2231,6 +2230,7 @@ DOMAIN-KEYWORD,boxinc
 DOMAIN-KEYWORD,epicgames
 DOMAIN-KEYWORD,flexnode
 DOMAIN-KEYWORD,github
+DOMAIN-KEYWORD,hbogoasia.
 DOMAIN-KEYWORD,invidious
 DOMAIN-KEYWORD,itdmusic
 DOMAIN-KEYWORD,jooxweb-api

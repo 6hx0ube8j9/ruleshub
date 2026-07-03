@@ -2223,7 +2223,6 @@ host, xbs.andrewkdinh.com, Global
 host, xbs.eris.cc, Global
 host, xbs.xv.rs, Global
 host, xbsapi.cgrx.de, Global
-host-keyword, .hbogoasia., Global
 host-keyword, abematv.akamaized.net, Global
 host-keyword, avoddashs, Global
 host-keyword, bbcfmt, Global
@@ -2231,6 +2230,7 @@ host-keyword, boxinc, Global
 host-keyword, epicgames, Global
 host-keyword, flexnode, Global
 host-keyword, github, Global
+host-keyword, hbogoasia., Global
 host-keyword, invidious, Global
 host-keyword, itdmusic, Global
 host-keyword, jooxweb-api, Global

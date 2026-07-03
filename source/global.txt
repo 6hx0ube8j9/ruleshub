@@ -2228,7 +2228,6 @@ full,xbs.xv.rs
 full,xbsapi.cgrx.de
 
 # --- TYPE: KEYWORD ---
-keyword,.hbogoasia.
 keyword,abematv.akamaized.net
 keyword,avoddashs
 keyword,bbcfmt
@@ -2236,6 +2235,7 @@ keyword,boxinc
 keyword,epicgames
 keyword,flexnode
 keyword,github
+keyword,hbogoasia.
 keyword,invidious
 keyword,itdmusic
 keyword,jooxweb-api
