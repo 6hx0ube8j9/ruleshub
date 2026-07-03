@@ -1,35 +1,73 @@
-# === 1234 Combined Base Rules ===
+# =========================================================
+# 压力测试 1：极端前后缀、空格与混乱的注释格式
+# =========================================================
+- '  DOMAIN-SUFFIX,  example.com  # 包含单引号、大量空格和行尾注释'
+//   DOMAIN,double-slash-comment.com # 双斜杠注释测试
+; DOMAIN,semicolon-comment.com # 分号注释测试
+   	# 纯空格和制表符夹杂的空行
+- "- DOMAIN,nested-dash.com" # 嵌套减号与双引号
+payload: # 针对某些YAML直接当纯文本读的干扰项
 
-# --- TYPE: REMOVE ---
-remove,another-trash.org
-remove,bad-upstream.net
-remove,deleted-stub.com
-remove,spaces-trim.com
+# =========================================================
+# 压力测试 2：高级逻辑与特殊修饰符（你的代码中有专门的处理逻辑）
+# =========================================================
+AND,((SRC-IP,1.1.1.1)) # 复合逻辑规则（预期结果：应该被逻辑安全过滤，返回 None）
+REMOVE,+.badsite.com # 显式移除规则（预期结果：从最终集合中剔除 badsite.com）
+REMOVE,*.anotherbad.top
+DOMAIN-SUFFIX,badsite.com # 用于测试上面 REMOVE 是否生效的对照组
 
-# --- TYPE: SUFFIX ---
-suffix,apple.com
-suffix,com.tw
-suffix,google.co.jp
-suffix,microsoft.com
-suffix,xn--fiq228c.xn--io0a7i
-suffix,xn--fiqs8s.xn--55qx5d
-suffix,yaml-mix-style.com
+# =========================================================
+# 压力测试 3：域名层级去重（轰炸 optimize_domains 函数）
+# =========================================================
+# 预期结果：如果 suffix 包含了 google.com，下面的 full 和更深层的子域名应该全被干掉
+apple.com
+www.apple.com
+api.www.apple.com
+invalid.www.apple.com
+# 乱序输入测试
+sub.netflix.com
+netflix.com
 
-# --- TYPE: FULL ---
-full,amazon.co.uk
-full,xn--fiq228c.xn--io0a7i
+# =========================================================
+# 压力测试 4：公共后缀黑名单（测试 PUBLIC_SUFFIX_BLACKLIST）
+# =========================================================
+# 预期结果：这些是顶级或公共后缀，单域名无前缀时应该被无情拒绝（返回 None）
+com
+com.cn
+org.hk
+co.jp
+# 对照组：如果是显式指定了后缀，应该允许通过
++.com.cn
+*.co.jp
 
-# --- TYPE: WILDCARD ---
-wildcard,?.single-char.org
-wildcard,abc??xyz.test.com
-wildcard,double-wildcard.net
-wildcard,wildcard-with-dash-?-test.*.cn
+# =========================================================
+# 压力测试 5：非英文国际化域名（测试 Punycode 编码）
+# =========================================================
+DOMAIN,中文.com
++.哔哩哔哩.中国
+xn--fiqs8s.xn--fiqs8s # 已经是Punnycode格式的
+DOMAIN,测试.测试.xn--fiqs8s
 
-# --- TYPE: IP ---
-ip,1.1.1.1/32
-ip,8.8.8.8/32
+# =========================================================
+# 压力测试 6：带端口的畸形输入与非法字符拦截
+# =========================================================
+192.168.1.1:8080 # 无逗号分支：带端口的IPv4（预期结果：提取出 192.168.1.1）
+DOMAIN,bilibili.com:443 # 有逗号分支：强行带端口（预期结果：触发字符拦截或正则失败）
+DOMAIN,invalid_char_$.com # 包含非法字符 $
++.domain/path/index.html # 包含路径的畸形域名
 
-# --- TYPE: IP6 ---
-ip6,2001:db8::1:80/128
-ip6,240c::6666:8080/128
+# =========================================================
+# 压力测试 7：IP 地址边界（测试 ensure_ip_mask 补全）
+# =========================================================
+IP-CIDR,10.0.0.1 # 没带掩码的 IPv4（预期：补齐为 10.0.0.1/32）
+IP-CIDR,172.16.0.0/12 # 标准带有掩码
+IP-CIDR6,2001:db8:: # 没带掩码的 IPv6（预期：补齐为 2001:db8::/128）
+IP-CIDR,2001:db8:g::/64 # 包含非法字符g的畸形IPv6
 
+# =========================================================
+# 压力测试 8：通配符与特殊类型（测试 Sing-box 的正则黑魔法）
+# =========================================================
+DOMAIN-WILDCARD,*.google.*
+*.netflix.?om
+USER-AGENT,Mozilla/5.0*
+PROCESS-NAME,Telegram
