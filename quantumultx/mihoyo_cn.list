@@ -1,4 +1,4 @@
-# Quantumult X Rule-Set: mihoyo_cn
+# Quantumult X Aggregated Rule-Set: MIHOYO_CN
 
 host-suffix, benghuai.com, Mihoyo_cn
 host, api-beta-sdk-static.mihoyo.com, Mihoyo_cn

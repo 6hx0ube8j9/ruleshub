@@ -1,4 +1,4 @@
-# Quantumult X Rule-Set: stress_test
+# Quantumult X Aggregated Rule-Set: STRESS_TEST
 
 host-suffix, apple.com, Stress_test
 host-suffix, github.com, Stress_test

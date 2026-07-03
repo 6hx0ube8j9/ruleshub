@@ -1,4 +1,4 @@
-# Quantumult X Rule-Set: pcloud
+# Quantumult X Aggregated Rule-Set: PCLOUD
 
 host-suffix, pcloud.com, Pcloud
 host, e.pcloud.link, Pcloud

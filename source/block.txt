@@ -1,4 +1,4 @@
-# === BLOCK Sorted Rules ===
+# === BLOCK Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,17gouwuba.com

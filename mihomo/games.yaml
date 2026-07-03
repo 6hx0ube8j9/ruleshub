@@ -1,0 +1,32 @@
+# Mihomo Payload Rule-Set: games
+payload:
+  - DOMAIN-SUFFIX,brawlstars.com
+  - DOMAIN-SUFFIX,brawlstarsgame.com
+  - DOMAIN-SUFFIX,king.com
+  - DOMAIN-SUFFIX,ninjakiwi.com
+  - DOMAIN-SUFFIX,nkstatic.com
+  - DOMAIN-SUFFIX,supercell.com
+  - DOMAIN-SUFFIX,unity3d.com
+  - DOMAIN,1681.engine.mobileapptracking.com
+  - DOMAIN,supercell.helpshift.com
+  - PROCESS-NAME,BloonsTD6-Epic.exe
+  - PROCESS-NAME,BloonsTD6.exe
+  - PROCESS-NAME,Cleaner-BTD6.exe
+  - PROCESS-NAME,UnityCrashHandler64.exe
+  - IP-CIDR,139.180.0.0/16,no-resolve
+  - IP-CIDR,142.132.0.0/16,no-resolve
+  - IP-CIDR,149.28.0.0/16,no-resolve
+  - IP-CIDR,167.235.0.0/16,no-resolve
+  - IP-CIDR,199.247.0.0/16,no-resolve
+  - IP-CIDR,216.238.0.0/16,no-resolve
+  - IP-CIDR,45.76.0.0/16,no-resolve
+  - IP-CIDR,49.12.0.0/16,no-resolve
+  - IP-CIDR,5.161.0.0/16,no-resolve
+  - IP-CIDR,5.223.0.0/16,no-resolve
+  - IP-CIDR,5.75.0.0/16,no-resolve
+  - IP-CIDR,5.78.0.0/16,no-resolve
+  - IP-CIDR,65.20.0.0/16,no-resolve
+  - IP-CIDR,70.34.0.0/16,no-resolve
+  - IP-CIDR,78.141.0.0/16,no-resolve
+  - IP-CIDR,78.47.0.0/16,no-resolve
+  - IP-CIDR,95.179.0.0/16,no-resolve

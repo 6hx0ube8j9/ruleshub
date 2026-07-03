@@ -1,4 +1,4 @@
-# Quantumult X Rule-Set: dropbox
+# Quantumult X Aggregated Rule-Set: DROPBOX
 
 host-suffix, db.tt, Dropbox
 host-suffix, dropbox-dns.com, Dropbox

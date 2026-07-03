@@ -1,4 +1,4 @@
-# === APPLE Sorted Rules ===
+# === APPLE Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,100beatscheap.com

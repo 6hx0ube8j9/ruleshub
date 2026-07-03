@@ -1,4 +1,4 @@
-# === MICROSOFT Sorted Rules ===
+# === MICROSOFT Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,1drv.com
@@ -662,6 +662,9 @@ suffix,yammer.com
 suffix,yammerusercontent.com
 
 # --- TYPE: FULL ---
+full,login.live.com
+full,logincdn.msauth.net
+full,store-images.s-microsoft.com
 full,vsmarketplacebadge.apphb.com
 
 # --- TYPE: KEYWORD ---

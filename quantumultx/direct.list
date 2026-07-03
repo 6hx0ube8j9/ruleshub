@@ -1,4 +1,4 @@
-# Quantumult X Rule-Set: direct
+# Quantumult X Aggregated Rule-Set: DIRECT
 
 host-suffix, 001wifi.com, direct
 host-suffix, 00cdn.com, direct

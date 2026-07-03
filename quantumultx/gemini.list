@@ -1,4 +1,4 @@
-# Quantumult X Rule-Set: gemini
+# Quantumult X Aggregated Rule-Set: GEMINI
 
 host-suffix, apis.google.com, Gemini
 host-suffix, bard.google.com, Gemini
