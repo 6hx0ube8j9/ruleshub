@@ -1,18 +1,19 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
 host-suffix, apple.com, 1234
-host-suffix, com.tw, 1234
-host-suffix, google.co.jp, 1234
-host-suffix, microsoft.com, 1234
-host-suffix, xn--fiq228c.xn--io0a7i, 1234
-host-suffix, xn--fiqs8s.xn--55qx5d, 1234
-host-suffix, yaml-mix-style.com, 1234
-host, amazon.co.uk, 1234
-host-wildcard, ?.single-char.org, 1234
-host-wildcard, abc??xyz.test.com, 1234
-host-wildcard, double-wildcard.net, 1234
-host-wildcard, wildcard-with-dash-?-test.*.cn, 1234
-ip-cidr, 1.1.1.1/32, 1234, no-resolve
-ip-cidr, 8.8.8.8/32, 1234, no-resolve
-ip6-cidr, 2001:db8::1:80/128, 1234, no-resolve
-ip6-cidr, 240c::6666:8080/128, 1234, no-resolve
+host-suffix, co.jp, 1234
+host-suffix, com.cn, 1234
+host-suffix, example.com, 1234
+host-suffix, netflix.com, 1234
+host-suffix, xn--2vra6db.xn--fiqs8s, 1234
+host-suffix, xn--fiqs8s.xn--fiqs8s, 1234
+host, xn--0zwm56d.xn--0zwm56d.xn--fiqs8s, 1234
+host, xn--fiq228c.com, 1234
+host-wildcard, google.*, 1234
+host-wildcard, netflix.?om, 1234
+user-agent, Mozilla/5.0*, 1234
+ip-cidr, 10.0.0.1/32, 1234, no-resolve
+ip-cidr, 172.16.0.0/12, 1234, no-resolve
+ip-cidr, 192.168.1.1/32, 1234, no-resolve
+ip-cidr, 2001:db8:g::/64, 1234, no-resolve
+ip6-cidr, 2001:db8::/128, 1234, no-resolve

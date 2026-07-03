@@ -4,33 +4,38 @@
     {
       "domain_suffix": [
         "apple.com",
-        "com.tw",
-        "google.co.jp",
-        "microsoft.com",
-        "xn--fiq228c.xn--io0a7i",
-        "xn--fiqs8s.xn--55qx5d",
-        "yaml-mix-style.com"
+        "co.jp",
+        "com.cn",
+        "example.com",
+        "netflix.com",
+        "xn--2vra6db.xn--fiqs8s",
+        "xn--fiqs8s.xn--fiqs8s"
       ]
     },
     {
       "domain": [
-        "amazon.co.uk"
+        "xn--0zwm56d.xn--0zwm56d.xn--fiqs8s",
+        "xn--fiq228c.com"
+      ]
+    },
+    {
+      "process_name": [
+        "Telegram"
       ]
     },
     {
       "domain_regex": [
-        "abc..xyz\\.test\\.com",
-        "double-wildcard\\.net",
-        "wildcard-with-dash-.-test\\..*\\.cn",
-        ".\\.single-char\\.org"
+        "google\\..*",
+        "netflix\\..om"
       ]
     },
     {
       "ip_cidr": [
-        "1.1.1.1/32",
-        "2001:db8::1:80/128",
-        "240c::6666:8080/128",
-        "8.8.8.8/32"
+        "10.0.0.1/32",
+        "172.16.0.0/12",
+        "192.168.1.1/32",
+        "2001:db8::/128",
+        "2001:db8:g::/64"
       ]
     }
   ]
