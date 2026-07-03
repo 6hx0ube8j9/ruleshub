@@ -24,7 +24,6 @@ suffix,xn--hs8h.com
 suffix,xn--o0uq09b.xn--fiqs8s
 
 # --- TYPE: FULL ---
-full,1.1.1.1
 full,this.is.a.very.very.long.and.nested.subdomain.structure.example.com
 
 # --- TYPE: KEYWORD ---
@@ -35,6 +34,7 @@ wildcard,*.wildcard.*.test.com
 wildcard,abc?.com
 
 # --- TYPE: IP ---
+ip,1.1.1.1/32
 ip,10.0.0.1/24
 ip,192.168.1.1/32
 
