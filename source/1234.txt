@@ -1,61 +1,36 @@
+# === 1234 Combined Base Rules ===
 
+# --- TYPE: SUFFIX ---
+suffix,baidu.com
+suffix,netflix.com
+suffix,tiktok.com
 
+# --- TYPE: FULL ---
+full,images.unsplash.com
+full,mycompany.com.cn
+full,test-lab.co.jp
+full,www.google
+full,www.microsoft.com
 
-# Mihomo Payload Rule-Set: 1234
-payload:
-  - DOMAIN-SUFFIX,baidu.com
-  - DOMAIN-SUFFIX,netflix.com
-  - DOMAIN-SUFFIX,tiktok.com
-  - DOMAIN,images.unsplash.com
-  - DOMAIN,mycompany.com.cn
-  - DOMAIN,test-lab.co.jp
-  - DOMAIN,www.google
-  - DOMAIN,www.microsoft.com
-  - DOMAIN-KEYWORD,hbogoasia
-  - DOMAIN-REGEX,^+.*\.apple\.com$
-  - PROCESS-NAME,DownloadService
-  - DST-PORT,443
-  - IP-CIDR,10.10.10.10/32,no-resolve
-  - IP-CIDR,192.168.1.1/24,no-resolve
-  - IP-CIDR6,240e:97c:2f:1::/64,no-resolve
-  
-  
+# --- TYPE: KEYWORD ---
+keyword,hbogoasia
 
+# --- TYPE: WILDCARD ---
+wildcard,+*.apple.com
 
-# Shadowrocket Rule-Set: 1234
+# --- TYPE: IP ---
+ip,10.10.10.10/32
+ip,192.168.1.1/24
 
-DOMAIN-SUFFIX,baidu.com
-DOMAIN-SUFFIX,netflix.com
-DOMAIN-SUFFIX,tiktok.com
-DOMAIN,images.unsplash.com
-DOMAIN,mycompany.com.cn
-DOMAIN,test-lab.co.jp
-DOMAIN,www.google
-DOMAIN,www.microsoft.com
-DOMAIN-KEYWORD,hbogoasia
-DOMAIN-WILDCARD,+*.apple.com
-USER-AGENT,Twitter*
-DST-PORT,443
-IP-CIDR,10.10.10.10/32,no-resolve
-IP-CIDR,192.168.1.1/24,no-resolve
-IP-CIDR6,240e:97c:2f:1::/64,no-resolve
+# --- TYPE: IP6 ---
+ip6,240e:97c:2f:1::/64
 
+# --- TYPE: PROCESS ---
+process,DownloadService
 
+# --- TYPE: USERAGENT ---
+useragent,Twitter*
 
+# --- TYPE: PORT ---
+port,443
 
-# Quantumult X Aggregated Rule-Set: 1234
-
-host-suffix, baidu.com, 1234
-host-suffix, netflix.com, 1234
-host-suffix, tiktok.com, 1234
-host, images.unsplash.com, 1234
-host, mycompany.com.cn, 1234
-host, test-lab.co.jp, 1234
-host, www.google, 1234
-host, www.microsoft.com, 1234
-host-keyword, hbogoasia, 1234
-host-wildcard, +*.apple.com, 1234
-user-agent, Twitter*, 1234
-ip-cidr, 10.10.10.10/32, 1234, no-resolve
-ip-cidr, 192.168.1.1/24, 1234, no-resolve
-ip6-cidr, 240e:97c:2f:1::/64, 1234, no-resolve
