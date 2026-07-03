@@ -1,49 +1,41 @@
-# === 1. 边缘注释与特殊空白字符测试 ===
-   # 前置空格注释
-// 双斜杠风格注释
-; 分号风格注释
-- DOMAIN,leading-dash-error.com # 带前置减号的复合行
-payload: # YAML 常见头部，应该被直接忽略
+# === 1234 Combined Base Rules ===
 
-# === 2. 高级正则表达式与特殊符号测试 (压力核心) ===
-DOMAIN-REGEX,^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+edu\.cn$
-REGEX,^https?:\/\/.*\.netflix\.com\/title\/.*$
-DOMAIN-REGEX,(bytedance|tiktok)\.com$ # 内部带管道符和括号的正则
+# --- TYPE: REMOVE ---
+remove,192.168.1.1
+remove,pan.baidu.com
 
-# === 3. 通配符与单值泛解析测试 ===
-DOMAIN-WILDCARD,*.pan.baidu.com
-*.sub.google.com
-+.microsoft.com
-.apple.com
-*~netflix.com
+# --- TYPE: SUFFIX ---
+suffix,apple.com
+suffix,microsoft.com
+suffix,music.internal.dev.apple.com
+suffix,xn--9kqx25nv1c.xn--fiqs8s
+suffix,xn--ur0an8bw2p.cn
 
-# === 4. 国际化域名 (IDN 中文域名 Punycode 测试) ===
-DOMAIN,哔哩哔哩.com
-DOMAIN-SUFFIX,腾讯网.cn
-阿里云.中国
+# --- TYPE: FULL ---
+full,leading-dash-error.com
+full,very.long.sub.domain.structure.co.uk
+full,xn--2vra6db.com
 
-# === 5. 黑名单与公共后缀拦截测试 (应被脚本剔除) ===
-com
-net.cn
-gov.hk
+# --- TYPE: WILDCARD ---
+wildcard,*.pan.baidu.com
+wildcard,*.sub.google.com
+wildcard,*~netflix.com
 
-# === 6. 混合嵌套与四段式域名测试 ===
-DOMAIN-SUFFIX,music.internal.dev.apple.com
-DOMAIN,very.long.sub.domain.structure.co.uk
+# --- TYPE: REGEX ---
+regex,(bytedance|tiktok)\.com$
+regex,^([a-zA-Z0-9]([a-zA-Z0-9\-]{0
+regex,^https?:\/\/.*\.netflix\.com\/title\/.*$
 
-# === 7. 端口与端口段边界测试 ===
-DST-PORT,80
-PORT,443
-DST-PORT,8080-8090
-PORT,10000-20000
+# --- TYPE: IP ---
+ip,10.0.0.0/8
+ip,192.168.1.100/32
 
-# === 8. IP 地址边界测试 (含端口溢出与掩码) ===
-192.168.1.1
-IP-CIDR,10.0.0.0/8
-192.168.1.100:8080 # 带单端口的 IPv4
-IP-CIDR6,2001:db8::/32
-[2001:db8:a0b:12f0::1]:443 # 带端口的 IPv6
+# --- TYPE: IP6 ---
+ip6,2001:db8::/32
 
-# === 9. 移除（反向流控）规则测试 ===
-REMOVE,*.pan.baidu.com
-REMOVE,ip,192.168.1.1
+# --- TYPE: PORT ---
+port,10000-20000
+port,443
+port,80
+port,8080-8090
+

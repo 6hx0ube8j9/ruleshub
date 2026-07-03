@@ -3,38 +3,46 @@
   "rules": [
     {
       "domain_suffix": [
-        "fast.com",
-        "github.com",
-        "steamcommunity.com"
+        "apple.com",
+        "microsoft.com",
+        "xn--9kqx25nv1c.xn--fiqs8s",
+        "xn--ur0an8bw2p.cn"
       ]
     },
     {
       "domain": [
-        "epicgames.com",
-        "rules.example.com",
-        "telemetry.microsoft.com"
+        "leading-dash-error.com",
+        "very.long.sub.domain.structure.co.uk",
+        "xn--2vra6db.com"
       ]
     },
     {
-      "domain_keyword": [
-        "spotify",
-        "twitter",
-        "ubisoft"
+      "port": [
+        80,
+        443
+      ]
+    },
+    {
+      "port_range": [
+        "10000-20000",
+        "8080-8090"
       ]
     },
     {
       "domain_regex": [
-        "^discord\\.gg$"
+        "(bytedance|tiktok)\\.com$",
+        "^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0",
+        "^.*\\.pan\\.baidu\\.com$",
+        "^.*\\.sub\\.google\\.com$",
+        "^.*~netflix\\.com$",
+        "^https?:\\/\\/.*\\.netflix\\.com\\/title\\/.*$"
       ]
     },
     {
       "ip_cidr": [
-        "100.64.0.0/10",
-        "114.114.114.114/32",
-        "172.16.0.0/12",
-        "2001:4860:4860::8888/128",
-        "2400:da00::/32",
-        "2606:4700:4700::1111/128"
+        "10.0.0.0/8",
+        "192.168.1.100/32",
+        "2001:db8::/32"
       ]
     }
   ]
