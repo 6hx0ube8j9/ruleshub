@@ -316,6 +316,11 @@ def sync_remote_to_local_source(base_name, policy):
         except Exception as e:
             print(f"  -> [Warning] Failed to fetch upstream url: {e}")
 
+    if rules['remove']:
+        for r_type in rules:
+            if r_type != 'remove':
+                rules[r_type] -= rules['remove']
+
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Combined Base Rules ===\n\n")
         for r_type in ['remove', 'suffix', 'full', 'keyword', 'wildcard', 'ip', 'ip6', 'process', 'useragent', 'port']:
@@ -363,6 +368,11 @@ def process_file_to_targets(file_name, global_matrix):
                 rules[rule_type].add(value)
 
     optimize_domains(rules)
+
+    if rules['remove']:
+        for r_type in rules:
+            if r_type != 'remove':
+                rules[r_type] -= rules['remove']
 
     if qx_target not in global_matrix['qx']:
         global_matrix['qx'][qx_target] = {
