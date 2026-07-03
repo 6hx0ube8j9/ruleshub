@@ -1,40 +1,43 @@
-# === 1234 Combined Base Rules ===
+# === 1234 Combined Base Rules (Phase 2: Chaos Engineering) ===
 
-# --- TYPE: REMOVE ---
-remove,192.168.1.1
-remove,pan.baidu.com
+# --- TYPE: REGEX 恶意畸变与破坏性测试 ---
+# 测试点1：完全断裂的正则（带未闭合括号和单侧逗号，专门刺杀 Quantumult X）
+regex,^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,
+# 测试点2：包含多重英文逗号的合法正则（测试 QX 拼接时是否会发生字段错位）
+regex,^https?:\/\/(www\.)?(baidu|google)\.com\/s\?wd=[a-z,1-9]+&c=[0-9,]+$
+# 测试点3：完全乱码的非法正则（测试 Python re.compile 拦截器）
+regex,[a-z$+++(???+++
 
-# --- TYPE: SUFFIX ---
-suffix,apple.com
-suffix,microsoft.com
-suffix,music.internal.dev.apple.com
-suffix,xn--9kqx25nv1c.xn--fiqs8s
-suffix,xn--ur0an8bw2p.cn
-
-# --- TYPE: FULL ---
-full,leading-dash-error.com
-full,very.long.sub.domain.structure.co.uk
-full,xn--2vra6db.com
-
-# --- TYPE: WILDCARD ---
-wildcard,*.pan.baidu.com
-wildcard,*.sub.google.com
+# --- TYPE: WILDCARD 边缘语义测试 ---
+# 测试点4：带非标符号的通配符（测试其转换成 Regex 时是否安全锚定，防止 Sing-box 泛化溢出）
 wildcard,*~netflix.com
+wildcard,sub*.google.*.com
+wildcard,???_special_*.tw
 
-# --- TYPE: REGEX ---
-regex,(bytedance|tiktok)\.com$
-regex,^https?:\/\/.*\.netflix\.com\/title\/.*$
+# --- TYPE: PUNYCODE 极限多语言与混合域名测试 ---
+# 测试点5：纯中文、中英混合、特殊后缀、甚至带大写的 Punycode 边界测试
+full,哔哩哔哩.com
+suffix,微软Microsoft.中国
+full,xn--2vra6db.com
+suffix,München-airport.de
 
-# --- TYPE: IP ---
+# --- TYPE: REMOVE 深度擦除与覆盖测试 ---
+# 测试点6：测试带前缀的精确擦除，以及全类型无死角擦除
+remove,pan.baidu.com
+remove,192.168.1.1
+remove,*.ad-tracker.net
+
+# --- TYPE: 混合噪声与极端格式化测试 ---
+# 测试点7：各种奇葩的空格、制表符、双引号、单引号包裹，测试清洗模块的鲁棒性
+  -  DOMAIN-SUFFIX,   "apple.com"   # 带前后空格和双引号
+'suffix,microsoft.com'   # 被单引号整行包裹
+   full,leading-dash-error.com      # 前方大量空格
+
+# --- TYPE: IP/PORT 边界测试 ---
+# 测试点8：无掩码单IP、畸形掩码、以及多重端口范围
 ip,10.0.0.0/8
-ip,192.168.1.100/32
-
-# --- TYPE: IP6 ---
-ip6,2001:db8::/32
-
-# --- TYPE: PORT ---
-port,10000-20000
-port,443
+ip,192.168.1.100
+ip6,2001:db8::
 port,80
+port,10000-20000
 port,8080-8090
-
