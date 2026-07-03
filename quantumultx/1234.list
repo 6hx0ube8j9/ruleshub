@@ -1,18 +1,13 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
 host-suffix, apple.com, 1234
-host-suffix, co.jp, 1234
-host-suffix, com.cn, 1234
-host-suffix, example.com, 1234
+host-suffix, google.com, 1234
 host-suffix, netflix.com, 1234
 host-suffix, xn--2vra6db.xn--fiqs8s, 1234
-host-suffix, xn--fiqs8s.xn--fiqs8s, 1234
-host, xn--0zwm56d.xn--0zwm56d.xn--fiqs8s, 1234
-host, xn--fiq228c.com, 1234
-host-wildcard, google.*, 1234
-host-wildcard, netflix.?om, 1234
-user-agent, Mozilla/5.0*, 1234
-ip-cidr, 10.0.0.1/32, 1234, no-resolve
-ip-cidr, 172.16.0.0/12, 1234, no-resolve
-ip-cidr, 192.168.1.1/32, 1234, no-resolve
-ip6-cidr, 2001:db8::/128, 1234, no-resolve
+host, nested-dash.com, 1234
+host-keyword, youtube, 1234
+host-wildcard, my-wildcard.com, 1234
+user-agent, *Streaming*, 1234
+ip-cidr, 10.0.0.0/8, 1234, no-resolve
+ip-cidr, 192.168.0.0/16, 1234, no-resolve
+ip6-cidr, 2001:db8::/32, 1234, no-resolve

@@ -1,24 +1,27 @@
-# ===================================================
-# 💥 终极混合压力测试集 (混合 QX, SR, Clash & 畸形行)
-# ===================================================
+# === 1234 Combined Base Rules ===
 
-# 1. Quantumult X 标准格式测试 (带空格、策略与修饰符)
-host-suffix, google.com, proxy
-host-keyword, youtube, proxy
-user-agent, *Streaming*, proxy
-ip-cidr, 10.0.0.0/8, direct, no-resolve
+# --- TYPE: SUFFIX ---
+suffix,apple.com
+suffix,google.com
+suffix,netflix.com
+suffix,xn--2vra6db.xn--fiqs8s
 
-# 2. Shadowrocket 标准格式测试 (全大写标签、IPv6)
-DOMAIN-SUFFIX,netflix.com,PROXY
-IP-CIDR6,2001:db8::/32,PROXY,no-resolve
-URL-REGEX,(ftp|https)://microsoft.com,DIRECT
+# --- TYPE: FULL ---
+full,nested-dash.com
 
-# 3. Clash / Mihomo 格式测试 (YAML 风格、带单双引号包裹)
-  - DOMAIN-SUFFIX,apple.com
-  - 'IP-CIDR,192.168.0.0/16,no-resolve'
-  - DOMAIN-WILDCARD,*.my-wildcard.com,PROXY
+# --- TYPE: KEYWORD ---
+keyword,youtube
 
-# 4. 恶性边界与中文 IDN 测试
-host-suffix, 哔哩哔哩.中国, direct
-- IP-CIDR,2001:db8:g::/64,no-resolve
-"- DOMAIN,nested-dash.com"
+# --- TYPE: WILDCARD ---
+wildcard,my-wildcard.com
+
+# --- TYPE: IP ---
+ip,10.0.0.0/8
+ip,192.168.0.0/16
+
+# --- TYPE: IP6 ---
+ip6,2001:db8::/32
+
+# --- TYPE: USERAGENT ---
+useragent,*Streaming*
+
