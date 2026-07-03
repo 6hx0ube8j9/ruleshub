@@ -20,7 +20,6 @@ wildcard,+.*.google.com
 
 # --- TYPE: IP ---
 ip,1.1.1.1/32
-ip,192.168.1.1/99
 
 # --- TYPE: PROCESS ---
 process,Clash.Meta.exe

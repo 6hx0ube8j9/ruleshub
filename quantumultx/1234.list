@@ -8,4 +8,3 @@ host, xn--fiqs8sirgfmh.xn--zfr164b.cn, 1234
 host-keyword, google.com, 1234
 host-wildcard, +.*.google.com, 1234
 ip-cidr, 1.1.1.1/32, 1234, no-resolve
-ip-cidr, 192.168.1.1/99, 1234, no-resolve
