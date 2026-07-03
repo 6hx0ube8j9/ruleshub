@@ -5,37 +5,31 @@
       "domain_suffix": [
         "apple.com",
         "com.tw",
+        "google.co.jp",
         "microsoft.com",
         "xn--fiq228c.xn--io0a7i",
-        "xn--j6w193g.xn--55qx5d",
-        "yaml-mix.com"
+        "xn--fiqs8s.xn--55qx5d",
+        "yaml-mix-style.com"
       ]
     },
     {
       "domain": [
-        "192.168.1.1.pcloud.com",
-        "github.com",
-        "openai.com"
-      ]
-    },
-    {
-      "domain_keyword": [
-        "space-keyword"
+        "amazon.co.uk"
       ]
     },
     {
       "domain_regex": [
-        "dot-star-prefix\\.org",
-        "wildcard-.-test\\..*\\.cn",
-        "abc..\\.gallery\\.tw",
-        "double-prefix\\.com",
-        "one.two.*\\.org"
+        "abc..xyz\\.test\\.com",
+        "double-wildcard\\.net",
+        ".\\.single-char\\.org",
+        "wildcard-with-dash-.-test\\..*\\.cn"
       ]
     },
     {
       "ip_cidr": [
         "1.1.1.1/32",
         "2001:db8::1:80/128",
+        "240c::6666:8080/128",
         "8.8.8.8/32"
       ]
     }

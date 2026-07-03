@@ -2,19 +2,17 @@
 
 host-suffix, apple.com, 1234
 host-suffix, com.tw, 1234
+host-suffix, google.co.jp, 1234
 host-suffix, microsoft.com, 1234
 host-suffix, xn--fiq228c.xn--io0a7i, 1234
-host-suffix, xn--j6w193g.xn--55qx5d, 1234
-host-suffix, yaml-mix.com, 1234
-host, 192.168.1.1.pcloud.com, 1234
-host, github.com, 1234
-host, openai.com, 1234
-host-keyword, space-keyword, 1234
-host-wildcard, abc??.gallery.tw, 1234
-host-wildcard, dot-star-prefix.org, 1234
-host-wildcard, double-prefix.com, 1234
-host-wildcard, one?two*.org, 1234
-host-wildcard, wildcard-?-test.*.cn, 1234
+host-suffix, xn--fiqs8s.xn--55qx5d, 1234
+host-suffix, yaml-mix-style.com, 1234
+host, amazon.co.uk, 1234
+host-wildcard, ?.single-char.org, 1234
+host-wildcard, abc??xyz.test.com, 1234
+host-wildcard, double-wildcard.net, 1234
+host-wildcard, wildcard-with-dash-?-test.*.cn, 1234
 ip-cidr, 1.1.1.1/32, 1234, no-resolve
 ip-cidr, 8.8.8.8/32, 1234, no-resolve
 ip6-cidr, 2001:db8::1:80/128, 1234, no-resolve
+ip6-cidr, 240c::6666:8080/128, 1234, no-resolve
