@@ -1,13 +1,7 @@
 # Shadowrocket Rule-Set: 1234
 
-DOMAIN-SUFFIX,apple.com
-DOMAIN-SUFFIX,google.com
-DOMAIN-SUFFIX,netflix.com
-DOMAIN-SUFFIX,xn--2vra6db.xn--fiqs8s
-DOMAIN,nested-dash.com
-DOMAIN-KEYWORD,youtube
-DOMAIN-WILDCARD,my-wildcard.com
-USER-AGENT,*Streaming*
-IP-CIDR,10.0.0.0/8,no-resolve
-IP-CIDR,192.168.0.0/16,no-resolve
-IP-CIDR6,2001:db8::/32,no-resolve
+DOMAIN-SUFFIX,microsoft.com
+USER-AGENT,*Telegram*📱🚀
+DST-PORT,80-443
+IP-CIDR,1.1.1.1/32,no-resolve
+IP-CIDR,999.999.999.999/32,no-resolve

@@ -3,32 +3,18 @@
   "rules": [
     {
       "domain_suffix": [
-        "apple.com",
-        "google.com",
-        "netflix.com",
-        "xn--2vra6db.xn--fiqs8s"
+        "microsoft.com"
       ]
     },
     {
-      "domain": [
-        "nested-dash.com"
-      ]
-    },
-    {
-      "domain_keyword": [
-        "youtube"
-      ]
-    },
-    {
-      "domain_regex": [
-        "my-wildcard\\.com"
+      "port_range": [
+        "80-443"
       ]
     },
     {
       "ip_cidr": [
-        "10.0.0.0/8",
-        "192.168.0.0/16",
-        "2001:db8::/32"
+        "1.1.1.1/32",
+        "999.999.999.999/32"
       ]
     }
   ]
