@@ -24,7 +24,7 @@
     },
     {
       "domain_regex": [
-        "discord\\.gg"
+        "^discord\\.gg$"
       ]
     },
     {
