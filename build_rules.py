@@ -125,63 +125,72 @@ def clean_and_parse_line(line):
         if len(parts) < 2:
             return None, None
         p1 = parts[0].upper()
-        p2 = parts[1]
+        p2 = parts[1].lower() 
         
         if p1 in ['AND', 'OR', 'NOT']:
             return None, None
             
         if p1 == 'REMOVE':
-            if len(parts) >= 3 and parts[1].upper() in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL', 'KEYWORD']:
-                return 'remove', parts[2].lower()
-            return 'remove', p2.lower()
+            target_val = parts[2].lower() if len(parts) >= 3 else p2
+            if target_val.startswith('+.'): target_val = target_val[2:]
+            elif target_val.startswith('*.'): target_val = target_val[2:]
+            elif target_val.startswith('.'): target_val = target_val[1:]
+            elif target_val.startswith('+'): target_val = target_val[1:]
+            target_val = target_val.lstrip('.')
+            return 'remove', target_val
             
+        if p2.startswith('+.'): p2 = p2[2:]
+        elif p2.startswith('*.'): p2 = p2[2:]
+        elif p2.startswith('.'): p2 = p2[1:]
+        elif p2.startswith('+'): p2 = p2[1:]
+        p2 = p2.lstrip('.')
+
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL']:
-            if has_invalid_domain_chars(p2.lower()):
+            if has_invalid_domain_chars(p2):
                 return None, None
                 
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
-            encoded_d = try_punycode_encode(p2.replace('*.', '', 1).lstrip('.').lower())
+            encoded_d = try_punycode_encode(p2)
             return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if p1 in ['DOMAIN', 'HOST', 'FULL']: 
-            p2 = p2.lower()
             if IPV4_REGEX.match(p2): return 'ip', p2
             if IPV6_REGEX.match(p2) or IPV6_REGEX.match(p2.split('/')[0]): return 'ip6', p2
-
-            if p2.startswith('+.'): p2 = p2[2:]
-            elif p2.startswith('*.'): p2 = p2[2:]
-            elif p2.startswith('.'): p2 = p2[1:]
-            elif p2.startswith('+'): p2 = p2[1:]
-            p2 = p2.lstrip('.')
-
             if '*' in p2 or '?' in p2: 
                 return 'wildcard', p2
             encoded_d = try_punycode_encode(p2)
             return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: 
-            return 'keyword', p2.lower()
+            return 'keyword', p2
         if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
-            return 'wildcard', p2.lower()
+            return 'wildcard', p2
             
         if p1 in ['IP-CIDR', 'IP', 'IP-CIDR6', 'IP6-CIDR', 'IP6']:
             raw_ip = p2.split(',')[0].strip()  
-            if IPV6_REGEX.match(raw_ip.lower()) or IPV6_REGEX.match(raw_ip.split('/')[0].lower()):
+            if ':' in raw_ip and '[' not in raw_ip and raw_ip.count(':') == 1:
+                raw_ip = raw_ip.split(':')[0] 
+            if IPV6_REGEX.match(raw_ip) or IPV6_REGEX.match(raw_ip.split('/')[0]):
                 return 'ip6', raw_ip
             return 'ip', raw_ip
             
-        if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', p2
-        if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', p2
-        if p1 in ['DST-PORT', 'PORT']: return 'port', p2        
+        if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', parts[1]
+        if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', parts[1]
+        if p1 in ['DST-PORT', 'PORT']: return 'port', parts[1]        
         
         return None, None
 
     raw_val = line.lower()
+    
+    if ':' in raw_val and '[' not in raw_val and raw_val.count(':') == 1:
+        possible_ip = raw_val.split(':')[0]
+        if IPV4_REGEX.match(possible_ip):
+            raw_val = possible_ip
+
     if IPV4_REGEX.match(raw_val):
         return 'ip', raw_val
     if IPV6_REGEX.match(raw_val):
         return 'ip6', raw_val
-        
     is_explicit_suffix = False
     if raw_val.startswith('+.'): 
         raw_val = raw_val[2:]
