@@ -153,20 +153,27 @@ def clean_and_parse_line(line):
                 return None, None
                 
         if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
+            p2 = p2.lstrip('+.*').lstrip('.') 
+            if has_invalid_domain_chars(p2): return None, None
             encoded_d = try_punycode_encode(p2)
             return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if p1 in ['DOMAIN', 'HOST', 'FULL']: 
+            if '*' in p2 or '?' in p2: 
+                if has_invalid_domain_chars(p2): return None, None
+                return 'wildcard', p2
+            p2 = p2.lstrip('+.*').lstrip('.')
             if IPV4_REGEX.match(p2): return 'ip', p2
             if IPV6_REGEX.match(p2) or IPV6_REGEX.match(p2.split('/')[0]): return 'ip6', p2
-            if '*' in p2 or '?' in p2: 
-                return 'wildcard', p2
+            if has_invalid_domain_chars(p2): return None, None
             encoded_d = try_punycode_encode(p2)
             return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: 
             return 'keyword', p2
+            
         if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
+            p2 = p2.lstrip('+').lstrip('.') 
             return 'wildcard', p2
             
         if p1 in ['IP-CIDR', 'IP', 'IP-CIDR6', 'IP6-CIDR', 'IP6']:
