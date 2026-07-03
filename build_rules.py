@@ -231,11 +231,14 @@ def clean_and_parse_line(line):
             parts_count = len(parts)
             last_2_parts = '.'.join(parts[-2:]) if parts_count >= 2 else ''
             is_compound_public = last_2_parts in PUBLIC_SUFFIX_BLACKLIST
-            
+
             if parts_count == 2:
                 return 'suffix', raw_val
-            elif parts_count == 3 and is_compound_public:
-                return 'suffix', raw_val
+            elif parts_count == 3:
+                if is_compound_public:
+                    return 'suffix', raw_val
+                else:
+                    return 'full', raw_val
             else:
                 return 'full', raw_val
         else:
