@@ -38,7 +38,7 @@ FILE_POLICY_ROUTER = [
     },
 
     # 示例 3: 紧凑型单行本
-    {'name': 'test.txt'},
+    {'name': 'test'},
 
     # 示例 4: 空键名智能命名
     {'name': '', 'url': 'https://remote.com/Apple.list'},
