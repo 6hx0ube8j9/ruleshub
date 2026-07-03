@@ -3,12 +3,38 @@
   "rules": [
     {
       "domain_suffix": [
-        "double-agent.com"
+        "fast.com",
+        "github.com",
+        "steamcommunity.com"
+      ]
+    },
+    {
+      "domain": [
+        "epicgames.com",
+        "rules.example.com",
+        "telemetry.microsoft.com"
       ]
     },
     {
       "domain_keyword": [
-        "netflix"
+        "spotify",
+        "twitter",
+        "ubisoft"
+      ]
+    },
+    {
+      "domain_regex": [
+        "discord\\.gg"
+      ]
+    },
+    {
+      "ip_cidr": [
+        "100.64.0.0/10",
+        "114.114.114.114/32",
+        "172.16.0.0/12",
+        "2001:4860:4860::8888/128",
+        "2400:da00::/32",
+        "2606:4700:4700::1111/128"
       ]
     }
   ]

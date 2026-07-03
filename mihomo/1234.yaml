@@ -1,4 +1,18 @@
 # Mihomo Payload Rule-Set: 1234
 payload:
-  - DOMAIN-SUFFIX,double-agent.com
-  - DOMAIN-KEYWORD,netflix
+  - DOMAIN-SUFFIX,fast.com
+  - DOMAIN-SUFFIX,github.com
+  - DOMAIN-SUFFIX,steamcommunity.com
+  - DOMAIN,epicgames.com
+  - DOMAIN,rules.example.com
+  - DOMAIN,telemetry.microsoft.com
+  - DOMAIN-KEYWORD,spotify
+  - DOMAIN-KEYWORD,twitter
+  - DOMAIN-KEYWORD,ubisoft
+  - DOMAIN-REGEX,^discord\.gg$
+  - IP-CIDR,100.64.0.0/10,no-resolve
+  - IP-CIDR,114.114.114.114/32,no-resolve
+  - IP-CIDR,172.16.0.0/12,no-resolve
+  - IP-CIDR6,2001:4860:4860::8888/128,no-resolve
+  - IP-CIDR6,2400:da00::/32,no-resolve
+  - IP-CIDR6,2606:4700:4700::1111/128,no-resolve

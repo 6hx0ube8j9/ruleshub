@@ -1,4 +1,19 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
-host-suffix, double-agent.com, 1234
-host-keyword, netflix, 1234
+host-suffix, fast.com, 1234
+host-suffix, github.com, 1234
+host-suffix, steamcommunity.com, 1234
+host, epicgames.com, 1234
+host, rules.example.com, 1234
+host, telemetry.microsoft.com, 1234
+host-keyword, spotify, 1234
+host-keyword, twitter, 1234
+host-keyword, ubisoft, 1234
+host-wildcard, discord.gg, 1234
+user-agent, *TikTok*, 1234
+ip-cidr, 100.64.0.0/10, 1234, no-resolve
+ip-cidr, 114.114.114.114/32, 1234, no-resolve
+ip-cidr, 172.16.0.0/12, 1234, no-resolve
+ip6-cidr, 2001:4860:4860::8888/128, 1234, no-resolve
+ip6-cidr, 2400:da00::/32, 1234, no-resolve
+ip6-cidr, 2606:4700:4700::1111/128, 1234, no-resolve
