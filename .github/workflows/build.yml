@@ -32,8 +32,8 @@ jobs:
         run: |
           MIHOMO_VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4)
           curl -L -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
-          gunzip -c mihomo.gz > mihomo
-          chmod +x mihomo
+          gunzip -c mihomo.gz > mihomo-bin
+          chmod +x mihomo-bin
           
           mkdir -p ~/.config/mihomo
           curl -L -o ~/.config/mihomo/Country.mmdb "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
@@ -56,13 +56,14 @@ jobs:
           echo "IP MRS"
           for ip_yaml in tmp_ip_*.yaml; do
             base_name=$(echo "$ip_yaml" | sed 's/tmp_ip_//' | sed 's/.yaml//')
-            ../mihomo convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}.mrs"
+            # 【修改点 2】调用上层目录的 ../mihomo-bin
+            ../mihomo-bin convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}.mrs"
           done
           
           echo "Domain MRS"
           for dm_yaml in tmp_domain_*.yaml; do
             base_name=$(echo "$dm_yaml" | sed 's/tmp_domain_//' | sed 's/.yaml//')
-            ../mihomo convert-ruleset domain yaml "$dm_yaml" "${base_name}.mrs"
+            ../mihomo-bin convert-ruleset domain yaml "$dm_yaml" "${base_name}.mrs"
           done
           
           rm -f tmp_ip_*.yaml tmp_domain_*.yaml
