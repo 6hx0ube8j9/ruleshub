@@ -1,36 +1,26 @@
-# === 1234 Combined Base Rules ===
+# === 1234 Combined Base Rules (Phase 5: The Doomsday Spec) ===
 
-# --- TYPE: SUFFIX ---
-suffix,baidu.com
-suffix,netflix.com
-suffix,tiktok.com
+# --- 1. 终极畸形：国际化中文域名（测试 try_punycode_encode 模块） ---
+# 正常维护者绝不会写中文，但摆烂的人会直接把中文域名贴进来！
+domain,中国政府.政务.cn.
+suffix,百度一下.com
 
-# --- TYPE: FULL ---
-full,images.unsplash.com
-full,mycompany.com.cn
-full,test-lab.co.jp
-full,www.google
-full,www.microsoft.com
+# --- 2. 彻底摆烂：前导、尾部、中段多重带点与空格的大杂烩 ---
+  -  DOMAIN-SUFFIX,  .crazy-mixed-up-domain.co.uk.  
+.apple.com...
++.*.google.com..
 
-# --- TYPE: KEYWORD ---
-keyword,hbogoasia
+# --- 3. 语义冲突与溢出测试（测试树状去重的极限承受力） ---
+# 先给一个极大的 suffix 伞，再给一堆不同层级的子域名和重复项
+suffix,google.com
+full,www.google.com
+full,mail.google.com.
+full,deep.sub.blog.google.com
+keyword,google.com
 
-# --- TYPE: WILDCARD ---
-wildcard,+*.apple.com
-
-# --- TYPE: IP ---
-ip,10.10.10.10/32
-ip,192.168.1.1/24
-
-# --- TYPE: IP6 ---
-ip6,240e:97c:2f:1::/64
-
-# --- TYPE: PROCESS ---
-process,DownloadService
-
-# --- TYPE: USERAGENT ---
-useragent,Twitter*
-
-# --- TYPE: PORT ---
-port,443
-
+# --- 4. 传输层与协议层大乱斗 ---
+# 带有非标端口的 IP、破损的 CIDR、以及奇葩大小写
+IP-CIDR,1.1.1.1/32:80.
+ip,192.168.1.1/99
+port,80-443
+process,Clash.Meta.exe
