@@ -1,45 +1,35 @@
-# =========================================================
-# 终极压力测试：边界破坏与极端大写、畸形规则数据集
-# =========================================================
+# === 1234 Combined Base Rules ===
 
-# 1. 彻底大写的带逗号规则（精准轰炸旧代码中对大写前缀 replace 失败的 Bug）
-DOMAIN-SUFFIX,*.MICROSOFT.COM
-DOMAIN-SUFFIX,+.GOOGLE.CO.JP
-DOMAIN-SUFFIX,.APPLE.COM
-DOMAIN,+.GITHUB.COM
-DOMAIN,*.OPENAI.COM
+# --- TYPE: REMOVE ---
+remove,+.deleted-stub.com
 
-# 2. 多重连续前缀与边界点剥离（验证 strip 和正则匹配的健壮性）
-+*.double-prefix.com
-.*.dot-star-prefix.org
-.+multi-mix.net
-....many-dots.com..
-+.+..comb-prefix.io
+# --- TYPE: SUFFIX ---
+suffix,apple.com
+suffix,com.tw
+suffix,microsoft.com
+suffix,xn--fiq228c.xn--io0a7i
+suffix,xn--j6w193g.xn--55qx5d
+suffix,yaml-mix.com
 
-# 3. 畸形 IP 与域名的极限伪装（验证 IP 拦截器和掩码补全）
-DOMAIN,8.8.8.8
-DOMAIN,1.1.1.1/24
-DOMAIN,2001:4860:4860::8888
-ip,1.1.1.1:443
-ip6,2001:db8::1:80
-DOMAIN,192.168.1.1.pcloud.com
+# --- TYPE: FULL ---
+full,192.168.1.1.pcloud.com
+full,github.com
+full,openai.com
 
-# 4. 特殊通配符与边界正则（重点验证修复后的 Sing-box Regex 转换顺序）
-abc??.gallery.tw
-*.wildcard-?-test.*.cn
-one?two*.org
+# --- TYPE: KEYWORD ---
+keyword,space-keyword
 
-# 5. 空格、特殊标点与垃圾关键词（验证整行清洗与合法字符过滤）
-DOMAIN-KEYWORD,  space-keyword  
-REMOVE,DOMAIN-SUFFIX,+.deleted-stub.com
-  - - DOMAIN,dash-space-mix.com
-payload:
-  - 'DOMAIN-SUFFIX,yaml-mix.com'
-bad_char$.net
-percent%sign.com
+# --- TYPE: WILDCARD ---
+wildcard,*.dot-star-prefix.org
+wildcard,*.double-prefix.com
+wildcard,abc??.gallery.tw
+wildcard,one?two*.org
+wildcard,wildcard-?-test.*.cn
 
-# 6. 多级公共后缀与中文国际化极端组合（测试黑名单与 Punycode）
-+.COM.TW
-NET.CN
-+.香港.公司
-DOMAIN-SUFFIX,中文.网络
+# --- TYPE: IP ---
+ip,1.1.1.1:443/32
+ip,8.8.8.8/32
+
+# --- TYPE: IP6 ---
+ip6,2001:db8::1:80/128
+

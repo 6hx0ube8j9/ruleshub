@@ -1,30 +1,15 @@
 # Mihomo Payload Rule-Set: 1234
 payload:
-  - DOMAIN-SUFFIX,amazon.co.uk
   - DOMAIN-SUFFIX,apple.com
-  - DOMAIN-SUFFIX,bilibili.com
-  - DOMAIN-SUFFIX,cleanafterdash.com
-  - DOMAIN-SUFFIX,com.cn
-  - DOMAIN-SUFFIX,double-quoted.com
-  - DOMAIN-SUFFIX,facebook.com
-  - DOMAIN-SUFFIX,github.com
-  - DOMAIN-SUFFIX,google.com
-  - DOMAIN-SUFFIX,google.com.hk
+  - DOMAIN-SUFFIX,com.tw
   - DOMAIN-SUFFIX,microsoft.com
-  - DOMAIN-SUFFIX,netflix.com
-  - DOMAIN-SUFFIX,openai.com
-  - DOMAIN-SUFFIX,quoted-domain.com
-  - DOMAIN-SUFFIX,stripspace.com
-  - DOMAIN-SUFFIX,www.sh.cn
-  - DOMAIN-SUFFIX,xn--0zwm56d.xn--ses554g
-  - DOMAIN-SUFFIX,xn--flw351e.com
-  - DOMAIN-SUFFIX,xn--gtvz22d.com
-  - DOMAIN-SUFFIX,xn--hs8h.com
-  - DOMAIN-SUFFIX,xn--o0uq09b.xn--fiqs8s
-  - DOMAIN,this.is.a.very.very.long.and.nested.subdomain.structure.example.com
-  - DOMAIN-KEYWORD,tiktok
-  - IP-CIDR,1.1.1.1/32,no-resolve
-  - IP-CIDR,10.0.0.1/24,no-resolve
-  - IP-CIDR,192.168.1.1/32,no-resolve
-  - IP-CIDR6,2001:db8::/32,no-resolve
-  - IP-CIDR6,2001:db8::1/128,no-resolve
+  - DOMAIN-SUFFIX,xn--fiq228c.xn--io0a7i
+  - DOMAIN-SUFFIX,xn--j6w193g.xn--55qx5d
+  - DOMAIN-SUFFIX,yaml-mix.com
+  - DOMAIN,192.168.1.1.pcloud.com
+  - DOMAIN,github.com
+  - DOMAIN,openai.com
+  - DOMAIN-KEYWORD,space-keyword
+  - IP-CIDR,1.1.1.1:443/32,no-resolve
+  - IP-CIDR,8.8.8.8/32,no-resolve
+  - IP-CIDR6,2001:db8::1:80/128,no-resolve

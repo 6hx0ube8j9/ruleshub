@@ -3,52 +3,40 @@
   "rules": [
     {
       "domain_suffix": [
-        "amazon.co.uk",
         "apple.com",
-        "bilibili.com",
-        "cleanafterdash.com",
-        "com.cn",
-        "double-quoted.com",
-        "facebook.com",
-        "github.com",
-        "google.com",
-        "google.com.hk",
+        "com.tw",
         "microsoft.com",
-        "netflix.com",
-        "openai.com",
-        "quoted-domain.com",
-        "stripspace.com",
-        "www.sh.cn",
-        "xn--0zwm56d.xn--ses554g",
-        "xn--flw351e.com",
-        "xn--gtvz22d.com",
-        "xn--hs8h.com",
-        "xn--o0uq09b.xn--fiqs8s"
+        "xn--fiq228c.xn--io0a7i",
+        "xn--j6w193g.xn--55qx5d",
+        "yaml-mix.com"
       ]
     },
     {
       "domain": [
-        "this.is.a.very.very.long.and.nested.subdomain.structure.example.com"
+        "192.168.1.1.pcloud.com",
+        "github.com",
+        "openai.com"
       ]
     },
     {
       "domain_keyword": [
-        "tiktok"
+        "space-keyword"
       ]
     },
     {
       "domain_regex": [
-        "abc.\\.com",
-        ".*\\.wildcard\\..*\\.test\\.com"
+        ".*\\.double-prefix\\.com",
+        ".*\\.dot-star-prefix\\.org",
+        "wildcard-.-test\\..*\\.cn",
+        "one.two.*\\.org",
+        "abc..\\.gallery\\.tw"
       ]
     },
     {
       "ip_cidr": [
-        "1.1.1.1/32",
-        "10.0.0.1/24",
-        "192.168.1.1/32",
-        "2001:db8::/32",
-        "2001:db8::1/128"
+        "1.1.1.1:443/32",
+        "2001:db8::1:80/128",
+        "8.8.8.8/32"
       ]
     }
   ]
