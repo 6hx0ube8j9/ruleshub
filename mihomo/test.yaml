@@ -1,9 +1,2 @@
 # Mihomo Payload Rule-Set: test
 payload:
-  - DOMAIN-SUFFIX,apple.com
-  - DOMAIN-SUFFIX,github.com
-  - DOMAIN-SUFFIX,microsoft.com
-  - DOMAIN-SUFFIX,netflix.com
-  - DOMAIN,google.com
-  - DOMAIN,youtube.com
-  - IP-CIDR,192.168.1.1/24,no-resolve
