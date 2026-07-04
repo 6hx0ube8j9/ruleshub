@@ -455,10 +455,12 @@ def process_file_to_targets(file_name, global_matrix, router_cleaned):
             if rules['full']: sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})      
             if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})      
             if rules['keyword']: sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
+            
             if rules['port']: 
                 p_list, p_range = parse_ports_for_singbox(rules['port'])
                 if p_list: sb_tmp_domain["rules"].append({"port": p_list})
                 if p_range: sb_tmp_domain["rules"].append({"port_range": p_range})
+                
             if rules['wildcard'] or rules['regex']:
                 regex_list = [convert_wildcard_to_regex(w) for w in rules['wildcard']]
                 for regex_val in rules['regex']:
