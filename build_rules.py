@@ -4,6 +4,7 @@ import json
 import re
 import urllib.request
 import urllib.error
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 SOURCE_DIR = 'source'
 SHADOWROCKET_DIR = 'shadowrocket'
@@ -15,19 +16,6 @@ SINGBOX_DIR = 'singbox'
 for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SINGBOX_DIR]:
     if not os.path.exists(d):
         os.makedirs(d)
-
-# ====================================================================================
-# FILE_POLICY_ROUTER 字段说明
-# ====================================================================================
-# 'name'        : 默认输出文件名（严格区分大小写，写什么就是什么）
-# 'url'         : 远程拉取规则链接列表并合并
-# 'qx_policy'   : QuantumultX 策略组标签（如 'Proxy', 'Apple'）
-# 'pac'         : PAC 输出文件名（留空不转换；仅 'name' 为 direct/china 时生成）
-# 'mrs' / 'srs' : 是否生成 mrs / srs 规则集（True/False，留空默认 True）
-#
-# [工具重命名] (留空默认使用 'name')
-# 'qx' / 'sr' / 'mihomo' / 'singbox' -> 对应各工具的输出文件名
-# ====================================================================================
 
 FILE_POLICY_ROUTER = [
     {
@@ -80,7 +68,6 @@ PUBLIC_SUFFIX_BLACKLIST = {
 }
 
 def get_smart_base_name(key_name, policy, existing_names):
-    # 🟢 修复点 1：移除这里的 .lower()，让智能命名也遵守你的大小写规范
     if key_name.strip():
         base = key_name.strip()
     else:
@@ -113,19 +100,13 @@ def try_punycode_encode(domain_str):
 
 def has_invalid_domain_chars(domain_str):
     return any(c in domain_str for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')'])
-    
-def get_actual_path(directory, base_name, ext=".txt"):
-    return os.path.join(directory, f"{base_name}{ext}")
-    
+
 def validate_ip_mask(ip_str, is_ipv6=False):
     if '/' in ip_str:
         try:
             parts = ip_str.split('/')
             mask = int(parts[1])
-            if is_ipv6:
-                return 0 <= mask <= 128
-            else:
-                return 0 <= mask <= 32
+            return 0 <= mask <= 128 if is_ipv6 else 0 <= mask <= 32
         except Exception:
             return False
     return True
@@ -163,12 +144,8 @@ def clean_and_parse_line(line):
             
         if p1 in ['DOMAIN-REGEX', 'REGEX']:
             prophecies = ['(?=', '(?<=', '(?!', '(?<!']
-            if any(lookaround in p2 for lookaround in prophecies):
+            if any(lookaround in p2 for lookaround in prophecies) or '/' in p2 or '?' in p2:
                 return None, None
-                
-            if '/' in p2 or '?' in p2:
-                return None, None
-                
             try:
                 re.compile(p2)
                 return 'regex', p2
@@ -225,7 +202,6 @@ def clean_and_parse_line(line):
         return None, None
 
     raw_val = line.lower()
-    
     if '/' in raw_val or '?' in raw_val:
         if not (IPV4_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val.split('/')[0])):
             return None, None
@@ -284,10 +260,7 @@ def clean_and_parse_line(line):
             if parts_count == 2:
                 return 'suffix', raw_val
             elif parts_count == 3:
-                if is_compound_public:
-                    return 'suffix', raw_val
-                else:
-                    return 'full', raw_val
+                return ('suffix', raw_val) if is_compound_public else ('full', raw_val)
             else:
                 return 'full', raw_val
         else:
@@ -302,13 +275,17 @@ def optimize_domains(rules):
                 clean_reversed.append(rd)
         rules['suffix'] = {'.'.join(reversed(rd.rstrip('.').split('.'))) for rd in clean_reversed}
 
-    if rules.get('full'):
+    if rules.get('full') and rules.get('suffix'):
+        rules['full'] = {
+            f for f in rules['full'] 
+            if not any(f.endswith('.' + s) or f == s for s in rules['suffix'])
+        }
+    elif rules.get('full'):
         rules['full'] = set(rules['full'])
 
 def ensure_ip_mask(ip_str, is_ipv6=False):
     if '/' in ip_str: return ip_str
-    if is_ipv6: return f"{ip_str}/128"
-    return f"{ip_str}/32"
+    return f"{ip_str}/128" if is_ipv6 else f"{ip_str}/32"
 
 def parse_ports_for_singbox(port_set):
     p_list, p_range = [], []
@@ -317,11 +294,25 @@ def parse_ports_for_singbox(port_set):
         else: p_list.append(int(p))
     return sorted(p_list), sorted(p_range)
 
+def fetch_single_url(remote_url):
+    """单条 URL 核心请求逻辑"""
+    try:
+        req = urllib.request.Request(
+            remote_url, 
+            headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        )
+        with urllib.request.urlopen(req, timeout=15) as response:
+            content = response.read().decode('utf-8', errors='ignore')
+            return remote_url, content.splitlines()
+    except Exception as e:
+        print(f"Warning: Failed to fetch {remote_url} - {e}")
+        return remote_url, []
+
 def sync_remote_to_local_source(base_name, policy):
     file_name = f"{base_name}.txt"
     source_path = os.path.join(SOURCE_DIR, file_name)
     
-    rules = {'remove': set(), 'process': set(), 'port': set(), 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
+    rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
     
     if not os.path.exists(source_path):
         with open(source_path, 'w', encoding='utf-8') as f:
@@ -336,23 +327,14 @@ def sync_remote_to_local_source(base_name, policy):
     remove_set = rules['remove']
     auth_set = set().union(*[rules[k] for k in rules.keys() if k != 'remove'])
     
-    remote_url_cfg = policy.get('url')
-    url_list = []
-    if isinstance(remote_url_cfg, list):
-        url_list = remote_url_cfg
-    elif isinstance(remote_url_cfg, str) and remote_url_cfg.strip():
-        url_list = [remote_url_cfg]
+    remote_url_cfg = policy.get('url', [])
+    url_list = remote_url_cfg if isinstance(remote_url_cfg, list) else ([remote_url_cfg] if remote_url_cfg else [])
 
-    for remote_url in url_list:
-        try:
-            req = urllib.request.Request(
-                remote_url, 
-                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-            )
-            with urllib.request.urlopen(req, timeout=15) as response:
-                content = response.read().decode('utf-8', errors='ignore')
-                lines = content.splitlines()
-                
+    if url_list:
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            future_to_url = {executor.submit(fetch_single_url, url): url for url in url_list}
+            for future in as_completed(future_to_url):
+                url, lines = future.result()
                 for line in lines:
                     r_type, payload = clean_and_parse_line(line)
                     if not payload or r_type not in rules or r_type == 'remove':
@@ -360,8 +342,6 @@ def sync_remote_to_local_source(base_name, policy):
                     if payload in remove_set or payload in auth_set:
                         continue
                     rules[r_type].add(payload)
-        except Exception as e:
-            print(f"Warning: Failed to fetch {remote_url} - {e}")
 
     if rules['remove']:
         for r_type in rules:
@@ -378,11 +358,11 @@ def sync_remote_to_local_source(base_name, policy):
                     elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
                     else: f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
-                
-def process_file_to_targets(file_name, global_matrix):
+
+def process_file_to_targets(file_name, global_matrix, router_cleaned):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0]
-    policy = FILE_POLICY_ROUTER_CLEANED.get(base_name, {})
+    policy = router_cleaned.get(base_name, {})
     standard_name = policy.get('name', base_name)
     
     qx_target = policy.get('qx', standard_name)
@@ -400,7 +380,7 @@ def process_file_to_targets(file_name, global_matrix):
         elif base_name.lower() == 'reject': qx_policy_label = 'reject'
         else: qx_policy_label = standard_name.capitalize()
         
-    rules = {'remove': set(), 'process': set(), 'port': set(), 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
+    rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
     
     with open(source_path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -493,27 +473,26 @@ def process_file_to_targets(file_name, global_matrix):
                     json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
 
 def main():
-    global FILE_POLICY_ROUTER_CLEANED
-    FILE_POLICY_ROUTER_CLEANED = {}
+    router_cleaned = {}
     allocated_names = set()
     
     for policy_card in FILE_POLICY_ROUTER:
         raw_name = policy_card.get('name', '')
         real_name = get_smart_base_name(raw_name, policy_card, allocated_names)
         allocated_names.add(real_name)
-        FILE_POLICY_ROUTER_CLEANED[real_name] = policy_card
+        router_cleaned[real_name] = policy_card
 
     if os.path.exists(SOURCE_DIR):
         for f in os.listdir(SOURCE_DIR):
             if f.endswith('.txt'):
                 local_base_name = os.path.splitext(f)[0]
-                if local_base_name not in FILE_POLICY_ROUTER_CLEANED:
-                    FILE_POLICY_ROUTER_CLEANED[local_base_name] = {
+                if local_base_name not in router_cleaned:
+                    router_cleaned[local_base_name] = {
                         'name': local_base_name,
                         'url': []
                     }
 
-    for target_base_name, policy_card in FILE_POLICY_ROUTER_CLEANED.items():
+    for target_base_name, policy_card in router_cleaned.items():
         sync_remote_to_local_source(target_base_name, policy_card)
 
     global_matrix = {
@@ -525,7 +504,7 @@ def main():
         
     files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
     for file_name in files:
-        process_file_to_targets(file_name, global_matrix)
+        process_file_to_targets(file_name, global_matrix, router_cleaned)
     
     # QuantumultX
     for g_name, g_rules in global_matrix['qx'].items():
@@ -648,7 +627,6 @@ def main():
             f.write("function FindProxyForURL(url, host) {\n")
             f.write("    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n")
             f.write("        return \"DIRECT\";\n    }\n\n")
-            f.write("    var suffix = host.toLowerCase();\n")
             f.write("    var suffix = host.toLowerCase();\n")
             f.write("    while (suffix) {\n")
             f.write("        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {\n")
