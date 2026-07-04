@@ -148,6 +148,9 @@ def clean_and_parse_line(line):
             return 'remove', target_val
             
         if p1 in ['DOMAIN-REGEX', 'REGEX']:
+            if any(lookaround in p2 for lookaround in ['(?=', '(?<=', '(?!', '(?<!']):
+                print(f"  -> [跳过] 发现 Go/RE2 不支持的环视正则: {p2}")
+                return None, None
             try:
                 re.compile(p2)
                 return 'regex', p2
@@ -457,9 +460,8 @@ def process_file_to_targets(file_name, global_matrix):
                     for item in sorted(rules['full']): f.write(f"  - DOMAIN,{item}\n")
                     for item in sorted(rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{item}\n")
                     for item in sorted(rules['regex']): f.write(f"  - DOMAIN-REGEX,{item}\n")
-                    for w in sorted(rules['wildcard']):
-                        r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
-                        f.write(f"  - DOMAIN-REGEX,^{r}$\n")
+                    for val in sorted(rules['wildcard']):
+                        f.write(f"  - DOMAIN-WILDCARD,{val}\n")
 
     if srs_enable:
         if 'ip' in file_keyword:
@@ -480,10 +482,11 @@ def process_file_to_targets(file_name, global_matrix):
             if rules['wildcard'] or rules['regex']:
                 regex_list = []
                 for w in rules['wildcard']:
-                    r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
-                    regex_list.append(f"^{r}$") # 已经具有前后锚定，防止 Sing-box 泛化溢出匹配
-                for r in rules['regex']:
-                    regex_list.append(r)
+                    escaped_w = re.escape(w)
+                    r_val = escaped_w.replace(r'\*', '.*').replace(r'\?', '.')
+                    regex_list.append(f"^{r_val}$")
+                for regex_val in rules['regex']:
+                    regex_list.append(regex_val)
                 sb_tmp_domain["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
                 
             if sb_tmp_domain["rules"]:
@@ -544,7 +547,11 @@ def main():
             for val in sorted(g_rules['wildcard']): f.write(f"host-wildcard, {val}, {qx_policy}\n")
             for val in sorted(g_rules['regex']): f.write(f"host-regex, {val.strip()}, {qx_policy}\n")
             for val in sorted(g_rules['useragent']):
-                qx_ua = val if ('*' in val or '?' in val) else f"*{val}*"
+                qx_ua = val
+                if not ('*' in qx_ua or '?' in qx_ua):
+                    qx_ua = f"*{qx_ua}*"
+                if ',' in qx_ua:
+                    qx_ua = f'"{qx_ua}"'
                 f.write(f"user-agent, {qx_ua}, {qx_policy}\n")
             for val in sorted(g_rules['ip']): f.write(f"ip-cidr, {ensure_ip_mask(val)}, {qx_policy}, no-resolve\n")
             for val in sorted(g_rules['ip6']): f.write(f"ip6-cidr, {ensure_ip_mask(val, True)}, {qx_policy}, no-resolve\n")
@@ -576,10 +583,8 @@ def main():
             for val in sorted(g_rules['full']): f.write(f"  - DOMAIN,{val}\n")
             for val in sorted(g_rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{val}\n")
             for val in sorted(g_rules['regex']): f.write(f"  - DOMAIN-REGEX,{val}\n")
-            if g_rules['wildcard']:
-                for w in sorted(g_rules['wildcard']):
-                    r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
-                    f.write(f"  - DOMAIN-REGEX,^{r}$\n")                
+            for val in sorted(g_rules['wildcard']): 
+                f.write(f"  - DOMAIN-WILDCARD,{val}\n")            
             for val in sorted(g_rules['process']): f.write(f"  - PROCESS-NAME,{val}\n")
             for val in sorted(g_rules['port']): f.write(f"  - DST-PORT,{val}\n")
             for val in sorted(g_rules['ip']): f.write(f"  - IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
@@ -601,7 +606,8 @@ def main():
         if g_rules['wildcard'] or g_rules['regex']:
             regex_list = []
             for w in g_rules['wildcard']:
-                r = w.replace('*', '___STAR___').replace('?', '___QUESTION___').replace('.', '\\.').replace('___STAR___', '.*').replace('___QUESTION___', '.')
+			    escaped_w = re.escape(w)
+                r = escaped_w.replace(r'\*', '.*').replace(r'\?', '.')
                 regex_list.append(f"^{r}$")
             for r in g_rules['regex']:
                 regex_list.append(r)
