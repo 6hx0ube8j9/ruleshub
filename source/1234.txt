@@ -1,33 +1,22 @@
-# === 1234 Combined Base Rules ===
+# === 压力测试：混合规则与排雷集 ===
 
-# --- TYPE: PROCESS ---
-process,Telegram
+# --- 1. 目标端口（测试大小写、变体、连字符范围排雷） ---
+dst-port,443
+DEST-PORT,80
+PORT,8080
+dst-port,3000-4000
+PORT,5000-6000
+dst-port,22
 
-# --- TYPE: PORT ---
-port,3000-4000
-port,443
-port,80
-port,8080
+# --- 2. 域名规则（测试全称、后缀、关键字、大小写） ---
+DOMAIN,Google.com
+domain,Twitter.com
+DOMAIN-SUFFIX,amazon.com
+domain-suffix,Apple.com
+DOMAIN-KEYWORD,netflix
+domain-keyword,youtube
 
-# --- TYPE: FULL ---
-full,google.com
-full,twitter.com
-
-# --- TYPE: SUFFIX ---
-suffix,amazon.com
-suffix,apple.com
-suffix,twimg.com
-
-# --- TYPE: KEYWORD ---
-keyword,netflix
-keyword,v2ray
-keyword,youtube
-
-# --- TYPE: IP ---
-ip,140.238.0.0/16
-ip,17.0.0.0/8
-ip,91.108.4.0/22
-
-# --- TYPE: IP6 ---
-ip6,2001:b000::/32
-
+# --- 3. IP规则（测试不解析、CIDR标准） ---
+IP-CIDR,140.238.0.0/16
+ip-cidr,17.0.0.0/8
+IP-CIDR6,2001:b000::/32
