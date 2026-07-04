@@ -1,11 +1,11 @@
-# 测试场景 1：域名 + 目标端口
-# 期望：只有当访问 google.com 且目标端口是 443 时才命中
-DOMAIN-SUFFIX,google.com,DST-PORT,443
+# === 1234 Combined Base Rules ===
 
-# 测试场景 2：IP + 目标端口范围 + 源端口
-# 期望：访问指定内网网段，且目标端口在 20000-30000，且本地源端口是 1024
-IP-CIDR,192.168.1.0/24,DST-PORT,20000-30000,SRC-PORT,1024
+# --- TYPE: SUFFIX ---
+suffix,google.com
 
-# 测试场景 3：域名关键字 + 目标端口 + 协议(其他字段)
-# 期望：包含 netflix 关键字的流量，走 80 端口，且协议是 udp
-DOMAIN-KEYWORD,netflix,DST-PORT,80,PROTOCOL,udp
+# --- TYPE: KEYWORD ---
+keyword,netflix
+
+# --- TYPE: IP ---
+ip,192.168.1.0/24
+

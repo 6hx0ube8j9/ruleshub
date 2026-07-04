@@ -3,18 +3,13 @@
   "rules": [
     {
       "domain_suffix": [
-        "1234567.xyz",
-        "co.uk",
-        "t.co",
-        "xn--yets76e.xn--fiqs8s"
+        "google.com"
+      ],
+      "domain_keyword": [
+        "netflix"
       ],
       "ip_cidr": [
-        "10.0.0.0/8",
-        "2001:db8::/32"
-      ],
-      "domain_regex": [
-        "^.*\\.le.*video\\.com$",
-        "^\\+\\..*\\.firebaseio\\.com$"
+        "192.168.1.0/24"
       ]
     }
   ]

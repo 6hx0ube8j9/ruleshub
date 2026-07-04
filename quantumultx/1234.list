@@ -1,10 +1,5 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
-host-suffix, 1234567.xyz, 1234
-host-suffix, co.uk, 1234
-host-suffix, t.co, 1234
-host-suffix, xn--yets76e.xn--fiqs8s, 1234
-ip-cidr, 10.0.0.0/8, 1234, no-resolve
-ip6-cidr, 2001:db8::/32, 1234, no-resolve
-host-wildcard, *.le*video.com, 1234
-host-wildcard, +.*.firebaseio.com, 1234
+host-suffix, google.com, 1234
+host-keyword, netflix, 1234
+ip-cidr, 192.168.1.0/24, 1234, no-resolve

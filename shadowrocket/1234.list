@@ -1,10 +1,5 @@
 # Shadowrocket Rule-Set: 1234
 
-DOMAIN-SUFFIX,1234567.xyz
-DOMAIN-SUFFIX,co.uk
-DOMAIN-SUFFIX,t.co
-DOMAIN-SUFFIX,xn--yets76e.xn--fiqs8s
-IP-CIDR,10.0.0.0/8,no-resolve
-IP-CIDR6,2001:db8::/32,no-resolve
-DOMAIN-WILDCARD,*.le*video.com
-DOMAIN-WILDCARD,+.*.firebaseio.com
+DOMAIN-SUFFIX,google.com
+DOMAIN-KEYWORD,netflix
+IP-CIDR,192.168.1.0/24,no-resolve
