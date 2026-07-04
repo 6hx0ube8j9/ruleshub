@@ -1,13 +1,18 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
 host-suffix, apple.com, 1234
-host-suffix, crazy-mixed-up-domain.co.uk, 1234
+host-suffix, co.uk, 1234
+host-suffix, fast.com, 1234
 host-suffix, google.com, 1234
-host-suffix, xn--4gqwa568jupw.com, 1234
-host, deep.sub.blog.google.com, 1234
-host, mail.google.com, 1234
-host, www.google.com, 1234
+host-suffix, xn--g5ty67h.xn--fiqs8s, 1234
+host, a.b.c.d.e.f.g.h.i.j.crazy-mixed-up-domain.co.uk, 1234
+host, sub.detailand.apple.com, 1234
+host, www.speedtest.net, 1234
+host, xn--fiqq24b.xn--gtvz22d.com, 1234
 host, xn--fiqs8sirgfmh.xn--zfr164b.cn, 1234
-host-keyword, google.com, 1234
-host-wildcard, +.*.google.com, 1234
-ip-cidr, 1.1.1.1/32, 1234, no-resolve
+host-wildcard, +.*.firebaseio.com, 1234
+host-regex, ^https?:\/\/.*\.byteoversea\.com\/amap, 1234
+ip-cidr, 10.0.0.0/8, 1234, no-resolve
+ip-cidr, 192.168.1.1/32, 1234, no-resolve
+ip6-cidr, 2001:db8::1/128, 1234, no-resolve
+ip6-cidr, fe80::/10, 1234, no-resolve

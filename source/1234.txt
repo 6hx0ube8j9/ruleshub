@@ -1,39 +1,39 @@
-# === 压力测试：极限边界与逻辑冲突 ===
+# === 1234 Combined Base Rules ===
 
-# 1. 跨类型包含测试（预期：新版必须同时保留这两条，绝对不能吞掉 full）
-suffix,apple.com
-full,sub.detailand.apple.com
-
-# 2. 纯 SUFFIX 内部层级去重与 REMOVE 冲突测试
-# 预期：因为调整了顺序，先做减法，remove 成功拦截 blog.google.com！
-# 最终优化后，应该只剩 suffix,google.com。而 blog.google.com 既不在 suffix 里，也不会被包含（因为它是 remove 掉的）
-suffix,google.com
-suffix,blog.google.com
+# --- TYPE: REMOVE ---
 remove,blog.google.com
 
-# 3. 完全相同域名的强力去重测试（预期：无论写多少遍，每种类型最后只剩 1 条）
-full,www.speedtest.net
-full,www.speedtest.net
+# --- TYPE: SUFFIX ---
+suffix,apple.com
+suffix,co.uk
 suffix,fast.com
-suffix,fast.com
+suffix,google.com
+suffix,xn--g5ty67h.xn--fiqs8s
 
-# 4. Punycode 国际化域名与中文字符测试
-suffix,微软.中国
-full,中心.苹果.com
+# --- TYPE: FULL ---
+full,a.b.c.d.e.f.g.h.i.j.crazy-mixed-up-domain.co.uk
+full,sub.detailand.apple.com
+full,www.speedtest.net
+full,xn--fiqq24b.xn--gtvz22d.com
 full,xn--fiqs8sirgfmh.xn--zfr164b.cn
 
-# 5. 极端深度子域名与主域测试
-suffix,co.uk
-full,a.b.c.d.e.f.g.h.i.j.crazy-mixed-up-domain.co.uk
+# --- TYPE: WILDCARD ---
+wildcard,+.*.firebaseio.com
 
-# 6. 各种带有掩码/无掩码的 IP 边界测试
-ip,192.168.1.1
+# --- TYPE: REGEX ---
+regex,^https?:\/\/.*\.byteoversea\.com\/amap
+
+# --- TYPE: IP ---
 ip,10.0.0.0/8
-ip6,2001:db8::1
+ip,192.168.1.1/32
+
+# --- TYPE: IP6 ---
+ip6,2001:db8::1/128
 ip6,fe80::/10
 
-# 7. 带有通配符、正则与端口的混合压力测试
-wildcard,+.*.firebaseio.com
-regex,^https?:\/\/.*\.byteoversea\.com\/amap
-port,8080-8089
+# --- TYPE: PROCESS ---
 process,Telegram.exe
+
+# --- TYPE: PORT ---
+port,8080-8089
+

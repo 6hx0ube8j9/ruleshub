@@ -4,42 +4,43 @@
     {
       "domain_suffix": [
         "apple.com",
-        "crazy-mixed-up-domain.co.uk",
+        "co.uk",
+        "fast.com",
         "google.com",
-        "xn--4gqwa568jupw.com"
+        "xn--g5ty67h.xn--fiqs8s"
       ]
     },
     {
       "domain": [
-        "deep.sub.blog.google.com",
-        "mail.google.com",
-        "www.google.com",
+        "a.b.c.d.e.f.g.h.i.j.crazy-mixed-up-domain.co.uk",
+        "sub.detailand.apple.com",
+        "www.speedtest.net",
+        "xn--fiqq24b.xn--gtvz22d.com",
         "xn--fiqs8sirgfmh.xn--zfr164b.cn"
       ]
     },
     {
-      "domain_keyword": [
-        "google.com"
-      ]
-    },
-    {
       "process_name": [
-        "Clash.Meta.exe"
+        "Telegram.exe"
       ]
     },
     {
       "port_range": [
-        "80-443"
+        "8080-8089"
       ]
     },
     {
       "domain_regex": [
-        "^\\+\\..*\\.google\\.com$"
+        "^\\+\\..*\\.firebaseio\\.com$",
+        "^https?:\\/\\/.*\\.byteoversea\\.com\\/amap"
       ]
     },
     {
       "ip_cidr": [
-        "1.1.1.1/32"
+        "10.0.0.0/8",
+        "192.168.1.1/32",
+        "2001:db8::1/128",
+        "fe80::/10"
       ]
     }
   ]
