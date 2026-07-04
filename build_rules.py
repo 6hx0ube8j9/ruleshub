@@ -162,7 +162,8 @@ def clean_and_parse_line(line):
             return 'remove', target_val
             
         if p1 in ['DOMAIN-REGEX', 'REGEX']:
-            if any(lookaround in p2 for lookaround in prophecies := ['(?=', '(?<=', '(?!', '(?<!']):
+            prophecies = ['(?=', '(?<=', '(?!', '(?<!']
+            if any(lookaround in p2 for lookaround in prophecies):
                 return None, None
                 
             if '/' in p2 or '?' in p2:
