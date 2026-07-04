@@ -156,6 +156,10 @@ def clean_and_parse_line(line):
         if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
             return 'wildcard', p2.lower()
 
+        if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL']:
+            if '/' in p2 or '?' in p2:
+                return None, None
+
         p2_clean = p2.lower()
         if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
         elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
@@ -200,6 +204,9 @@ def clean_and_parse_line(line):
 
     raw_val = line.lower()
     
+    if '/' in raw_val or '?' in raw_val:
+        if not (IPV4_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val.split('/')[0])):
+            return None, None
     if ':' in raw_val and '[' not in raw_val and raw_val.count(':') == 1:
         possible_ip = raw_val.split(':')[0]
         if IPV4_REGEX.match(possible_ip):
