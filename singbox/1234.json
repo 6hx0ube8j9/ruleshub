@@ -31,7 +31,7 @@
     },
     {
       "domain_regex": [
-        "^+\\..*\\.google\\.com$"
+        "^\\+\\..*\\.google\\.com$"
       ]
     },
     {
