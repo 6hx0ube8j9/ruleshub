@@ -3,14 +3,29 @@
   "rules": [
     {
       "domain_suffix": [
-        "apple.com",
-        "co.uk",
-        "fast.com",
-        "google.com",
+        "edge.apple",
+        "webobjects.eu",
+        "webobjects.net",
+        "wholesale-exporter1.com",
+        "wholesalediscountpurses.com",
+        "wholesalefine.com",
+        "wholesaleonlinemart.com",
+        "worldcoinpay.com",
+        "wpewebkit.org",
+        "wuxiapple.com",
+        "wwapple.net",
+        "www.apple.com.edgekey.net",
+        "wwwapple.com",
+        "wwwapple.net",
+        "wwwapplemusic.com",
+        "wwwicloud.com",
+        "wwwipodlounge.com",
+        "wwwitunes.com",
+        "wwwlapple.com",
+        "wwwmacbookair.com",
         "xn--czrs0t4phtr3a.cn",
         "xn--fiqs8sxootzz.cn",
         "xn--fiqs8sxootzz.xn--hxt814e",
-        "xn--g5ty67h.xn--fiqs8s",
         "xn--gtvq61aiijy0b.xn--hxt814e",
         "xn--gtvz22d.wang",
         "xn--gtvz22d.xn--hxt814e",
@@ -23,40 +38,14 @@
     },
     {
       "domain": [
-        "a.b.c.d.e.f.g.h.i.j.crazy-mixed-up-domain.co.uk",
         "apple-events.akamaized.net",
         "appleworldwidedeveloper.hb-api.omtrdc.net",
         "appleworldwidedeveloper.sc.omtrdc.net",
         "beatselectronicsllc.tt.omtrdc.net",
         "e16991.b.akamaiedge.net",
-        "sub.detailand.apple.com",
-        "www.speedtest.net",
-        "xn--fiqq24b.xn--gtvz22d.com",
-        "xn--fiqs8sirgfmh.xn--zfr164b.cn"
-      ]
-    },
-    {
-      "process_name": [
-        "Telegram.exe"
-      ]
-    },
-    {
-      "port_range": [
-        "8080-8089"
-      ]
-    },
-    {
-      "domain_regex": [
-        "^\\+\\..*\\.firebaseio\\.com$",
-        "^https?:\\/\\/.*\\.byteoversea\\.com\\/amap"
-      ]
-    },
-    {
-      "ip_cidr": [
-        "10.0.0.0/8",
-        "192.168.1.1/32",
-        "2001:db8::1/128",
-        "fe80::/10"
+        "icons.axm-usercontent-apple.com",
+        "lookup-api.apple.com.edgekey.net",
+        "p-events-delivery.akamaized.net"
       ]
     }
   ]
