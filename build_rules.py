@@ -290,7 +290,8 @@ def ensure_ip_mask(ip_str, is_ipv6=False):
 def parse_ports_for_singbox(port_set):
     p_list, p_range = [], []
     for p in port_set:
-        if '-' in p: p_range.append(p)
+        if '-' in p: p_range.append(p.replace('-', ':'))
+        elif ':' in p: p_range.append(p)
         else: p_list.append(int(p))
     return sorted(p_list), sorted(p_range)
 
@@ -446,11 +447,11 @@ def process_file_to_targets(file_name, global_matrix, router_cleaned):
         if 'ip' in base_name.lower():
             combined_ips_srs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
             if combined_ips_srs:
-                sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips_srs}]}
+                sb_tmp_ip = {"version": 2, "rules": [{"ip_cidr": combined_ips_srs}]}
                 with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{base_name}.json"), 'w', encoding='utf-8') as f:
                     json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
         else:
-            sb_tmp_domain = {"version": 1, "rules": []}
+            sb_tmp_domain = {"version": 2, "rules": []}
             if rules['full']: sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})      
             if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})      
             if rules['keyword']: sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
