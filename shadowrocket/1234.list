@@ -1,2 +1,10 @@
 # Shadowrocket Rule-Set: 1234
 
+DST-PORT,20000-30000
+DST-PORT,443
+DST-PORT,8080
+DOMAIN,maps.google.com
+DOMAIN-SUFFIX,google.com
+DOMAIN-KEYWORD,netflix
+IP-CIDR,192.168.1.0/24,no-resolve
+IP-CIDR6,2001:db8::/32,no-resolve

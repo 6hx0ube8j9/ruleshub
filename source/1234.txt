@@ -1,16 +1,25 @@
-# --- 维度 1：域名与域名后缀匹配 ---
-domain-suffix,google.com
-domain,maps.google.com
-domain-keyword,netflix
+# === 1234 Combined Base Rules ===
 
-# --- 维度 2：目标端口与目标端口段（AND 复合测试项） ---
+# --- TYPE: PROCESS ---
+process,chrome.exe
+
+# --- TYPE: PORT ---
+port,20000-30000
 port,443
 port,8080
-port,20000-30000
 
-# --- 维度 3：IP 匹配 ---
-ip-cidr,192.168.1.0/24
-ip6-cidr,2001:db8::/32
+# --- TYPE: FULL ---
+full,maps.google.com
 
-# --- 维度 4：进程名匹配（其他字段） ---
-process-name,chrome.exe
+# --- TYPE: SUFFIX ---
+suffix,google.com
+
+# --- TYPE: KEYWORD ---
+keyword,netflix
+
+# --- TYPE: IP ---
+ip,192.168.1.0/24
+
+# --- TYPE: IP6 ---
+ip6,2001:db8::/32
+

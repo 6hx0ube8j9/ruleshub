@@ -1,4 +1,30 @@
 {
   "version": 2,
-  "rules": []
+  "rules": [
+    {
+      "process_name": [
+        "chrome.exe"
+      ],
+      "port": [
+        443,
+        8080
+      ],
+      "port_range": [
+        "20000:30000"
+      ],
+      "domain": [
+        "maps.google.com"
+      ],
+      "domain_suffix": [
+        "google.com"
+      ],
+      "domain_keyword": [
+        "netflix"
+      ],
+      "ip_cidr": [
+        "192.168.1.0/24",
+        "2001:db8::/32"
+      ]
+    }
+  ]
 }
