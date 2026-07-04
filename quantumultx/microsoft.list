@@ -1,5 +1,9 @@
-# Quantumult X Rule-Set: microsoft
+# Quantumult X Aggregated Rule-Set: MICROSOFT
 
+host, login.live.com, Microsoft
+host, logincdn.msauth.net, Microsoft
+host, store-images.s-microsoft.com, Microsoft
+host, vsmarketplacebadge.apphb.com, Microsoft
 host-suffix, 1drv.com, Microsoft
 host-suffix, 1drv.ms, Microsoft
 host-suffix, 21vbc.com, Microsoft
@@ -659,7 +663,6 @@ host-suffix, xboxstudios.com, Microsoft
 host-suffix, xbx.lv, Microsoft
 host-suffix, yammer.com, Microsoft
 host-suffix, yammerusercontent.com, Microsoft
-host, vsmarketplacebadge.apphb.com, Microsoft
 host-keyword, 1drv, Microsoft
 host-keyword, microsoft, Microsoft
 host-keyword, onedrive, Microsoft
