@@ -1,59 +1,54 @@
-# ========================================================
-# 🔥 极限压力测试底稿规则 (STRESS TEST BASE RULES)
-# ========================================================
+# === 1234 Combined Base Rules ===
 
-# --- 1. 拦截排除与逻辑冲突测试 (REMOVE TYPE) ---
-# 预期结果：脚本运行后，下面被 REMOVE 的内容在所有输出文件中都应该消失
-remove,google.com
+# --- TYPE: REMOVE ---
 remove,10.0.0.1
-remove,Telegram.exe
+remove,google.com
 remove,netflix.com
+remove,telegram.exe
 
-# --- 2. 进程与端口极限测试 ---
+# --- TYPE: PROCESS ---
 process,Telegram.exe
 process,WeChat.exe
-port,8080-8089
+
+# --- TYPE: PORT ---
 port,443
+port,8080-8089
 
-# --- 3. 🎯 完全域名与垃圾数据混合测试 (FULL TYPE) ---
-full,www.google.com
-   full,www.speedtest.net   
-''full,www.dirty-quote.com''
-"full,www.double-quote.com"
-- full,www.dash-prefix.com
-full,com
+# --- TYPE: FULL ---
 full,co.uk
-full,bad_domain.com/path?query=123
-full,user:pass@hacked-domain.com:8080
+full,www.dash-prefix.com
+full,www.dirty-quote.com
+full,www.double-quote.com
+full,www.google.com
+full,www.speedtest.net
 
-# --- 4. 🔍 域名后缀与深度重复合并测试 (SUFFIX TYPE) ---
-suffix,google.com
+# --- TYPE: SUFFIX ---
 suffix,apple.com
-suffix,netflix.com
-suffix,sub.video.netflix.com
 suffix,deep.sub.video.netflix.com
-suffix,测试顶级域名.中国
-suffix,🚀.com
+suffix,sub.video.netflix.com
+suffix,xn--158h.com
+suffix,xn--eqrt2gbuz51p87oi1r.xn--fiqs8s
 
-# --- 5. 🧱 关键字模糊匹配测试 (KEYWORD TYPE) ---
+# --- TYPE: KEYWORD ---
+keyword,payload
 keyword,secure
 keyword,torrent
-keyword,payload
 
-# --- 6. 🌐 IP 网段与畸形子网掩码测试 (IP / IP6 TYPE) ---
-ip,10.0.0.1
+# --- TYPE: IP ---
 ip,192.168.1.5/24
-ip,172.16.0.1/35
-ip6,2001:db8::1
-ip6,2001:db8:g1::2
-ip6,2001:db8::3/129
 
-# --- 7. 📱 移动端 User-Agent 测试 ---
-useragent,Mozilla/5.0
+# --- TYPE: IP6 ---
+ip6,2001:db8::1/128
+
+# --- TYPE: USERAGENT ---
 useragent,MicroMessenger
+useragent,Mozilla/5.0
 
-# --- 8. 🐌 通配符与正则匹配极端测试 (WILDCARD / REGEX TYPE) ---
-wildcard,+.*.firebaseio.com
+# --- TYPE: WILDCARD ---
 wildcard,*.le*video.com
+wildcard,+.*.firebaseio.com
+wildcard,bad_domain.com/path?query=123
+
+# --- TYPE: REGEX ---
 regex,^https?:\/\/.*\.byteoversea\.com\/amap
-regex,^https?:\/\/.*\.bad-lookaround(?=analytics)\.com
+
