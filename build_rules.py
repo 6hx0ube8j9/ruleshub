@@ -359,8 +359,8 @@ def sync_remote_to_local_source(base_name, policy):
                     if payload in remove_set or payload in auth_set:
                         continue
                     rules[r_type].add(payload)
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"Warning: Failed to fetch {remote_url} - {e}")
 
     if rules['remove']:
         for r_type in rules:
