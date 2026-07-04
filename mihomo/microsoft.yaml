@@ -1,5 +1,8 @@
 # Mihomo Payload Rule-Set: microsoft
 payload:
+  - DOMAIN,login.live.com
+  - DOMAIN,logincdn.msauth.net
+  - DOMAIN,store-images.s-microsoft.com
   - DOMAIN,vsmarketplacebadge.apphb.com
   - DOMAIN-SUFFIX,1drv.com
   - DOMAIN-SUFFIX,1drv.ms

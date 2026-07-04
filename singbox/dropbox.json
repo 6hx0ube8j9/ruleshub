@@ -7,14 +7,10 @@
         "Dropbox.exe",
         "DropboxUninstaller.exe",
         "DropboxUpdate.exe"
-      ]
-    },
-    {
+      ],
       "domain": [
         "dropbox-api.arkoselabs.com"
-      ]
-    },
-    {
+      ],
       "domain_suffix": [
         "db.tt",
         "dropbox-dns.com",

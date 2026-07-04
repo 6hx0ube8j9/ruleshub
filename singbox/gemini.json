@@ -9,9 +9,7 @@
         "gemini-user-content.googleusercontent.com",
         "gemini.gstatic.com",
         "makersuite.google.com"
-      ]
-    },
-    {
+      ],
       "domain_suffix": [
         "apis.google.com",
         "bard.google.com",
@@ -20,9 +18,7 @@
         "gemini.google.com",
         "generativeai.google",
         "proactivebackend-pa.googleapis.com"
-      ]
-    },
-    {
+      ],
       "domain_keyword": [
         "colab",
         "developerprofiles",

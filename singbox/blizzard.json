@@ -6,9 +6,7 @@
         "blz-contentstack-assets.akamaized.net",
         "blz-contentstack-images.akamaized.net",
         "bnetaccount.akamaized.net"
-      ]
-    },
-    {
+      ],
       "domain_suffix": [
         "battle.net",
         "battlenet.com",
@@ -51,9 +49,7 @@
         "worldofwarcraft.com",
         "wow.nosdn.127.net",
         "wowchina.com"
-      ]
-    },
-    {
+      ],
       "ip_cidr": [
         "103.4.114.233/32",
         "103.4.115.248/32",
