@@ -4,6 +4,9 @@ host-suffix, apple.com, 1234
 host-suffix, crazy-mixed-up-domain.co.uk, 1234
 host-suffix, google.com, 1234
 host-suffix, xn--4gqwa568jupw.com, 1234
+host, deep.sub.blog.google.com, 1234
+host, mail.google.com, 1234
+host, www.google.com, 1234
 host, xn--fiqs8sirgfmh.xn--zfr164b.cn, 1234
 host-keyword, google.com, 1234
 host-wildcard, +.*.google.com, 1234

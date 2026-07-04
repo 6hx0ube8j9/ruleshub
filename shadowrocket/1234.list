@@ -4,6 +4,9 @@ DOMAIN-SUFFIX,apple.com
 DOMAIN-SUFFIX,crazy-mixed-up-domain.co.uk
 DOMAIN-SUFFIX,google.com
 DOMAIN-SUFFIX,xn--4gqwa568jupw.com
+DOMAIN,deep.sub.blog.google.com
+DOMAIN,mail.google.com
+DOMAIN,www.google.com
 DOMAIN,xn--fiqs8sirgfmh.xn--zfr164b.cn
 DOMAIN-KEYWORD,google.com
 DOMAIN-WILDCARD,+.*.google.com

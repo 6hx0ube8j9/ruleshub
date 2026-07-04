@@ -659,6 +659,9 @@ host-suffix, xboxstudios.com, proxy
 host-suffix, xbx.lv, proxy
 host-suffix, yammer.com, proxy
 host-suffix, yammerusercontent.com, proxy
+host, login.live.com, proxy
+host, logincdn.msauth.net, proxy
+host, store-images.s-microsoft.com, proxy
 host, vsmarketplacebadge.apphb.com, proxy
 host-keyword, 1drv, proxy
 host-keyword, microsoft, proxy

@@ -659,6 +659,9 @@ DOMAIN-SUFFIX,xboxstudios.com
 DOMAIN-SUFFIX,xbx.lv
 DOMAIN-SUFFIX,yammer.com
 DOMAIN-SUFFIX,yammerusercontent.com
+DOMAIN,login.live.com
+DOMAIN,logincdn.msauth.net
+DOMAIN,store-images.s-microsoft.com
 DOMAIN,vsmarketplacebadge.apphb.com
 DOMAIN-KEYWORD,1drv
 DOMAIN-KEYWORD,microsoft
