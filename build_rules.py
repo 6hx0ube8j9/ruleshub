@@ -325,14 +325,14 @@ def parse_ports_for_singbox(port_set):
     return sorted(p_list), sorted(p_range)
 
 def sync_remote_to_local_source(base_name, policy):
-    strict_file_name = f"{base_name.lower()}.txt"
-    source_path = os.path.join(SOURCE_DIR, strict_file_name)
+    file_name = f"{base_name}.txt"
+    source_path = os.path.join(SOURCE_DIR, file_name)
     
     rules = {'remove': set(), 'process': set(), 'port': set(), 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
     
     if not os.path.exists(source_path):
         with open(source_path, 'w', encoding='utf-8') as f:
-            f.write(f"# === {base_name.lower().upper()} Local Base Rules ===\n\n")
+            f.write(f"# === {base_name.upper()} Local Base Rules ===\n\n")
             
     with open(source_path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -369,6 +369,22 @@ def sync_remote_to_local_source(base_name, policy):
                     rules[r_type].add(payload)
         except Exception as e:
             print(f"Warning: Failed to fetch {remote_url} - {e}")
+
+    if rules['remove']:
+        for r_type in rules:
+            if r_type != 'remove':
+                rules[r_type] -= rules['remove']
+
+    with open(source_path, 'w', encoding='utf-8') as f_source:
+        f_source.write(f"# === {base_name.upper()} Combined Base Rules ===\n\n")
+        for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
+            if rules[r_type]:
+                f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
+                for val in sorted(rules[r_type]):
+                    if r_type == 'ip': f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
+                    elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
+                    else: f_source.write(f"{r_type},{val}\n")
+                f_source.write("\n")
 
     if rules['remove']:
         for r_type in rules:
