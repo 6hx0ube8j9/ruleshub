@@ -1,2 +1,9 @@
 # === 1234 Combined Base Rules ===
 
+- domain_suffix: google.com
+    - port: 443
+	
+	
+- ip_cidr: 192.168.1.0/24
+    - port_range: 20000-30000
+    - source_port: 1024
