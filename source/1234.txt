@@ -1,25 +1,39 @@
-# === 1234 Combined Base Rules ===
-
-# --- TYPE: PROCESS ---
-process,chrome.exe
-
-# --- TYPE: PORT ---
-port,20000-30000
+# === Mihomo / Clash 端口格式 ===
 port,443
-port,8080
+port,80
+dst-port,8080
+src-port,12345
 
-# --- TYPE: FULL ---
-full,maps.google.com
+# === Shadowrocket / 小火箭 端口格式 ===
+DEST-PORT,9000
+SRC-PORT,53
 
-# --- TYPE: SUFFIX ---
-suffix,google.com
+# === Quantumult X 端口格式 ===
+DEST-PORT,1000-2000
+MATCH,Proxy
 
-# --- TYPE: KEYWORD ---
-keyword,netflix
+# === 常见带端口范围的混合极端测试 ===
+port,3000-4000
+src-port,10000:11000
+# === Mihomo / Clash 常见格式 ===
+domain,google.com
+domain-suffix,apple.com
+domain-keyword,v2ray
+ip-cidr,91.108.4.0/22
+ip6-cidr,2001:b000::/32
 
-# --- TYPE: IP ---
-ip,192.168.1.0/24
+# === Shadowrocket / 小火箭 格式 ===
+DOMAIN-SUFFIX,amazon.com
+DOMAIN-KEYWORD,netflix
+IP-CIDR,140.238.0.0/16
+PROCESS-NAME,Telegram
 
-# --- TYPE: IP6 ---
-ip6,2001:db8::/32
+# === Quantumult X 格式 ===
+HOST,twitter.com
+HOST-SUFFIX,twimg.com
+HOST-KEYWORD,youtube
+IP-CIDR,17.0.0.0/8,no-resolve
 
+# === 混淆与特殊去重测试（测试脚本健壮性） ===
+DOMAIN,google.com
+domain-suffix,.cn
