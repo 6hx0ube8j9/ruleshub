@@ -16,23 +16,42 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SI
     if not os.path.exists(d):
         os.makedirs(d)
 
+# ====================================================================================
+#                    FILE_POLICY_ROUTER 说明
+# ====================================================================================
+# [ 核心输入 ]
+# 'name'      : 默认以此名称作为所有工具的输出文件名
+# 'url'       : 远程规则拉取链接列表（自动拉取并合并）
+# 'qx_policy' : Quantumult X 的策略组标签（如 'Proxy', 'Direct', 'Apple'）
+#
+# [ 对应工具重命名 ]
+# 'qx' / 'sr' / 'mihomo' / 'singbox' -> 分别对应各工具的输出文件名，不写默认使用 'name' 名称
+#
+# [ 特殊转换 ]
+# 'pac'       : pac 输出文件名（写了才触发转换；不写默认仅 'direct.txt'/'china.txt' 才会生成）
+# 'mrs'       : 是否转换生成 Mihomo 规则集（True/False，不写默认为 True）
+# 'srs'       : 是否转换生成 Sing-box 规则集（True/False，不写默认为 True）
+# ====================================================================================
+
 FILE_POLICY_ROUTER = [
     {
-        'name': 'block', 'mrs': False, 'srs': True, 'qx_policy': 'reject', 'qx': 'block', 'sr': 'block', 'singbox': 'block', 'mihomo': 'block',
+        'name': 'block',
         'url': [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list',
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Privacy/Privacy.list',
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list'
         ]
     },
+	
     {
-        'name': 'microsoft', 'mrs': True, 'pac': 'productivity', 'qx': 'gaming', 'sr': 'gaming', 'singbox': 'productivity', 'mihomo': 'productivity', 'qx_policy': 'proxy',
+        'name': 'microsoft',
         'url': [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list',
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list'
         ]
     },
-    {'name': 'direct', 'mrs': True, 'qx': 'direct', 'sr': 'direct', 'singbox': 'direct', 'mihomo': 'direct', 'qx_policy': 'direct'}
+	
+    { 'name': 'direct', 'qx_policy': 'direct' }
 ]
 
 IPV4_REGEX = re.compile(
