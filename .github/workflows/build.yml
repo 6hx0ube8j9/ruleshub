@@ -32,14 +32,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "==== 正在获取 Mihomo 最新版本 ===="
+          echo "==== Fetching latest Mihomo ===="
           MIHOMO_VERSION=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4)
           
           if [ -z "$MIHOMO_VERSION" ] || [ "$MIHOMO_VERSION" = "null" ]; then
-            echo "❌ 错误: 无法获取 Mihomo 版本号，可能是 API 异常。"
+            echo "❌ Error: Mihomo version fetch failed."
             exit 1
           fi
-          echo "成功获取 Mihomo 版本: ${MIHOMO_VERSION}"
+          echo "Mihomo version: ${MIHOMO_VERSION}"
           
           curl -L -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
           gunzip -c mihomo.gz > mihomo-bin
@@ -49,15 +49,14 @@ jobs:
           curl -L -o ~/.config/mihomo/Country.mmdb "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
           cp ~/.config/mihomo/Country.mmdb ./Country.mmdb
 
-          echo "==== 正在获取 Sing-box 最新版本 ===="
-          # 同样为 Sing-box 的 API 请求注入 Token 认证
+          echo "==== Fetching latest Sing-box ===="
           SB_VERSION=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
           
           if [ -z "$SB_VERSION" ] || [ "$SB_VERSION" = "null" ]; then
-            echo "❌ 错误: 无法获取 Sing-box 版本号。"
+            echo "❌ Error: Sing-box version fetch failed."
             exit 1
           fi
-          echo "成功获取 Sing-box 版本: ${SB_VERSION}"
+          echo "Sing-box version: ${SB_VERSION}"
           
           curl -L -o sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/v${SB_VERSION}/sing-box-${SB_VERSION}-linux-amd64.tar.gz"
           tar -xzvf sing-box.tar.gz
