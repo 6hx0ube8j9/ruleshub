@@ -221,7 +221,7 @@ def clean_and_parse_line(line):
             
         if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', parts[1]
         if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', parts[1]
-        if p1 in ['DST-PORT', 'PORT']: return 'port', parts[1]        
+        if p1 in ['DST-PORT', 'DEST-PORT', 'PORT']: return 'port', parts[1]      
         
         return None, None
 
