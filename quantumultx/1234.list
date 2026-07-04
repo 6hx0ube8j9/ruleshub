@@ -1,5 +1,2 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
-host-suffix, google.com, 1234
-host-keyword, netflix, 1234
-ip-cidr, 192.168.1.0/24, 1234, no-resolve

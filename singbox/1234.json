@@ -1,16 +1,4 @@
 {
   "version": 2,
-  "rules": [
-    {
-      "domain_suffix": [
-        "google.com"
-      ],
-      "domain_keyword": [
-        "netflix"
-      ],
-      "ip_cidr": [
-        "192.168.1.0/24"
-      ]
-    }
-  ]
+  "rules": []
 }

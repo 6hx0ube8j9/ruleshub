@@ -1,5 +1,2 @@
 # Shadowrocket Rule-Set: 1234
 
-DOMAIN-SUFFIX,google.com
-DOMAIN-KEYWORD,netflix
-IP-CIDR,192.168.1.0/24,no-resolve
