@@ -290,12 +290,7 @@ def parse_ports_for_singbox(port_set):
 
 def sync_remote_to_local_source(base_name, policy):
     source_path = os.path.join(SOURCE_DIR, f"{base_name}.txt")
-    
-    rules = {
-        'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(), 'regex': set(),
-        'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set(),
-        'port': set(), 'remove': set()
-    }
+    rules = {'remove': set(), 'process': set(), 'port': set(), 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
     
     if not os.path.exists(source_path):
         with open(source_path, 'w', encoding='utf-8') as f:
@@ -344,7 +339,7 @@ def sync_remote_to_local_source(base_name, policy):
 
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {base_name.upper()} Combined Base Rules ===\n\n")
-        for r_type in ['remove', 'suffix', 'full', 'keyword', 'wildcard', 'regex', 'ip', 'ip6', 'process', 'useragent', 'port']:
+        for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
                 for val in sorted(rules[r_type]):
@@ -375,11 +370,7 @@ def process_file_to_targets(file_name, global_matrix):
         elif file_keyword == 'reject': qx_policy_label = 'reject'
         else: qx_policy_label = base_name.capitalize()
         
-    rules = {
-        'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(), 'regex': set(),
-        'ip': set(), 'ip6': set(), 'process': set(), 'useragent': set(),
-        'port': set(), 'remove': set()
-    }
+    rules = {'remove': set(), 'process': set(), 'port': set(), 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
     
     with open(source_path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -397,7 +388,7 @@ def process_file_to_targets(file_name, global_matrix):
     if qx_target not in global_matrix['qx']:
         global_matrix['qx'][qx_target] = {
             'policy_label': qx_policy_label,
-            'suffix': set(), 'full': set(), 'keyword': set(), 'wildcard': set(), 'regex': set(), 'ip': set(), 'ip6': set(), 'useragent': set()
+            'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()
         }
     for k in global_matrix['qx'][qx_target].keys():
         if k != 'policy_label': global_matrix['qx'][qx_target][k].update(rules[k])
@@ -435,12 +426,11 @@ def process_file_to_targets(file_name, global_matrix):
             if rules['suffix'] or rules['full'] or rules['keyword'] or rules['wildcard'] or rules['regex']:
                 with open(os.path.join(MIHOMO_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
                     f.write("payload:\n")
-                    for item in sorted(rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
                     for item in sorted(rules['full']): f.write(f"  - DOMAIN,{item}\n")
+                    for item in sorted(rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
                     for item in sorted(rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{item}\n")
+                    for val in sorted(rules['wildcard']): f.write(f"  - DOMAIN-WILDCARD,{val}\n")
                     for item in sorted(rules['regex']): f.write(f"  - DOMAIN-REGEX,{item}\n")
-                    for val in sorted(rules['wildcard']):
-                        f.write(f"  - DOMAIN-WILDCARD,{val}\n")
 
     if srs_enable:
         if 'ip' in file_keyword:
@@ -451,8 +441,8 @@ def process_file_to_targets(file_name, global_matrix):
                     json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
         else:
             sb_tmp_domain = {"version": 1, "rules": []}
-            if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})
-            if rules['full']: sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})
+            if rules['full']: sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})      
+            if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})      
             if rules['keyword']: sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
             if rules['port']: 
                 p_list, p_range = parse_ports_for_singbox(rules['port'])
@@ -563,8 +553,7 @@ def main():
             for val in sorted(g_rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{val}\n")
             for val in sorted(g_rules['ip']): f.write(f"  - IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
             for val in sorted(g_rules['ip6']): f.write(f"  - IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
-            for val in sorted(g_rules['wildcard']): 
-                f.write(f"  - DOMAIN-WILDCARD,{val}\n")            
+            for val in sorted(g_rules['wildcard']): f.write(f"  - DOMAIN-WILDCARD,{val}\n")            
             for val in sorted(g_rules['regex']): f.write(f"  - DOMAIN-REGEX,{val}\n")
 
     # Sing-box 
