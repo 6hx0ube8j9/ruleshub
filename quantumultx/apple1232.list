@@ -1,2 +1,8 @@
 # Quantumult X Aggregated Rule-Set: APPLE1232
 
+host, google.com, Apple1232
+host, twitter.com, Apple1232
+host-suffix, amazon.com, Apple1232
+host-suffix, apple.com, Apple1232
+host-keyword, netflix, Apple1232
+host-keyword, youtube, Apple1232
