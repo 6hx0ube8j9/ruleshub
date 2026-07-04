@@ -1,22 +1,11 @@
-# === 1234 Combined Base Rules ===
+# 测试场景 1：域名 + 目标端口
+# 期望：只有当访问 google.com 且目标端口是 443 时才命中
+DOMAIN-SUFFIX,google.com,DST-PORT,443
 
-# --- TYPE: REMOVE ---
-remove,172.16.0.1
-remove,my-hyphen-domain.com
+# 测试场景 2：IP + 目标端口范围 + 源端口
+# 期望：访问指定内网网段，且目标端口在 20000-30000，且本地源端口是 1024
+IP-CIDR,192.168.1.0/24,DST-PORT,20000-30000,SRC-PORT,1024
 
-# --- TYPE: SUFFIX ---
-suffix,1234567.xyz
-suffix,co.uk
-suffix,t.co
-suffix,xn--yets76e.xn--fiqs8s
-
-# --- TYPE: IP ---
-ip,10.0.0.0/8
-
-# --- TYPE: IP6 ---
-ip6,2001:db8::/32
-
-# --- TYPE: WILDCARD ---
-wildcard,*.le*video.com
-wildcard,+.*.firebaseio.com
-
+# 测试场景 3：域名关键字 + 目标端口 + 协议(其他字段)
+# 期望：包含 netflix 关键字的流量，走 80 端口，且协议是 udp
+DOMAIN-KEYWORD,netflix,DST-PORT,80,PROTOCOL,udp
