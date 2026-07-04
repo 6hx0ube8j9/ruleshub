@@ -387,12 +387,12 @@ def process_file_to_targets(file_name, global_matrix):
             if rule_type in rules:
                 rules[rule_type].add(value)
 
-    optimize_domains(rules)
-
     if rules['remove']:
         for r_type in rules:
             if r_type != 'remove':
                 rules[r_type] -= rules['remove']
+
+    optimize_domains(rules)
 
     if qx_target not in global_matrix['qx']:
         global_matrix['qx'][qx_target] = {
