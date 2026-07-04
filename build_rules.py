@@ -114,7 +114,17 @@ def try_punycode_encode(domain_str):
 
 def has_invalid_domain_chars(domain_str):
     return any(c in domain_str for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')'])
-
+	
+def get_actual_path(directory, base_name, ext=".txt"):
+    if not os.path.exists(directory):
+        return os.path.join(directory, f"{base_name.lower()}{ext}")
+    
+    target_lower = f"{base_name.lower()}{ext}"
+    for f in os.listdir(directory):
+        if f.lower() == target_lower:
+            return os.path.join(directory, f)
+    return os.path.join(directory, target_lower)
+	
 def validate_ip_mask(ip_str, is_ipv6=False):
     if '/' in ip_str:
         try:
@@ -315,7 +325,7 @@ def parse_ports_for_singbox(port_set):
     return sorted(p_list), sorted(p_range)
 
 def sync_remote_to_local_source(base_name, policy):
-    source_path = os.path.join(SOURCE_DIR, f"{base_name}.txt")
+    source_path = get_actual_path(SOURCE_DIR, base_name, ".txt")
     rules = {'remove': set(), 'process': set(), 'port': set(), 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
     
     if not os.path.exists(source_path):
@@ -378,8 +388,7 @@ def process_file_to_targets(file_name, global_matrix):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0]
     file_keyword = base_name.lower()
-    
-    policy = FILE_POLICY_ROUTER_CLEANED.get(base_name, {})
+	policy = FILE_POLICY_ROUTER_CLEANED.get(file_keyword, {})
     
     qx_target = policy.get('qx', base_name)
     sr_target = policy.get('sr', base_name)
