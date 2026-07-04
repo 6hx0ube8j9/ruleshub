@@ -2,16 +2,15 @@
   "version": 2,
   "rules": [
     {
-      "process_name": [
-        "Telegram"
-      ],
       "port": [
+        22,
         80,
         443,
         8080
       ],
       "port_range": [
-        "3000:4000"
+        "3000:4000",
+        "5000:6000"
       ],
       "domain": [
         "google.com",
@@ -19,19 +18,16 @@
       ],
       "domain_suffix": [
         "amazon.com",
-        "apple.com",
-        "twimg.com"
+        "apple.com"
       ],
       "domain_keyword": [
         "netflix",
-        "v2ray",
         "youtube"
       ],
       "ip_cidr": [
         "140.238.0.0/16",
         "17.0.0.0/8",
-        "2001:b000::/32",
-        "91.108.4.0/22"
+        "2001:b000::/32"
       ]
     }
   ]
