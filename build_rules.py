@@ -460,11 +460,7 @@ def process_file_to_targets(file_name, global_matrix, router_cleaned):
                 if p_list: sb_tmp_domain["rules"].append({"port": p_list})
                 if p_range: sb_tmp_domain["rules"].append({"port_range": p_range})
             if rules['wildcard'] or rules['regex']:
-                regex_list = []
-                for w in rules['wildcard']:
-                    escaped_w = re.escape(w)
-                    r_val = escaped_w.replace(r'\*', '.*').replace(r'\?', '.')
-                    regex_list.append(f"^{r_val}$")
+                regex_list = [convert_wildcard_to_regex(w) for w in rules['wildcard']]
                 for regex_val in rules['regex']:
                     regex_list.append(regex_val)
                 sb_tmp_domain["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
@@ -473,6 +469,18 @@ def process_file_to_targets(file_name, global_matrix, router_cleaned):
                 with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
                     json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
 
+def convert_wildcard_to_regex(wildcard_str):
+    if '*' not in wildcard_str and '?' not in wildcard_str:
+        return f"^{re.escape(wildcard_str)}$"
+        
+    escaped = re.escape(wildcard_str)
+    r_val = escaped.replace(r'\*', '.*').replace(r'\?', '.')
+    
+    while '.*.*' in r_val:
+        r_val = r_val.replace('.*.*', '.*')
+        
+    return f"^{r_val}$"
+    
 def main():
     router_cleaned = {}
     allocated_names = set()
