@@ -1,7 +1,14 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
-host, maps.google.com, 1234
-host-suffix, google.com, 1234
+host, google.com, 1234
+host, twitter.com, 1234
+host-suffix, amazon.com, 1234
+host-suffix, apple.com, 1234
+host-suffix, twimg.com, 1234
 host-keyword, netflix, 1234
-ip-cidr, 192.168.1.0/24, 1234, no-resolve
-ip6-cidr, 2001:db8::/32, 1234, no-resolve
+host-keyword, v2ray, 1234
+host-keyword, youtube, 1234
+ip-cidr, 140.238.0.0/16, 1234, no-resolve
+ip-cidr, 17.0.0.0/8, 1234, no-resolve
+ip-cidr, 91.108.4.0/22, 1234, no-resolve
+ip6-cidr, 2001:b000::/32, 1234, no-resolve
