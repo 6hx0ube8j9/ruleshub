@@ -19,7 +19,7 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SI
 # ====================================================================================
 # FILE_POLICY_ROUTER 字段说明
 # ====================================================================================
-# 'name'        : 默认输出文件名
+# 'name'        : 默认输出文件名（严格区分大小写，写什么就是什么）
 # 'url'         : 远程拉取规则链接列表并合并
 # 'qx_policy'   : QuantumultX 策略组标签（如 'Proxy', 'Apple'）
 # 'pac'         : PAC 输出文件名（留空不转换；仅 'name' 为 direct/china 时生成）
@@ -38,7 +38,6 @@ FILE_POLICY_ROUTER = [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list'
         ]
     },
-	
     {
         'name': 'microsoft',
         'url': [
@@ -46,7 +45,6 @@ FILE_POLICY_ROUTER = [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list'
         ]
     },
-	
     { 'name': 'direct', 'qx_policy': 'direct' }
 ]
 
@@ -82,8 +80,9 @@ PUBLIC_SUFFIX_BLACKLIST = {
 }
 
 def get_smart_base_name(key_name, policy, existing_names):
+    # 🟢 修复点 1：移除这里的 .lower()，让智能命名也遵守你的大小写规范
     if key_name.strip():
-        base = key_name.strip().lower()
+        base = key_name.strip()
     else:
         url = policy.get('url', '')
         first_url = url[0] if isinstance(url, list) and url else url
@@ -93,7 +92,7 @@ def get_smart_base_name(key_name, policy, existing_names):
                 last_part = first_url.split('/')[-1]
                 extracted = os.path.splitext(last_part)[0]
                 if extracted.strip():
-                    base = extracted.strip().lower()
+                    base = extracted.strip()
             except Exception:
                 pass
                 
@@ -114,17 +113,10 @@ def try_punycode_encode(domain_str):
 
 def has_invalid_domain_chars(domain_str):
     return any(c in domain_str for c in [' ', '/', '?', '@', ':', '=', '%', '&', ';', '[', ']', '(', ')'])
-	
-def get_actual_path(directory, base_name, ext=".txt"):
-    if not os.path.exists(directory):
-        return os.path.join(directory, f"{base_name.lower()}{ext}")
     
-    target_lower = f"{base_name.lower()}{ext}"
-    for f in os.listdir(directory):
-        if f.lower() == target_lower:
-            return os.path.join(directory, f)
-    return os.path.join(directory, target_lower)
-	
+def get_actual_path(directory, base_name, ext=".txt"):
+    return os.path.join(directory, f"{base_name}{ext}")
+    
 def validate_ip_mask(ip_str, is_ipv6=False):
     if '/' in ip_str:
         try:
@@ -170,7 +162,7 @@ def clean_and_parse_line(line):
             return 'remove', target_val
             
         if p1 in ['DOMAIN-REGEX', 'REGEX']:
-            if any(lookaround in p2 for lookaround in ['(?=', '(?<=', '(?!', '(?<!']):
+            if any(lookaround in p2 for lookaround in prophecies := ['(?=', '(?<=', '(?!', '(?<!']):
                 return None, None
                 
             if '/' in p2 or '?' in p2:
@@ -376,7 +368,7 @@ def sync_remote_to_local_source(base_name, policy):
                 rules[r_type] -= rules['remove']
 
     with open(source_path, 'w', encoding='utf-8') as f_source:
-        f_source.write(f"# === {base_name.upper()} Combined Base Rules ===\n\n")
+        f_source.write(f"# === {base_name} Combined Base Rules ===\n\n")
         for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
@@ -385,30 +377,12 @@ def sync_remote_to_local_source(base_name, policy):
                     elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
                     else: f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
-
-    if rules['remove']:
-        for r_type in rules:
-            if r_type != 'remove':
-                rules[r_type] -= rules['remove']
-
-    with open(source_path, 'w', encoding='utf-8') as f_source:
-        f_source.write(f"# === {base_name.lower().upper()} Combined Base Rules ===\n\n")
-        for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
-            if rules[r_type]:
-                f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
-                for val in sorted(rules[r_type]):
-                    if r_type == 'ip': f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
-                    elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
-                    else: f_source.write(f"{r_type},{val}\n")
-                f_source.write("\n")
-				
+                
 def process_file_to_targets(file_name, global_matrix):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0]
-    file_keyword = base_name.lower()
-    
-    policy = FILE_POLICY_ROUTER_CLEANED.get(file_keyword, {})
-    standard_name = policy.get('name', file_keyword)
+    policy = FILE_POLICY_ROUTER_CLEANED.get(base_name, {})
+    standard_name = policy.get('name', base_name)
     
     qx_target = policy.get('qx', standard_name)
     sr_target = policy.get('sr', standard_name)
@@ -421,8 +395,8 @@ def process_file_to_targets(file_name, global_matrix):
     if 'qx_policy' in policy:
         qx_policy_label = policy['qx_policy']
     else:
-        if file_keyword == 'direct': qx_policy_label = 'direct'
-        elif file_keyword == 'reject': qx_policy_label = 'reject'
+        if base_name.lower() == 'direct': qx_policy_label = 'direct'
+        elif base_name.lower() == 'reject': qx_policy_label = 'reject'
         else: qx_policy_label = standard_name.capitalize()
         
     rules = {'remove': set(), 'process': set(), 'port': set(), 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
@@ -460,18 +434,18 @@ def process_file_to_targets(file_name, global_matrix):
         global_matrix['singbox'][singbox_target] = {k: set() for k in rules.keys()}
     for k in rules.keys(): global_matrix['singbox'][singbox_target][k].update(rules[k])
 
-    if file_keyword in ['direct', 'china'] or pac_target:
+    if base_name.lower() in ['direct', 'china'] or pac_target:
         p_target = pac_target if pac_target else 'direct'
         if p_target not in global_matrix['pac']:
             global_matrix['pac'][p_target] = set()
         global_matrix['pac'][p_target].update(rules['suffix'])
         global_matrix['pac'][p_target].update(rules['full'])
 
-    if 'classic' in file_keyword or 'nodomain' in file_keyword:
+    if 'classic' in base_name.lower() or 'nodomain' in base_name.lower():
         return
 
     if mrs_enable:
-        if 'ip' in file_keyword:
+        if 'ip' in base_name.lower():
             combined_ips_mrs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
             if combined_ips_mrs:
                 with open(os.path.join(MIHOMO_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
@@ -488,7 +462,7 @@ def process_file_to_targets(file_name, global_matrix):
                     for item in sorted(rules['regex']): f.write(f"  - DOMAIN-REGEX,{item}\n")
 
     if srs_enable:
-        if 'ip' in file_keyword:
+        if 'ip' in base_name.lower():
             combined_ips_srs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
             if combined_ips_srs:
                 sb_tmp_ip = {"version": 1, "rules": [{"ip_cidr": combined_ips_srs}]}
@@ -531,7 +505,7 @@ def main():
     if os.path.exists(SOURCE_DIR):
         for f in os.listdir(SOURCE_DIR):
             if f.endswith('.txt'):
-                local_base_name = os.path.splitext(f)[0].lower()
+                local_base_name = os.path.splitext(f)[0]
                 if local_base_name not in FILE_POLICY_ROUTER_CLEANED:
                     FILE_POLICY_ROUTER_CLEANED[local_base_name] = {
                         'name': local_base_name,
@@ -558,7 +532,7 @@ def main():
         qx_policy = g_rules['policy_label']
         optimize_domains(g_rules)
         with open(qx_path, 'w', encoding='utf-8') as f:
-            f.write(f"# Quantumult X Aggregated Rule-Set: {g_name.upper()}\n\n")
+            f.write(f"# Quantumult X Aggregated Rule-Set: {g_name}\n\n")
             
             for val in sorted(g_rules['full']): f.write(f"host, {val}, {qx_policy}\n")
             for val in sorted(g_rules['suffix']): f.write(f"host-suffix, {val}, {qx_policy}\n")
@@ -617,7 +591,6 @@ def main():
         optimize_domains(g_rules)
 
         sb_data = {"version": 2, "rules": []}
-        
         single_rule = {}
         
         if g_rules['process']: 
@@ -674,6 +647,7 @@ def main():
             f.write("function FindProxyForURL(url, host) {\n")
             f.write("    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n")
             f.write("        return \"DIRECT\";\n    }\n\n")
+            f.write("    var suffix = host.toLowerCase();\n")
             f.write("    var suffix = host.toLowerCase();\n")
             f.write("    while (suffix) {\n")
             f.write("        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {\n")
