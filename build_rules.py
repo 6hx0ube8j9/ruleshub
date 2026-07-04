@@ -558,7 +558,7 @@ def main():
         with open(sr_path, 'w', encoding='utf-8') as f:
             f.write(f"# Shadowrocket Rule-Set: {g_name}\n\n")
 
-			for val in sorted(g_rules['port']): f.write(f"PORT,{val}\n") if '-' not in val else None
+            for val in sorted(g_rules['port']): f.write(f"PORT,{val}\n") if '-' not in val else None
             for val in sorted(g_rules['full']): f.write(f"DOMAIN,{val}\n")
             for val in sorted(g_rules['suffix']): f.write(f"DOMAIN-SUFFIX,{val}\n")
             for val in sorted(g_rules['keyword']): f.write(f"DOMAIN-KEYWORD,{val}\n")
