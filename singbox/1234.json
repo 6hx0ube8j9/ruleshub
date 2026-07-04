@@ -7,15 +7,11 @@
         "co.uk",
         "t.co",
         "xn--yets76e.xn--fiqs8s"
-      ]
-    },
-    {
+      ],
       "ip_cidr": [
         "10.0.0.0/8",
         "2001:db8::/32"
-      ]
-    },
-    {
+      ],
       "domain_regex": [
         "^.*\\.le.*video\\.com$",
         "^\\+\\..*\\.firebaseio\\.com$"

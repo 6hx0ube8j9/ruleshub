@@ -21,9 +21,7 @@
         "skype.gmw.cn",
         "ssp.kaiads.com",
         "www.cmpassport.com"
-      ]
-    },
-    {
+      ],
       "domain_suffix": [
         "17gouwuba.com",
         "186078.com",
@@ -224,9 +222,7 @@
         "zryydi.com",
         "zunmi.cn",
         "zzd6.com"
-      ]
-    },
-    {
+      ],
       "domain_keyword": [
         "112wan",
         "789htbet",
@@ -424,9 +420,7 @@
         "xxshuyuan",
         "ynuf.alipay.com",
         "zjtoolbar"
-      ]
-    },
-    {
+      ],
       "ip_cidr": [
         "0.0.0.1/32",
         "1.3.0.10/32",

@@ -852,9 +852,7 @@
         "ytimg.com",
         "zukunftswerkstatt.de",
         "zynamics.com"
-      ]
-    },
-    {
+      ],
       "domain_keyword": [
         "appspot",
         "blogspot",
@@ -865,9 +863,7 @@
         "recaptcha",
         "www.google",
         "youtube"
-      ]
-    },
-    {
+      ],
       "ip_cidr": [
         "172.110.32.0/21",
         "173.194.0.0/16",

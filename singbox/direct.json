@@ -6,9 +6,7 @@
         "FTBrowserProxy.exe",
         "FTIMShell.exe",
         "xiadan.exe"
-      ]
-    },
-    {
+      ],
       "domain_suffix": [
         "001wifi.com",
         "00cdn.com",
@@ -6599,9 +6597,7 @@
         "zybang.com",
         "zyh365.com",
         "zzdtec.com"
-      ]
-    },
-    {
+      ],
       "domain_keyword": [
         "97hanju",
         "97jumi",
@@ -6616,9 +6612,7 @@
         "qcvod",
         "qiyi",
         "weibo"
-      ]
-    },
-    {
+      ],
       "ip_cidr": [
         "101.224.0.0/13",
         "101.71.154.241/32",

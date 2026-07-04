@@ -72,9 +72,7 @@
         "webstatic.mihoyo.com.m.alikunlun.com",
         "x8af4371739i8h99.aliyunddos0007.com",
         "ys-api-os.mihoyo.com"
-      ]
-    },
-    {
+      ],
       "domain_suffix": [
         "domain-suffix.co.jp",
         "domaindesktop.mihoyo.com",
@@ -82,15 +80,11 @@
         "hoyolab.com",
         "hoyoverse.com",
         "yuanshen.com"
-      ]
-    },
-    {
+      ],
       "domain_keyword": [
         "hoyolab",
         "yuanshen"
-      ]
-    },
-    {
+      ],
       "ip_cidr": [
         "170.33.9.150/20",
         "47.242.175.196/20",
