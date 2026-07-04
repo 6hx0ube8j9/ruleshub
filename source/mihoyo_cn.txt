@@ -1,4 +1,4 @@
-# === MIHOYO_CN Combined Base Rules ===
+# === mihoyo_cn Combined Base Rules ===
 
 # --- TYPE: FULL ---
 full,api-beta-sdk-static.mihoyo.com

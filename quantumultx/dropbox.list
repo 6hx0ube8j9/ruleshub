@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: DROPBOX
+# Quantumult X Aggregated Rule-Set: dropbox
 
 host, dropbox-api.arkoselabs.com, Dropbox
 host-suffix, db.tt, Dropbox

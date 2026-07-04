@@ -1,4 +1,4 @@
-# === PCLOUD Combined Base Rules ===
+# === pcloud Combined Base Rules ===
 
 # --- TYPE: FULL ---
 full,e.pcloud.link

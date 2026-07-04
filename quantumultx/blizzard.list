@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: BLIZZARD
+# Quantumult X Aggregated Rule-Set: blizzard
 
 host, blz-contentstack-assets.akamaized.net, Blizzard
 host, blz-contentstack-images.akamaized.net, Blizzard

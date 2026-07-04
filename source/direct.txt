@@ -1,4 +1,4 @@
-# === DIRECT Combined Base Rules ===
+# === direct Combined Base Rules ===
 
 # --- TYPE: PROCESS ---
 process,FTBrowserProxy.exe

@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: MIHOYO
+# Quantumult X Aggregated Rule-Set: mihoyo
 
 host, account.mihoyo.com, Mihoyo
 host, api-beta-os.mihoyo.com, Mihoyo

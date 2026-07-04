@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: BLOCK
+# Quantumult X Aggregated Rule-Set: block
 
 host, ad.10010.com, Block
 host, app-measurement.com, Block

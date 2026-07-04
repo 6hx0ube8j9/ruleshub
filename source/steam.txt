@@ -1,4 +1,4 @@
-# === STEAM Combined Base Rules ===
+# === steam Combined Base Rules ===
 
 # --- TYPE: PROCESS ---
 process,steam.exe

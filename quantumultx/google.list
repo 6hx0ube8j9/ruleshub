@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: GOOGLE
+# Quantumult X Aggregated Rule-Set: google
 
 host-suffix, 0emm.com, Google
 host-suffix, 1e100.net, Google

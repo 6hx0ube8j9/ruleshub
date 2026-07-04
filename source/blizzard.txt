@@ -1,4 +1,4 @@
-# === BLIZZARD Combined Base Rules ===
+# === blizzard Combined Base Rules ===
 
 # --- TYPE: FULL ---
 full,blz-contentstack-assets.akamaized.net

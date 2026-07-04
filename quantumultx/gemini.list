@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: GEMINI
+# Quantumult X Aggregated Rule-Set: gemini
 
 host, ai.google.dev, Gemini
 host, alkalimakersuite-pa.clients6.google.com, Gemini

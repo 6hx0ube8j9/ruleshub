@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: GAMES
+# Quantumult X Aggregated Rule-Set: games
 
 host, 1681.engine.mobileapptracking.com, Games
 host, supercell.helpshift.com, Games

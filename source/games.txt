@@ -1,4 +1,4 @@
-# === GAMES Combined Base Rules ===
+# === games Combined Base Rules ===
 
 # --- TYPE: PROCESS ---
 process,BloonsTD6-Epic.exe

@@ -1,2 +1,2 @@
-# === TEST Combined Base Rules ===
+# === test Combined Base Rules ===
 

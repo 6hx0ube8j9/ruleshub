@@ -1,4 +1,4 @@
-# === GEMINI Combined Base Rules ===
+# === gemini Combined Base Rules ===
 
 # --- TYPE: FULL ---
 full,ai.google.dev

@@ -1,4 +1,4 @@
-# === 1234 Combined Base Rules ===
+# === Apple_NoDomain Combined Base Rules ===
 
 # --- TYPE: PORT ---
 port,22
@@ -20,4 +20,3 @@ suffix,apple.com
 keyword,netflix
 keyword,youtube
 
- 

@@ -1,4 +1,4 @@
-# === MICROSOFT Combined Base Rules ===
+# === microsoft Combined Base Rules ===
 
 # --- TYPE: FULL ---
 full,login.live.com

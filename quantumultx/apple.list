@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: APPLE
+# Quantumult X Aggregated Rule-Set: apple
 
 host, appldnld.apple.com.edgesuite.net, Apple
 host, apple-events.akamaized.net, Apple

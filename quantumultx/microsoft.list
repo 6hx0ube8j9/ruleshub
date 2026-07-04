@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: MICROSOFT
+# Quantumult X Aggregated Rule-Set: microsoft
 
 host, login.live.com, Microsoft
 host, logincdn.msauth.net, Microsoft

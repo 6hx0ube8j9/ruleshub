@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: GLOBAL
+# Quantumult X Aggregated Rule-Set: global
 
 host, a248.e.akamai.net, Global
 host, a771.dscq.akamai.net, Global

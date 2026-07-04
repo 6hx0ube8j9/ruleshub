@@ -1,4 +1,4 @@
-# === DROPBOX Combined Base Rules ===
+# === dropbox Combined Base Rules ===
 
 # --- TYPE: PROCESS ---
 process,DbxSvc.exe

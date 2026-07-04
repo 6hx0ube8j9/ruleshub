@@ -1,2 +1,2 @@
-# === APPLE_NODOMAIN Combined Base Rules ===
+# === apple_nodomain Combined Base Rules ===
 

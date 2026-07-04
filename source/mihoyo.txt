@@ -1,4 +1,4 @@
-# === MIHOYO Combined Base Rules ===
+# === mihoyo Combined Base Rules ===
 
 # --- TYPE: FULL ---
 full,account.mihoyo.com

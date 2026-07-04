@@ -1,4 +1,4 @@
-# === EPIC Combined Base Rules ===
+# === epic Combined Base Rules ===
 
 # --- TYPE: PROCESS ---
 process,EpicGamesLauncher.exe

@@ -1,4 +1,4 @@
-# === GLOBAL Combined Base Rules ===
+# === global Combined Base Rules ===
 
 # --- TYPE: FULL ---
 full,a248.e.akamai.net

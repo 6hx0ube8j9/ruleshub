@@ -1,4 +1,4 @@
-# === BLOCK Combined Base Rules ===
+# === block Combined Base Rules ===
 
 # --- TYPE: FULL ---
 full,ad.10010.com

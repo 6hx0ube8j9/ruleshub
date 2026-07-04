@@ -1,2 +1,2 @@
-# === APPLE1232 Combined Base Rules ===
+# === apple1232 Combined Base Rules ===
 

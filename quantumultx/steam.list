@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: STEAM
+# Quantumult X Aggregated Rule-Set: steam
 
 host-suffix, cdn-ali.content.steamchina.com, Steam
 host-suffix, cdn-qc.content.steamchina.com, Steam
