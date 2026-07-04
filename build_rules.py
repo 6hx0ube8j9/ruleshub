@@ -438,7 +438,7 @@ def process_file_to_targets(file_name, global_matrix):
         global_matrix['pac'][p_target].update(rules['suffix'])
         global_matrix['pac'][p_target].update(rules['full'])
 
-    if 'classic' in file_keyword:
+    if 'classic' in file_keyword or 'nodomain' in file_keyword:
         return
 
     if mrs_enable:
