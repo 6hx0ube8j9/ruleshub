@@ -578,13 +578,9 @@ def main():
             single_rule["process_name"] = sorted(list(g_rules['process']))
             
         if g_rules['port']: 
-            p_list, p_range = [], []
-            for p in g_rules['port']:
-                if '-' in p: p_range.append(p.replace('-', ':'))
-                elif ':' in p: p_range.append(p)
-                else: p_list.append(int(p))
-            if p_list: single_rule["port"] = sorted(p_list)
-            if p_range: single_rule["port_range"] = sorted(p_range)
+            p_list, p_range = parse_ports_for_singbox(g_rules['port'])
+            if p_list: single_rule["port"] = p_list
+            if p_range: single_rule["port_range"] = p_range
             
         if g_rules['full']: 
             single_rule["domain"] = sorted(list(g_rules['full']))
@@ -598,11 +594,7 @@ def main():
             single_rule["ip_cidr"] = combined_ips
         
         if g_rules['wildcard'] or g_rules['regex']:
-            regex_list = []
-            for w in g_rules['wildcard']:
-                escaped_w = re.escape(w)
-                r_val = escaped_w.replace(r'\*', '.*').replace(r'\?', '.')
-                regex_list.append(f"^{r_val}$")
+            regex_list = [convert_wildcard_to_regex(w) for w in g_rules['wildcard']]
             for r in g_rules['regex']:
                 regex_list.append(r)
             single_rule["domain_regex"] = sorted(list(set(regex_list)))
