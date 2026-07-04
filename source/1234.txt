@@ -1,45 +1,59 @@
-# === 1234 Combined Base Rules ===
+# ========================================================
+# 🔥 极限压力测试底稿规则 (STRESS TEST BASE RULES)
+# ========================================================
 
-# --- TYPE: FULL ---
-full,apple-events.akamaized.net
-full,appleworldwidedeveloper.hb-api.omtrdc.net
-full,appleworldwidedeveloper.sc.omtrdc.net
-full,beatselectronicsllc.tt.omtrdc.net
-full,e16991.b.akamaiedge.net
-full,icons.axm-usercontent-apple.com
-full,lookup-api.apple.com.edgekey.net
-full,p-events-delivery.akamaized.net
+# --- 1. 拦截排除与逻辑冲突测试 (REMOVE TYPE) ---
+# 预期结果：脚本运行后，下面被 REMOVE 的内容在所有输出文件中都应该消失
+remove,google.com
+remove,10.0.0.1
+remove,Telegram.exe
+remove,netflix.com
 
-# --- TYPE: SUFFIX ---
-suffix,edge.apple
-suffix,webobjects.eu
-suffix,webobjects.net
-suffix,wholesale-exporter1.com
-suffix,wholesalediscountpurses.com
-suffix,wholesalefine.com
-suffix,wholesaleonlinemart.com
-suffix,worldcoinpay.com
-suffix,wpewebkit.org
-suffix,wuxiapple.com
-suffix,wwapple.net
-suffix,www.apple.com.edgekey.net
-suffix,wwwapple.com
-suffix,wwwapple.net
-suffix,wwwapplemusic.com
-suffix,wwwicloud.com
-suffix,wwwipodlounge.com
-suffix,wwwitunes.com
-suffix,wwwlapple.com
-suffix,wwwmacbookair.com
-suffix,xn--czrs0t4phtr3a.cn
-suffix,xn--fiqs8sxootzz.cn
-suffix,xn--fiqs8sxootzz.xn--hxt814e
-suffix,xn--gtvq61aiijy0b.xn--hxt814e
-suffix,xn--gtvz22d.wang
-suffix,xn--gtvz22d.xn--hxt814e
-suffix,xn--hxtr4rozx.xn--czr694b
-suffix,xn--kput3imi374g.xn--hxt814e
-suffix,xn--ohq11k7pl25iyo8a.cn
-suffix,xn--ruq8a011kt6y.xn--hxt814e
-suffix,yourmonsterbeats.com
+# --- 2. 进程与端口极限测试 ---
+process,Telegram.exe
+process,WeChat.exe
+port,8080-8089
+port,443
 
+# --- 3. 🎯 完全域名与垃圾数据混合测试 (FULL TYPE) ---
+full,www.google.com
+   full,www.speedtest.net   
+''full,www.dirty-quote.com''
+"full,www.double-quote.com"
+- full,www.dash-prefix.com
+full,com
+full,co.uk
+full,bad_domain.com/path?query=123
+full,user:pass@hacked-domain.com:8080
+
+# --- 4. 🔍 域名后缀与深度重复合并测试 (SUFFIX TYPE) ---
+suffix,google.com
+suffix,apple.com
+suffix,netflix.com
+suffix,sub.video.netflix.com
+suffix,deep.sub.video.netflix.com
+suffix,测试顶级域名.中国
+suffix,🚀.com
+
+# --- 5. 🧱 关键字模糊匹配测试 (KEYWORD TYPE) ---
+keyword,secure
+keyword,torrent
+keyword,payload
+
+# --- 6. 🌐 IP 网段与畸形子网掩码测试 (IP / IP6 TYPE) ---
+ip,10.0.0.1
+ip,192.168.1.5/24
+ip,172.16.0.1/35
+ip6,2001:db8::1
+ip6,2001:db8:g1::2
+ip6,2001:db8::3/129
+
+# --- 7. 📱 移动端 User-Agent 测试 ---
+useragent,Mozilla/5.0
+useragent,MicroMessenger
+
+# --- 8. 🐌 通配符与正则匹配极端测试 (WILDCARD / REGEX TYPE) ---
+wildcard,+.*.firebaseio.com
+wildcard,*.le*video.com
+regex,^https?:\/\/.*\.byteoversea\.com\/amap
+regex,^https?:\/\/.*\.bad-lookaround(?=analytics)\.com
