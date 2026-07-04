@@ -1,25 +1,10 @@
 # Mihomo Payload Rule-Set: 1234
 payload:
-  - PROCESS-NAME,Telegram.exe
-  - PROCESS-NAME,WeChat.exe
-  - DST-PORT,443
-  - DST-PORT,8080-8089
-  - DOMAIN,co.uk
-  - DOMAIN,www.dash-prefix.com
-  - DOMAIN,www.dirty-quote.com
-  - DOMAIN,www.double-quote.com
-  - DOMAIN,www.google.com
   - DOMAIN,www.speedtest.net
-  - DOMAIN-SUFFIX,apple.com
-  - DOMAIN-SUFFIX,sub.video.netflix.com
-  - DOMAIN-SUFFIX,xn--158h.com
-  - DOMAIN-SUFFIX,xn--eqrt2gbuz51p87oi1r.xn--fiqs8s
-  - DOMAIN-KEYWORD,payload
-  - DOMAIN-KEYWORD,secure
-  - DOMAIN-KEYWORD,torrent
+  - DOMAIN-SUFFIX,cloudflare.com
+  - DOMAIN-SUFFIX,v2ex.com
+  - IP-CIDR,10.0.0.0/8,no-resolve
   - IP-CIDR,192.168.1.5/24,no-resolve
   - IP-CIDR6,2001:db8::1/128,no-resolve
   - DOMAIN-WILDCARD,*.le*video.com
-  - DOMAIN-WILDCARD,+.*.firebaseio.com
-  - DOMAIN-WILDCARD,bad_domain.com/path?query=123
   - DOMAIN-REGEX,^https?:\/\/.*\.byteoversea\.com\/amap

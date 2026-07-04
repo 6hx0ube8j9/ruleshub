@@ -1,23 +1,10 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
-host, co.uk, 1234
-host, www.dash-prefix.com, 1234
-host, www.dirty-quote.com, 1234
-host, www.double-quote.com, 1234
-host, www.google.com, 1234
 host, www.speedtest.net, 1234
-host-suffix, apple.com, 1234
-host-suffix, sub.video.netflix.com, 1234
-host-suffix, xn--158h.com, 1234
-host-suffix, xn--eqrt2gbuz51p87oi1r.xn--fiqs8s, 1234
-host-keyword, payload, 1234
-host-keyword, secure, 1234
-host-keyword, torrent, 1234
+host-suffix, cloudflare.com, 1234
+host-suffix, v2ex.com, 1234
+ip-cidr, 10.0.0.0/8, 1234, no-resolve
 ip-cidr, 192.168.1.5/24, 1234, no-resolve
 ip6-cidr, 2001:db8::1/128, 1234, no-resolve
-user-agent, *MicroMessenger*, 1234
-user-agent, *Mozilla/5.0*, 1234
 host-wildcard, *.le*video.com, 1234
-host-wildcard, +.*.firebaseio.com, 1234
-host-wildcard, bad_domain.com/path?query=123, 1234
 host-regex, ^https?:\/\/.*\.byteoversea\.com\/amap, 1234

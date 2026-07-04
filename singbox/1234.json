@@ -2,48 +2,19 @@
   "version": 1,
   "rules": [
     {
-      "process_name": [
-        "Telegram.exe",
-        "WeChat.exe"
-      ]
-    },
-    {
-      "port": [
-        443
-      ]
-    },
-    {
-      "port_range": [
-        "8080-8089"
-      ]
-    },
-    {
       "domain": [
-        "co.uk",
-        "www.dash-prefix.com",
-        "www.dirty-quote.com",
-        "www.double-quote.com",
-        "www.google.com",
         "www.speedtest.net"
       ]
     },
     {
       "domain_suffix": [
-        "apple.com",
-        "sub.video.netflix.com",
-        "xn--158h.com",
-        "xn--eqrt2gbuz51p87oi1r.xn--fiqs8s"
-      ]
-    },
-    {
-      "domain_keyword": [
-        "payload",
-        "secure",
-        "torrent"
+        "cloudflare.com",
+        "v2ex.com"
       ]
     },
     {
       "ip_cidr": [
+        "10.0.0.0/8",
         "192.168.1.5/24",
         "2001:db8::1/128"
       ]
@@ -51,8 +22,6 @@
     {
       "domain_regex": [
         "^.*\\.le.*video\\.com$",
-        "^\\+\\..*\\.firebaseio\\.com$",
-        "^bad_domain\\.com/path.query=123$",
         "^https?:\\/\\/.*\\.byteoversea\\.com\\/amap"
       ]
     }
