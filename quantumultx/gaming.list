@@ -1,5 +1,9 @@
 # Quantumult X Aggregated Rule-Set: GAMING
 
+host, login.live.com, proxy
+host, logincdn.msauth.net, proxy
+host, store-images.s-microsoft.com, proxy
+host, vsmarketplacebadge.apphb.com, proxy
 host-suffix, 1drv.com, proxy
 host-suffix, 1drv.ms, proxy
 host-suffix, 21vbc.com, proxy
@@ -659,10 +663,6 @@ host-suffix, xboxstudios.com, proxy
 host-suffix, xbx.lv, proxy
 host-suffix, yammer.com, proxy
 host-suffix, yammerusercontent.com, proxy
-host, login.live.com, proxy
-host, logincdn.msauth.net, proxy
-host, store-images.s-microsoft.com, proxy
-host, vsmarketplacebadge.apphb.com, proxy
 host-keyword, 1drv, proxy
 host-keyword, microsoft, proxy
 host-keyword, onedrive, proxy

@@ -2,13 +2,13 @@
   "version": 1,
   "rules": [
     {
-      "domain_suffix": [
-        "pcloud.com"
+      "domain": [
+        "e.pcloud.link"
       ]
     },
     {
-      "domain": [
-        "e.pcloud.link"
+      "domain_suffix": [
+        "pcloud.com"
       ]
     },
     {

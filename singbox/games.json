@@ -2,14 +2,11 @@
   "version": 1,
   "rules": [
     {
-      "domain_suffix": [
-        "brawlstars.com",
-        "brawlstarsgame.com",
-        "king.com",
-        "ninjakiwi.com",
-        "nkstatic.com",
-        "supercell.com",
-        "unity3d.com"
+      "process_name": [
+        "BloonsTD6-Epic.exe",
+        "BloonsTD6.exe",
+        "Cleaner-BTD6.exe",
+        "UnityCrashHandler64.exe"
       ]
     },
     {
@@ -19,11 +16,14 @@
       ]
     },
     {
-      "process_name": [
-        "BloonsTD6-Epic.exe",
-        "BloonsTD6.exe",
-        "Cleaner-BTD6.exe",
-        "UnityCrashHandler64.exe"
+      "domain_suffix": [
+        "brawlstars.com",
+        "brawlstarsgame.com",
+        "king.com",
+        "ninjakiwi.com",
+        "nkstatic.com",
+        "supercell.com",
+        "unity3d.com"
       ]
     },
     {

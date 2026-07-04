@@ -1,5 +1,9 @@
 # Mihomo Payload Rule-Set: productivity
 payload:
+  - DOMAIN,login.live.com
+  - DOMAIN,logincdn.msauth.net
+  - DOMAIN,store-images.s-microsoft.com
+  - DOMAIN,vsmarketplacebadge.apphb.com
   - DOMAIN-SUFFIX,1drv.com
   - DOMAIN-SUFFIX,1drv.ms
   - DOMAIN-SUFFIX,21vbc.com
@@ -659,10 +663,6 @@ payload:
   - DOMAIN-SUFFIX,xbx.lv
   - DOMAIN-SUFFIX,yammer.com
   - DOMAIN-SUFFIX,yammerusercontent.com
-  - DOMAIN,login.live.com
-  - DOMAIN,logincdn.msauth.net
-  - DOMAIN,store-images.s-microsoft.com
-  - DOMAIN,vsmarketplacebadge.apphb.com
   - DOMAIN-KEYWORD,1drv
   - DOMAIN-KEYWORD,microsoft
   - DOMAIN-KEYWORD,onedrive

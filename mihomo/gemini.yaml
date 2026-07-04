@@ -1,5 +1,11 @@
 # Mihomo Payload Rule-Set: gemini
 payload:
+  - DOMAIN,ai.google.dev
+  - DOMAIN,alkalimakersuite-pa.clients6.google.com
+  - DOMAIN,alkalimessages-pa.googleapis.com
+  - DOMAIN,gemini-user-content.googleusercontent.com
+  - DOMAIN,gemini.gstatic.com
+  - DOMAIN,makersuite.google.com
   - DOMAIN-SUFFIX,apis.google.com
   - DOMAIN-SUFFIX,bard.google.com
   - DOMAIN-SUFFIX,deepmind.com
@@ -7,12 +13,6 @@ payload:
   - DOMAIN-SUFFIX,gemini.google.com
   - DOMAIN-SUFFIX,generativeai.google
   - DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
-  - DOMAIN,ai.google.dev
-  - DOMAIN,alkalimakersuite-pa.clients6.google.com
-  - DOMAIN,alkalimessages-pa.googleapis.com
-  - DOMAIN,gemini-user-content.googleusercontent.com
-  - DOMAIN,gemini.gstatic.com
-  - DOMAIN,makersuite.google.com
   - DOMAIN-KEYWORD,colab
   - DOMAIN-KEYWORD,developerprofiles
   - DOMAIN-KEYWORD,generativelanguage

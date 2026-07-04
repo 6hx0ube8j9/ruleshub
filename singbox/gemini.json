@@ -2,6 +2,16 @@
   "version": 1,
   "rules": [
     {
+      "domain": [
+        "ai.google.dev",
+        "alkalimakersuite-pa.clients6.google.com",
+        "alkalimessages-pa.googleapis.com",
+        "gemini-user-content.googleusercontent.com",
+        "gemini.gstatic.com",
+        "makersuite.google.com"
+      ]
+    },
+    {
       "domain_suffix": [
         "apis.google.com",
         "bard.google.com",
@@ -10,16 +20,6 @@
         "gemini.google.com",
         "generativeai.google",
         "proactivebackend-pa.googleapis.com"
-      ]
-    },
-    {
-      "domain": [
-        "ai.google.dev",
-        "alkalimakersuite-pa.clients6.google.com",
-        "alkalimessages-pa.googleapis.com",
-        "gemini-user-content.googleusercontent.com",
-        "gemini.gstatic.com",
-        "makersuite.google.com"
       ]
     },
     {

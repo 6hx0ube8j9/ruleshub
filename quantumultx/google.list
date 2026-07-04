@@ -858,6 +858,11 @@ host-keyword, gstatic, Google
 host-keyword, recaptcha, Google
 host-keyword, www.google, Google
 host-keyword, youtube, Google
+ip-cidr, 172.110.32.0/21, Google, no-resolve
+ip-cidr, 173.194.0.0/16, Google, no-resolve
+ip-cidr, 216.73.80.0/20, Google, no-resolve
+ip-cidr, 74.125.0.0/16, Google, no-resolve
+ip6-cidr, 2620:120:e000::/40, Google, no-resolve
 user-agent, %E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*, Google
 user-agent, *YouTubeMusic*, Google
 user-agent, *com.google.Drive*, Google
@@ -868,8 +873,3 @@ user-agent, YouTube*, Google
 user-agent, YouTubeMusic*, Google
 user-agent, com.google.ios.youtube*, Google
 user-agent, com.google.ios.youtubemusic*, Google
-ip-cidr, 172.110.32.0/21, Google, no-resolve
-ip-cidr, 173.194.0.0/16, Google, no-resolve
-ip-cidr, 216.73.80.0/20, Google, no-resolve
-ip-cidr, 74.125.0.0/16, Google, no-resolve
-ip6-cidr, 2620:120:e000::/40, Google, no-resolve

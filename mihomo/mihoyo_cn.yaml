@@ -1,6 +1,5 @@
 # Mihomo Payload Rule-Set: mihoyo_cn
 payload:
-  - DOMAIN-SUFFIX,benghuai.com
   - DOMAIN,api-beta-sdk-static.mihoyo.com
   - DOMAIN,api-beta-sdk.mihoyo.com
   - DOMAIN,api-beta-static.mihoyo.com
@@ -95,3 +94,4 @@ payload:
   - DOMAIN,ys-api.mihoyo.com
   - DOMAIN,ys.mihoyo.com
   - DOMAIN,ysjfsc.mihoyo.com
+  - DOMAIN-SUFFIX,benghuai.com

@@ -2,6 +2,18 @@
   "version": 1,
   "rules": [
     {
+      "domain": [
+        "apple-events.akamaized.net",
+        "appleworldwidedeveloper.hb-api.omtrdc.net",
+        "appleworldwidedeveloper.sc.omtrdc.net",
+        "beatselectronicsllc.tt.omtrdc.net",
+        "e16991.b.akamaiedge.net",
+        "icons.axm-usercontent-apple.com",
+        "lookup-api.apple.com.edgekey.net",
+        "p-events-delivery.akamaized.net"
+      ]
+    },
+    {
       "domain_suffix": [
         "edge.apple",
         "webobjects.eu",
@@ -34,18 +46,6 @@
         "xn--ohq11k7pl25iyo8a.cn",
         "xn--ruq8a011kt6y.xn--hxt814e",
         "yourmonsterbeats.com"
-      ]
-    },
-    {
-      "domain": [
-        "apple-events.akamaized.net",
-        "appleworldwidedeveloper.hb-api.omtrdc.net",
-        "appleworldwidedeveloper.sc.omtrdc.net",
-        "beatselectronicsllc.tt.omtrdc.net",
-        "e16991.b.akamaiedge.net",
-        "icons.axm-usercontent-apple.com",
-        "lookup-api.apple.com.edgekey.net",
-        "p-events-delivery.akamaized.net"
       ]
     }
   ]

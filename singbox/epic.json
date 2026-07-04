@@ -2,6 +2,12 @@
   "version": 1,
   "rules": [
     {
+      "process_name": [
+        "EpicGamesLauncher.exe",
+        "EpicGamesUpdater.exe"
+      ]
+    },
+    {
       "domain_suffix": [
         "battlebreakers.com",
         "eac-cdn.com",
@@ -19,12 +25,6 @@
         "twinmotion.com",
         "unrealengine.com",
         "unrealtournament.com"
-      ]
-    },
-    {
-      "process_name": [
-        "EpicGamesLauncher.exe",
-        "EpicGamesUpdater.exe"
       ]
     }
   ]

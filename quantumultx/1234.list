@@ -1,5 +1,13 @@
 # Quantumult X Aggregated Rule-Set: 1234
 
+host, apple-events.akamaized.net, 1234
+host, appleworldwidedeveloper.hb-api.omtrdc.net, 1234
+host, appleworldwidedeveloper.sc.omtrdc.net, 1234
+host, beatselectronicsllc.tt.omtrdc.net, 1234
+host, e16991.b.akamaiedge.net, 1234
+host, icons.axm-usercontent-apple.com, 1234
+host, lookup-api.apple.com.edgekey.net, 1234
+host, p-events-delivery.akamaized.net, 1234
 host-suffix, edge.apple, 1234
 host-suffix, webobjects.eu, 1234
 host-suffix, webobjects.net, 1234
@@ -31,11 +39,3 @@ host-suffix, xn--kput3imi374g.xn--hxt814e, 1234
 host-suffix, xn--ohq11k7pl25iyo8a.cn, 1234
 host-suffix, xn--ruq8a011kt6y.xn--hxt814e, 1234
 host-suffix, yourmonsterbeats.com, 1234
-host, apple-events.akamaized.net, 1234
-host, appleworldwidedeveloper.hb-api.omtrdc.net, 1234
-host, appleworldwidedeveloper.sc.omtrdc.net, 1234
-host, beatselectronicsllc.tt.omtrdc.net, 1234
-host, e16991.b.akamaiedge.net, 1234
-host, icons.axm-usercontent-apple.com, 1234
-host, lookup-api.apple.com.edgekey.net, 1234
-host, p-events-delivery.akamaized.net, 1234

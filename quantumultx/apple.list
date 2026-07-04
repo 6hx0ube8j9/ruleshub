@@ -1,5 +1,17 @@
 # Quantumult X Aggregated Rule-Set: APPLE
 
+host, appldnld.apple.com.edgesuite.net, Apple
+host, apple-events.akamaized.net, Apple
+host, appleworldwidedeveloper.hb-api.omtrdc.net, Apple
+host, appleworldwidedeveloper.sc.omtrdc.net, Apple
+host, beatselectronicsllc.tt.omtrdc.net, Apple
+host, crl.entrust.net, Apple
+host, e16991.b.akamaiedge.net, Apple
+host, icons.axm-usercontent-apple.com, Apple
+host, lookup-api.apple.com.edgekey.net, Apple
+host, ocsp.entrust.net, Apple
+host, ocsp.verisign.net, Apple
+host, p-events-delivery.akamaized.net, Apple
 host-suffix, 100beatscheap.com, Apple
 host-suffix, 12diasdepresentesdeitunes.com, Apple
 host-suffix, 12diasderegalosdeitunes.cl, Apple
@@ -1545,18 +1557,6 @@ host-suffix, xn--kput3imi374g.xn--hxt814e, Apple
 host-suffix, xn--ohq11k7pl25iyo8a.cn, Apple
 host-suffix, xn--ruq8a011kt6y.xn--hxt814e, Apple
 host-suffix, yourmonsterbeats.com, Apple
-host, appldnld.apple.com.edgesuite.net, Apple
-host, apple-events.akamaized.net, Apple
-host, appleworldwidedeveloper.hb-api.omtrdc.net, Apple
-host, appleworldwidedeveloper.sc.omtrdc.net, Apple
-host, beatselectronicsllc.tt.omtrdc.net, Apple
-host, crl.entrust.net, Apple
-host, e16991.b.akamaiedge.net, Apple
-host, icons.axm-usercontent-apple.com, Apple
-host, lookup-api.apple.com.edgekey.net, Apple
-host, ocsp.entrust.net, Apple
-host, ocsp.verisign.net, Apple
-host, p-events-delivery.akamaized.net, Apple
 host-keyword, apple-support.akadns.net, Apple
 host-keyword, apple.com.akadns.net, Apple
 host-keyword, apple.com.edgekey.net, Apple

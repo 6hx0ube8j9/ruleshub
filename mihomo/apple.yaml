@@ -1,5 +1,17 @@
 # Mihomo Payload Rule-Set: apple
 payload:
+  - DOMAIN,appldnld.apple.com.edgesuite.net
+  - DOMAIN,apple-events.akamaized.net
+  - DOMAIN,appleworldwidedeveloper.hb-api.omtrdc.net
+  - DOMAIN,appleworldwidedeveloper.sc.omtrdc.net
+  - DOMAIN,beatselectronicsllc.tt.omtrdc.net
+  - DOMAIN,crl.entrust.net
+  - DOMAIN,e16991.b.akamaiedge.net
+  - DOMAIN,icons.axm-usercontent-apple.com
+  - DOMAIN,lookup-api.apple.com.edgekey.net
+  - DOMAIN,ocsp.entrust.net
+  - DOMAIN,ocsp.verisign.net
+  - DOMAIN,p-events-delivery.akamaized.net
   - DOMAIN-SUFFIX,100beatscheap.com
   - DOMAIN-SUFFIX,12diasdepresentesdeitunes.com
   - DOMAIN-SUFFIX,12diasderegalosdeitunes.cl
@@ -1545,18 +1557,6 @@ payload:
   - DOMAIN-SUFFIX,xn--ohq11k7pl25iyo8a.cn
   - DOMAIN-SUFFIX,xn--ruq8a011kt6y.xn--hxt814e
   - DOMAIN-SUFFIX,yourmonsterbeats.com
-  - DOMAIN,appldnld.apple.com.edgesuite.net
-  - DOMAIN,apple-events.akamaized.net
-  - DOMAIN,appleworldwidedeveloper.hb-api.omtrdc.net
-  - DOMAIN,appleworldwidedeveloper.sc.omtrdc.net
-  - DOMAIN,beatselectronicsllc.tt.omtrdc.net
-  - DOMAIN,crl.entrust.net
-  - DOMAIN,e16991.b.akamaiedge.net
-  - DOMAIN,icons.axm-usercontent-apple.com
-  - DOMAIN,lookup-api.apple.com.edgekey.net
-  - DOMAIN,ocsp.entrust.net
-  - DOMAIN,ocsp.verisign.net
-  - DOMAIN,p-events-delivery.akamaized.net
   - DOMAIN-KEYWORD,apple-support.akadns.net
   - DOMAIN-KEYWORD,apple.com.akadns.net
   - DOMAIN-KEYWORD,apple.com.edgekey.net

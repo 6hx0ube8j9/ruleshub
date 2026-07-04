@@ -1,5 +1,6 @@
 # Shadowrocket Rule-Set: dropbox
 
+DOMAIN,dropbox-api.arkoselabs.com
 DOMAIN-SUFFIX,db.tt
 DOMAIN-SUFFIX,dropbox-dns.com
 DOMAIN-SUFFIX,dropbox.com
@@ -18,4 +19,3 @@ DOMAIN-SUFFIX,dropboxstatic.com
 DOMAIN-SUFFIX,dropboxusercontent.com
 DOMAIN-SUFFIX,getdropbox.com
 DOMAIN-SUFFIX,paper-attachments.s3.amazonaws.com
-DOMAIN,dropbox-api.arkoselabs.com

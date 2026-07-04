@@ -1,5 +1,8 @@
 # Mihomo Payload Rule-Set: steam
 payload:
+  - PROCESS-NAME,steam.exe
+  - PROCESS-NAME,steamservice.exe
+  - PROCESS-NAME,steamwebhelper.exe
   - DOMAIN-SUFFIX,cdn-ali.content.steamchina.com
   - DOMAIN-SUFFIX,cdn-qc.content.steamchina.com
   - DOMAIN-SUFFIX,cdn-ws.content.steamchina.com
@@ -54,6 +57,3 @@ payload:
   - DOMAIN-KEYWORD,steambroadcast
   - DOMAIN-KEYWORD,steamstore
   - DOMAIN-KEYWORD,steamuserimages
-  - PROCESS-NAME,steam.exe
-  - PROCESS-NAME,steamservice.exe
-  - PROCESS-NAME,steamwebhelper.exe

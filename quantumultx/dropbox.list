@@ -1,5 +1,6 @@
 # Quantumult X Aggregated Rule-Set: DROPBOX
 
+host, dropbox-api.arkoselabs.com, Dropbox
 host-suffix, db.tt, Dropbox
 host-suffix, dropbox-dns.com, Dropbox
 host-suffix, dropbox.com, Dropbox
@@ -18,4 +19,3 @@ host-suffix, dropboxstatic.com, Dropbox
 host-suffix, dropboxusercontent.com, Dropbox
 host-suffix, getdropbox.com, Dropbox
 host-suffix, paper-attachments.s3.amazonaws.com, Dropbox
-host, dropbox-api.arkoselabs.com, Dropbox

@@ -1,5 +1,8 @@
 # Mihomo Payload Rule-Set: direct
 payload:
+  - PROCESS-NAME,FTBrowserProxy.exe
+  - PROCESS-NAME,FTIMShell.exe
+  - PROCESS-NAME,xiadan.exe
   - DOMAIN-SUFFIX,001wifi.com
   - DOMAIN-SUFFIX,00cdn.com
   - DOMAIN-SUFFIX,01058511989.com
@@ -6602,9 +6605,6 @@ payload:
   - DOMAIN-KEYWORD,qcvod
   - DOMAIN-KEYWORD,qiyi
   - DOMAIN-KEYWORD,weibo
-  - PROCESS-NAME,FTBrowserProxy.exe
-  - PROCESS-NAME,FTIMShell.exe
-  - PROCESS-NAME,xiadan.exe
   - IP-CIDR,101.224.0.0/13,no-resolve
   - IP-CIDR,101.71.154.241/32,no-resolve
   - IP-CIDR,103.126.92.13/32,no-resolve

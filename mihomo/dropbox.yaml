@@ -1,5 +1,10 @@
 # Mihomo Payload Rule-Set: dropbox
 payload:
+  - PROCESS-NAME,DbxSvc.exe
+  - PROCESS-NAME,Dropbox.exe
+  - PROCESS-NAME,DropboxUninstaller.exe
+  - PROCESS-NAME,DropboxUpdate.exe
+  - DOMAIN,dropbox-api.arkoselabs.com
   - DOMAIN-SUFFIX,db.tt
   - DOMAIN-SUFFIX,dropbox-dns.com
   - DOMAIN-SUFFIX,dropbox.com
@@ -18,8 +23,3 @@ payload:
   - DOMAIN-SUFFIX,dropboxusercontent.com
   - DOMAIN-SUFFIX,getdropbox.com
   - DOMAIN-SUFFIX,paper-attachments.s3.amazonaws.com
-  - DOMAIN,dropbox-api.arkoselabs.com
-  - PROCESS-NAME,DbxSvc.exe
-  - PROCESS-NAME,Dropbox.exe
-  - PROCESS-NAME,DropboxUninstaller.exe
-  - PROCESS-NAME,DropboxUpdate.exe

@@ -2,6 +2,28 @@
   "version": 1,
   "rules": [
     {
+      "domain": [
+        "ad.10010.com",
+        "app-measurement.com",
+        "clients3.google.com",
+        "config.cmpassport.com",
+        "config001.cmpassport.com",
+        "ecm.cmpassport.com",
+        "firebaseinstallations.googleapis.com",
+        "firebaselogging-pa.googleapis.com",
+        "gate.hockeyapp.net",
+        "geo2.adobe.com",
+        "log001.cmpassport.com",
+        "mta.e.189.cn",
+        "open.e.189.cn",
+        "play.googleapis.com",
+        "s2.ax1x.com",
+        "skype.gmw.cn",
+        "ssp.kaiads.com",
+        "www.cmpassport.com"
+      ]
+    },
+    {
       "domain_suffix": [
         "17gouwuba.com",
         "186078.com",
@@ -202,28 +224,6 @@
         "zryydi.com",
         "zunmi.cn",
         "zzd6.com"
-      ]
-    },
-    {
-      "domain": [
-        "ad.10010.com",
-        "app-measurement.com",
-        "clients3.google.com",
-        "config.cmpassport.com",
-        "config001.cmpassport.com",
-        "ecm.cmpassport.com",
-        "firebaseinstallations.googleapis.com",
-        "firebaselogging-pa.googleapis.com",
-        "gate.hockeyapp.net",
-        "geo2.adobe.com",
-        "log001.cmpassport.com",
-        "mta.e.189.cn",
-        "open.e.189.cn",
-        "play.googleapis.com",
-        "s2.ax1x.com",
-        "skype.gmw.cn",
-        "ssp.kaiads.com",
-        "www.cmpassport.com"
       ]
     },
     {

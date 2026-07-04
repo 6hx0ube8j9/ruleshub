@@ -2,6 +2,13 @@
   "version": 1,
   "rules": [
     {
+      "process_name": [
+        "FTBrowserProxy.exe",
+        "FTIMShell.exe",
+        "xiadan.exe"
+      ]
+    },
+    {
       "domain_suffix": [
         "001wifi.com",
         "00cdn.com",
@@ -6609,13 +6616,6 @@
         "qcvod",
         "qiyi",
         "weibo"
-      ]
-    },
-    {
-      "process_name": [
-        "FTBrowserProxy.exe",
-        "FTIMShell.exe",
-        "xiadan.exe"
       ]
     },
     {

@@ -1,11 +1,5 @@
 # Quantumult X Aggregated Rule-Set: MIHOYO
 
-host-suffix, domain-suffix.co.jp, Mihoyo
-host-suffix, domaindesktop.mihoyo.com, Mihoyo
-host-suffix, hoyo.link, Mihoyo
-host-suffix, hoyolab.com, Mihoyo
-host-suffix, hoyoverse.com, Mihoyo
-host-suffix, yuanshen.com, Mihoyo
 host, account.mihoyo.com, Mihoyo
 host, api-beta-os.mihoyo.com, Mihoyo
 host, api-beta-sdk-os-static.mihoyo.com, Mihoyo
@@ -75,6 +69,12 @@ host, webstatic-sea.mihoyo.com, Mihoyo
 host, webstatic.mihoyo.com.m.alikunlun.com, Mihoyo
 host, x8af4371739i8h99.aliyunddos0007.com, Mihoyo
 host, ys-api-os.mihoyo.com, Mihoyo
+host-suffix, domain-suffix.co.jp, Mihoyo
+host-suffix, domaindesktop.mihoyo.com, Mihoyo
+host-suffix, hoyo.link, Mihoyo
+host-suffix, hoyolab.com, Mihoyo
+host-suffix, hoyoverse.com, Mihoyo
+host-suffix, yuanshen.com, Mihoyo
 host-keyword, hoyolab, Mihoyo
 host-keyword, yuanshen, Mihoyo
 ip-cidr, 170.33.9.150/20, Mihoyo, no-resolve

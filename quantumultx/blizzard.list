@@ -1,5 +1,8 @@
 # Quantumult X Aggregated Rule-Set: BLIZZARD
 
+host, blz-contentstack-assets.akamaized.net, Blizzard
+host, blz-contentstack-images.akamaized.net, Blizzard
+host, bnetaccount.akamaized.net, Blizzard
 host-suffix, battle.net, Blizzard
 host-suffix, battlenet.com, Blizzard
 host-suffix, battlenet.com.cn, Blizzard
@@ -41,9 +44,6 @@ host-suffix, starcraft2.com, Blizzard
 host-suffix, worldofwarcraft.com, Blizzard
 host-suffix, wow.nosdn.127.net, Blizzard
 host-suffix, wowchina.com, Blizzard
-host, blz-contentstack-assets.akamaized.net, Blizzard
-host, blz-contentstack-images.akamaized.net, Blizzard
-host, bnetaccount.akamaized.net, Blizzard
 ip-cidr, 103.4.114.233/32, Blizzard, no-resolve
 ip-cidr, 103.4.115.248/32, Blizzard, no-resolve
 ip-cidr, 137.221.105.2/32, Blizzard, no-resolve

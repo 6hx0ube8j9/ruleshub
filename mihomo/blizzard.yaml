@@ -1,5 +1,8 @@
 # Mihomo Payload Rule-Set: blizzard
 payload:
+  - DOMAIN,blz-contentstack-assets.akamaized.net
+  - DOMAIN,blz-contentstack-images.akamaized.net
+  - DOMAIN,bnetaccount.akamaized.net
   - DOMAIN-SUFFIX,battle.net
   - DOMAIN-SUFFIX,battlenet.com
   - DOMAIN-SUFFIX,battlenet.com.cn
@@ -41,9 +44,6 @@ payload:
   - DOMAIN-SUFFIX,worldofwarcraft.com
   - DOMAIN-SUFFIX,wow.nosdn.127.net
   - DOMAIN-SUFFIX,wowchina.com
-  - DOMAIN,blz-contentstack-assets.akamaized.net
-  - DOMAIN,blz-contentstack-images.akamaized.net
-  - DOMAIN,bnetaccount.akamaized.net
   - IP-CIDR,103.4.114.233/32,no-resolve
   - IP-CIDR,103.4.115.248/32,no-resolve
   - IP-CIDR,137.221.105.2/32,no-resolve

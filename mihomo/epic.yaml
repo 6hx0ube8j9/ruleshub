@@ -1,5 +1,7 @@
 # Mihomo Payload Rule-Set: epic
 payload:
+  - PROCESS-NAME,EpicGamesLauncher.exe
+  - PROCESS-NAME,EpicGamesUpdater.exe
   - DOMAIN-SUFFIX,battlebreakers.com
   - DOMAIN-SUFFIX,eac-cdn.com
   - DOMAIN-SUFFIX,easy.ac
@@ -16,5 +18,3 @@ payload:
   - DOMAIN-SUFFIX,twinmotion.com
   - DOMAIN-SUFFIX,unrealengine.com
   - DOMAIN-SUFFIX,unrealtournament.com
-  - PROCESS-NAME,EpicGamesLauncher.exe
-  - PROCESS-NAME,EpicGamesUpdater.exe

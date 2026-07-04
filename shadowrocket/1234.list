@@ -1,5 +1,13 @@
 # Shadowrocket Rule-Set: 1234
 
+DOMAIN,apple-events.akamaized.net
+DOMAIN,appleworldwidedeveloper.hb-api.omtrdc.net
+DOMAIN,appleworldwidedeveloper.sc.omtrdc.net
+DOMAIN,beatselectronicsllc.tt.omtrdc.net
+DOMAIN,e16991.b.akamaiedge.net
+DOMAIN,icons.axm-usercontent-apple.com
+DOMAIN,lookup-api.apple.com.edgekey.net
+DOMAIN,p-events-delivery.akamaized.net
 DOMAIN-SUFFIX,edge.apple
 DOMAIN-SUFFIX,webobjects.eu
 DOMAIN-SUFFIX,webobjects.net
@@ -31,11 +39,3 @@ DOMAIN-SUFFIX,xn--kput3imi374g.xn--hxt814e
 DOMAIN-SUFFIX,xn--ohq11k7pl25iyo8a.cn
 DOMAIN-SUFFIX,xn--ruq8a011kt6y.xn--hxt814e
 DOMAIN-SUFFIX,yourmonsterbeats.com
-DOMAIN,apple-events.akamaized.net
-DOMAIN,appleworldwidedeveloper.hb-api.omtrdc.net
-DOMAIN,appleworldwidedeveloper.sc.omtrdc.net
-DOMAIN,beatselectronicsllc.tt.omtrdc.net
-DOMAIN,e16991.b.akamaiedge.net
-DOMAIN,icons.axm-usercontent-apple.com
-DOMAIN,lookup-api.apple.com.edgekey.net
-DOMAIN,p-events-delivery.akamaized.net
