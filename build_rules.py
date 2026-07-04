@@ -591,7 +591,7 @@ def main():
         sb_path = os.path.join(SINGBOX_DIR, f"{g_name}.json")
         optimize_domains(g_rules)
 
-        sb_data = {"version": 1, "rules": []}
+        sb_data = {"version": 2, "rules": []}
         
         single_rule = {}
         
