@@ -1,5 +1,13 @@
 # === GEMINI Combined Base Rules ===
 
+# --- TYPE: FULL ---
+full,ai.google.dev
+full,alkalimakersuite-pa.clients6.google.com
+full,alkalimessages-pa.googleapis.com
+full,gemini-user-content.googleusercontent.com
+full,gemini.gstatic.com
+full,makersuite.google.com
+
 # --- TYPE: SUFFIX ---
 suffix,apis.google.com
 suffix,bard.google.com
@@ -8,14 +16,6 @@ suffix,deepmind.google
 suffix,gemini.google.com
 suffix,generativeai.google
 suffix,proactivebackend-pa.googleapis.com
-
-# --- TYPE: FULL ---
-full,ai.google.dev
-full,alkalimakersuite-pa.clients6.google.com
-full,alkalimessages-pa.googleapis.com
-full,gemini-user-content.googleusercontent.com
-full,gemini.gstatic.com
-full,makersuite.google.com
 
 # --- TYPE: KEYWORD ---
 keyword,colab

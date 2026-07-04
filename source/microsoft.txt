@@ -1,5 +1,11 @@
 # === MICROSOFT Combined Base Rules ===
 
+# --- TYPE: FULL ---
+full,login.live.com
+full,logincdn.msauth.net
+full,store-images.s-microsoft.com
+full,vsmarketplacebadge.apphb.com
+
 # --- TYPE: SUFFIX ---
 suffix,1drv.com
 suffix,1drv.ms
@@ -660,12 +666,6 @@ suffix,xboxstudios.com
 suffix,xbx.lv
 suffix,yammer.com
 suffix,yammerusercontent.com
-
-# --- TYPE: FULL ---
-full,login.live.com
-full,logincdn.msauth.net
-full,store-images.s-microsoft.com
-full,vsmarketplacebadge.apphb.com
 
 # --- TYPE: KEYWORD ---
 keyword,1drv

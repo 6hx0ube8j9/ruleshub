@@ -1,5 +1,10 @@
 # === STEAM Combined Base Rules ===
 
+# --- TYPE: PROCESS ---
+process,steam.exe
+process,steamservice.exe
+process,steamwebhelper.exe
+
 # --- TYPE: SUFFIX ---
 suffix,cdn-ali.content.steamchina.com
 suffix,cdn-qc.content.steamchina.com
@@ -57,9 +62,4 @@ suffix,wmsjsteam.com
 keyword,steambroadcast
 keyword,steamstore
 keyword,steamuserimages
-
-# --- TYPE: PROCESS ---
-process,steam.exe
-process,steamservice.exe
-process,steamwebhelper.exe
 

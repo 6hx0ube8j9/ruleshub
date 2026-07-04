@@ -1,5 +1,14 @@
 # === DROPBOX Combined Base Rules ===
 
+# --- TYPE: PROCESS ---
+process,DbxSvc.exe
+process,Dropbox.exe
+process,DropboxUninstaller.exe
+process,DropboxUpdate.exe
+
+# --- TYPE: FULL ---
+full,dropbox-api.arkoselabs.com
+
 # --- TYPE: SUFFIX ---
 suffix,db.tt
 suffix,dropbox-dns.com
@@ -19,13 +28,4 @@ suffix,dropboxstatic.com
 suffix,dropboxusercontent.com
 suffix,getdropbox.com
 suffix,paper-attachments.s3.amazonaws.com
-
-# --- TYPE: FULL ---
-full,dropbox-api.arkoselabs.com
-
-# --- TYPE: PROCESS ---
-process,DbxSvc.exe
-process,Dropbox.exe
-process,DropboxUninstaller.exe
-process,DropboxUpdate.exe
 

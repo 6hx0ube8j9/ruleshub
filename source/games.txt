@@ -1,5 +1,15 @@
 # === GAMES Combined Base Rules ===
 
+# --- TYPE: PROCESS ---
+process,BloonsTD6-Epic.exe
+process,BloonsTD6.exe
+process,Cleaner-BTD6.exe
+process,UnityCrashHandler64.exe
+
+# --- TYPE: FULL ---
+full,1681.engine.mobileapptracking.com
+full,supercell.helpshift.com
+
 # --- TYPE: SUFFIX ---
 suffix,brawlstars.com
 suffix,brawlstarsgame.com
@@ -8,10 +18,6 @@ suffix,ninjakiwi.com
 suffix,nkstatic.com
 suffix,supercell.com
 suffix,unity3d.com
-
-# --- TYPE: FULL ---
-full,1681.engine.mobileapptracking.com
-full,supercell.helpshift.com
 
 # --- TYPE: IP ---
 ip,139.180.0.0/16
@@ -31,10 +37,4 @@ ip,70.34.0.0/16
 ip,78.141.0.0/16
 ip,78.47.0.0/16
 ip,95.179.0.0/16
-
-# --- TYPE: PROCESS ---
-process,BloonsTD6-Epic.exe
-process,BloonsTD6.exe
-process,Cleaner-BTD6.exe
-process,UnityCrashHandler64.exe
 

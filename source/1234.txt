@@ -1,5 +1,15 @@
 # === 1234 Combined Base Rules ===
 
+# --- TYPE: FULL ---
+full,apple-events.akamaized.net
+full,appleworldwidedeveloper.hb-api.omtrdc.net
+full,appleworldwidedeveloper.sc.omtrdc.net
+full,beatselectronicsllc.tt.omtrdc.net
+full,e16991.b.akamaiedge.net
+full,icons.axm-usercontent-apple.com
+full,lookup-api.apple.com.edgekey.net
+full,p-events-delivery.akamaized.net
+
 # --- TYPE: SUFFIX ---
 suffix,edge.apple
 suffix,webobjects.eu
@@ -32,14 +42,4 @@ suffix,xn--kput3imi374g.xn--hxt814e
 suffix,xn--ohq11k7pl25iyo8a.cn
 suffix,xn--ruq8a011kt6y.xn--hxt814e
 suffix,yourmonsterbeats.com
-
-# --- TYPE: FULL ---
-full,apple-events.akamaized.net
-full,appleworldwidedeveloper.hb-api.omtrdc.net
-full,appleworldwidedeveloper.sc.omtrdc.net
-full,beatselectronicsllc.tt.omtrdc.net
-full,e16991.b.akamaiedge.net
-full,icons.axm-usercontent-apple.com
-full,lookup-api.apple.com.edgekey.net
-full,p-events-delivery.akamaized.net
 

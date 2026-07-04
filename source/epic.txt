@@ -1,5 +1,9 @@
 # === EPIC Combined Base Rules ===
 
+# --- TYPE: PROCESS ---
+process,EpicGamesLauncher.exe
+process,EpicGamesUpdater.exe
+
 # --- TYPE: SUFFIX ---
 suffix,battlebreakers.com
 suffix,eac-cdn.com
@@ -17,8 +21,4 @@ suffix,spyjinx.com
 suffix,twinmotion.com
 suffix,unrealengine.com
 suffix,unrealtournament.com
-
-# --- TYPE: PROCESS ---
-process,EpicGamesLauncher.exe
-process,EpicGamesUpdater.exe
 

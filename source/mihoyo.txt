@@ -1,13 +1,5 @@
 # === MIHOYO Combined Base Rules ===
 
-# --- TYPE: SUFFIX ---
-suffix,domain-suffix.co.jp
-suffix,domaindesktop.mihoyo.com
-suffix,hoyo.link
-suffix,hoyolab.com
-suffix,hoyoverse.com
-suffix,yuanshen.com
-
 # --- TYPE: FULL ---
 full,account.mihoyo.com
 full,api-beta-os.mihoyo.com
@@ -78,6 +70,14 @@ full,webstatic-sea.mihoyo.com
 full,webstatic.mihoyo.com.m.alikunlun.com
 full,x8af4371739i8h99.aliyunddos0007.com
 full,ys-api-os.mihoyo.com
+
+# --- TYPE: SUFFIX ---
+suffix,domain-suffix.co.jp
+suffix,domaindesktop.mihoyo.com
+suffix,hoyo.link
+suffix,hoyolab.com
+suffix,hoyoverse.com
+suffix,yuanshen.com
 
 # --- TYPE: KEYWORD ---
 keyword,hoyolab

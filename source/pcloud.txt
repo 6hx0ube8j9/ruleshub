@@ -1,10 +1,10 @@
 # === PCLOUD Combined Base Rules ===
 
-# --- TYPE: SUFFIX ---
-suffix,pcloud.com
-
 # --- TYPE: FULL ---
 full,e.pcloud.link
+
+# --- TYPE: SUFFIX ---
+suffix,pcloud.com
 
 # --- TYPE: IP ---
 ip,185.62.236.0/22

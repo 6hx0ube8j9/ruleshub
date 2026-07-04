@@ -1,8 +1,5 @@
 # === MIHOYO_CN Combined Base Rules ===
 
-# --- TYPE: SUFFIX ---
-suffix,benghuai.com
-
 # --- TYPE: FULL ---
 full,api-beta-sdk-static.mihoyo.com
 full,api-beta-sdk.mihoyo.com
@@ -98,4 +95,7 @@ full,www.yuanshen.com
 full,ys-api.mihoyo.com
 full,ys.mihoyo.com
 full,ysjfsc.mihoyo.com
+
+# --- TYPE: SUFFIX ---
+suffix,benghuai.com
 

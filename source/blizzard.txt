@@ -1,5 +1,10 @@
 # === BLIZZARD Combined Base Rules ===
 
+# --- TYPE: FULL ---
+full,blz-contentstack-assets.akamaized.net
+full,blz-contentstack-images.akamaized.net
+full,bnetaccount.akamaized.net
+
 # --- TYPE: SUFFIX ---
 suffix,battle.net
 suffix,battlenet.com
@@ -42,11 +47,6 @@ suffix,starcraft2.com
 suffix,worldofwarcraft.com
 suffix,wow.nosdn.127.net
 suffix,wowchina.com
-
-# --- TYPE: FULL ---
-full,blz-contentstack-assets.akamaized.net
-full,blz-contentstack-images.akamaized.net
-full,bnetaccount.akamaized.net
 
 # --- TYPE: IP ---
 ip,103.4.114.233/32

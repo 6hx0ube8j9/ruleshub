@@ -1,5 +1,19 @@
 # === APPLE Combined Base Rules ===
 
+# --- TYPE: FULL ---
+full,appldnld.apple.com.edgesuite.net
+full,apple-events.akamaized.net
+full,appleworldwidedeveloper.hb-api.omtrdc.net
+full,appleworldwidedeveloper.sc.omtrdc.net
+full,beatselectronicsllc.tt.omtrdc.net
+full,crl.entrust.net
+full,e16991.b.akamaiedge.net
+full,icons.axm-usercontent-apple.com
+full,lookup-api.apple.com.edgekey.net
+full,ocsp.entrust.net
+full,ocsp.verisign.net
+full,p-events-delivery.akamaized.net
+
 # --- TYPE: SUFFIX ---
 suffix,100beatscheap.com
 suffix,12diasdepresentesdeitunes.com
@@ -1546,20 +1560,6 @@ suffix,xn--kput3imi374g.xn--hxt814e
 suffix,xn--ohq11k7pl25iyo8a.cn
 suffix,xn--ruq8a011kt6y.xn--hxt814e
 suffix,yourmonsterbeats.com
-
-# --- TYPE: FULL ---
-full,appldnld.apple.com.edgesuite.net
-full,apple-events.akamaized.net
-full,appleworldwidedeveloper.hb-api.omtrdc.net
-full,appleworldwidedeveloper.sc.omtrdc.net
-full,beatselectronicsllc.tt.omtrdc.net
-full,crl.entrust.net
-full,e16991.b.akamaiedge.net
-full,icons.axm-usercontent-apple.com
-full,lookup-api.apple.com.edgekey.net
-full,ocsp.entrust.net
-full,ocsp.verisign.net
-full,p-events-delivery.akamaized.net
 
 # --- TYPE: KEYWORD ---
 keyword,apple-support.akadns.net
