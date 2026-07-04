@@ -1,9 +1,8 @@
 # Shadowrocket Rule-Set: 1234
 
-DST-PORT,3000-4000
-DST-PORT,443
-DST-PORT,80
-DST-PORT,8080
+PORT,443
+PORT,80
+PORT,8080
 DOMAIN,google.com
 DOMAIN,twitter.com
 DOMAIN-SUFFIX,amazon.com
