@@ -147,6 +147,10 @@ def clean_and_parse_line(line):
         if p1 in ['DOMAIN-REGEX', 'REGEX']:
             if any(lookaround in p2 for lookaround in ['(?=', '(?<=', '(?!', '(?<!']):
                 return None, None
+                
+            if '/' in p2 or '?' in p2:
+                return None, None
+                
             try:
                 re.compile(p2)
                 return 'regex', p2
