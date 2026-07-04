@@ -4,10 +4,14 @@
     {
       "domain": [
         "e.pcloud.link"
-      ],
+      ]
+    },
+    {
       "domain_suffix": [
         "pcloud.com"
-      ],
+      ]
+    },
+    {
       "ip_cidr": [
         "185.62.236.0/22",
         "45.131.244.0/22",

@@ -5,7 +5,9 @@
       "process_name": [
         "EpicGamesLauncher.exe",
         "EpicGamesUpdater.exe"
-      ],
+      ]
+    },
+    {
       "domain_suffix": [
         "battlebreakers.com",
         "eac-cdn.com",

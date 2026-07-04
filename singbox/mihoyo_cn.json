@@ -97,7 +97,9 @@
         "ys-api.mihoyo.com",
         "ys.mihoyo.com",
         "ysjfsc.mihoyo.com"
-      ],
+      ]
+    },
+    {
       "domain_suffix": [
         "benghuai.com"
       ]

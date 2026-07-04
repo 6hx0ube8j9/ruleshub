@@ -7,19 +7,27 @@
         80,
         443,
         8080
-      ],
+      ]
+    },
+    {
       "port_range": [
         "3000:4000",
         "5000:6000"
-      ],
+      ]
+    },
+    {
       "domain": [
         "google.com",
         "twitter.com"
-      ],
+      ]
+    },
+    {
       "domain_suffix": [
         "amazon.com",
         "apple.com"
-      ],
+      ]
+    },
+    {
       "domain_keyword": [
         "netflix",
         "youtube"

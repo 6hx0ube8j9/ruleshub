@@ -4,7 +4,9 @@
     {
       "domain": [
         "vsmarketplacebadge.apphb.com"
-      ],
+      ]
+    },
+    {
       "domain_suffix": [
         "1drv.com",
         "1drv.ms",
@@ -665,7 +667,9 @@
         "xbx.lv",
         "yammer.com",
         "yammerusercontent.com"
-      ],
+      ]
+    },
+    {
       "domain_keyword": [
         "1drv",
         "microsoft",

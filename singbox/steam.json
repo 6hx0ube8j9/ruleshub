@@ -6,7 +6,9 @@
         "steam.exe",
         "steamservice.exe",
         "steamwebhelper.exe"
-      ],
+      ]
+    },
+    {
       "domain_suffix": [
         "cdn-ali.content.steamchina.com",
         "cdn-qc.content.steamchina.com",
@@ -59,7 +61,9 @@
         "underlords.com",
         "valvesoftware.com",
         "wmsjsteam.com"
-      ],
+      ]
+    },
+    {
       "domain_keyword": [
         "steambroadcast",
         "steamstore",

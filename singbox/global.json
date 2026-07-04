@@ -46,7 +46,9 @@
         "xbs.eris.cc",
         "xbs.xv.rs",
         "xbsapi.cgrx.de"
-      ],
+      ]
+    },
+    {
       "domain_suffix": [
         "100classicbooks.com",
         "112263.com",
@@ -2228,7 +2230,9 @@
         "zorincdn.com",
         "zorinos.com",
         "zulipchat.com"
-      ],
+      ]
+    },
+    {
       "domain_keyword": [
         "abematv.akamaized.net",
         "avoddashs",
@@ -2248,7 +2252,9 @@
         "steamuserimages",
         "uk-live",
         "voddazn"
-      ],
+      ]
+    },
+    {
       "ip_cidr": [
         "100.43.64.0/19",
         "103.2.28.0/22",
