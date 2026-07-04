@@ -8,5 +8,3 @@ ip-cidr, 10.0.0.0/8, 1234, no-resolve
 ip6-cidr, 2001:db8::/32, 1234, no-resolve
 host-wildcard, *.le*video.com, 1234
 host-wildcard, +.*.firebaseio.com, 1234
-host-regex, ^https?:\/\/(www\.)?google\.com\/recaptcha\/, 1234
-host-regex, ^https?:\/\/.*\.byteoversea\.com\/amap, 1234

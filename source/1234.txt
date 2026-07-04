@@ -20,7 +20,3 @@ ip6,2001:db8::/32
 wildcard,*.le*video.com
 wildcard,+.*.firebaseio.com
 
-# --- TYPE: REGEX ---
-regex,^https?:\/\/(www\.)?google\.com\/recaptcha\/
-regex,^https?:\/\/.*\.byteoversea\.com\/amap
-

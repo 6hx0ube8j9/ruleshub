@@ -8,5 +8,3 @@ payload:
   - IP-CIDR6,2001:db8::/32,no-resolve
   - DOMAIN-WILDCARD,*.le*video.com
   - DOMAIN-WILDCARD,+.*.firebaseio.com
-  - DOMAIN-REGEX,^https?:\/\/(www\.)?google\.com\/recaptcha\/
-  - DOMAIN-REGEX,^https?:\/\/.*\.byteoversea\.com\/amap
