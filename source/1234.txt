@@ -1,54 +1,28 @@
-# === 1234 Combined Base Rules ===
+# ========================================================
+# 🔥 丢弃逻辑专项测试底稿 (DROP LOGIC TEST RULES)
+# ========================================================
 
-# --- TYPE: REMOVE ---
-remove,10.0.0.1
-remove,google.com
-remove,netflix.com
-remove,telegram.exe
+# --- 1. 带前缀的域名类脏数据 (预期结果：全部被直接丢弃，不生成任何规则) ---
+full,bad_domain.com/path?query=123
+suffix,apple.com/legal/privacy
+full,google.com?q=keyword
+suffix,netflix.com/
 
-# --- TYPE: PROCESS ---
-process,Telegram.exe
-process,WeChat.exe
+# --- 2. 不带前缀的纯输入脏数据 (预期结果：全部被直接丢弃，不生成任何规则) ---
+microsoft.com/advantage
+youtube.com/watch?v=dQw4w9WgXcQ
+github.com?tab=repositories
 
-# --- TYPE: PORT ---
-port,443
-port,8080-8089
-
-# --- TYPE: FULL ---
-full,co.uk
-full,www.dash-prefix.com
-full,www.dirty-quote.com
-full,www.double-quote.com
-full,www.google.com
-full,www.speedtest.net
-
-# --- TYPE: SUFFIX ---
-suffix,apple.com
-suffix,deep.sub.video.netflix.com
-suffix,sub.video.netflix.com
-suffix,xn--158h.com
-suffix,xn--eqrt2gbuz51p87oi1r.xn--fiqs8s
-
-# --- TYPE: KEYWORD ---
-keyword,payload
-keyword,secure
-keyword,torrent
-
-# --- TYPE: IP ---
+# --- 3. 合法的 IP / CIDR 网段 (预期结果：虽然包含 '/'，但必须放行，不能被误杀) ---
 ip,192.168.1.5/24
-
-# --- TYPE: IP6 ---
 ip6,2001:db8::1/128
+10.0.0.0/8
 
-# --- TYPE: USERAGENT ---
-useragent,MicroMessenger
-useragent,Mozilla/5.0
-
-# --- TYPE: WILDCARD ---
+# --- 4. 合法的正则与通配符 (预期结果：必须放行，不能被误杀) ---
 wildcard,*.le*video.com
-wildcard,+.*.firebaseio.com
-wildcard,bad_domain.com/path?query=123
-
-# --- TYPE: REGEX ---
 regex,^https?:\/\/.*\.byteoversea\.com\/amap
 
+# --- 5. 正常的标准纯域名 (预期结果：必须放行，正常进入 full 或 suffix) ---
+full,www.speedtest.net
+suffix,cloudflare.com
+v2ex.com
