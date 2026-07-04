@@ -17,7 +17,6 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SI
         os.makedirs(d)
 
 FILE_POLICY_ROUTER = [
-    # 示例 1: 多合一广告与隐私拦截
     {
         'name': 'block', 'mrs': False, 'srs': True, 'qx_policy': 'reject', 'qx': 'block', 'sr': 'block', 'singbox': 'block', 'mihomo': 'block',
         'url': [
@@ -26,7 +25,6 @@ FILE_POLICY_ROUTER = [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list'
         ]
     },
-    # 示例 2: 跨境合流分发矩阵
     {
         'name': 'microsoft', 'mrs': True, 'pac': 'productivity', 'qx': 'gaming', 'sr': 'gaming', 'singbox': 'productivity', 'mihomo': 'productivity', 'qx_policy': 'proxy',
         'url': [
@@ -34,7 +32,6 @@ FILE_POLICY_ROUTER = [
             'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list'
         ]
     },
-    # 示例 3: 直连基础规则
     {'name': 'direct', 'mrs': True, 'qx': 'direct', 'sr': 'direct', 'singbox': 'direct', 'mihomo': 'direct', 'qx_policy': 'direct'}
 ]
 
@@ -149,13 +146,11 @@ def clean_and_parse_line(line):
             
         if p1 in ['DOMAIN-REGEX', 'REGEX']:
             if any(lookaround in p2 for lookaround in ['(?=', '(?<=', '(?!', '(?<!']):
-                print(f"  -> [跳过] 发现 Go/RE2 不支持的环视正则: {p2}")
                 return None, None
             try:
                 re.compile(p2)
                 return 'regex', p2
             except re.error:
-                print(f"  -> [跳过] 检测到断裂或非法的正则表达式: {p2}")
                 return None, None
 
         if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
@@ -334,7 +329,6 @@ def sync_remote_to_local_source(base_name, policy):
         url_list = [remote_url_cfg]
 
     for remote_url in url_list:
-        print(f"  -> Syncing & Merging url [{remote_url}] into source/{base_name}.txt...")
         try:
             req = urllib.request.Request(
                 remote_url, 
@@ -351,12 +345,8 @@ def sync_remote_to_local_source(base_name, policy):
                     if payload in remove_set or payload in auth_set:
                         continue
                     rules[r_type].add(payload)
-        except urllib.error.HTTPError as e:
-            print(f"  -> [Warning] HTTP Error {e.code} for upstream url")
-        except urllib.error.URLError as e:
-            print(f"  -> [Warning] URL Error {e.reason} for upstream url")
-        except Exception as e:
-            print(f"  -> [Warning] Failed to fetch upstream url: {e}")
+        except Exception:
+            pass
 
     if rules['remove']:
         for r_type in rules:
@@ -514,7 +504,6 @@ def main():
                         'url': []
                     }
 
-    print("Phase 1: Syncing remote rules into local source .txt documents...")
     for target_base_name, policy_card in FILE_POLICY_ROUTER_CLEANED.items():
         sync_remote_to_local_source(target_base_name, policy_card)
 
@@ -522,17 +511,12 @@ def main():
         'qx': {}, 'sr': {}, 'mihomo': {}, 'singbox': {}, 'pac': {}
     }
 
-    print("\nPhase 2: Translating fully combined base documents to target matrices...")
     if not os.path.exists(SOURCE_DIR):
-        print(f"Directory '{SOURCE_DIR}' not found.")
         return
         
     files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
     for file_name in files:
-        print(f"Routing rule matrices for: {file_name}")
         process_file_to_targets(file_name, global_matrix)
-
-    print("\nPhase 3: Exporting rule-sets to destination paths...")
     
     # QuantumultX
     for g_name, g_rules in global_matrix['qx'].items():
@@ -605,10 +589,10 @@ def main():
             if p_range: sb_data["rules"].append({"port_range": p_range})
         if g_rules['wildcard'] or g_rules['regex']:
             regex_list = []
-			for w in rules['wildcard']:
-				escaped_w = re.escape(w)
-				r_val = escaped_w.replace(r'\*', '.*').replace(r'\?', '.')
-			    regex_list.append(f"^{r_val}$")
+            for w in g_rules['wildcard']:
+                escaped_w = re.escape(w)
+                r_val = escaped_w.replace(r'\*', '.*').replace(r'\?', '.')
+                regex_list.append(f"^{r_val}$")
             for r in g_rules['regex']:
                 regex_list.append(r)
             sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
@@ -642,8 +626,6 @@ def main():
             f.write("        suffix = suffix.substring(pos + 1);\n")
             f.write("    }\n\n")
             f.write("    return PROXY_METHOD;\n}\n")
-
-    print("\nSUCCESS: All global multi-routing matrix pipelines completed successfully!")
 
 if __name__ == '__main__':
     main()
