@@ -1,22 +1,38 @@
-# === 1234 Combined Base Rules ===
+# ========================================================
+# 🔥 复合型极端边缘场景压力测试 (EXTREME EDGE-CASE RULES)
+# ========================================================
 
-# --- TYPE: FULL ---
-full,www.speedtest.net
+# --- 1. 带各类奇葩路径与符号的域名 (预期结果：全部被直接丢弃，不生成任何规则) ---
+full,hacker.com/path/to/malware?payload=true&cookies=yes
+suffix,attack-site.net/?redirect=https://google.com
+bad-domain.xyz/index.php#heading-anchor
+another-dirty.info:443/api/v1/auth
 
-# --- TYPE: SUFFIX ---
-suffix,cloudflare.com
-suffix,v2ex.com
+# --- 2. 容易引发“误杀”的特殊域名 (预期结果：没有路径和问号，必须放行并安全转换) ---
+# 包含短横线、Punycode 中文、纯数字域名、国际顶级域名
+full,my-hyphen-domain.com
+suffix,小米.中国
+1234567.xyz
+suffix,t.co
 
-# --- TYPE: IP ---
-ip,10.0.0.0/8
-ip,192.168.1.5/24
+# --- 3. 极端的 IP / CIDR 网段与畸形变体 (预期结果：合法放行，非法丢弃) ---
+ip,10.0.0.0/8         # 合法
+ip,192.168.1.1/35     # 非法掩码，预期丢弃
+ip6,2001:db8::/32     # 合法
+ip6,2001:db8::1/129   # 非法掩码，预期丢弃
+172.16.0.1            # 正常无掩码，预期自动补齐 /32
 
-# --- TYPE: IP6 ---
-ip6,2001:db8::1/128
-
-# --- TYPE: WILDCARD ---
+# --- 4. 包含特殊符号的合法通配符与正则 (预期结果：必须放行，不能被误杀) ---
 wildcard,*.le*video.com
-
-# --- TYPE: REGEX ---
+wildcard,+.*.firebaseio.com
 regex,^https?:\/\/.*\.byteoversea\.com\/amap
+regex,^https?:\/\/(www\.)?google\.com\/recaptcha\/
 
+# --- 5. 黑名单顶级域名测试 (预期结果：直接丢弃，不能作为后缀引入) ---
+full,com
+suffix,co.uk
+gov.cn
+
+# --- 6. 拦截排除与逻辑冲突测试 (预期结果：下面被 REMOVE 的内容在最终输出中被完全擦除) ---
+remove,172.16.0.1
+remove,my-hyphen-domain.com
