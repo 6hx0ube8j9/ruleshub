@@ -514,11 +514,12 @@ def main():
         optimize_domains(g_rules)
         with open(qx_path, 'w', encoding='utf-8') as f:
             f.write(f"# Quantumult X Aggregated Rule-Set: {g_name.upper()}\n\n")
-            for val in sorted(g_rules['suffix']): f.write(f"host-suffix, {val}, {qx_policy}\n")
+            
             for val in sorted(g_rules['full']): f.write(f"host, {val}, {qx_policy}\n")
+            for val in sorted(g_rules['suffix']): f.write(f"host-suffix, {val}, {qx_policy}\n")
             for val in sorted(g_rules['keyword']): f.write(f"host-keyword, {val}, {qx_policy}\n")
-            for val in sorted(g_rules['wildcard']): f.write(f"host-wildcard, {val}, {qx_policy}\n")
-            for val in sorted(g_rules['regex']): f.write(f"host-regex, {val.strip()}, {qx_policy}\n")
+            for val in sorted(g_rules['ip']): f.write(f"ip-cidr, {ensure_ip_mask(val)}, {qx_policy}, no-resolve\n")
+            for val in sorted(g_rules['ip6']): f.write(f"ip6-cidr, {ensure_ip_mask(val, True)}, {qx_policy}, no-resolve\n")
             for val in sorted(g_rules['useragent']):
                 qx_ua = val
                 if not ('*' in qx_ua or '?' in qx_ua):
@@ -526,8 +527,9 @@ def main():
                 if ',' in qx_ua:
                     qx_ua = f'"{qx_ua}"'
                 f.write(f"user-agent, {qx_ua}, {qx_policy}\n")
-            for val in sorted(g_rules['ip']): f.write(f"ip-cidr, {ensure_ip_mask(val)}, {qx_policy}, no-resolve\n")
-            for val in sorted(g_rules['ip6']): f.write(f"ip6-cidr, {ensure_ip_mask(val, True)}, {qx_policy}, no-resolve\n")
+        
+            for val in sorted(g_rules['wildcard']): f.write(f"host-wildcard, {val}, {qx_policy}\n")
+            for val in sorted(g_rules['regex']): f.write(f"host-regex, {val.strip()}, {qx_policy}\n")
 
     # Shadowrocket
     for g_name, g_rules in global_matrix['sr'].items():
@@ -535,15 +537,16 @@ def main():
         optimize_domains(g_rules)
         with open(sr_path, 'w', encoding='utf-8') as f:
             f.write(f"# Shadowrocket Rule-Set: {g_name}\n\n")
-            for val in sorted(g_rules['suffix']): f.write(f"DOMAIN-SUFFIX,{val}\n")
-            for val in sorted(g_rules['full']): f.write(f"DOMAIN,{val}\n")
-            for val in sorted(g_rules['keyword']): f.write(f"DOMAIN-KEYWORD,{val}\n")
-            for val in sorted(g_rules['wildcard']): f.write(f"DOMAIN-WILDCARD,{val}\n")
-            for val in sorted(g_rules['regex']): f.write(f"DOMAIN-REGEX,{val}\n")
-            for val in sorted(g_rules['useragent']): f.write(f"USER-AGENT,{val}\n")
+
             for val in sorted(g_rules['port']): f.write(f"DST-PORT,{val}\n")
+            for val in sorted(g_rules['full']): f.write(f"DOMAIN,{val}\n")
+            for val in sorted(g_rules['suffix']): f.write(f"DOMAIN-SUFFIX,{val}\n")
+            for val in sorted(g_rules['keyword']): f.write(f"DOMAIN-KEYWORD,{val}\n")
             for val in sorted(g_rules['ip']): f.write(f"IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
             for val in sorted(g_rules['ip6']): f.write(f"IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
+            for val in sorted(g_rules['useragent']): f.write(f"USER-AGENT,{val}\n")
+            for val in sorted(g_rules['wildcard']): f.write(f"DOMAIN-WILDCARD,{val}\n")
+            for val in sorted(g_rules['regex']): f.write(f"DOMAIN-REGEX,{val}\n")
 
     # Mihomo 
     for g_name, g_rules in global_matrix['mihomo'].items():
@@ -552,30 +555,36 @@ def main():
         with open(mihomo_path, 'w', encoding='utf-8') as f:
             f.write(f"# Mihomo Payload Rule-Set: {g_name}\n")
             f.write("payload:\n")
-            for val in sorted(g_rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{val}\n")
-            for val in sorted(g_rules['full']): f.write(f"  - DOMAIN,{val}\n")
-            for val in sorted(g_rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{val}\n")
-            for val in sorted(g_rules['regex']): f.write(f"  - DOMAIN-REGEX,{val}\n")
-            for val in sorted(g_rules['wildcard']): 
-                f.write(f"  - DOMAIN-WILDCARD,{val}\n")            
+            
             for val in sorted(g_rules['process']): f.write(f"  - PROCESS-NAME,{val}\n")
             for val in sorted(g_rules['port']): f.write(f"  - DST-PORT,{val}\n")
+            for val in sorted(g_rules['full']): f.write(f"  - DOMAIN,{val}\n")
+            for val in sorted(g_rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{val}\n")
+            for val in sorted(g_rules['keyword']): f.write(f"  - DOMAIN-KEYWORD,{val}\n")
             for val in sorted(g_rules['ip']): f.write(f"  - IP-CIDR,{ensure_ip_mask(val)},no-resolve\n")
             for val in sorted(g_rules['ip6']): f.write(f"  - IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
+            for val in sorted(g_rules['wildcard']): 
+                f.write(f"  - DOMAIN-WILDCARD,{val}\n")            
+            for val in sorted(g_rules['regex']): f.write(f"  - DOMAIN-REGEX,{val}\n")
 
     # Sing-box 
     for g_name, g_rules in global_matrix['singbox'].items():
         sb_path = os.path.join(SINGBOX_DIR, f"{g_name}.json")
         optimize_domains(g_rules)
         sb_data = {"version": 1, "rules": []}
-        if g_rules['suffix']: sb_data["rules"].append({"domain_suffix": sorted(list(g_rules['suffix']))})
-        if g_rules['full']: sb_data["rules"].append({"domain": sorted(list(g_rules['full']))})
-        if g_rules['keyword']: sb_data["rules"].append({"domain_keyword": sorted(list(g_rules['keyword']))})
-        if g_rules['process']: sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
+        
+        if g_rules['process']: sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})        
         if g_rules['port']: 
             p_list, p_range = parse_ports_for_singbox(g_rules['port'])
             if p_list: sb_data["rules"].append({"port": p_list})
             if p_range: sb_data["rules"].append({"port_range": p_range})
+            
+        if g_rules['full']: sb_data["rules"].append({"domain": sorted(list(g_rules['full']))})      
+        if g_rules['suffix']: sb_data["rules"].append({"domain_suffix": sorted(list(g_rules['suffix']))})      
+        if g_rules['keyword']: sb_data["rules"].append({"domain_keyword": sorted(list(g_rules['keyword']))})
+        combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
+        if combined_ips: sb_data["rules"].append({"ip_cidr": combined_ips})
+        
         if g_rules['wildcard'] or g_rules['regex']:
             regex_list = []
             for w in g_rules['wildcard']:
@@ -585,8 +594,7 @@ def main():
             for r in g_rules['regex']:
                 regex_list.append(r)
             sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
-        combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
-        if combined_ips: sb_data["rules"].append({"ip_cidr": combined_ips})
+            
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
 
