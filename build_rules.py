@@ -143,7 +143,7 @@ def clean_and_parse_line(line):
             return 'remove', target_val
             
         if p1 in ['DOMAIN-REGEX', 'REGEX']:
-            prophecies = ['(?=', '(?<=', '(?!', '(?<!']
+            prophecies = ['', '(?<=', '(?!', '(?<!']
             if any(lookaround in p2 for lookaround in prophecies) or '/' in p2 or '?' in p2:
                 return None, None
             try:
@@ -296,7 +296,6 @@ def parse_ports_for_singbox(port_set):
     return sorted(p_list), sorted(p_range)
 
 def fetch_single_url(remote_url):
-    """单条 URL 核心请求逻辑"""
     try:
         req = urllib.request.Request(
             remote_url, 
@@ -456,6 +455,7 @@ def process_file_to_targets(file_name, global_matrix, router_cleaned):
             if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})      
             if rules['keyword']: sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
             
+            # 安全修复：防范单对象 AND 嵌套阻断，平铺端口
             if rules['port']: 
                 p_list, p_range = parse_ports_for_singbox(rules['port'])
                 if p_list: sb_tmp_domain["rules"].append({"port": p_list})
@@ -576,41 +576,37 @@ def main():
             for val in sorted(g_rules['wildcard']): f.write(f"  - DOMAIN-WILDCARD,{val}\n")            
             for val in sorted(g_rules['regex']): f.write(f"  - DOMAIN-REGEX,{val}\n")
 
-    # Sing-box 
+    # Sing-box 核心升级：安全平铺转换，拒绝 AND 逻辑污染
     for g_name, g_rules in global_matrix['singbox'].items():
         sb_path = os.path.join(SINGBOX_DIR, f"{g_name}.json")
         optimize_domains(g_rules)
 
         sb_data = {"version": 2, "rules": []}
-        single_rule = {}
         
         if g_rules['process']: 
-            single_rule["process_name"] = sorted(list(g_rules['process']))
+            sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
             
         if g_rules['port']: 
             p_list, p_range = parse_ports_for_singbox(g_rules['port'])
-            if p_list: single_rule["port"] = p_list
-            if p_range: single_rule["port_range"] = p_range
+            if p_list: sb_data["rules"].append({"port": p_list})
+            if p_range: sb_data["rules"].append({"port_range": p_range})
             
         if g_rules['full']: 
-            single_rule["domain"] = sorted(list(g_rules['full']))
+            sb_data["rules"].append({"domain": sorted(list(g_rules['full']))})
         if g_rules['suffix']: 
-            single_rule["domain_suffix"] = sorted(list(g_rules['suffix']))
+            sb_data["rules"].append({"domain_suffix": sorted(list(g_rules['suffix']))})
         if g_rules['keyword']: 
-            single_rule["domain_keyword"] = sorted(list(g_rules['keyword']))
+            sb_data["rules"].append({"domain_keyword": sorted(list(g_rules['keyword']))})
             
         combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
         if combined_ips: 
-            single_rule["ip_cidr"] = combined_ips
+            sb_data["rules"].append({"ip_cidr": combined_ips})
         
         if g_rules['wildcard'] or g_rules['regex']:
             regex_list = [convert_wildcard_to_regex(w) for w in g_rules['wildcard']]
             for r in g_rules['regex']:
                 regex_list.append(r)
-            single_rule["domain_regex"] = sorted(list(set(regex_list)))
-            
-        if single_rule:
-            sb_data["rules"].append(single_rule)
+            sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
             
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
