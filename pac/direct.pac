@@ -6599,7 +6599,6 @@ function FindProxyForURL(url, host) {
     }
 
     var suffix = host.toLowerCase();
-    var suffix = host.toLowerCase();
     while (suffix) {
         if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {
             return "DIRECT";

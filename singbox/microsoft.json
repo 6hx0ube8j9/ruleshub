@@ -3,9 +3,6 @@
   "rules": [
     {
       "domain": [
-        "login.live.com",
-        "logincdn.msauth.net",
-        "store-images.s-microsoft.com",
         "vsmarketplacebadge.apphb.com"
       ],
       "domain_suffix": [
