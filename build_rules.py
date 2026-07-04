@@ -17,20 +17,16 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SI
         os.makedirs(d)
 
 # ====================================================================================
-#                    FILE_POLICY_ROUTER 说明
+# FILE_POLICY_ROUTER 字段说明
 # ====================================================================================
-# [ 核心输入 ]
-# 'name'      : 默认以此名称作为所有工具的输出文件名
-# 'url'       : 远程规则拉取链接列表（自动拉取并合并）
-# 'qx_policy' : Quantumult X 的策略组标签（如 'Proxy', 'Direct', 'Apple'）
+# 'name'        : 默认输出文件名
+# 'url'         : 远程拉取规则链接列表并合并
+# 'qx_policy'   : QuantumultX 策略组标签（如 'Proxy', 'Apple'）
+# 'pac'         : PAC 输出文件名（留空不转换；仅 'name' 为 direct/china 时生成）
+# 'mrs' / 'srs' : 是否生成 mrs / srs 规则集（True/False，留空默认 True）
 #
-# [ 对应工具重命名 ]
-# 'qx' / 'sr' / 'mihomo' / 'singbox' -> 分别对应各工具的输出文件名，不写默认使用 'name' 名称
-#
-# [ 特殊设置 ]
-# 'pac'       : pac 输出文件名（写了才触发转换；不写默认仅 'direct.txt'/'china.txt' 才会生成）
-# 'mrs'       : 是否转换生成 Mihomo 规则集（True/False，不写默认为 True）
-# 'srs'       : 是否转换生成 Sing-box 规则集（True/False，不写默认为 True）
+# [工具重命名] (留空默认使用 'name')
+# 'qx' / 'sr' / 'mihomo' / 'singbox' -> 对应各工具的输出文件名
 # ====================================================================================
 
 FILE_POLICY_ROUTER = [
