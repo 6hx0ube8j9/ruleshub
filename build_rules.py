@@ -605,10 +605,10 @@ def main():
             if p_range: sb_data["rules"].append({"port_range": p_range})
         if g_rules['wildcard'] or g_rules['regex']:
             regex_list = []
-            for w in g_rules['wildcard']:
-			    escaped_w = re.escape(w)
-                r = escaped_w.replace(r'\*', '.*').replace(r'\?', '.')
-                regex_list.append(f"^{r}$")
+			for w in rules['wildcard']:
+				escaped_w = re.escape(w)
+				r_val = escaped_w.replace(r'\*', '.*').replace(r'\?', '.')
+			    regex_list.append(f"^{r_val}$")
             for r in g_rules['regex']:
                 regex_list.append(r)
             sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
