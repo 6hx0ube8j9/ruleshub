@@ -1,54 +1,59 @@
-# === 1234 Combined Base Rules ===
+# ========================================================
+# 🔥 极限压力测试底稿规则 (STRESS TEST BASE RULES)
+# ========================================================
 
-# --- TYPE: REMOVE ---
-remove,10.0.0.1
+# --- 1. 拦截排除与逻辑冲突测试 (REMOVE TYPE) ---
+# 预期结果：脚本运行后，下面被 REMOVE 的内容在所有输出文件中都应该消失
 remove,google.com
+remove,10.0.0.1
+remove,Telegram.exe
 remove,netflix.com
-remove,telegram.exe
 
-# --- TYPE: PROCESS ---
+# --- 2. 进程与端口极限测试 ---
 process,Telegram.exe
 process,WeChat.exe
-
-# --- TYPE: PORT ---
-port,443
 port,8080-8089
+port,443
 
-# --- TYPE: FULL ---
-full,co.uk
-full,www.dash-prefix.com
-full,www.dirty-quote.com
-full,www.double-quote.com
+# --- 3. 🎯 完全域名与垃圾数据混合测试 (FULL TYPE) ---
 full,www.google.com
-full,www.speedtest.net
+   full,www.speedtest.net   
+''full,www.dirty-quote.com''
+"full,www.double-quote.com"
+- full,www.dash-prefix.com
+full,com
+full,co.uk
+full,bad_domain.com/path?query=123
+full,user:pass@hacked-domain.com:8080
 
-# --- TYPE: SUFFIX ---
+# --- 4. 🔍 域名后缀与深度重复合并测试 (SUFFIX TYPE) ---
+suffix,google.com
 suffix,apple.com
-suffix,deep.sub.video.netflix.com
+suffix,netflix.com
 suffix,sub.video.netflix.com
-suffix,xn--158h.com
-suffix,xn--eqrt2gbuz51p87oi1r.xn--fiqs8s
+suffix,deep.sub.video.netflix.com
+suffix,测试顶级域名.中国
+suffix,🚀.com
 
-# --- TYPE: KEYWORD ---
-keyword,payload
+# --- 5. 🧱 关键字模糊匹配测试 (KEYWORD TYPE) ---
 keyword,secure
 keyword,torrent
+keyword,payload
 
-# --- TYPE: IP ---
+# --- 6. 🌐 IP 网段与畸形子网掩码测试 (IP / IP6 TYPE) ---
+ip,10.0.0.1
 ip,192.168.1.5/24
+ip,172.16.0.1/35
+ip6,2001:db8::1
+ip6,2001:db8:g1::2
+ip6,2001:db8::3/129
 
-# --- TYPE: IP6 ---
-ip6,2001:db8::1/128
-
-# --- TYPE: USERAGENT ---
-useragent,MicroMessenger
+# --- 7. 📱 移动端 User-Agent 测试 ---
 useragent,Mozilla/5.0
+useragent,MicroMessenger
 
-# --- TYPE: WILDCARD ---
-wildcard,*.le*video.com
+# --- 8. 🐌 通配符与正则匹配极端测试 (WILDCARD / REGEX TYPE) ---
 wildcard,+.*.firebaseio.com
-wildcard,bad_domain.com/path?query=123
-
-# --- TYPE: REGEX ---
+wildcard,*.le*video.com
 regex,^https?:\/\/.*\.byteoversea\.com\/amap
-
+regex,^https?:\/\/.*\.bad-lookaround(?=analytics)\.com
