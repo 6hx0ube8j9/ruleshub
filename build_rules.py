@@ -273,19 +273,8 @@ def optimize_domains(rules):
                 clean_reversed.append(rd)
         rules['suffix'] = {'.'.join(reversed(rd.rstrip('.').split('.'))) for rd in clean_reversed}
 
-    if rules.get('full') and rules.get('suffix'):
-        clean_full = set()
-        for domain in rules['full']:
-            is_covered = False
-            parts = domain.split('.')
-            for i in range(len(parts)):
-                parent = '.'.join(parts[i:])
-                if parent in rules['suffix']:
-                    is_covered = True
-                    break
-            if not is_covered:
-                clean_full.add(domain)
-        rules['full'] = clean_full
+    if rules.get('full'):
+        rules['full'] = set(rules['full'])
 
 def ensure_ip_mask(ip_str, is_ipv6=False):
     if '/' in ip_str: return ip_str
