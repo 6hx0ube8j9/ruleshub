@@ -325,12 +325,14 @@ def parse_ports_for_singbox(port_set):
     return sorted(p_list), sorted(p_range)
 
 def sync_remote_to_local_source(base_name, policy):
-    source_path = get_actual_path(SOURCE_DIR, base_name, ".txt")
+    strict_file_name = f"{base_name.lower()}.txt"
+    source_path = os.path.join(SOURCE_DIR, strict_file_name)
+    
     rules = {'remove': set(), 'process': set(), 'port': set(), 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
     
     if not os.path.exists(source_path):
         with open(source_path, 'w', encoding='utf-8') as f:
-            f.write(f"# === {base_name.upper()} Local Base Rules ===\n\n")
+            f.write(f"# === {base_name.lower().upper()} Local Base Rules ===\n\n")
             
     with open(source_path, 'r', encoding='utf-8') as f:
         for line in f:
@@ -374,7 +376,7 @@ def sync_remote_to_local_source(base_name, policy):
                 rules[r_type] -= rules['remove']
 
     with open(source_path, 'w', encoding='utf-8') as f_source:
-        f_source.write(f"# === {base_name.upper()} Combined Base Rules ===\n\n")
+        f_source.write(f"# === {base_name.lower().upper()} Combined Base Rules ===\n\n")
         for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
             if rules[r_type]:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
@@ -383,7 +385,7 @@ def sync_remote_to_local_source(base_name, policy):
                     elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
                     else: f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
-
+				
 def process_file_to_targets(file_name, global_matrix):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0]
