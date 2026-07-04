@@ -27,7 +27,7 @@ for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SI
 # [ 对应工具重命名 ]
 # 'qx' / 'sr' / 'mihomo' / 'singbox' -> 分别对应各工具的输出文件名，不写默认使用 'name' 名称
 #
-# [ 特殊转换 ]
+# [ 特殊设置 ]
 # 'pac'       : pac 输出文件名（写了才触发转换；不写默认仅 'direct.txt'/'china.txt' 才会生成）
 # 'mrs'       : 是否转换生成 Mihomo 规则集（True/False，不写默认为 True）
 # 'srs'       : 是否转换生成 Sing-box 规则集（True/False，不写默认为 True）
