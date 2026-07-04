@@ -275,12 +275,7 @@ def optimize_domains(rules):
                 clean_reversed.append(rd)
         rules['suffix'] = {'.'.join(reversed(rd.rstrip('.').split('.'))) for rd in clean_reversed}
 
-    if rules.get('full') and rules.get('suffix'):
-        rules['full'] = {
-            f for f in rules['full'] 
-            if not any(f.endswith('.' + s) or f == s for s in rules['suffix'])
-        }
-    elif rules.get('full'):
+    if rules.get('full'):
         rules['full'] = set(rules['full'])
 
 def ensure_ip_mask(ip_str, is_ipv6=False):
@@ -590,30 +585,43 @@ def main():
 
         sb_data = {"version": 2, "rules": []}
         
+        single_rule = {}
+        
         if g_rules['process']: 
-            sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
+            single_rule["process_name"] = sorted(list(g_rules['process']))
             
         if g_rules['port']: 
-            p_list, p_range = parse_ports_for_singbox(g_rules['port'])
-            if p_list: sb_data["rules"].append({"port": p_list})
-            if p_range: sb_data["rules"].append({"port_range": p_range})
+            p_list, p_range = [], []
+            for p in g_rules['port']:
+                if '-' in p: p_range.append(p.replace('-', ':'))
+                elif ':' in p: p_range.append(p)
+                else: p_list.append(int(p))
+            if p_list: single_rule["port"] = sorted(p_list)
+            if p_range: single_rule["port_range"] = sorted(p_range)
             
         if g_rules['full']: 
-            sb_data["rules"].append({"domain": sorted(list(g_rules['full']))})
+            single_rule["domain"] = sorted(list(g_rules['full']))
         if g_rules['suffix']: 
-            sb_data["rules"].append({"domain_suffix": sorted(list(g_rules['suffix']))})
+            single_rule["domain_suffix"] = sorted(list(g_rules['suffix']))
         if g_rules['keyword']: 
-            sb_data["rules"].append({"domain_keyword": sorted(list(g_rules['keyword']))})
+            single_rule["domain_keyword"] = sorted(list(g_rules['keyword']))
             
         combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
         if combined_ips: 
-            sb_data["rules"].append({"ip_cidr": combined_ips})
+            single_rule["ip_cidr"] = combined_ips
         
         if g_rules['wildcard'] or g_rules['regex']:
-            regex_list = [convert_wildcard_to_regex(w) for w in g_rules['wildcard']]
+            regex_list = []
+            for w in g_rules['wildcard']:
+                escaped_w = re.escape(w)
+                r_val = escaped_w.replace(r'\*', '.*').replace(r'\?', '.')
+                regex_list.append(f"^{r_val}$")
             for r in g_rules['regex']:
                 regex_list.append(r)
-            sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
+            single_rule["domain_regex"] = sorted(list(set(regex_list)))
+            
+        if single_rule:
+            sb_data["rules"].append(single_rule)
             
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
