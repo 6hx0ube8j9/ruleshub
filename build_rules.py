@@ -312,18 +312,32 @@ def fetch_single_url(remote_url):
 def fetch_and_merge_rules(base_name, policy):
     rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
     
+    source_enable, source_name = parse_target_config(policy, 'source', base_name)
+    source_path = os.path.join(SOURCE_DIR, f"{source_name}.txt")
+    
+    local_exists = os.path.exists(source_path)
+    if source_enable and local_exists:
+        with open(source_path, 'r', encoding='utf-8') as f_local:
+            for line in f_local:
+                r_type, payload = clean_and_parse_line(line)
+                if payload and r_type in rules:
+                    rules[r_type].add(payload)
+
     remote_url_cfg = policy.get('url', [])
     url_list = remote_url_cfg if isinstance(remote_url_cfg, list) else ([remote_url_cfg] if remote_url_cfg else [])
 
+    has_remote_data = False
     if url_list:
         with ThreadPoolExecutor(max_workers=5) as executor:
             future_to_url = {executor.submit(fetch_single_url, url): url for url in url_list}
             for future in as_completed(future_to_url):
                 url, lines = future.result()
-                for line in lines:
-                    r_type, payload = clean_and_parse_line(line)
-                    if payload and r_type in rules:
-                        rules[r_type].add(payload)
+                if lines: 
+                    for line in lines:
+                        r_type, payload = clean_and_parse_line(line)
+                        if payload and r_type in rules:
+                            rules[r_type].add(payload)
+                            has_remote_data = True
 
     if rules['remove']:
         remove_set = rules['remove']
@@ -331,19 +345,20 @@ def fetch_and_merge_rules(base_name, policy):
             if r_type != 'remove':
                 rules[r_type] -= remove_set
 
-    source_enable, source_name = parse_target_config(policy, 'source', base_name)
     if source_enable:
-        source_path = os.path.join(SOURCE_DIR, f"{source_name}.txt")
-        with open(source_path, 'w', encoding='utf-8') as f_source:
-            f_source.write(f"# === {source_name} Combined Base Rules ===\n\n")
-            for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
-                if rules[r_type]:
-                    f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
-                    for val in sorted(rules[r_type]):
-                        if r_type == 'ip': f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
-                        elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
-                        else: f_source.write(f"{r_type},{val}\n")
-                    f_source.write("\n")
+        has_any_rule = any(len(rules[k]) > 0 for k in rules)
+        
+        if has_any_rule and (not local_exists or has_remote_data):
+            with open(source_path, 'w', encoding='utf-8') as f_source:
+                f_source.write(f"# === {source_name} Combined Base Rules ===\n\n")
+                for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
+                    if rules[r_type]:
+                        f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
+                        for val in sorted(rules[r_type]):
+                            if r_type == 'ip': f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
+                            elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
+                            else: f_source.write(f"{r_type},{val}\n")
+                        f_source.write("\n")
 
     return rules
 
