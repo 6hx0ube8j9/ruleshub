@@ -543,13 +543,10 @@ def main():
         with open(sr_path, 'w', encoding='utf-8') as f:
             f.write(f"# Shadowrocket Rule-Set: {g_name}\n\n")
 
-            # 规范修复安全逻辑：支持平铺处理单端口和范围端口
             for val in sorted(g_rules['port']):
                 if '-' in val or ':' in val:
-                    clean_p = val.replace(':', '-')
-                    f.write(f"DST-PORT,{clean_p}\n")
-                else:
-                    f.write(f"DST-PORT,{val}\n")
+                    continue
+                f.write(f"DST-PORT,{val}\n")
 
             for val in sorted(g_rules['full']): f.write(f"DOMAIN,{val}\n")
             for val in sorted(g_rules['suffix']): f.write(f"DOMAIN-SUFFIX,{val}\n")
