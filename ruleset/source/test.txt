@@ -1,32 +1,24 @@
-# ==========================================
-# 极限测试底稿：请直接复制进 test.txt
-# ==========================================
+# === test Combined Base Rules ===
 
-# 场景 1：大小写与前后空格、引号混杂（测试清洗与规范化去重）
-DOMAIN-SUFFIX, Apple.com
-domain-suffix,'apple.com'
-  host-suffix,   APPLE.COM  
-
-# 场景 2：重复数据与带前缀数据（测试 Set 去重与剥离）
-+.google.com
-*.google.com
-.google.com
-google.com
-
-# 场景 3：IP 与 IPv6 混合且没写掩码（测试自动补齐 /32 和 /128）
-ip-cidr,1.1.1.1
-ip6-cidr,2001:db8::1
-192.168.1.1
-
-# 场景 4：垃圾行与错误格式（测试异常行安全跳过，绝不能崩溃）
-payload:
-- 
-   # 这是一行纯注释
-// 这也是一行乱入的注释
-  
-# 场景 5：黑名单强力测试（这行会把上面拉进来的所有 apple.com 规则全部无情斩杀）
+# --- TYPE: REMOVE ---
 remove,apple.com
 
-# 场景 6：其他类型乱入（测试常规客户端保留，二进制规则集剥离）
+# --- TYPE: PROCESS ---
+process,telegram
+
+# --- TYPE: PORT ---
 port,443
-process,Telegram
+
+# --- TYPE: SUFFIX ---
+suffix,google.com
+
+# --- TYPE: IP ---
+ip,1.1.1.1/32
+ip,192.168.1.1/32
+
+# --- TYPE: IP6 ---
+ip6,2001:db8::1/128
+
+# --- TYPE: WILDCARD ---
+wildcard,*.google.com
+
