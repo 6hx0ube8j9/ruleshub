@@ -1,5 +1,6 @@
 # Shadowrocket Rule-Set: direct
 
+DST-PORT,set()
 DOMAIN-SUFFIX,001wifi.com
 DOMAIN-SUFFIX,00cdn.com
 DOMAIN-SUFFIX,01058511989.com

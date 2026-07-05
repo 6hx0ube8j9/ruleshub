@@ -1,5 +1,6 @@
 # Shadowrocket Rule-Set: pcloud
 
+DST-PORT,set()
 DOMAIN,e.pcloud.link
 DOMAIN-SUFFIX,pcloud.com
 IP-CIDR,185.62.236.0/22,no-resolve

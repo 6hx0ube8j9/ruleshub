@@ -1,5 +1,6 @@
 # Shadowrocket Rule-Set: games
 
+DST-PORT,set()
 DOMAIN,1681.engine.mobileapptracking.com
 DOMAIN,supercell.helpshift.com
 DOMAIN-SUFFIX,brawlstars.com

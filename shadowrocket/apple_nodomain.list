@@ -1,2 +1,3 @@
 # Shadowrocket Rule-Set: apple_nodomain
 
+DST-PORT,set()

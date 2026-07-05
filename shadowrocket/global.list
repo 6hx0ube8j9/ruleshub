@@ -1,5 +1,6 @@
 # Shadowrocket Rule-Set: global
 
+DST-PORT,set()
 DOMAIN,a248.e.akamai.net
 DOMAIN,a771.dscq.akamai.net
 DOMAIN,abcnewsvod-f.akamaihd.net

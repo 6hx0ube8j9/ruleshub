@@ -1,5 +1,6 @@
 # Shadowrocket Rule-Set: microsoft
 
+DST-PORT,set()
 DOMAIN,login.live.com
 DOMAIN,logincdn.msauth.net
 DOMAIN,store-images.s-microsoft.com
