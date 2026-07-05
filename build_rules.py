@@ -6,16 +6,17 @@ import urllib.request
 import urllib.error
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-SOURCE_DIR = 'source'
-SHADOWROCKET_DIR = 'shadowrocket'
-QUANTUMULTX_DIR = 'quantumultx'
-MIHOMO_DIR = 'mihomo'
-PAC_DIR = 'pac'
-SINGBOX_DIR = 'singbox'
+RULES_BASE_DIR = 'rules'
+SOURCE_DIR = os.path.join(RULES_BASE_DIR, 'source')
+SHADOWROCKET_DIR = os.path.join(RULES_BASE_DIR, 'shadowrocket')
+QUANTUMULTX_DIR = os.path.join(RULES_BASE_DIR, 'quantumultx')
+MIHOMO_DIR = os.path.join(RULES_BASE_DIR, 'mihomo')
+PAC_DIR = os.path.join(RULES_BASE_DIR, 'pac')
+SINGBOX_DIR = os.path.join(RULES_BASE_DIR, 'singbox')
 
-for d in [SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SINGBOX_DIR]:
+for d in [RULES_BASE_DIR, SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SINGBOX_DIR]:
     if not os.path.exists(d):
-        os.makedirs(d)
+        os.makedirs(d, exist_ok=True)
 
 FILE_POLICY_ROUTER = [
     {
