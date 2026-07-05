@@ -315,7 +315,7 @@ def fetch_and_merge_rules(base_name, policy):
     source_enable, source_name = parse_target_config(policy, 'source', base_name)
     source_path = os.path.join(SOURCE_DIR, f"{source_name}.txt")
 
-    if os.path.exists(source_path):
+    if source_enable and os.path.exists(source_path):
         with open(source_path, 'r', encoding='utf-8') as f_local:
             for line in f_local:
                 r_type, payload = clean_and_parse_line(line)
