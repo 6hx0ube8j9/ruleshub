@@ -1,10 +1,10 @@
 # === games Combined Base Rules ===
 
 # --- TYPE: PROCESS ---
-process,BloonsTD6-Epic.exe
-process,BloonsTD6.exe
-process,Cleaner-BTD6.exe
-process,UnityCrashHandler64.exe
+process,bloonstd6-epic.exe
+process,bloonstd6.exe
+process,cleaner-btd6.exe
+process,unitycrashhandler64.exe
 
 # --- TYPE: FULL ---
 full,1681.engine.mobileapptracking.com

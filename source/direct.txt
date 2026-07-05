@@ -1,8 +1,8 @@
 # === direct Combined Base Rules ===
 
 # --- TYPE: PROCESS ---
-process,FTBrowserProxy.exe
-process,FTIMShell.exe
+process,ftbrowserproxy.exe
+process,ftimshell.exe
 process,xiadan.exe
 
 # --- TYPE: SUFFIX ---

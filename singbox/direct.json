@@ -3,8 +3,8 @@
   "rules": [
     {
       "process_name": [
-        "FTBrowserProxy.exe",
-        "FTIMShell.exe",
+        "ftbrowserproxy.exe",
+        "ftimshell.exe",
         "xiadan.exe"
       ],
       "domain_suffix": [

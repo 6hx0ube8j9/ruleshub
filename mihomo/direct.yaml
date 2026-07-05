@@ -1,7 +1,7 @@
 # Mihomo Payload Rule-Set: direct
 payload:
-  - PROCESS-NAME,FTBrowserProxy.exe
-  - PROCESS-NAME,FTIMShell.exe
+  - PROCESS-NAME,ftbrowserproxy.exe
+  - PROCESS-NAME,ftimshell.exe
   - PROCESS-NAME,xiadan.exe
   - DOMAIN-SUFFIX,001wifi.com
   - DOMAIN-SUFFIX,00cdn.com

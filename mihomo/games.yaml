@@ -1,9 +1,9 @@
 # Mihomo Payload Rule-Set: games
 payload:
-  - PROCESS-NAME,BloonsTD6-Epic.exe
-  - PROCESS-NAME,BloonsTD6.exe
-  - PROCESS-NAME,Cleaner-BTD6.exe
-  - PROCESS-NAME,UnityCrashHandler64.exe
+  - PROCESS-NAME,bloonstd6-epic.exe
+  - PROCESS-NAME,bloonstd6.exe
+  - PROCESS-NAME,cleaner-btd6.exe
+  - PROCESS-NAME,unitycrashhandler64.exe
   - DOMAIN,1681.engine.mobileapptracking.com
   - DOMAIN,supercell.helpshift.com
   - DOMAIN-SUFFIX,brawlstars.com

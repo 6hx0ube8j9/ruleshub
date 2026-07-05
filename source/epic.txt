@@ -1,8 +1,8 @@
 # === epic Combined Base Rules ===
 
 # --- TYPE: PROCESS ---
-process,EpicGamesLauncher.exe
-process,EpicGamesUpdater.exe
+process,epicgameslauncher.exe
+process,epicgamesupdater.exe
 
 # --- TYPE: SUFFIX ---
 suffix,battlebreakers.com

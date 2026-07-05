@@ -674,7 +674,7 @@ keyword,onedrive
 keyword,skydrive
 
 # --- TYPE: USERAGENT ---
-useragent,Microsoft*
-useragent,OneDrive*
-useragent,OneDriveiOSApp*
+useragent,microsoft*
+useragent,onedrive*
+useragent,onedriveiosapp*
 

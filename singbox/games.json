@@ -3,10 +3,10 @@
   "rules": [
     {
       "process_name": [
-        "BloonsTD6-Epic.exe",
-        "BloonsTD6.exe",
-        "Cleaner-BTD6.exe",
-        "UnityCrashHandler64.exe"
+        "bloonstd6-epic.exe",
+        "bloonstd6.exe",
+        "cleaner-btd6.exe",
+        "unitycrashhandler64.exe"
       ],
       "domain": [
         "1681.engine.mobileapptracking.com",

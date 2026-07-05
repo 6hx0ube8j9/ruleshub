@@ -1,10 +1,10 @@
 # === dropbox Combined Base Rules ===
 
 # --- TYPE: PROCESS ---
-process,DbxSvc.exe
-process,Dropbox.exe
-process,DropboxUninstaller.exe
-process,DropboxUpdate.exe
+process,dbxsvc.exe
+process,dropbox.exe
+process,dropboxuninstaller.exe
+process,dropboxupdate.exe
 
 # --- TYPE: FULL ---
 full,dropbox-api.arkoselabs.com

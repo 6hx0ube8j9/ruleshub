@@ -667,6 +667,6 @@ host-keyword, 1drv, Microsoft
 host-keyword, microsoft, Microsoft
 host-keyword, onedrive, Microsoft
 host-keyword, skydrive, Microsoft
-user-agent, Microsoft*, Microsoft
-user-agent, OneDrive*, Microsoft
-user-agent, OneDriveiOSApp*, Microsoft
+user-agent, microsoft*, Microsoft
+user-agent, onedrive*, Microsoft
+user-agent, onedriveiosapp*, Microsoft
