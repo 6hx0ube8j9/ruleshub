@@ -542,7 +542,7 @@ def main():
         with open(sr_path, 'w', encoding='utf-8') as f:
             f.write(f"# Shadowrocket Rule-Set: {g_name}\n\n")
 
-            for val in sorted(g_rules['port']):
+            for val in sorted([{str(p) for p in g_rules['port']}]):
                 if '-' in val or ':' in val:
                     continue
                 f.write(f"DST-PORT,{val}\n")
@@ -586,7 +586,8 @@ def main():
             single_rule["process_name"] = sorted(list(g_rules['process']))
             
         if g_rules['port']: 
-            p_list, p_range = parse_ports_for_singbox(g_rules['port'])
+            str_port_set = {str(p) for p in g_rules['port']}
+            p_list, p_range = parse_ports_for_singbox(str_port_set)
             if p_list: single_rule["port"] = p_list
             if p_range: single_rule["port_range"] = p_range
             
