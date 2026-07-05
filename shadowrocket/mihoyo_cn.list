@@ -1,6 +1,5 @@
 # Shadowrocket Rule-Set: mihoyo_cn
 
-DST-PORT,set()
 DOMAIN,api-beta-sdk-static.mihoyo.com
 DOMAIN,api-beta-sdk.mihoyo.com
 DOMAIN,api-beta-static.mihoyo.com

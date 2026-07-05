@@ -1,6 +1,5 @@
 # Shadowrocket Rule-Set: gemini
 
-DST-PORT,set()
 DOMAIN,ai.google.dev
 DOMAIN,alkalimakersuite-pa.clients6.google.com
 DOMAIN,alkalimessages-pa.googleapis.com

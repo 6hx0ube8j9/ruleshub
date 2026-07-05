@@ -1,6 +1,5 @@
 # Shadowrocket Rule-Set: block
 
-DST-PORT,set()
 DOMAIN,ad.10010.com
 DOMAIN,app-measurement.com
 DOMAIN,clients3.google.com

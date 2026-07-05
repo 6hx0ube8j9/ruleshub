@@ -1,6 +1,5 @@
 # Shadowrocket Rule-Set: dropbox
 
-DST-PORT,set()
 DOMAIN,dropbox-api.arkoselabs.com
 DOMAIN-SUFFIX,db.tt
 DOMAIN-SUFFIX,dropbox-dns.com

@@ -1,6 +1,5 @@
 # Shadowrocket Rule-Set: blizzard
 
-DST-PORT,set()
 DOMAIN,blz-contentstack-assets.akamaized.net
 DOMAIN,blz-contentstack-images.akamaized.net
 DOMAIN,bnetaccount.akamaized.net

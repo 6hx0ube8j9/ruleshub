@@ -1,6 +1,5 @@
 # Shadowrocket Rule-Set: x
 
-DST-PORT,set()
 DOMAIN-SUFFIX,ads-twitter.com
 DOMAIN-SUFFIX,cms-twdigitalassets.com
 DOMAIN-SUFFIX,grok.com

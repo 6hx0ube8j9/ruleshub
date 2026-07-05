@@ -1,6 +1,5 @@
 # Shadowrocket Rule-Set: apple
 
-DST-PORT,set()
 DOMAIN,appldnld.apple.com.edgesuite.net
 DOMAIN,apple-events.akamaized.net
 DOMAIN,appleworldwidedeveloper.hb-api.omtrdc.net

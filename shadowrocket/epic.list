@@ -1,6 +1,5 @@
 # Shadowrocket Rule-Set: epic
 
-DST-PORT,set()
 DOMAIN-SUFFIX,battlebreakers.com
 DOMAIN-SUFFIX,eac-cdn.com
 DOMAIN-SUFFIX,easy.ac
