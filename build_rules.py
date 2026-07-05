@@ -342,7 +342,7 @@ def fetch_and_merge_rules(base_name, policy):
             if r_type != 'remove':
                 rules[r_type] -= remove_set
 				
-	optimize_domains(rules)			
+    optimize_domains(rules)	
 
     if source_enable:
         has_any_rule = any(len(rules[k]) > 0 for k in rules)
