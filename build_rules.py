@@ -482,20 +482,9 @@ def main():
     if os.path.exists(SOURCE_DIR):
         for f in os.listdir(SOURCE_DIR):
             if f.endswith('.txt'):
-                original_path = os.path.join(SOURCE_DIR, f)
-                lower_f = f.lower()
-            
-                if f != lower_f:
-                    lower_path = os.path.join(SOURCE_DIR, lower_f)
-                    if os.path.exists(lower_path) and original_path != lower_path:
-                        pass
-                    else:
-                        os.rename(original_path, lower_path)
-                    f = lower_f
-
-                local_base_name = os.path.splitext(f)[0]
-                if local_base_name not in FILE_POLICY_ROUTER_CLEANED:
-                    FILE_POLICY_ROUTER_CLEANED[local_base_name] = {
+                local_base_name = os.path.splitext(f)[0].lower()
+                if local_base_name not in router_cleaned:
+                    router_cleaned[local_base_name] = {
                         'name': local_base_name,
                         'url': []
                     }
