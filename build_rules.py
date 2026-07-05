@@ -354,7 +354,7 @@ def sync_remote_to_local_source(base_name, policy):
 
 def process_file_to_targets(file_name, global_matrix, router_cleaned):
     source_path = os.path.join(SOURCE_DIR, file_name)
-    base_name = os.path.splitext(file_name)[0]
+    base_name = os.path.splitext(file_name)[0].lower()
     policy = router_cleaned.get(base_name, {})
     standard_name = policy.get('name', base_name)
     
