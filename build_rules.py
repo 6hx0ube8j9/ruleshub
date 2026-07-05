@@ -18,24 +18,17 @@ for d in [RULESET_BASE_DIR, SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOM
     if not os.path.exists(d):
         os.makedirs(d, exist_ok=True)
 
-FILE_POLICY_ROUTER = [
-    {
-        'name': 'block',
-        'url': [
-            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AdvertisingLite/AdvertisingLite.list',
-            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Privacy/Privacy.list',
-            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Hijacking/Hijacking.list'
-        ]
-    },
-    {
-        'name': 'microsoft',
-        'url': [
-            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list',
-            'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Xbox/Xbox.list'
-        ]
-    },
-    { 'name': 'direct', 'qx_policy': 'direct' }
-]
+RULESET_JSON_PATH = os.path.join(RULESET_BASE_DIR, 'ruleset.json')
+if not os.path.exists(RULESET_JSON_PATH):
+    with open(RULESET_JSON_PATH, 'w', encoding='utf-8') as f:
+        json.dump([], f, indent=2, ensure_ascii=False)
+
+try:
+    with open(RULESET_JSON_PATH, 'r', encoding='utf-8') as f:
+        FILE_POLICY_ROUTER = json.load(f)
+except Exception as e:
+    print(f"Error loading ruleset.json: {e}")
+    FILE_POLICY_ROUTER = []
 
 IPV4_REGEX = re.compile(
     r'^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)(\/([0-9]|[1-2][0-9]|3[0-2]))?$'
