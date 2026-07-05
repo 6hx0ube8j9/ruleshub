@@ -313,6 +313,7 @@ def fetch_and_merge_rules(base_name, policy):
     rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
     
     source_enable, source_name = parse_target_config(policy, 'source', base_name)
+	source_name = source_name.lower()
     source_path = os.path.join(SOURCE_DIR, f"{source_name}.txt")
 
     if source_enable and os.path.exists(source_path):
