@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'rules/source/**'
+      - 'ruleset/source/**'
+      - 'ruleset/ruleset.json'
       - 'build_rules.py'
       - '.github/workflows/build.yml'
   schedule:
@@ -68,7 +69,7 @@ jobs:
 
       - name: Build MRS
         run: |
-          cd rules/mihomo
+          cd ruleset/mihomo
           shopt -s nullglob
           
           echo "IP MRS"
@@ -90,7 +91,7 @@ jobs:
 
       - name: Build SRS
         run: |
-          cd rules/singbox
+          cd ruleset/singbox
           shopt -s nullglob
           
           echo "IP SRS"
@@ -113,7 +114,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          git add rules/
+          git add ruleset/
           
           if git diff --staged --quiet; then
             echo "No changes"
