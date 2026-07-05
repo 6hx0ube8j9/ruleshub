@@ -450,7 +450,6 @@ def process_file_to_targets(file_name, global_matrix, router_cleaned):
             if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})      
             if rules['keyword']: sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
             
-            # 安全修复：防范单对象 AND 嵌套阻断，平铺端口
             if rules['port']: 
                 p_list, p_range = parse_ports_for_singbox(rules['port'])
                 if p_list: sb_tmp_domain["rules"].append({"port": p_list})
