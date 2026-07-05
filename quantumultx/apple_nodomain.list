@@ -1,2 +1,8 @@
 # Quantumult X Aggregated Rule-Set: apple_nodomain
 
+host, google.com, Apple_nodomain
+host, twitter.com, Apple_nodomain
+host-suffix, amazon.com, Apple_nodomain
+host-suffix, apple.com, Apple_nodomain
+host-keyword, netflix, Apple_nodomain
+host-keyword, youtube, Apple_nodomain
