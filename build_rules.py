@@ -340,6 +340,8 @@ def fetch_and_merge_rules(base_name, policy):
         for r_type in rules:
             if r_type != 'remove':
                 rules[r_type] -= remove_set
+				
+	optimize_domains(rules)			
 
     if source_enable:
         has_any_rule = any(len(rules[k]) > 0 for k in rules)
@@ -358,8 +360,6 @@ def fetch_and_merge_rules(base_name, policy):
     return rules
 
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
-
-    optimize_domains(rules)
     
     qx_en, qx_name = parse_target_config(policy, 'qx', base_name)
     sr_en, sr_name = parse_target_config(policy, 'sr', base_name)
