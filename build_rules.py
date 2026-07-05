@@ -61,6 +61,17 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za'
 }
 
+def parse_target_config(policy, field_name, default_base_name):
+    val = policy.get(field_name)
+    
+    if val is False or str(val).lower() == 'false':
+        return False, None
+        
+    if val is None or val == '' or val is True or str(val).lower() == 'true':
+        return True, default_base_name
+        
+    return True, str(val).strip()
+	
 def get_smart_base_name(key_name, policy, existing_names):
     if key_name.strip():
         base = key_name.strip().lower() 
@@ -298,22 +309,8 @@ def fetch_single_url(remote_url):
         print(f"Warning: Failed to fetch {remote_url} - {e}")
         return remote_url, []
 
-def sync_remote_to_local_source(base_name, policy):
-    source_path = os.path.join(SOURCE_DIR, f"{base_name}.txt")    
+def fetch_and_merge_rules(base_name, policy):
     rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
-    
-    if not os.path.exists(source_path):
-        with open(source_path, 'w', encoding='utf-8') as f:
-            f.write(f"# === {base_name.upper()} Local Base Rules ===\n\n")
-            
-    with open(source_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            rule_type, value = clean_and_parse_line(line)
-            if rule_type in rules:
-                rules[rule_type].add(value)
-
-    remove_set = rules['remove']
-    auth_set = set().union(*[rules[k] for k in rules.keys() if k != 'remove'])
     
     remote_url_cfg = policy.get('url', [])
     url_list = remote_url_cfg if isinstance(remote_url_cfg, list) else ([remote_url_cfg] if remote_url_cfg else [])
@@ -325,103 +322,98 @@ def sync_remote_to_local_source(base_name, policy):
                 url, lines = future.result()
                 for line in lines:
                     r_type, payload = clean_and_parse_line(line)
-                    if not payload or r_type not in rules or r_type == 'remove':
-                        continue
-                    if payload in remove_set or payload in auth_set:
-                        continue
-                    rules[r_type].add(payload)
+                    if payload and r_type in rules:
+                        rules[r_type].add(payload)
 
     if rules['remove']:
+        remove_set = rules['remove']
         for r_type in rules:
             if r_type != 'remove':
-                rules[r_type] -= rules['remove']
+                rules[r_type] -= remove_set
 
-    with open(source_path, 'w', encoding='utf-8') as f_source:
-        f_source.write(f"# === {base_name} Combined Base Rules ===\n\n")
-        for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
-            if rules[r_type]:
-                f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
-                for val in sorted(rules[r_type]):
-                    if r_type == 'ip': f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
-                    elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
-                    else: f_source.write(f"{r_type},{val}\n")
-                f_source.write("\n")
+    source_enable, source_name = parse_target_config(policy, 'source', base_name)
+    if source_enable:
+        source_path = os.path.join(SOURCE_DIR, f"{source_name}.txt")
+        with open(source_path, 'w', encoding='utf-8') as f_source:
+            f_source.write(f"# === {source_name} Combined Base Rules ===\n\n")
+            for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
+                if rules[r_type]:
+                    f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
+                    for val in sorted(rules[r_type]):
+                        if r_type == 'ip': f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
+                        elif r_type == 'ip6': f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
+                        else: f_source.write(f"{r_type},{val}\n")
+                    f_source.write("\n")
 
-def process_file_to_targets(file_name, global_matrix, router_cleaned):
-    source_path = os.path.join(SOURCE_DIR, file_name)
-    base_name = os.path.splitext(file_name)[0].lower()
-    policy = router_cleaned.get(base_name, {})
-    
-    qx_target = policy.get('qx', base_name)
-    sr_target = policy.get('sr', base_name)
-    singbox_target = policy.get('singbox', base_name)
-    pac_target = policy.get('pac', None)
-    mihomo_target = policy.get('mihomo', base_name)
-    mrs_enable = policy.get('mrs', True)
-    srs_enable = policy.get('srs', True)
-    
-    if 'qx_policy' in policy:
-        qx_policy_label = policy['qx_policy']
-    else:
-        if base_name == 'direct': qx_policy_label = 'direct'
-        elif base_name == 'reject': qx_policy_label = 'reject'
-        else: qx_policy_label = base_name.capitalize()
-        
-    rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
-    
-    with open(source_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            rule_type, value = clean_and_parse_line(line)
-            if rule_type in rules:
-                rules[rule_type].add(value)
+    return rules
 
-    if rules['remove']:
-        for r_type in rules:
-            if r_type != 'remove':
-                rules[r_type] -= rules['remove']
+def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
 
     optimize_domains(rules)
+    
+    qx_en, qx_name = parse_target_config(policy, 'qx', base_name)
+    sr_en, sr_name = parse_target_config(policy, 'sr', base_name)
+    mi_en, mi_name = parse_target_config(policy, 'mihomo', base_name)
+    sb_en, sb_name = parse_target_config(policy, 'singbox', base_name)
+    mrs_en, mrs_name = parse_target_config(policy, 'mrs', base_name)
+    srs_en, srs_name = parse_target_config(policy, 'srs', base_name)
+    
+    qx_policy_label = policy.get('qx_policy', base_name.capitalize() if base_name.lower() not in ['direct', 'reject'] else base_name.lower())
 
-    if qx_target not in global_matrix['qx']:
-        global_matrix['qx'][qx_target] = {
-            'policy_label': qx_policy_label,
-            'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()
-        }
-    for k in global_matrix['qx'][qx_target].keys():
-        if k != 'policy_label': global_matrix['qx'][qx_target][k].update(rules[k])
+    if qx_en:
+        if qx_name not in global_matrix['qx']:
+            global_matrix['qx'][qx_name] = {'policy_label': qx_policy_label, 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
+        for k in global_matrix['qx'][qx_name].keys():
+            if k != 'policy_label': global_matrix['qx'][qx_name][k].update(rules[k])
 
-    if sr_target not in global_matrix['sr']:
-        global_matrix['sr'][sr_target] = {k: set() for k in rules.keys()}
-    for k in rules.keys(): global_matrix['sr'][sr_target][k].update(rules[k])
+    if sr_en:
+        if sr_name not in global_matrix['sr']: global_matrix['sr'][sr_name] = {k: set() for k in rules.keys()}
+        for k in rules.keys(): global_matrix['sr'][sr_name][k].update(rules[k])
 
-    if mihomo_target not in global_matrix['mihomo']:
-        global_matrix['mihomo'][mihomo_target] = {k: set() for k in rules.keys()}
-    for k in rules.keys(): global_matrix['mihomo'][mihomo_target][k].update(rules[k])
+    if mi_en:
+        if mi_name not in global_matrix['mihomo']: global_matrix['mihomo'][mi_name] = {k: set() for k in rules.keys()}
+        for k in rules.keys(): global_matrix['mihomo'][mi_name][k].update(rules[k])
 
-    if singbox_target not in global_matrix['singbox']:
-        global_matrix['singbox'][singbox_target] = {k: set() for k in rules.keys()}
-    for k in rules.keys(): global_matrix['singbox'][singbox_target][k].update(rules[k])
+    if sb_en:
+        if sb_name not in global_matrix['singbox']: global_matrix['singbox'][sb_name] = {k: set() for k in rules.keys()}
+        for k in rules.keys(): global_matrix['singbox'][sb_name][k].update(rules[k])
 
-    if base_name.lower() in ['direct', 'china'] or pac_target:
-        p_target = pac_target if pac_target else 'direct'
-        if p_target not in global_matrix['pac']:
-            global_matrix['pac'][p_target] = set()
-        global_matrix['pac'][p_target].update(rules['suffix'])
-        global_matrix['pac'][p_target].update(rules['full'])
+    pac_val = policy.get('pac')
+    if pac_val is not False and str(pac_val).lower() != 'false': 
+        pac_en = False
+        pac_name = base_name
+        if pac_val and pac_val is not True and str(pac_val).lower() != 'true':
+            pac_en, pac_name = True, str(pac_val).strip()
+        elif pac_val is True or str(pac_val).lower() == 'true' or base_name.lower() in ['direct', 'china']:
+            pac_en = True
+            
+        if pac_en:
+            if pac_name not in global_matrix['pac']: global_matrix['pac'][pac_name] = set()
+            global_matrix['pac'][pac_name].update(rules['suffix'])
+            global_matrix['pac'][pac_name].update(rules['full'])
 
     if 'classic' in base_name.lower() or 'nodomain' in base_name.lower():
         return
 
-    if mrs_enable:
-        if 'ip' in base_name.lower():
-            combined_ips_mrs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
+    if not mrs_en and not srs_en:
+        return
+
+    is_ip_rule = 'ipcidr' in policy or 'ip' in base_name.lower()
+    is_domain_rule = 'domain' in policy or (not is_ip_rule)
+    
+    if mrs_en:
+        if is_ip_rule:
+            final_mrs_name = f"{mrs_name}_ip"
+            combined_ips_mrs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])))
             if combined_ips_mrs:
-                with open(os.path.join(MIHOMO_DIR, f"tmp_ip_{base_name}.yaml"), 'w', encoding='utf-8') as f:
+                with open(os.path.join(MIHOMO_DIR, f"tmp_ip_{final_mrs_name}.yaml"), 'w', encoding='utf-8') as f:
                     f.write("payload:\n")
                     for item in combined_ips_mrs: f.write(f"  - '{item}'\n")
-        else:
+        
+        if is_domain_rule:
+            final_mrs_name = f"{mrs_name}_domain"
             if rules['suffix'] or rules['full'] or rules['keyword'] or rules['wildcard'] or rules['regex']:
-                with open(os.path.join(MIHOMO_DIR, f"tmp_domain_{base_name}.yaml"), 'w', encoding='utf-8') as f:
+                with open(os.path.join(MIHOMO_DIR, f"tmp_domain_{final_mrs_name}.yaml"), 'w', encoding='utf-8') as f:
                     f.write("payload:\n")
                     for item in sorted(rules['full']): f.write(f"  - DOMAIN,{item}\n")
                     for item in sorted(rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
@@ -429,32 +421,32 @@ def process_file_to_targets(file_name, global_matrix, router_cleaned):
                     for val in sorted(rules['wildcard']): f.write(f"  - DOMAIN-WILDCARD,{val}\n")
                     for item in sorted(rules['regex']): f.write(f"  - DOMAIN-REGEX,{item}\n")
 
-    if srs_enable:
-        if 'ip' in base_name.lower():
-            combined_ips_srs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6'] ])))
+    if srs_en:
+        if is_ip_rule:
+            final_srs_name = f"{srs_name}_ip"
+            combined_ips_srs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])))
             if combined_ips_srs:
                 sb_tmp_ip = {"version": 2, "rules": [{"ip_cidr": combined_ips_srs}]}
-                with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{base_name}.json"), 'w', encoding='utf-8') as f:
+                with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{final_srs_name}.json"), 'w', encoding='utf-8') as f:
                     json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
-        else:
+                    
+        if is_domain_rule:
+            final_srs_name = f"{srs_name}_domain"
             sb_tmp_domain = {"version": 2, "rules": []}
             if rules['full']: sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})      
             if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})      
             if rules['keyword']: sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
-            
             if rules['port']: 
                 p_list, p_range = parse_ports_for_singbox(rules['port'])
                 if p_list: sb_tmp_domain["rules"].append({"port": p_list})
                 if p_range: sb_tmp_domain["rules"].append({"port_range": p_range})
-                
             if rules['wildcard'] or rules['regex']:
                 regex_list = [convert_wildcard_to_regex(w) for w in rules['wildcard']]
-                for regex_val in rules['regex']:
-                    regex_list.append(regex_val)
+                for regex_val in rules['regex']: regex_list.append(regex_val)
                 sb_tmp_domain["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
                 
             if sb_tmp_domain["rules"]:
-                with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{base_name}.json"), 'w', encoding='utf-8') as f:
+                with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{final_srs_name}.json"), 'w', encoding='utf-8') as f:
                     json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
 
 def convert_wildcard_to_regex(wildcard_str):
@@ -496,12 +488,10 @@ def main():
         'qx': {}, 'sr': {}, 'mihomo': {}, 'singbox': {}, 'pac': {}
     }
 
-    if not os.path.exists(SOURCE_DIR):
-        return
-        
-    files = [f for f in os.listdir(SOURCE_DIR) if f.endswith('.txt')]
-    for file_name in files:
-        process_file_to_targets(file_name, global_matrix, router_cleaned)
+    for target_base_name, policy_card in router_cleaned.items():
+        rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
+        dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
+
     
     # QuantumultX
     for g_name, g_rules in global_matrix['qx'].items():
