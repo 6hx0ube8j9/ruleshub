@@ -356,22 +356,21 @@ def process_file_to_targets(file_name, global_matrix, router_cleaned):
     source_path = os.path.join(SOURCE_DIR, file_name)
     base_name = os.path.splitext(file_name)[0].lower()
     policy = router_cleaned.get(base_name, {})
-    standard_name = policy.get('name', base_name)
     
-    qx_target = policy.get('qx', standard_name)
-    sr_target = policy.get('sr', standard_name)
-    singbox_target = policy.get('singbox', standard_name)
+    qx_target = policy.get('qx', base_name)
+    sr_target = policy.get('sr', base_name)
+    singbox_target = policy.get('singbox', base_name)
     pac_target = policy.get('pac', None)
-    mihomo_target = policy.get('mihomo', standard_name)
+    mihomo_target = policy.get('mihomo', base_name)
     mrs_enable = policy.get('mrs', True)
     srs_enable = policy.get('srs', True)
     
     if 'qx_policy' in policy:
         qx_policy_label = policy['qx_policy']
     else:
-        if base_name.lower() == 'direct': qx_policy_label = 'direct'
-        elif base_name.lower() == 'reject': qx_policy_label = 'reject'
-        else: qx_policy_label = standard_name.capitalize()
+        if base_name == 'direct': qx_policy_label = 'direct'
+        elif base_name == 'reject': qx_policy_label = 'reject'
+        else: qx_policy_label = base_name.capitalize()
         
     rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
     
