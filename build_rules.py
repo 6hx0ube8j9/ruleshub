@@ -571,43 +571,44 @@ def main():
             for val in sorted(g_rules['ip6']): f.write(f"  - IP-CIDR6,{ensure_ip_mask(val, True)},no-resolve\n")
             for val in sorted(g_rules['wildcard']): f.write(f"  - DOMAIN-WILDCARD,{val}\n")            
             for val in sorted(g_rules['regex']): f.write(f"  - DOMAIN-REGEX,{val}\n")
-
-    # Singbox 
+    
+    # Singbox
     for g_name, g_rules in global_matrix['singbox'].items():
         sb_path = os.path.join(SINGBOX_DIR, f"{g_name}.json")
         optimize_domains(g_rules)
 
         sb_data = {"version": 2, "rules": []}
-        single_rule = {}
         
         if g_rules['process']: 
-            single_rule["process_name"] = sorted(list(g_rules['process']))
+            sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
             
+        network_block = {}
+        
         if g_rules['port']: 
             str_port_set = {str(p) for p in g_rules['port']}
             p_list, p_range = parse_ports_for_singbox(str_port_set)
-            if p_list: single_rule["port"] = p_list
-            if p_range: single_rule["port_range"] = p_range
+            if p_list: network_block["port"] = p_list
+            if p_range: network_block["port_range"] = p_range
             
         if g_rules['full']: 
-            single_rule["domain"] = sorted(list(g_rules['full']))
+            network_block["domain"] = sorted(list(g_rules['full']))
         if g_rules['suffix']: 
-            single_rule["domain_suffix"] = sorted(list(g_rules['suffix']))
+            network_block["domain_suffix"] = sorted(list(g_rules['suffix']))
         if g_rules['keyword']: 
-            single_rule["domain_keyword"] = sorted(list(g_rules['keyword']))
+            network_block["domain_keyword"] = sorted(list(g_rules['keyword']))
             
         combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
         if combined_ips: 
-            single_rule["ip_cidr"] = combined_ips
+            network_block["ip_cidr"] = combined_ips
         
         if g_rules['wildcard'] or g_rules['regex']:
             regex_list = [convert_wildcard_to_regex(w) for w in g_rules['wildcard']]
             for r in g_rules['regex']:
                 regex_list.append(r)
-            single_rule["domain_regex"] = sorted(list(set(regex_list)))
+            network_block["domain_regex"] = sorted(list(set(regex_list)))
             
-        if single_rule:
-            sb_data["rules"].append(single_rule)
+        if network_block:
+            sb_data["rules"].append(network_block)
             
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
