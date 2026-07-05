@@ -68,51 +68,45 @@ jobs:
 
       - name: Build MRS
         run: |
-          # 1. 切换到包含所有临时文件的 rules 目录
-          cd rules
+          cd rules/mihomo
           shopt -s nullglob
           
           echo "IP MRS"
           for ip_yaml in tmp_ip_*.yaml; do
             base_name=$(echo "$ip_yaml" | sed 's/tmp_ip_//' | sed 's/.yaml//')
-            # 2. 调用上一级目录的二进制文件 (../mihomo-bin)，输出到当前目录下的 mihomo/ 文件夹里
-            ../mihomo-bin convert-ruleset ipcidr yaml "$ip_yaml" "mihomo/${base_name}.mrs"
+            ../../mihomo-bin convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}.mrs"
             rm -f "$ip_yaml"
           done
           
           echo "Domain MRS"
           for dm_yaml in tmp_domain_*.yaml; do
             base_name=$(echo "$dm_yaml" | sed 's/tmp_domain_//' | sed 's/.yaml//')
-            # 3. 修复原配置中的变量错误，这里应该读取的是 "$dm_yaml"，类型为 domain
-            ../mihomo-bin convert-ruleset domain yaml "$dm_yaml" "mihomo/${base_name}.mrs"
+            ../../mihomo-bin convert-ruleset domain yaml "$dm_yaml" "${base_name}.mrs"
             rm -f "$dm_yaml"
           done
           
           rm -f tmp_ip_*.yaml tmp_domain_*.yaml
-          cd ..
+          cd ../..
 
       - name: Build SRS
         run: |
-          cd rules
+          cd rules/singbox
           shopt -s nullglob
           
           echo "IP SRS"
           for ip_json in tmp_ip_*.json; do
             base_name=$(echo "$ip_json" | sed 's/tmp_ip_//' | sed 's/.json//')
-            # 2. 调用上一级目录的 sing-box，输出到当前目录下的 singbox/ 文件夹里
-            ../sing-box rule-set compile "$ip_json" -o "singbox/${base_name}.srs"
-            rm -f "$ip_json"
+            ../../sing-box rule-set compile "$ip_json" -o "${base_name}.srs"
           done
           
           echo "Domain SRS"
           for dm_json in tmp_domain_*.json; do
             base_name=$(echo "$dm_json" | sed 's/tmp_domain_//' | sed 's/.json//')
-            ../sing-box rule-set compile "$dm_json" -o "singbox/${base_name}.srs"
-            rm -f "$dm_json"
+            ../../sing-box rule-set compile "$dm_json" -o "${base_name}.srs"
           done
           
           rm -f tmp_ip_*.json tmp_domain_*.json
-          cd ..
+          cd ../..
 
       - name: Commit
         run: |
