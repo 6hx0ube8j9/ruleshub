@@ -490,7 +490,7 @@ def main():
     if os.path.exists(SOURCE_DIR):
         for f in os.listdir(SOURCE_DIR):
             if f.endswith('.txt'):
-                local_base_name = os.path.splitext(f)[0]
+                local_base_name = os.path.splitext(f)[0].lower()
                 if local_base_name not in router_cleaned:
                     router_cleaned[local_base_name] = {
                         'name': local_base_name,
