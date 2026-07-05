@@ -1,9 +1,0 @@
-# Shadowrocket Rule-Set: Apple_NoDomain
-
-DST-PORT,{'8080', '3000-4000', '22', '443', '5000-6000', '80'}
-DOMAIN,google.com
-DOMAIN,twitter.com
-DOMAIN-SUFFIX,amazon.com
-DOMAIN-SUFFIX,apple.com
-DOMAIN-KEYWORD,netflix
-DOMAIN-KEYWORD,youtube
