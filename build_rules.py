@@ -540,7 +540,7 @@ def main():
         with open(sr_path, 'w', encoding='utf-8') as f:
             f.write(f"# Shadowrocket Rule-Set: {g_name}\n\n")
 
-            for val in sorted([{str(p) for p in g_rules['port']}]):
+            for val in sorted(list({str(p) for p in g_rules['port']})):
                 if '-' in val or ':' in val:
                     continue
                 f.write(f"DST-PORT,{val}\n")
