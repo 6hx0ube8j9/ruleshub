@@ -1,7 +1,0 @@
-# Quantumult X Aggregated Rule-Set: pcloud
-
-host, e.pcloud.link, Pcloud
-host-suffix, pcloud.com, Pcloud
-ip-cidr, 185.62.236.0/22, Pcloud, no-resolve
-ip-cidr, 45.131.244.0/22, Pcloud, no-resolve
-ip-cidr, 74.120.8.0/22, Pcloud, no-resolve
