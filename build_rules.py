@@ -69,17 +69,17 @@ PUBLIC_SUFFIX_BLACKLIST = {
 
 def get_smart_base_name(key_name, policy, existing_names):
     if key_name.strip():
-        base = key_name.strip()
+        base = key_name.strip().lower() 
     else:
         url = policy.get('url', '')
         first_url = url[0] if isinstance(url, list) and url else url
-        base = 'apple'
+        base = 'untitled_unknown'
         if first_url:
             try:
                 last_part = first_url.split('/')[-1]
                 extracted = os.path.splitext(last_part)[0]
                 if extracted.strip():
-                    base = extracted.strip()
+                    base = extracted.strip().lower() 
             except Exception:
                 pass
                 
