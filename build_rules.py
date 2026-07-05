@@ -481,9 +481,6 @@ def main():
                         'url': []
                     }
 
-    for target_base_name, policy_card in router_cleaned.items():
-        sync_remote_to_local_source(target_base_name, policy_card)
-
     global_matrix = {
         'qx': {}, 'sr': {}, 'mihomo': {}, 'singbox': {}, 'pac': {}
     }
@@ -491,8 +488,7 @@ def main():
     for target_base_name, policy_card in router_cleaned.items():
         rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
         dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
-
-    
+  
     # QuantumultX
     for g_name, g_rules in global_matrix['qx'].items():
         qx_path = os.path.join(QUANTUMULTX_DIR, f"{g_name}.list")
