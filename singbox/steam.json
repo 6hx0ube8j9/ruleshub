@@ -6,7 +6,9 @@
         "steam.exe",
         "steamservice.exe",
         "steamwebhelper.exe"
-      ],
+      ]
+    },
+    {
       "domain_suffix": [
         "cdn-ali.content.steamchina.com",
         "cdn-qc.content.steamchina.com",

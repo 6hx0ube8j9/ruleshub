@@ -6,7 +6,9 @@
         "ftbrowserproxy.exe",
         "ftimshell.exe",
         "xiadan.exe"
-      ],
+      ]
+    },
+    {
       "domain_suffix": [
         "001wifi.com",
         "00cdn.com",

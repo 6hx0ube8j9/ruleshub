@@ -7,7 +7,9 @@
         "dropbox.exe",
         "dropboxuninstaller.exe",
         "dropboxupdate.exe"
-      ],
+      ]
+    },
+    {
       "domain": [
         "dropbox-api.arkoselabs.com"
       ],

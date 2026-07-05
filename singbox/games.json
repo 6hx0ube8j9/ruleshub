@@ -7,7 +7,9 @@
         "bloonstd6.exe",
         "cleaner-btd6.exe",
         "unitycrashhandler64.exe"
-      ],
+      ]
+    },
+    {
       "domain": [
         "1681.engine.mobileapptracking.com",
         "supercell.helpshift.com"
