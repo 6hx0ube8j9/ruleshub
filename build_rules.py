@@ -147,8 +147,9 @@ def clean_and_parse_line(line):
             if any(lookaround in p2 for lookaround in prophecies) or '/' in p2 or '?' in p2:
                 return None, None
             try:
-                re.compile(p2)
-                return 'regex', p2
+                p2_low = p2.lower()
+                re.compile(p2_low)
+                return 'regex', p2_low
             except re.error:
                 return None, None
 
@@ -195,9 +196,9 @@ def clean_and_parse_line(line):
                 return ('ip', raw_ip) if validate_ip_mask(raw_ip, False) else (None, None)
             return None, None
             
-        if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', parts[1]
-        if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', parts[1]
-        if p1 in ['DST-PORT', 'DEST-PORT', 'PORT']: return 'port', parts[1]      
+        if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', parts[1].strip().lower()
+        if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', parts[1].strip().lower()
+        if p1 in ['DST-PORT', 'DEST-PORT', 'PORT']: return 'port', parts[1].strip().lower()      
         
         return None, None
 
