@@ -304,9 +304,7 @@ def fetch_single_url(remote_url):
         return remote_url, []
 
 def sync_remote_to_local_source(base_name, policy):
-    file_name = f"{base_name}.txt"
-    source_path = os.path.join(SOURCE_DIR, file_name)
-    
+    source_path = os.path.join(SOURCE_DIR, f"{base_name}.txt")    
     rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
     
     if not os.path.exists(source_path):
