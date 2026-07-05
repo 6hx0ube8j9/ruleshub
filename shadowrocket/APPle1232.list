@@ -1,6 +1,6 @@
 # Shadowrocket Rule-Set: APPle1232
 
-DST-PORT,{'443', '22', '5000-6000', '80', '3000-4000', '8080'}
+DST-PORT,{'443', '3000-4000', '22', '5000-6000', '8080', '80'}
 DOMAIN,google.com
 DOMAIN,twitter.com
 DOMAIN-SUFFIX,amazon.com
