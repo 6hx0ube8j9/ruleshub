@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'source/**'
+      - 'rules/source/**'
       - 'build_rules.py'
       - '.github/workflows/build.yml'
   schedule:
@@ -68,20 +68,23 @@ jobs:
 
       - name: Build MRS
         run: |
-          cd mihomo
+          # 1. 切换到包含所有临时文件的 rules 目录
+          cd rules
           shopt -s nullglob
           
           echo "IP MRS"
           for ip_yaml in tmp_ip_*.yaml; do
             base_name=$(echo "$ip_yaml" | sed 's/tmp_ip_//' | sed 's/.yaml//')
-            ../mihomo-bin convert-ruleset ipcidr yaml "$ip_yaml" "${base_name}.mrs"
+            # 2. 调用上一级目录的二进制文件 (../mihomo-bin)，输出到当前目录下的 mihomo/ 文件夹里
+            ../mihomo-bin convert-ruleset ipcidr yaml "$ip_yaml" "mihomo/${base_name}.mrs"
             rm -f "$ip_yaml"
           done
           
           echo "Domain MRS"
           for dm_yaml in tmp_domain_*.yaml; do
             base_name=$(echo "$dm_yaml" | sed 's/tmp_domain_//' | sed 's/.yaml//')
-            ../mihomo-bin convert-ruleset domain yaml "$dm_yaml" "${base_name}.mrs"
+            # 3. 修复原配置中的变量错误，这里应该读取的是 "$dm_yaml"，类型为 domain
+            ../mihomo-bin convert-ruleset domain yaml "$dm_yaml" "mihomo/${base_name}.mrs"
             rm -f "$dm_yaml"
           done
           
@@ -90,19 +93,22 @@ jobs:
 
       - name: Build SRS
         run: |
-          cd singbox
+          cd rules
           shopt -s nullglob
           
           echo "IP SRS"
           for ip_json in tmp_ip_*.json; do
             base_name=$(echo "$ip_json" | sed 's/tmp_ip_//' | sed 's/.json//')
-            ../sing-box rule-set compile "$ip_json" -o "${base_name}.srs"
+            # 2. 调用上一级目录的 sing-box，输出到当前目录下的 singbox/ 文件夹里
+            ../sing-box rule-set compile "$ip_json" -o "singbox/${base_name}.srs"
+            rm -f "$ip_json"
           done
           
           echo "Domain SRS"
           for dm_json in tmp_domain_*.json; do
             base_name=$(echo "$dm_json" | sed 's/tmp_domain_//' | sed 's/.json//')
-            ../sing-box rule-set compile "$dm_json" -o "${base_name}.srs"
+            ../sing-box rule-set compile "$dm_json" -o "singbox/${base_name}.srs"
+            rm -f "$dm_json"
           done
           
           rm -f tmp_ip_*.json tmp_domain_*.json
@@ -113,7 +119,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          git add source/ shadowrocket/ quantumultx/ mihomo/ pac/ singbox/
+          git add rules/
           
           if git diff --staged --quiet; then
             echo "No changes"
