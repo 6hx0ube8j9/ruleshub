@@ -333,9 +333,25 @@ def ensure_ip_mask(ip_str, is_ipv6=False):
 def parse_ports_for_singbox(port_set):
     p_list, p_range = [], []
     for p in port_set:
-        if '-' in p: p_range.append(p.replace('-', ':'))
-        elif ':' in p: p_range.append(p)
-        else: p_list.append(int(p))
+        if isinstance(p, tuple):
+            p = str(p[0]) if p else ""
+        else:
+            p = str(p)
+            
+        p = p.strip()
+        if not p:
+            continue
+
+        if '-' in p: 
+            p_range.append(p.replace('-', ':'))
+        elif ':' in p: 
+            p_range.append(p)
+        else: 
+            try:
+                p_list.append(int(p))
+            except ValueError:
+                pass 
+
     return sorted(p_list), sorted(p_range)
 
 def fetch_single_url(remote_url):
