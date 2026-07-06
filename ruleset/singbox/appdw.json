@@ -1,34 +1,4 @@
 {
   "version": 2,
-  "rules": [
-    {
-      "domain": [
-        "example.com",
-        "www.example.com"
-      ],
-      "domain_suffix": [
-        "google.com"
-      ],
-      "domain_keyword": [
-        "netflix",
-        "spotify"
-      ],
-      "ip_cidr": [
-        "192.168.1.1/24",
-        "2001:db8::/32"
-      ]
-    },
-    {
-      "process_name": [
-        "discord",
-        "telegram"
-      ]
-    },
-    {
-      "port": [
-        80,
-        443
-      ]
-    }
-  ]
+  "rules": []
 }

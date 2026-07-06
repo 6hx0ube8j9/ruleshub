@@ -1,5 +1,12 @@
-# 示例规则源数据
-DOMAIN,badguy.com
-IP-CIDR,12.34.56.78/32
-PORT,80
-PORT,443
+# === apple223 Combined Base Rules ===
+
+# --- TYPE: PORT ---
+port,443
+port,80
+
+# --- TYPE: FULL ---
+full,badguy.com
+
+# --- TYPE: IP ---
+ip,12.34.56.78/32
+
