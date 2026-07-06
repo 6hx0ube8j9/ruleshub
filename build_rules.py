@@ -61,6 +61,15 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za'
 }
 
+def is_ip_centric_name(name):
+    name_lower = name.lower()
+    if name_lower in ['ip', 'ipcidr']: return True
+    return bool(re.search(r'(^|[_0-9-])ip([_0-9-]|$)', name_lower))
+
+def is_truthy_cfg(policy, key):
+    val = policy.get(key)
+    return val is True or str(val).lower() == 'true'
+	
 def parse_target_config(policy, field_name, default_base_name):
     val = policy.get(field_name)
     
@@ -361,7 +370,7 @@ def fetch_and_merge_rules(base_name, policy):
     return rules
 
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
-    
+	
     qx_en, qx_name = parse_target_config(policy, 'qx', base_name)
     sr_en, sr_name = parse_target_config(policy, 'sr', base_name)
     mi_en, mi_name = parse_target_config(policy, 'mihomo', base_name)
@@ -409,22 +418,32 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
     if not mrs_en and not srs_en:
         return
 
-    is_ip_rule = 'ipcidr' in policy or 'ip' in base_name.lower()
-    is_domain_rule = 'domain' in policy or (not is_ip_rule)
-    
+    has_ipcidr_cfg = is_truthy_cfg(policy, 'ipcidr')
+    has_domain_cfg = is_truthy_cfg(policy, 'domain')
+
     if mrs_en:
-        if is_ip_rule:
-            final_mrs_name = f"{mrs_name}_ip"
-            combined_ips_mrs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])))
-            if combined_ips_mrs:
-                with open(os.path.join(MIHOMO_DIR, f"tmp_ip_{final_mrs_name}.yaml"), 'w', encoding='utf-8') as f:
-                    f.write("payload:\n")
-                    for item in combined_ips_mrs: f.write(f"  - '{item}'\n")
+        target_ip_name = None
+        target_domain_name = None
         
-        if is_domain_rule:
-            final_mrs_name = f"{mrs_name}_domain"
+        name_has_ip = is_ip_centric_name(mrs_name)
+        
+        if name_has_ip:
+            target_ip_name = mrs_name
+            target_domain_name = f"{mrs_name}_domain" if has_domain_cfg else None
+        else:
+            target_domain_name = mrs_name
+            target_ip_name = f"{mrs_name}_ip" if has_ipcidr_cfg else None
+
+        if target_ip_name:
+            combined_ips = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])))
+            if combined_ips:
+                with open(os.path.join(MIHOMO_DIR, f"tmp_ip_{target_ip_name}.yaml"), 'w', encoding='utf-8') as f:
+                    f.write("payload:\n")
+                    for item in combined_ips: f.write(f"  - '{item}'\n")
+
+        if target_domain_name:
             if rules['suffix'] or rules['full'] or rules['keyword'] or rules['wildcard'] or rules['regex']:
-                with open(os.path.join(MIHOMO_DIR, f"tmp_domain_{final_mrs_name}.yaml"), 'w', encoding='utf-8') as f:
+                with open(os.path.join(MIHOMO_DIR, f"tmp_domain_{target_domain_name}.yaml"), 'w', encoding='utf-8') as f:
                     f.write("payload:\n")
                     for item in sorted(rules['full']): f.write(f"  - DOMAIN,{item}\n")
                     for item in sorted(rules['suffix']): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
@@ -433,16 +452,26 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
                     for item in sorted(rules['regex']): f.write(f"  - DOMAIN-REGEX,{item}\n")
 
     if srs_en:
-        if is_ip_rule:
-            final_srs_name = f"{srs_name}_ip"
-            combined_ips_srs = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])))
-            if combined_ips_srs:
-                sb_tmp_ip = {"version": 2, "rules": [{"ip_cidr": combined_ips_srs}]}
-                with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{final_srs_name}.json"), 'w', encoding='utf-8') as f:
+        target_ip_name = None
+        target_domain_name = None
+
+        name_has_ip = is_ip_centric_name(srs_name)
+        
+        if name_has_ip:
+            target_ip_name = srs_name
+            target_domain_name = f"{srs_name}_domain" if has_domain_cfg else None
+        else:
+            target_domain_name = srs_name
+            target_ip_name = f"{srs_name}_ip" if has_ipcidr_cfg else None
+
+        if target_ip_name:
+            combined_ips = sorted(list(set([ensure_ip_mask(i) for i in rules['ip']] + [ensure_ip_mask(i, True) for i in rules['ip6']])))
+            if combined_ips:
+                sb_tmp_ip = {"version": 2, "rules": [{"ip_cidr": combined_ips}]}
+                with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{target_ip_name}.json"), 'w', encoding='utf-8') as f:
                     json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
                     
-        if is_domain_rule:
-            final_srs_name = f"{srs_name}_domain"
+        if target_domain_name:
             sb_tmp_domain = {"version": 2, "rules": []}
             if rules['full']: sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})      
             if rules['suffix']: sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})      
@@ -457,7 +486,7 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
                 sb_tmp_domain["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
                 
             if sb_tmp_domain["rules"]:
-                with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{final_srs_name}.json"), 'w', encoding='utf-8') as f:
+                with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{target_domain_name}.json"), 'w', encoding='utf-8') as f:
                     json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
 
 def convert_wildcard_to_regex(wildcard_str):
