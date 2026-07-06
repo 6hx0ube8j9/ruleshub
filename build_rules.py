@@ -631,6 +631,7 @@ def main():
 
         sb_data = {"version": 2, "rules": []}
         
+        # 1. 组装独立的网络/域名族大区块 (利用同对象内的官方 OR 优化体积)
         net_block = {}
         
         if g_rules['full']: 
@@ -650,12 +651,15 @@ def main():
                 regex_list.append(r)
             net_block["domain_regex"] = sorted(list(set(regex_list)))
             
+        # 如果有域名或 IP 规则，作为一个独立对象放入数组
         if net_block:
             sb_data["rules"].append(net_block)
 
+        # 2. 独立进程区块 (剥离出来，在外部形成全局 OR)
         if g_rules['process']: 
             sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
             
+        # 3. 独立端口区块 (剥离出来，在外部形成全局 OR)
         if g_rules['port']: 
             str_port_set = {str(p) for p in g_rules['port']}
             p_list, p_range = parse_ports_for_singbox(str_port_set)
@@ -665,10 +669,12 @@ def main():
             if port_block:
                 sb_data["rules"].append(port_block)
 
+        # 4. 复杂逻辑 AND 区块透传
         if g_rules.get('logical_and'):
             for and_rule in g_rules['logical_and']:
                 sb_data["rules"].append(and_rule)
-        print(f"检查 {g_name} 的 rules 数量: {len(sb_data['rules'])}")        
+                
+        # 写入文件
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
 
