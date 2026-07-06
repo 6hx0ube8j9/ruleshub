@@ -30,7 +30,7 @@
     "pac": "google_media",
     "mrs": false,
     "srs": false
-  },  <-- 💥【注意看这里】这里多了一个致命的尾随逗号！JSON 规范绝对不允许数组最后一项后面还有逗号
+  },
   {
     "name": "custom_direct",
     "url": [],
