@@ -1,27 +1,17 @@
-# === appdw Combined Base Rules ===
+# --- 域名类 (对应 net_block) ---
+DOMAIN,test.com
+DOMAIN-SUFFIX,cn
+DOMAIN-KEYWORD,test
 
-# --- TYPE: PROCESS ---
-process,discord
-process,telegram
+# --- IP类 (对应 net_block) ---
+IP-CIDR,10.0.0.0/24
+IP-CIDR,192.168.0.1/32
+IP-CIDR6,2000::/3
 
-# --- TYPE: PORT ---
-port,443
-port,80
+# --- 进程类 (独立 block) ---
+PROCESS-NAME,curl
 
-# --- TYPE: FULL ---
-full,example.com
-full,www.example.com
-
-# --- TYPE: SUFFIX ---
-suffix,google.com
-
-# --- TYPE: KEYWORD ---
-keyword,netflix
-keyword,spotify
-
-# --- TYPE: IP ---
-ip,192.168.1.1/24
-
-# --- TYPE: IP6 ---
-ip6,2001:db8::/32
-
+# --- 端口类 (独立 block) ---
+PORT,80
+PORT,443
+PORT,1000:2000
