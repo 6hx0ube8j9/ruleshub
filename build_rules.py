@@ -130,141 +130,152 @@ def clean_and_parse_line(line):
     line = line.strip()
     if not line or line.startswith(('#', '//', ';')) or line == 'payload:':
         return None, None
-        
-    line = line.split('#')[0].split('//')[0].strip()
-    line = line.strip("'").strip('"').strip()
     if line.startswith('-'):
         line = line.lstrip('-').strip()
     line = line.strip("'").strip('"').strip()
-    if not any(k in line.upper() for k in ['REGEX', 'WILDCARD']):
-        line = line.rstrip('.')
-        
+    
     if not line:
         return None, None
 
     if ',' in line:
-        parts = [p.strip() for p in line.split(',')]
-        if len(parts) < 2:
-            return None, None
-        p1 = parts[0].upper()
-        p2 = parts[1]
+        possible_tag = line.split(',')[0].strip().upper()
+        known_tags = [
+            'DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL',
+            'DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD', 'DOMAIN-REGEX', 'REGEX',
+            'DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD', 'IP-CIDR', 'IP',
+            'IP-CIDR6', 'IP6-CIDR', 'IP6', 'PROCESS-NAME', 'PROCESS', 
+            'USER-AGENT', 'USERAGENT', 'DST-PORT', 'DEST-PORT', 'PORT', 'REMOVE'
+        ]
         
-        if p1 in ['AND', 'OR', 'NOT']:
-            return None, None
+        if possible_tag in known_tags:
+            p1, p2 = [x.strip() for x in line.split(',', 1)]
             
-        if p1 == 'REMOVE':
-            target_val = parts[2].lower() if len(parts) >= 3 else p2.lower()
-            target_val = target_val.lstrip('+.*')
-            return 'remove', target_val
-            
-        if p1 in ['DOMAIN-REGEX', 'REGEX']:
-            prophecies = ['(?=', '(?<=', '(?!', '(?<!']
-            if any(lookaround in p2 for lookaround in prophecies) or '/' in p2 or '?' in p2:
+            if p1 in ['AND', 'OR', 'NOT']:
                 return None, None
-            try:
-                p2_low = p2.lower()
-                re.compile(p2_low)
-                return 'regex', p2_low
-            except re.error:
-                return None, None
+                
+            if p1 == 'REMOVE':
+                rem_parts = [x.strip() for x in p2.split(',')]
+                target_val = rem_parts[1].lower() if len(rem_parts) >= 2 else rem_parts[0].lower()
+                return 'remove', target_val.lstrip('+.*')
 
-        if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
-            return 'wildcard', p2.lower()
+            if p1 not in ['DOMAIN-REGEX', 'REGEX', 'USER-AGENT', 'USERAGENT']:
+                p2 = p2.split('#')[0].split('//')[0].strip()
 
-        if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL']:
-            if '/' in p2 or '?' in p2:
-                return None, None
+            if p1 in ['DOMAIN-REGEX', 'REGEX']:
+                prophecies = ['(?=', '(?<=', '(?!', '(?<!']
+                if any(lookaround in p2 for lookaround in prophecies) or '/' in p2 or '?' in p2:
+                    return None, None
+                try:
+                    p2_low = p2.lower()
+                    re.compile(p2_low)
+                    return 'regex', p2_low
+                except re.error:
+                    return None, None
 
-        p2_clean = p2.lower()
-        if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
-        elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
-        elif p2_clean.startswith('.'): p2_clean = p2_clean[1:]
-        elif p2_clean.startswith('+'): p2_clean = p2_clean[1:]
-        p2_clean = p2_clean.lstrip('.')
-
-        if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
-            if has_invalid_domain_chars(p2_clean): return None, None
-            encoded_d = try_punycode_encode(p2_clean)
-            return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
-            
-        if p1 in ['DOMAIN', 'HOST', 'FULL']: 
-            if '*' in p2_clean or '?' in p2_clean: 
+            if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
                 return 'wildcard', p2.lower()
-            if IPV4_REGEX.match(p2_clean): 
-                return ('ip', p2_clean) if validate_ip_mask(p2_clean, False) else (None, None)
-            if IPV6_REGEX.match(p2_clean) or IPV6_REGEX.match(p2_clean.split('/')[0]): 
-                return ('ip6', p2_clean) if validate_ip_mask(p2_clean, True) else (None, None)
-            if has_invalid_domain_chars(p2_clean): return None, None
-            encoded_d = try_punycode_encode(p2_clean)
-            return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
+
+            if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL']:
+                if '/' in p2 or '?' in p2:
+                    return None, None
+
+            p2_clean = p2.lower()
+            if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
+            elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
+            elif p2_clean.startswith('.'): p2_clean = p2_clean[1:]
+            elif p2_clean.startswith('+'): p2_clean = p2_clean[1:]
+            p2_clean = p2_clean.lstrip('.')
+
+            if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
+                if has_invalid_domain_chars(p2_clean): return None, None
+                encoded_d = try_punycode_encode(p2_clean)
+                return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
+                
+            if p1 in ['DOMAIN', 'HOST', 'FULL']: 
+                if '*' in p2_clean or '?' in p2_clean: 
+                    return 'wildcard', p2.lower()
+                if IPV4_REGEX.match(p2_clean): 
+                    return ('ip', p2_clean) if validate_ip_mask(p2_clean, False) else (None, None)
+                if IPV6_REGEX.match(p2_clean) or IPV6_REGEX.match(p2_clean.split('/')[0]): 
+                    return ('ip6', p2_clean) if validate_ip_mask(p2_clean, True) else (None, None)
+                if has_invalid_domain_chars(p2_clean): return None, None
+                encoded_d = try_punycode_encode(p2_clean)
+                return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
+                
+            if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: 
+                return 'keyword', p2_clean
+                
+            if p1 in ['IP-CIDR', 'IP', 'IP-CIDR6', 'IP6-CIDR', 'IP6']:
+                raw_ip = p2_clean.split(',')[0].strip()  
+                if ':' in raw_ip and '[' not in raw_ip and raw_ip.count(':') == 1:
+                    raw_ip = raw_ip.split(':')[0] 
+                if IPV6_REGEX.match(raw_ip) or IPV6_REGEX.match(raw_ip.split('/')[0]):
+                    return ('ip6', raw_ip) if validate_ip_mask(raw_ip, True) else (None, None)
+                if IPV4_REGEX.match(raw_ip) or IPV4_REGEX.match(raw_ip.split('/')[0]):
+                    return ('ip', raw_ip) if validate_ip_mask(raw_ip, False) else (None, None)
+                return None, None
+                
+            if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', p2.lower()
+            if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', p2.lower()
+            if p1 in ['DST-PORT', 'DEST-PORT', 'PORT']: return 'port', p2.lower()      
             
-        if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: 
-            return 'keyword', p2_clean
-            
-        if p1 in ['IP-CIDR', 'IP', 'IP-CIDR6', 'IP6-CIDR', 'IP6']:
-            raw_ip = p2_clean.split(',')[0].strip()  
-            if ':' in raw_ip and '[' not in raw_ip and raw_ip.count(':') == 1:
-                raw_ip = raw_ip.split(':')[0] 
-            if IPV6_REGEX.match(raw_ip) or IPV6_REGEX.match(raw_ip.split('/')[0]):
-                return ('ip6', raw_ip) if validate_ip_mask(raw_ip, True) else (None, None)
-            if IPV4_REGEX.match(raw_ip) or IPV4_REGEX.match(raw_ip.split('/')[0]):
-                return ('ip', raw_ip) if validate_ip_mask(raw_ip, False) else (None, None)
             return None, None
-            
-        if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', parts[1].strip().lower()
-        if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', parts[1].strip().lower()
-        if p1 in ['DST-PORT', 'DEST-PORT', 'PORT']: return 'port', parts[1].strip().lower()      
-        
-        return None, None
 
     raw_val = line.lower()
-    if '/' in raw_val or '?' in raw_val:
+    
+    raw_val = raw_val.split('#')[0].split('//')[0].strip()
+    if not raw_val:
+        return None, None
+
+    if any(c in raw_val for c in ['*', '?', '(', ')', '|', '^', '$', '\\']):
+        return None, None
+
+    raw_val = raw_val.rstrip('.')
+    if not raw_val:
+        return None, None
+
+    if '/' in raw_val:
         if not (IPV4_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val.split('/')[0])):
             return None, None
-    if ':' in raw_val and '[' not in raw_val and raw_val.count(':') == 1:
-        possible_ip = raw_val.split(':')[0]
-        if IPV4_REGEX.match(possible_ip):
-            raw_val = possible_ip
+
+    if ':' in raw_val:
+        if raw_val.count(':') == 1:
+            possible_ip_or_domain, port = raw_val.split(':')
+            if port.isdigit() and possible_ip_or_domain:
+                raw_val = possible_ip_or_domain
+            else:
+                return None, None
+        else:
+            clean_ipv6 = raw_val.strip('[]')
+            if not IPV6_REGEX.match(clean_ipv6):
+                return None, None
+            raw_val = clean_ipv6
 
     if IPV4_REGEX.match(raw_val):
         return ('ip', raw_val) if validate_ip_mask(raw_val, False) else (None, None)
     if IPV6_REGEX.match(raw_val):
         return ('ip6', raw_val) if validate_ip_mask(raw_val, True) else (None, None)
         
-    if '*' in raw_val or '?' in raw_val:
-        return 'wildcard', raw_val
-        
     if has_invalid_domain_chars(raw_val):
         return None, None
-        
+
     is_explicit_suffix = False
-    if raw_val.startswith('+.'): 
-        raw_val = raw_val[2:]
-        is_explicit_suffix = True
-    elif raw_val.startswith('*.'): 
-        raw_val = raw_val[2:]
-        is_explicit_suffix = True
-    elif raw_val.startswith('.'): 
-        raw_val = raw_val[1:]
-        is_explicit_suffix = True
-    elif raw_val.startswith('+'): 
-        raw_val = raw_val[1:]
-        is_explicit_suffix = True
+    if raw_val.startswith('+.'):   raw_val = raw_val[2:]; is_explicit_suffix = True
+    elif raw_val.startswith('.'):  raw_val = raw_val[1:]; is_explicit_suffix = True
+    elif raw_val.startswith('+'):  raw_val = raw_val[1:]; is_explicit_suffix = True
         
     raw_val = raw_val.lstrip('.')
     if not raw_val:
         return None, None
         
     raw_val = try_punycode_encode(raw_val)
-    if not raw_val:
+    if not raw_val or not DOMAIN_PATTERN.match(raw_val):
         return None, None
 
     if is_explicit_suffix:
-        if DOMAIN_PATTERN.match(raw_val):
-            return 'suffix', raw_val
-        return None, None
+        return 'suffix', raw_val
     else:
-        if DOMAIN_PATTERN.match(raw_val):
+        if 'PUBLIC_SUFFIX_BLACKLIST' in globals() or 'PUBLIC_SUFFIX_BLACKLIST' in locals():
             if raw_val in PUBLIC_SUFFIX_BLACKLIST:
                 return None, None
             
@@ -279,8 +290,8 @@ def clean_and_parse_line(line):
                 return ('suffix', raw_val) if is_compound_public else ('full', raw_val)
             else:
                 return 'full', raw_val
-        else:
-            return None, None
+                
+        return ('suffix', raw_val) if raw_val.count('.') == 1 else ('full', raw_val)
 
 def optimize_domains(rules):
     if rules.get('suffix'):
