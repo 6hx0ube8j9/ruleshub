@@ -631,37 +631,44 @@ def main():
 
         sb_data = {"version": 2, "rules": []}
         
-        if g_rules['process']: 
-            sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
-            
-        network_block = {}
+        net_block = {}
         
-        if g_rules['port']: 
-            str_port_set = {str(p) for p in g_rules['port']}
-            p_list, p_range = parse_ports_for_singbox(str_port_set)
-            if p_list: network_block["port"] = p_list
-            if p_range: network_block["port_range"] = p_range
-            
         if g_rules['full']: 
-            network_block["domain"] = sorted(list(g_rules['full']))
+            net_block["domain"] = sorted(list(g_rules['full']))
         if g_rules['suffix']: 
-            network_block["domain_suffix"] = sorted(list(g_rules['suffix']))
+            net_block["domain_suffix"] = sorted(list(g_rules['suffix']))
         if g_rules['keyword']: 
-            network_block["domain_keyword"] = sorted(list(g_rules['keyword']))
+            net_block["domain_keyword"] = sorted(list(g_rules['keyword']))
             
         combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
         if combined_ips: 
-            network_block["ip_cidr"] = combined_ips
-        
+            net_block["ip_cidr"] = combined_ips
+            
         if g_rules['wildcard'] or g_rules['regex']:
             regex_list = [convert_wildcard_to_regex(w) for w in g_rules['wildcard']]
             for r in g_rules['regex']:
                 regex_list.append(r)
-            network_block["domain_regex"] = sorted(list(set(regex_list)))
+            net_block["domain_regex"] = sorted(list(set(regex_list)))
             
-        if network_block:
-            sb_data["rules"].append(network_block)
+        if net_block:
+            sb_data["rules"].append(net_block)
+
+        if g_rules['process']: 
+            sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
             
+        if g_rules['port']: 
+            str_port_set = {str(p) for p in g_rules['port']}
+            p_list, p_range = parse_ports_for_singbox(str_port_set)
+            port_block = {}
+            if p_list: port_block["port"] = p_list
+            if p_range: port_block["port_range"] = p_range
+            if port_block:
+                sb_data["rules"].append(port_block)
+
+        if g_rules.get('logical_and'):
+            for and_rule in g_rules['logical_and']:
+                sb_data["rules"].append(and_rule)
+                
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
 
