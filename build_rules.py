@@ -319,13 +319,12 @@ def fetch_single_url(remote_url):
         return remote_url, []
 
 def fetch_and_merge_rules(base_name, policy):
-    rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
-    
-    source_enable, source_name = parse_target_config(policy, 'source', base_name)
-    source_name = source_name.lower()
-    source_path = os.path.join(SOURCE_DIR, f"{source_name}.txt")
+    rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}  
+    source_enable, _ = parse_target_config(policy, 'source', base_name)
+    source_file_name = base_name.lower()
+    source_path = os.path.join(SOURCE_DIR, f"{source_file_name}.txt")
 
-    if source_enable and os.path.exists(source_path):
+    if os.path.exists(source_path):
         with open(source_path, 'r', encoding='utf-8') as f_local:
             for line in f_local:
                 r_type, payload = clean_and_parse_line(line)
@@ -350,14 +349,14 @@ def fetch_and_merge_rules(base_name, policy):
         for r_type in rules:
             if r_type != 'remove':
                 rules[r_type] -= remove_set
-				
-    optimize_domains(rules)	
+                
+    optimize_domains(rules) 
 
     if source_enable:
         has_any_rule = any(len(rules[k]) > 0 for k in rules)
         if has_any_rule:
             with open(source_path, 'w', encoding='utf-8') as f_source:
-                f_source.write(f"# === {source_name} Combined Base Rules ===\n\n")
+                f_source.write(f"# === {source_file_name} Combined Base Rules ===\n\n")
                 for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
                     if rules[r_type]:
                         f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
