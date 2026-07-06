@@ -1,3 +1,2 @@
 # Mihomo Payload Rule-Set: apple223
 payload:
-  - DOMAIN-SUFFIX,googele.co.uk
