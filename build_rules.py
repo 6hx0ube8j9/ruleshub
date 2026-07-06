@@ -164,16 +164,26 @@ def clean_and_parse_line(line):
 
         # 3. 处理端口类型的归一化 (直接在这里切入新逻辑)
         if internal_type == 'port':
-            p2_clean = p2.lower()
-            # 兼容 1000:2000, 1000-2000 以及单端口 80
+            p2_clean = p2.lower().replace('(', '').replace(')', '').strip()
+            if ',' in p2_clean:
+                p2_clean = p2_clean.split(',')[0].strip()
             if ':' in p2_clean:
                 s, e = p2_clean.split(':', 1)
-                return 'port', (int(s), int(e))
+                try:
+                    return 'port', (int(s.strip()), int(e.strip()))
+                except ValueError:
+                    return None, None
             elif '-' in p2_clean:
                 s, e = p2_clean.split('-', 1)
-                return 'port', (int(s), int(e))
+                try:
+                    return 'port', (int(s.strip()), int(e.strip()))
+                except ValueError:
+                    return None, None
             else:
-                return 'port', (int(p2_clean), int(p2_clean))
+                try:
+                    return 'port', (int(p2_clean), int(p2_clean))
+                except ValueError:
+                    return None, None
 
         # 4. 针对域名的清洗与剔除
         p2_clean = p2.lower()
