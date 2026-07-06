@@ -1,3 +1,5 @@
+# === appdw Combined Base Rules ===
 
-wwwww
-www.apple.com
+# --- TYPE: FULL ---
+full,www.apple.com
+
