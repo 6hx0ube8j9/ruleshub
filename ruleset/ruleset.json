@@ -1,1 +1,52 @@
-[]
+[
+  {
+    "key_name": "china",
+    "url": [
+      "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_No_Resolve.yaml",
+      "https://raw.githubusercontent.com/meta-rules-dat/meta-rules-dat/release/geo/geosite/cn.list"
+    ],
+    "source": true,
+    "qx": true,
+    "qx_policy": "DIRECT",
+    "sr": "china_direct",
+    "mihomo": "china_rules",
+    "singbox": "china_singbox",
+    "pac": true,
+    "mrs": "china_clash_classic",
+    "srs": "china_sb_srs",
+    "domain": true,
+    "ipcidr": false
+  },
+  {
+    "key_name": "advertising",
+    "url": "https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules_domainset.txt",
+    "source": "local_ad_blacklist",
+    "qx": true,
+    "qx_policy": "REJECT",
+    "sr": "ad_reject",
+    "mihomo": "ad_mihomo",
+    "singbox": "ad_singbox",
+    "pac": false,
+    "mrs": "ad_block",
+    "srs": "ad_block",
+    "domain": true,
+    "ipcidr": true
+  },
+  {
+    "key_name": "telegram",
+    "url": [
+      "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Telegram/Telegram.list"
+    ],
+    "source": false,
+    "qx": "Telegram_QX",
+    "qx_policy": "Proxy",
+    "sr": "Telegram_SR",
+    "mihomo": "Telegram_Mihomo",
+    "singbox": "Telegram_Singbox",
+    "pac": false,
+    "mrs": "telegram_ip",
+    "srs": "telegram_ip",
+    "domain": false,
+    "ipcidr": true
+  }
+]
