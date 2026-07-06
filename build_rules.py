@@ -333,7 +333,7 @@ def fetch_and_merge_rules(base_name, policy):
 
     remote_url_cfg = policy.get('url', [])
     url_list = remote_url_cfg if isinstance(remote_url_cfg, list) else ([remote_url_cfg] if remote_url_cfg else [])
-	
+
     if url_list:
         with ThreadPoolExecutor(max_workers=5) as executor:
             future_to_url = {executor.submit(fetch_single_url, url): url for url in url_list}
@@ -351,7 +351,7 @@ def fetch_and_merge_rules(base_name, policy):
                 rules[r_type] -= remove_set
                 
     optimize_domains(rules) 
-	
+
     if source_enable:
         has_any_rule = any(len(rules[k]) > 0 for k in rules)
         if has_any_rule:
@@ -514,11 +514,12 @@ def main():
         for f in os.listdir(SOURCE_DIR):
             if f.endswith('.txt'):
                 local_base_name = os.path.splitext(f)[0].lower()
-                if local_base_name not in router_cleaned:
-                    router_cleaned[local_base_name] = {
-                        'name': local_base_name,
-                        'url': []
-                    }
+                if local_base_name in router_cleaned:
+                    continue
+                router_cleaned[local_base_name] = {
+                    'name': local_base_name,
+                    'url': []
+                }
 
     global_matrix = {
         'qx': {}, 'sr': {}, 'mihomo': {}, 'singbox': {}, 'pac': {}
