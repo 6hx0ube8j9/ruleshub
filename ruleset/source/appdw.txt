@@ -1,12 +1,22 @@
-# === appdw Combined Base Rules ===
+# 基础域名测试
+DOMAIN,example.com
+DOMAIN,www.example.com
 
-# --- TYPE: PORT ---
-port,443
-port,80
+# 域名后缀测试（用于触发你的 optimize_domains 优化逻辑）
+DOMAIN-SUFFIX,google.com
+DOMAIN-SUFFIX,sub.google.com
+DOMAIN-SUFFIX,maps.google.com
 
-# --- TYPE: FULL ---
-full,badguy.com
+# 关键字与通配符测试
+DOMAIN-KEYWORD,netflix
+DOMAIN-KEYWORD,spotify
 
-# --- TYPE: IP ---
-ip,12.34.56.78/32
+# IP 测试（包含 IPv4 和 IPv6）
+IP-CIDR,192.168.1.1/24
+IP-CIDR6,2001:db8::/32
 
+# 端口与进程测试（专门测 Mihomo 和 Singbox 的专属区块）
+DST-PORT,443
+DST-PORT,80
+PROCESS-NAME,Telegram
+PROCESS-NAME,Discord
