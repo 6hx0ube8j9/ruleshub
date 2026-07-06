@@ -81,9 +81,9 @@ def parse_target_config(policy, field_name, default_base_name):
         
     return True, str(val).strip()
 	
-def get_smart_base_name(key_name, policy, existing_names):
-    if key_name.strip():
-        base = key_name.strip().lower() 
+def get_smart_base_name(name, policy, existing_names):
+    if name.strip():
+        base = name.strip().lower() 
     else:
         url = policy.get('url', '')
         first_url = url[0] if isinstance(url, list) and url else url
