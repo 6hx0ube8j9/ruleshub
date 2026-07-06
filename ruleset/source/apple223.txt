@@ -1,6 +1,5 @@
 # === apple223 Combined Base Rules ===
 
-googele.co.uk
-dddd
+# --- TYPE: SUFFIX ---
+suffix,googele.co.uk
 
-hhhhhhhh
