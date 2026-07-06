@@ -1,2 +1,9 @@
 # Quantumult X Aggregated Rule-Set: appdw
 
+host, example.com, Appdw
+host, www.example.com, Appdw
+host-suffix, google.com, Appdw
+host-keyword, netflix, Appdw
+host-keyword, spotify, Appdw
+ip-cidr, 192.168.1.1/24, Appdw, no-resolve
+ip6-cidr, 2001:db8::/32, Appdw, no-resolve

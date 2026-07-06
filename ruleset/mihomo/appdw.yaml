@@ -1,2 +1,13 @@
 # Mihomo Payload Rule-Set: appdw
 payload:
+  - PROCESS-NAME,discord
+  - PROCESS-NAME,telegram
+  - DST-PORT,443
+  - DST-PORT,80
+  - DOMAIN,example.com
+  - DOMAIN,www.example.com
+  - DOMAIN-SUFFIX,google.com
+  - DOMAIN-KEYWORD,netflix
+  - DOMAIN-KEYWORD,spotify
+  - IP-CIDR,192.168.1.1/24,no-resolve
+  - IP-CIDR6,2001:db8::/32,no-resolve
