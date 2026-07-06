@@ -1,4 +1,2 @@
 # Quantumult X Aggregated Rule-Set: appdw
 
-host, badguy.com, Appdw
-ip-cidr, 12.34.56.78/32, Appdw, no-resolve
