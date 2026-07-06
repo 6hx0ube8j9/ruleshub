@@ -513,7 +513,27 @@ def main():
     if os.path.exists(SOURCE_DIR):
         for f in os.listdir(SOURCE_DIR):
             if f.endswith('.txt'):
-                local_base_name = os.path.splitext(f)[0].lower()
+                if not f.islower():
+                    old_path = os.path.join(SOURCE_DIR, f)
+                    new_f = f.lower()
+                    new_path = os.path.join(SOURCE_DIR, new_f)
+                    if os.path.exists(new_path):
+                        try:
+                            with open(old_path, 'r', encoding='utf-8') as f_old:
+                                old_content = f_old.read()
+                            with open(new_path, 'a', encoding='utf-8') as f_new:
+                                f_new.write("\n" + old_content)
+                            os.remove(old_path)
+                        except Exception:
+                            pass
+                    else:
+                        try:
+                            os.rename(old_path, new_path)
+                        except Exception:
+                            pass
+                    f = new_f
+
+                local_base_name = os.path.splitext(f)[0]
                 if local_base_name in router_cleaned:
                     continue
                 router_cleaned[local_base_name] = {
