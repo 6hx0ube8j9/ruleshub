@@ -1,26 +1,4 @@
 {
   "version": 2,
-  "rules": [
-    {
-      "process_name": [
-        "telegram"
-      ]
-    },
-    {
-      "port": [
-        443
-      ],
-      "domain_suffix": [
-        "google.com"
-      ],
-      "ip_cidr": [
-        "1.1.1.1/32",
-        "192.168.1.1/32",
-        "2001:db8::1/128"
-      ],
-      "domain_regex": [
-        "^.*\\.google\\.com$"
-      ]
-    }
-  ]
+  "rules": []
 }

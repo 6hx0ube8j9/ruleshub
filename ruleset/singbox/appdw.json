@@ -1,10 +1,4 @@
 {
   "version": 2,
-  "rules": [
-    {
-      "domain": [
-        "www.apple.com"
-      ]
-    }
-  ]
+  "rules": []
 }
