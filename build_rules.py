@@ -668,7 +668,7 @@ def main():
         if g_rules.get('logical_and'):
             for and_rule in g_rules['logical_and']:
                 sb_data["rules"].append(and_rule)
-                
+        print(f"检查 {g_name} 的 rules 数量: {len(sb_data['rules'])}")        
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
 
