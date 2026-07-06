@@ -1,5 +1,5 @@
-# === appdw Combined Base Rules ===
-
-# --- TYPE: FULL ---
-full,www.apple.com
-
+# 示例规则源数据
+DOMAIN,badguy.com
+IP-CIDR,12.34.56.78/32
+PORT,80
+PORT,443
