@@ -62,6 +62,16 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za'
 }
 
+RULE_TYPE_MAP = {
+    'DOMAIN': 'full', 'HOST': 'full', 'FULL': 'full',
+    'DOMAIN-SUFFIX': 'suffix', 'SUFFIX': 'suffix',
+    'DOMAIN-KEYWORD': 'keyword', 'KEYWORD': 'keyword',
+    'IP-CIDR': 'ip', 'IP': 'ip',
+    'IP-CIDR6': 'ip6', 'IP6': 'ip6',
+    'PROCESS-NAME': 'process', 'PROCESS': 'process',
+    'PORT': 'port', 'DST-PORT': 'port'
+}
+
 def is_ip_centric_name(name):
     name_lower = name.lower()
     if name_lower in ['ip', 'ipcidr']: return True
@@ -138,88 +148,82 @@ def clean_and_parse_line(line):
         return None, None
 
     if ',' in line:
+        # 1. 提取标签并映射为内部标准类型
         possible_tag = line.split(',')[0].strip().upper()
-        known_tags = [
-            'DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL',
-            'DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD', 'DOMAIN-REGEX', 'REGEX',
-            'DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD', 'IP-CIDR', 'IP',
-            'IP-CIDR6', 'IP6-CIDR', 'IP6', 'PROCESS-NAME', 'PROCESS', 
-            'USER-AGENT', 'USERAGENT', 'DST-PORT', 'DEST-PORT', 'PORT', 'REMOVE'
-        ]
+        internal_type = RULE_TYPE_MAP.get(possible_tag)
         
-        if possible_tag in known_tags:
-            p1, p2 = [x.strip() for x in line.split(',', 1)]
-            
-            if p1 in ['AND', 'OR', 'NOT']:
-                return None, None
-                
-            if p1 == 'REMOVE':
-                rem_parts = [x.strip() for x in p2.split(',')]
-                target_val = rem_parts[1].lower() if len(rem_parts) >= 2 else rem_parts[0].lower()
-                return 'remove', target_val.lstrip('+.*')
-
-            if p1 not in ['DOMAIN-REGEX', 'REGEX', 'USER-AGENT', 'USERAGENT']:
-                p2 = p2.split('#')[0].split('//')[0].strip()
-
-            if p1 in ['DOMAIN-REGEX', 'REGEX']:
-                prophecies = ['(?=', '(?<=', '(?!', '(?<!']
-                if any(lookaround in p2 for lookaround in prophecies) or '/' in p2 or '?' in p2:
-                    return None, None
-                try:
-                    p2_low = p2.lower()
-                    re.compile(p2_low)
-                    return 'regex', p2_low
-                except re.error:
-                    return None, None
-
-            if p1 in ['DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD']:
-                return 'wildcard', p2.lower()
-
-            if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX', 'DOMAIN', 'HOST', 'FULL']:
-                if '/' in p2 or '?' in p2:
-                    return None, None
-
-            p2_clean = p2.lower()
-            if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
-            elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
-            elif p2_clean.startswith('.'): p2_clean = p2_clean[1:]
-            elif p2_clean.startswith('+'): p2_clean = p2_clean[1:]
-            p2_clean = p2_clean.lstrip('.')
-
-            if p1 in ['DOMAIN-SUFFIX', 'HOST-SUFFIX', 'SUFFIX']: 
-                if has_invalid_domain_chars(p2_clean): return None, None
-                encoded_d = try_punycode_encode(p2_clean)
-                return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
-                
-            if p1 in ['DOMAIN', 'HOST', 'FULL']: 
-                if '*' in p2_clean or '?' in p2_clean: 
-                    return 'wildcard', p2.lower()
-                if IPV4_REGEX.match(p2_clean): 
-                    return ('ip', p2_clean) if validate_ip_mask(p2_clean, False) else (None, None)
-                if IPV6_REGEX.match(p2_clean) or IPV6_REGEX.match(p2_clean.split('/')[0]): 
-                    return ('ip6', p2_clean) if validate_ip_mask(p2_clean, True) else (None, None)
-                if has_invalid_domain_chars(p2_clean): return None, None
-                encoded_d = try_punycode_encode(p2_clean)
-                return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
-                
-            if p1 in ['DOMAIN-KEYWORD', 'HOST-KEYWORD', 'KEYWORD']: 
-                return 'keyword', p2_clean
-                
-            if p1 in ['IP-CIDR', 'IP', 'IP-CIDR6', 'IP6-CIDR', 'IP6']:
-                raw_ip = p2_clean.split(',')[0].strip()  
-                if ':' in raw_ip and '[' not in raw_ip and raw_ip.count(':') == 1:
-                    raw_ip = raw_ip.split(':')[0] 
-                if IPV6_REGEX.match(raw_ip) or IPV6_REGEX.match(raw_ip.split('/')[0]):
-                    return ('ip6', raw_ip) if validate_ip_mask(raw_ip, True) else (None, None)
-                if IPV4_REGEX.match(raw_ip) or IPV4_REGEX.match(raw_ip.split('/')[0]):
-                    return ('ip', raw_ip) if validate_ip_mask(raw_ip, False) else (None, None)
-                return None, None
-                
-            if p1 in ['PROCESS-NAME', 'PROCESS']: return 'process', p2.lower()
-            if p1 in ['USER-AGENT', 'USERAGENT']: return 'useragent', p2.lower()
-            if p1 in ['DST-PORT', 'DEST-PORT', 'PORT']: return 'port', p2.lower()      
-            
+        # 如果是不认识的标签，或者是控制流标签，直接丢弃
+        if not internal_type or possible_tag in ['AND', 'OR', 'NOT']:
             return None, None
+            
+        p1, p2 = [x.strip() for x in line.split(',', 1)]
+        
+        # 2. 剥离尾部注释 (保持你原有的安全过滤)
+        if possible_tag not in ['DOMAIN-REGEX', 'REGEX', 'USER-AGENT', 'USERAGENT']:
+            p2 = p2.split('#')[0].split('//')[0].strip()
+
+        # 3. 处理端口类型的归一化 (直接在这里切入新逻辑)
+        if internal_type == 'port':
+            p2_clean = p2.lower()
+            # 兼容 1000:2000, 1000-2000 以及单端口 80
+            if ':' in p2_clean:
+                s, e = p2_clean.split(':', 1)
+                return 'port', (int(s), int(e))
+            elif '-' in p2_clean:
+                s, e = p2_clean.split('-', 1)
+                return 'port', (int(s), int(e))
+            else:
+                return 'port', (int(p2_clean), int(p2_clean))
+
+        # 4. 针对域名的清洗与剔除
+        p2_clean = p2.lower()
+        if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
+        elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
+        elif p2_clean.startswith('.'): p2_clean = p2_clean[1:]
+        elif p2_clean.startswith('+'): p2_clean = p2_clean[1:]
+        p2_clean = p2_clean.lstrip('.')
+
+        # 【全场核心：精准拯救 cn 和 abc.cn】
+        if internal_type == 'suffix': 
+            if has_invalid_domain_chars(p2_clean): return None, None
+            
+            # 客观修正：如果是后缀，且洗完点后里面完全没有点(如纯 cn)，立刻前置补点
+            if '.' not in p2_clean:
+                p2_clean = '.' + p2_clean
+                
+            encoded_d = try_punycode_encode(p2_clean)
+            if encoded_d:
+                # 统一格式：内部后缀一律带上前缀点存入内存(如 .cn, .abc.cn)
+                return 'suffix', (encoded_d if encoded_d.startswith('.') else '.' + encoded_d)
+            return None, None
+            
+        if internal_type == 'full': 
+            if '*' in p2_clean or '?' in p2_clean: 
+                return 'wildcard', p2.lower()
+            if IPV4_REGEX.match(p2_clean): 
+                return ('ip', p2_clean) if validate_ip_mask(p2_clean, False) else (None, None)
+            if IPV6_REGEX.match(p2_clean) or IPV6_REGEX.match(p2_clean.split('/')[0]): 
+                return ('ip6', p2_clean) if validate_ip_mask(p2_clean, True) else (None, None)
+            if has_invalid_domain_chars(p2_clean): return None, None
+            encoded_d = try_punycode_encode(p2_clean)
+            return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
+            
+        if internal_type == 'keyword': 
+            return 'keyword', p2_clean
+            
+        if internal_type in ['ip', 'ip6']:
+            raw_ip = p2_clean.split(',')[0].strip()  
+            if ':' in raw_ip and '[' not in raw_ip and raw_ip.count(':') == 1:
+                raw_ip = raw_ip.split(':')[0] 
+            if IPV6_REGEX.match(raw_ip) or IPV6_REGEX.match(raw_ip.split('/')[0]):
+                return ('ip6', raw_ip) if validate_ip_mask(raw_ip, True) else (None, None)
+            if IPV4_REGEX.match(raw_ip) or IPV4_REGEX.match(raw_ip.split('/')[0]):
+                return ('ip', raw_ip) if validate_ip_mask(raw_ip, False) else (None, None)
+            return None, None
+            
+        if internal_type == 'process': return 'process', p2.lower()
+        
+        return None, None
 
     raw_val = line.lower()
     
@@ -293,17 +297,34 @@ def clean_and_parse_line(line):
                 
         return ('suffix', raw_val) if raw_val.count('.') == 1 else ('full', raw_val)
 
-def optimize_domains(rules):
-    if rules.get('suffix'):
-        reversed_domains = sorted(['.'.join(reversed(d.split('.'))) + '.' for d in rules['suffix']])
-        clean_reversed = []
-        for rd in reversed_domains:
-            if not clean_reversed or not rd.startswith(clean_reversed[-1]):
-                clean_reversed.append(rd)
-        rules['suffix'] = {'.'.join(reversed(rd.rstrip('.').split('.'))) for rd in clean_reversed}
-
-    if rules.get('full'):
-        rules['full'] = set(rules['full'])
+def optimize_domains(rules: dict):
+    if 'suffix' not in rules or 'full' not in rules:
+        return
+    safe_suffixes = {s if s.startswith('.') else '.' + s for s in rules['suffix'] if s}
+    sorted_suffixes = sorted(list(safe_suffixes), key=len)
+    optimized_suffixes = set()
+    
+    for suf in sorted_suffixes:
+        is_sub = False
+        for opt in optimized_suffixes:
+            if suf == opt or suf.endswith(opt):
+                is_sub = True
+                break
+        if not is_sub:
+            optimized_suffixes.add(suf)
+            
+    rules['suffix'] = {s.lstrip('.') for s in optimized_suffixes}
+    optimized_fulls = set()
+    for f_dom in rules['full']:
+        is_covered = False
+        for suf in rules['suffix']:
+            if f_dom == suf or f_dom.endswith('.' + suf):
+                is_covered = True
+                break
+        if not is_covered:
+            optimized_fulls.add(f_dom)
+            
+    rules['full'] = optimized_fulls
 
 def ensure_ip_mask(ip_str, is_ipv6=False):
     if '/' in ip_str: return ip_str
