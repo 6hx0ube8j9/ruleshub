@@ -26,9 +26,10 @@ if not os.path.exists(RULESET_JSON_PATH):
 try:
     with open(RULESET_JSON_PATH, 'r', encoding='utf-8') as f:
         FILE_POLICY_ROUTER = json.load(f)
-except Exception as e:
-    print(f"Error loading ruleset.json: {e}")
-    FILE_POLICY_ROUTER = []
+except json.JSONDecodeError as e:
+    print(f"\n❌ ruleset.json [{e.lineno}:{e.colno}] -> {e.msg}\n")
+    import sys
+    sys.exit(1)	
 
 IPV4_REGEX = re.compile(
     r'^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)(\/([0-9]|[1-2][0-9]|3[0-2]))?$'
