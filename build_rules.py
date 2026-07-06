@@ -373,7 +373,7 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
 	
     qx_en, qx_name = parse_target_config(policy, 'qx', base_name)
     sr_en, sr_name = parse_target_config(policy, 'sr', base_name)
-    mi_en, mi_name = parse_target_config(policy, 'mihomo', base_name)
+    mhm_en, mhm_name = parse_target_config(policy, 'mihomo', base_name)
     sb_en, sb_name = parse_target_config(policy, 'singbox', base_name)
     mrs_en, mrs_name = parse_target_config(policy, 'mrs', base_name)
     srs_en, srs_name = parse_target_config(policy, 'srs', base_name)
@@ -390,9 +390,9 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
         if sr_name not in global_matrix['sr']: global_matrix['sr'][sr_name] = {k: set() for k in rules.keys()}
         for k in rules.keys(): global_matrix['sr'][sr_name][k].update(rules[k])
 
-    if mi_en:
-        if mi_name not in global_matrix['mihomo']: global_matrix['mihomo'][mi_name] = {k: set() for k in rules.keys()}
-        for k in rules.keys(): global_matrix['mihomo'][mi_name][k].update(rules[k])
+    if mhm_en:
+        if mhm_name not in global_matrix['mihomo']: global_matrix['mihomo'][mhm_name] = {k: set() for k in rules.keys()}
+        for k in rules.keys(): global_matrix['mihomo'][mhm_name][k].update(rules[k])
 
     if sb_en:
         if sb_name not in global_matrix['singbox']: global_matrix['singbox'][sb_name] = {k: set() for k in rules.keys()}
