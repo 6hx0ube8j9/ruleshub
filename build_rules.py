@@ -746,6 +746,7 @@ def main():
     # PAC
     for g_name, raw_domains in global_matrix['pac'].items():
         pac_path = os.path.join(PAC_DIR, f"{g_name}.pac")
+		
         if isinstance(raw_domains, dict):
             combined_domains = set(raw_domains.get('full', [])) | set(raw_domains.get('suffix', []))
         else:
