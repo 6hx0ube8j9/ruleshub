@@ -628,10 +628,10 @@ def main():
     for g_name, g_rules in global_matrix['singbox'].items():
         sb_path = os.path.join(SINGBOX_DIR, f"{g_name}.json")
         optimize_domains(g_rules)
+		print(f"==== 调试 [{g_name}] 进门数据 ====> {g_rules}")
 
         sb_data = {"version": 2, "rules": []}
         
-        # 1. 组装独立的网络/域名族大区块 (利用同对象内的官方 OR 优化体积)
         net_block = {}
         
         if g_rules['full']: 
@@ -651,15 +651,12 @@ def main():
                 regex_list.append(r)
             net_block["domain_regex"] = sorted(list(set(regex_list)))
             
-        # 如果有域名或 IP 规则，作为一个独立对象放入数组
         if net_block:
             sb_data["rules"].append(net_block)
 
-        # 2. 独立进程区块 (剥离出来，在外部形成全局 OR)
         if g_rules['process']: 
             sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
             
-        # 3. 独立端口区块 (剥离出来，在外部形成全局 OR)
         if g_rules['port']: 
             str_port_set = {str(p) for p in g_rules['port']}
             p_list, p_range = parse_ports_for_singbox(str_port_set)
