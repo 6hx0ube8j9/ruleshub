@@ -625,39 +625,40 @@ def main():
             for val in sorted(g_rules['regex']): f.write(f"  - DOMAIN-REGEX,{val}\n")
     
     # Singbox
-    for g_name, g_rules in global_matrix['singbox'].items():
+    for g_name, raw_rules in global_matrix['singbox'].items():
         sb_path = os.path.join(SINGBOX_DIR, f"{g_name}.json")
+        g_rules = {k: list(v) if isinstance(v, (list, set, tuple)) else v for k, v in raw_rules.items()}
+        
         optimize_domains(g_rules)
-		print(f"==== 调试 [{g_name}] 进门数据 ====> {g_rules}")
+        print(f"==== 调试 [{g_name}] 进门数据 ====> {g_rules}")
 
         sb_data = {"version": 2, "rules": []}
-        
         net_block = {}
         
-        if g_rules['full']: 
+        if g_rules.get('full'): 
             net_block["domain"] = sorted(list(g_rules['full']))
-        if g_rules['suffix']: 
+        if g_rules.get('suffix'): 
             net_block["domain_suffix"] = sorted(list(g_rules['suffix']))
-        if g_rules['keyword']: 
+        if g_rules.get('keyword'): 
             net_block["domain_keyword"] = sorted(list(g_rules['keyword']))
             
-        combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules['ip']] + [ensure_ip_mask(i, True) for i in g_rules['ip6'] ])))
+        combined_ips = sorted(list(set([ensure_ip_mask(i) for i in g_rules.get('ip', [])] + [ensure_ip_mask(i, True) for i in g_rules.get('ip6', [])])))
         if combined_ips: 
             net_block["ip_cidr"] = combined_ips
             
-        if g_rules['wildcard'] or g_rules['regex']:
-            regex_list = [convert_wildcard_to_regex(w) for w in g_rules['wildcard']]
-            for r in g_rules['regex']:
+        if g_rules.get('wildcard') or g_rules.get('regex'):
+            regex_list = [convert_wildcard_to_regex(w) for w in g_rules.get('wildcard', [])]
+            for r in g_rules.get('regex', []):
                 regex_list.append(r)
             net_block["domain_regex"] = sorted(list(set(regex_list)))
             
         if net_block:
             sb_data["rules"].append(net_block)
 
-        if g_rules['process']: 
+        if g_rules.get('process'): 
             sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
             
-        if g_rules['port']: 
+        if g_rules.get('port'): 
             str_port_set = {str(p) for p in g_rules['port']}
             p_list, p_range = parse_ports_for_singbox(str_port_set)
             port_block = {}
@@ -666,7 +667,7 @@ def main():
             if port_block:
                 sb_data["rules"].append(port_block)
 
-        # 4. 复杂逻辑 AND 区块透传
+        # 复杂逻辑 AND 区块透传
         if g_rules.get('logical_and'):
             for and_rule in g_rules['logical_and']:
                 sb_data["rules"].append(and_rule)
