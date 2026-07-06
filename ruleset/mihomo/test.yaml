@@ -1,2 +1,8 @@
 # Mihomo Payload Rule-Set: test
 payload:
+  - PROCESS-NAME,telegram
+  - DST-PORT,(443, 443)
+  - DOMAIN-SUFFIX,google.com
+  - IP-CIDR,1.1.1.1/32,no-resolve
+  - IP-CIDR,192.168.1.1/32,no-resolve
+  - IP-CIDR6,2001:db8::1/128,no-resolve

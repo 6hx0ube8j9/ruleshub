@@ -1,2 +1,6 @@
 # Mihomo Payload Rule-Set: apple223
 payload:
+  - DST-PORT,(80, 80)
+  - DST-PORT,(443, 443)
+  - DOMAIN,badguy.com
+  - IP-CIDR,12.34.56.78/32,no-resolve

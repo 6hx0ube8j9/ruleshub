@@ -682,6 +682,7 @@ DOMAIN-SUFFIX,xn--ngstr-lra8j.com
 DOMAIN-SUFFIX,xn--p8j9a0d9c9a.xn--q9jyb4c
 DOMAIN-SUFFIX,xplr.co
 DOMAIN-SUFFIX,youtu.be
+DOMAIN-SUFFIX,youtube
 DOMAIN-SUFFIX,youtube-nocookie.com
 DOMAIN-SUFFIX,youtube.ae
 DOMAIN-SUFFIX,youtube.al
@@ -860,13 +861,3 @@ IP-CIDR,173.194.0.0/16,no-resolve
 IP-CIDR,216.73.80.0/20,no-resolve
 IP-CIDR,74.125.0.0/16,no-resolve
 IP-CIDR6,2620:120:e000::/40,no-resolve
-USER-AGENT,%e4%ba%91%e7%ab%af%e7%a1%ac%e7%9b%98*
-USER-AGENT,*com.google.drive*
-USER-AGENT,*com.google.ios.youtubemusic*
-USER-AGENT,*youtube*
-USER-AGENT,*youtubemusic*
-USER-AGENT,com.google.ios.youtube*
-USER-AGENT,com.google.ios.youtubemusic*
-USER-AGENT,google.drive*
-USER-AGENT,youtube*
-USER-AGENT,youtubemusic*

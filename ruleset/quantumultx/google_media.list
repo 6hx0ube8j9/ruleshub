@@ -682,6 +682,7 @@ host-suffix, xn--ngstr-lra8j.com, GoogleGroup
 host-suffix, xn--p8j9a0d9c9a.xn--q9jyb4c, GoogleGroup
 host-suffix, xplr.co, GoogleGroup
 host-suffix, youtu.be, GoogleGroup
+host-suffix, youtube, GoogleGroup
 host-suffix, youtube-nocookie.com, GoogleGroup
 host-suffix, youtube.ae, GoogleGroup
 host-suffix, youtube.al, GoogleGroup
@@ -860,13 +861,3 @@ ip-cidr, 173.194.0.0/16, GoogleGroup, no-resolve
 ip-cidr, 216.73.80.0/20, GoogleGroup, no-resolve
 ip-cidr, 74.125.0.0/16, GoogleGroup, no-resolve
 ip6-cidr, 2620:120:e000::/40, GoogleGroup, no-resolve
-user-agent, %e4%ba%91%e7%ab%af%e7%a1%ac%e7%9b%98*, GoogleGroup
-user-agent, *com.google.drive*, GoogleGroup
-user-agent, *com.google.ios.youtubemusic*, GoogleGroup
-user-agent, *youtube*, GoogleGroup
-user-agent, *youtubemusic*, GoogleGroup
-user-agent, com.google.ios.youtube*, GoogleGroup
-user-agent, com.google.ios.youtubemusic*, GoogleGroup
-user-agent, google.drive*, GoogleGroup
-user-agent, youtube*, GoogleGroup
-user-agent, youtubemusic*, GoogleGroup

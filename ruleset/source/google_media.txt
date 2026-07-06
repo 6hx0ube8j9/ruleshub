@@ -685,6 +685,7 @@ suffix,xn--ngstr-lra8j.com
 suffix,xn--p8j9a0d9c9a.xn--q9jyb4c
 suffix,xplr.co
 suffix,youtu.be
+suffix,youtube
 suffix,youtube-nocookie.com
 suffix,youtube.ae
 suffix,youtube.al
@@ -869,16 +870,4 @@ ip,74.125.0.0/16
 
 # --- TYPE: IP6 ---
 ip6,2620:120:e000::/40
-
-# --- TYPE: USERAGENT ---
-useragent,%e4%ba%91%e7%ab%af%e7%a1%ac%e7%9b%98*
-useragent,*com.google.drive*
-useragent,*com.google.ios.youtubemusic*
-useragent,*youtube*
-useragent,*youtubemusic*
-useragent,com.google.ios.youtube*
-useragent,com.google.ios.youtubemusic*
-useragent,google.drive*
-useragent,youtube*
-useragent,youtubemusic*
 

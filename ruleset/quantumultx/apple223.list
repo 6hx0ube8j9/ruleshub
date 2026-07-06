@@ -1,2 +1,4 @@
 # Quantumult X Aggregated Rule-Set: apple223
 
+host, badguy.com, Apple223
+ip-cidr, 12.34.56.78/32, Apple223, no-resolve

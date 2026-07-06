@@ -1,4 +1,13 @@
 {
   "version": 2,
-  "rules": []
+  "rules": [
+    {
+      "domain": [
+        "badguy.com"
+      ],
+      "ip_cidr": [
+        "12.34.56.78/32"
+      ]
+    }
+  ]
 }

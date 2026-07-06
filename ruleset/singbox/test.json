@@ -1,4 +1,20 @@
 {
   "version": 2,
-  "rules": []
+  "rules": [
+    {
+      "domain_suffix": [
+        "google.com"
+      ],
+      "ip_cidr": [
+        "1.1.1.1/32",
+        "192.168.1.1/32",
+        "2001:db8::1/128"
+      ]
+    },
+    {
+      "process_name": [
+        "telegram"
+      ]
+    }
+  ]
 }

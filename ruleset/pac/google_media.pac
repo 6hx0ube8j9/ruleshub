@@ -684,6 +684,7 @@ var DIRECT_DOMAINS = {
     "xn--p8j9a0d9c9a.xn--q9jyb4c": 1,
     "xplr.co": 1,
     "youtu.be": 1,
+    "youtube": 1,
     "youtube-nocookie.com": 1,
     "youtube.ae": 1,
     "youtube.al": 1,
