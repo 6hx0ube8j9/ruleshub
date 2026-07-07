@@ -74,16 +74,15 @@ RULE_TYPE_MAP = {
     'DOMAIN': 'full', 'HOST': 'full', 'FULL': 'full', 'DOMAIN-FULL': 'full',
     'DOMAIN-SUFFIX': 'suffix', 'SUFFIX': 'suffix', 'HOST-SUFFIX': 'suffix', 'DOMAIN_SUFFIX': 'suffix',
     'DOMAIN-KEYWORD': 'keyword', 'KEYWORD': 'keyword', 'HOST-KEYWORD': 'keyword', 'DOMAIN_KEYWORD': 'keyword',
-    
     'DOMAIN-WILDCARD': 'wildcard', 'HOST-WILDCARD': 'wildcard', 'WILDCARD': 'wildcard', 
     'DOMAIN-REGEX': 'regex', 'DOMAIN_REGEX': 'regex', 'REGEX': 'regex', 
+    'PROCESS-NAME': 'process', 'PROCESS': 'process', 'PROCESS_NAME': 'process',
+    'USER-AGENT': 'useragent', 'USERAGENT': 'useragent'
     
     'IP-CIDR': 'ip', 'IP': 'ip',
-    'IP-CIDR6': 'ip6', 'IP6': 'ip6', 'IP6-CIDR': 'ip6',
-    
-    'PROCESS-NAME': 'process', 'PROCESS': 'process', 'PROCESS_NAME': 'process',
+    'IP-CIDR6': 'ip6', 'IP6': 'ip6', 'IP6-CIDR': 'ip6',  
     'DST-PORT': 'port', 'DEST-PORT': 'port', 'PORT': 'port', 
-    'USER-AGENT': 'useragent', 'USERAGENT': 'useragent'
+    
 }
 
 
