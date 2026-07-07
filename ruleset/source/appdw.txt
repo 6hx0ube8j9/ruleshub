@@ -1,5 +1,5 @@
 # === appdw Combined Base Rules ===
-DOMAIN-SUFFIX,abc.cn
+
 # --- TYPE: PROCESS ---
 process,curl
 
@@ -10,6 +10,9 @@ port,80
 
 # --- TYPE: FULL ---
 full,test.com
+
+# --- TYPE: SUFFIX ---
+suffix,abc.cn
 
 # --- TYPE: KEYWORD ---
 keyword,test
