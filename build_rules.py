@@ -240,11 +240,9 @@ def clean_and_parse_line(line):
 
         if internal_type == 'suffix': 
             if has_invalid_domain_chars(p2_clean): return None, None
-            if '.' not in p2_clean: p2_clean = '.' + p2_clean
+            p2_clean = p2_clean.lstrip('+.')
             encoded_d = try_punycode_encode(p2_clean)
-            if encoded_d:
-                return 'suffix', (encoded_d if encoded_d.startswith('.') else '.' + encoded_d)
-            return None, None
+            return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if internal_type == 'full': 
             if '*' in p2_clean or '?' in p2_clean: return 'wildcard', p2.lower()
@@ -324,24 +322,16 @@ def clean_and_parse_line(line):
         return None, None
 
     if is_explicit_suffix:
-        return 'suffix', (raw_val if raw_val.startswith('.') else '.' + raw_val)
+        return 'suffix', raw_val.lstrip('+.')
     else:
         if 'PUBLIC_SUFFIX_BLACKLIST' in globals():
-            if raw_val in PUBLIC_SUFFIX_BLACKLIST: 
-                return None, None
-            parts = raw_val.split('.')
-            parts_count = len(parts)
-            last_2_parts = '.'.join(parts[-2:]) if parts_count >= 2 else ''
-            is_compound_public = last_2_parts in PUBLIC_SUFFIX_BLACKLIST
-
-            if parts_count == 2: 
-                return 'suffix', '.' + raw_val
-            elif parts_count == 3: 
-                return ('suffix', '.' + raw_val) if is_compound_public else ('full', raw_val)
+            if parts_count == 2:
+                return 'suffix', raw_val.lstrip('+.')
+            elif parts_count == 3:
+                return ('suffix', raw_val.lstrip('+.')) if is_compound_public else ('full', raw_val)
             else: 
                 return 'full', raw_val 
-
-        return ('suffix', '.' + raw_val) if raw_val.count('.') == 1 else ('full', raw_val)
+        return ('suffix', raw_val.lstrip('+.')) if raw_val.count('.') == 1 else ('full', raw_val)
 
 def optimize_domains(rules: dict):
     if 'suffix' not in rules or 'full' not in rules: return
@@ -349,34 +339,31 @@ def optimize_domains(rules: dict):
     raw_fulls = rules['full']
     is_list_output = isinstance(raw_suffixes, list)
     
-    safe_suffixes = {s if s.startswith('.') else '.' + s for s in raw_suffixes if s}
-    sorted_suffixes = sorted(list(safe_suffixes), key=len)
+    sorted_suffixes = sorted(list(raw_suffixes), key=len)
     optimized_suffixes = set()
     
     for suf in sorted_suffixes:
         is_sub = False
         for opt in optimized_suffixes:
-            if suf == opt or suf.endswith(opt):
+            if suf == opt or suf.endswith('.' + opt):
                 is_sub = True
                 break
         if not is_sub: optimized_suffixes.add(suf)
             
-    final_suffixes = {s.lstrip('.') for s in optimized_suffixes}
-    
     optimized_fulls = set()
     for f_dom in raw_fulls:
         is_covered = False
-        for suf in final_suffixes:
+        for suf in optimized_suffixes:
             if f_dom == suf or f_dom.endswith('.' + suf):
                 is_covered = True
                 break
         if not is_covered: optimized_fulls.add(f_dom)
         
     if is_list_output:
-        rules['suffix'] = sorted(list(final_suffixes))
+        rules['suffix'] = sorted(list(optimized_suffixes))
         rules['full'] = sorted(list(optimized_fulls))
     else:
-        rules['suffix'] = final_suffixes
+        rules['suffix'] = optimized_suffixes
         rules['full'] = optimized_fulls
 
 # ==========================================
@@ -411,20 +398,12 @@ def load_remote_rules_batch(url_cfg, rule_keys):
 
 def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_keys: list) -> dict:
     merged = {k: local_rules[k].copy() | remote_rules[k] for k in rule_keys}
-    
     remove_set = merged.get('remove', set())
     if remove_set:
-        normalized_remove = set()
-        for r in remove_set:
-            r_clean = r.strip().lower()
-            normalized_remove.add(r_clean)
-            normalized_remove.add('.' + r_clean.lstrip('.'))
-            normalized_remove.add(r_clean.lstrip('.'))
-            
         for r_type in rule_keys:
             if r_type != 'remove':
-                merged[r_type] -= normalized_remove
-
+                merged[r_type] -= remove_set
+				
     local_vessels = set()
     for r_type in rule_keys:
         if r_type != 'remove' and local_rules.get(r_type):
