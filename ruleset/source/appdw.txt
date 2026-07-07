@@ -1,5 +1,5 @@
 # === appdw Combined Base Rules ===
-
+DOMAIN-SUFFIX,abc.cn
 # --- TYPE: PROCESS ---
 process,curl
 
