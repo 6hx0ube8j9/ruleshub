@@ -2,4 +2,4 @@
 
 # --- TYPE: SUFFIX ---
 suffix,abc.cn
-.google
+
