@@ -479,9 +479,6 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
 # 6. 【新提炼】独立专职 I/O 模块
 # ==========================================
 def normalize_and_discover_local_sources(router_cleaned):
-    """
-    【从 main 解耦】专门负责本地 txt 文件的文件名大小写平滑归一化与路由底座初始化。
-    """
     if not os.path.exists(SOURCE_DIR): return
     for f in os.listdir(SOURCE_DIR):
         if f.endswith('.txt'):
@@ -587,14 +584,9 @@ def main():
         'qx': {}, 'sr': {}, 'mihomo': {}, 'singbox': {}, 'pac': {}
     }
 
-    # 步骤 3：多渠道融合分发大循环
     for target_base_name, policy_card in router_cleaned.items():
         rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
-        
-        # 3.1 内存矩阵上色（安全纯净无 I/O）
         dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
-        
-        # 3.2 【解耦调用】专职生成临时过渡配置
         generate_mrs_srs_temp_files(target_base_name, policy_card, rules_in_memory)
   
     # [QuantumultX]
