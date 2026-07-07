@@ -320,9 +320,13 @@ def clean_and_parse_line(line):
     raw_val = try_punycode_encode(raw_val)
     if not raw_val or not DOMAIN_PATTERN.match(raw_val): 
         return None, None
-
+		
     if is_explicit_suffix:
         return 'suffix', raw_val.lstrip('+.')
+		
+    elif rule_type: 
+        return rule_type, raw_val
+		
     else:
         if 'PUBLIC_SUFFIX_BLACKLIST' in globals():
             if parts_count == 2:
