@@ -22,6 +22,7 @@ host-suffix, telegram.space, Telegram
 host-suffix, telegramdownload.com, Telegram
 host-suffix, telesco.pe, Telegram
 host-suffix, tg.dev, Telegram
+host-suffix, tx.me, Telegram
 host-suffix, usercontent.dev, Telegram
 host-keyword, nicegram, Telegram
 ip-cidr, 109.239.140.0/24, Telegram, no-resolve
