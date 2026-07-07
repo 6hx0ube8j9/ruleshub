@@ -80,7 +80,8 @@ RULE_TYPE_MAP = {
     'USER-AGENT': 'useragent', 'USERAGENT': 'useragent',   
     'IP-CIDR': 'ip', 'IP': 'ip',
     'IP-CIDR6': 'ip6', 'IP6': 'ip6', 'IP6-CIDR': 'ip6',  
-    'DST-PORT': 'port', 'DEST-PORT': 'port', 'PORT': 'port'    
+    'DST-PORT': 'port', 'DEST-PORT': 'port', 'PORT': 'port',
+	'REMOVE': 'remove'
 }
 
 
@@ -410,12 +411,19 @@ def load_remote_rules_batch(url_cfg, rule_keys):
 
 def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_keys: list) -> dict:
     merged = {k: local_rules[k].copy() | remote_rules[k] for k in rule_keys}
-	
+    
     remove_set = merged.get('remove', set())
     if remove_set:
+        normalized_remove = set()
+        for r in remove_set:
+            r_clean = r.strip().lower()
+            normalized_remove.add(r_clean)
+            normalized_remove.add('.' + r_clean.lstrip('.'))
+            normalized_remove.add(r_clean.lstrip('.'))
+            
         for r_type in rule_keys:
             if r_type != 'remove':
-                merged[r_type] -= remove_set
+                merged[r_type] -= normalized_remove
 
     local_vessels = set()
     for r_type in rule_keys:
