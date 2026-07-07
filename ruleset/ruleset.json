@@ -4,16 +4,6 @@
     "url": [
       "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Telegram/Telegram.list"
     ],
-    "qx": "Telegram_QX",
-    "qx_policy": "Proxy",
-    "sr": "Telegram_SR",
-    "mihomo": "Telegram_Mihomo",
-    "singbox": "Telegram_Singbox",
-    "pac": false,
-    "mrs": "telegram_ip",
-    "srs": "telegram_ip",
-    "domain": false,
-    "ipcidr": true
   },
   {
     "name": "google_media",
