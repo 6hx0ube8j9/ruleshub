@@ -1,5 +1,5 @@
 # === telegram Combined Base Rules ===
-
+ remove,t.me
 # --- TYPE: FULL ---
 full,api.imem.app
 full,api.swiftgram.app
