@@ -410,14 +410,17 @@ def load_remote_rules_batch(url_cfg, rule_keys):
 
 def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_keys: list) -> dict:
     merged = {k: local_rules[k].copy() | remote_rules[k] for k in rule_keys}
-
+	
     remove_set = merged.get('remove', set())
     if remove_set:
         for r_type in rule_keys:
             if r_type != 'remove':
                 merged[r_type] -= remove_set
 
-    local_vessels = set().union(*(payloads for r_type, payloads in local_rules.items() if r_type != 'remove'))
+    local_vessels = set()
+    for r_type in rule_keys:
+        if r_type != 'remove' and local_rules.get(r_type):
+            local_vessels.update(local_rules[r_type])
     
     if local_vessels:
         for r_type in rule_keys:
@@ -425,7 +428,7 @@ def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_key
                 conflict_items = (merged[r_type] & local_vessels) - local_rules[r_type]
                 if conflict_items:
                     merged[r_type] -= conflict_items
-                    
+                        
     return merged
 	
 def fetch_single_url(remote_url):
@@ -473,11 +476,11 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys, source_ena
             else:
                 cleaned_ports.add(str(v).replace(':', '-').strip())
         rules['port'] = cleaned_ports
-
+		
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {source_file_name} Combined Base Rules ===\n\n")
         for r_type in rule_keys:
-            if rules[r_type]:
+            if rules.get(r_type):
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
                 for val in sorted(rules[r_type]):
                     if r_type == 'ip': 
@@ -487,7 +490,6 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys, source_ena
                     else: 
                         f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
-
 
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
     platforms = ['qx', 'sr', 'mihomo', 'singbox']
@@ -529,7 +531,7 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
             global_matrix['pac'][pac_name].update(rules.get('full', set()))
 
 # ==========================================
-# 6. 【新提炼】独立专职 I/O 模块
+# 6. 自动化本地源发现与编译期临时 Payload 生成
 # ==========================================
 def normalize_and_discover_local_sources(router_cleaned):
     if not os.path.exists(SOURCE_DIR): return
