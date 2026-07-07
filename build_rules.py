@@ -649,27 +649,34 @@ def main():
                     else: f.write(f"  - {raw_type},{val}\n")
     
     # [Singbox]
+# [Singbox]
     for g_name, raw_rules in global_matrix['singbox'].items():
         sb_path = os.path.join(SINGBOX_DIR, f"{g_name}.json")
         g_rules = {k: list(v) if isinstance(v, (list, set, tuple)) else v for k, v in raw_rules.items()}
+        
         optimize_domains(g_rules)
 
         sb_data = {"version": 2, "rules": []}
-        net_block = {}
-        sb_domain_mapping = [('full', 'domain'), ('suffix', 'domain_suffix'), ('keyword', 'domain_keyword')]
-
-        for ik, sb_key in sb_domain_mapping:
-            if g_rules.get(ik): net_block[sb_key] = sorted(list(g_rules[ik]))
+        
+        if g_rules.get('full'):
+            sb_data["rules"].append({"domain": sorted(list(g_rules['full']))})
+            
+        if g_rules.get('suffix'):
+            sb_data["rules"].append({"domain_suffix": sorted(list(g_rules['suffix']))})
+            
+        if g_rules.get('keyword'):
+            sb_data["rules"].append({"domain_keyword": sorted(list(g_rules['keyword']))})
             
         combined_ips = extract_combined_cidrs(g_rules)
-        if combined_ips: net_block["ip_cidr"] = combined_ips
+        if combined_ips: 
+            sb_data["rules"].append({"ip_cidr": combined_ips})
             
         if g_rules.get('wildcard') or g_rules.get('regex'):
             regex_list = [convert_wildcard_to_regex(w) for w in g_rules.get('wildcard', [])] + g_rules.get('regex', [])
-            net_block["domain_regex"] = sorted(list(set(regex_list)))
+            sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
             
-        if net_block: sb_data["rules"].append(net_block)
-        if g_rules.get('process'): sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
+        if g_rules.get('process'): 
+            sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
             
         if g_rules.get('port'): 
             p_list, p_range = parse_ports_for_singbox(g_rules['port'])
@@ -679,12 +686,13 @@ def main():
             if port_block: sb_data["rules"].append(port_block)
 
         if g_rules.get('logical_and'):
-            for and_rule in g_rules['logical_and']: sb_data["rules"].append(and_rule)
-                
+            for and_rule in g_rules['logical_and']: 
+                sb_data["rules"].append(and_rule)
+
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
 
-    # [PAC 生产流]
+    # [PAC ]
     for g_name, raw_domains in global_matrix['pac'].items():
         pac_path = os.path.join(PAC_DIR, f"{g_name}.pac")
         combined_domains = set(raw_domains.get('full', [])) | set(raw_domains.get('suffix', [])) if isinstance(raw_domains, dict) else (set(raw_domains) if raw_domains else set())
