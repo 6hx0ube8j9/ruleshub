@@ -77,11 +77,10 @@ RULE_TYPE_MAP = {
     'DOMAIN-WILDCARD': 'wildcard', 'HOST-WILDCARD': 'wildcard', 'WILDCARD': 'wildcard', 
     'DOMAIN-REGEX': 'regex', 'DOMAIN_REGEX': 'regex', 'REGEX': 'regex', 
     'PROCESS-NAME': 'process', 'PROCESS': 'process', 'PROCESS_NAME': 'process',
-    'USER-AGENT': 'useragent', 'USERAGENT': 'useragent'
-    
+    'USER-AGENT': 'useragent', 'USERAGENT': 'useragent',   
     'IP-CIDR': 'ip', 'IP': 'ip',
     'IP-CIDR6': 'ip6', 'IP6': 'ip6', 'IP6-CIDR': 'ip6',  
-    'DST-PORT': 'port', 'DEST-PORT': 'port', 'PORT': 'port', 
+    'DST-PORT': 'port', 'DEST-PORT': 'port', 'PORT': 'port' 
     
 }
 
