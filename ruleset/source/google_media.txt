@@ -685,7 +685,6 @@ suffix,xn--ngstr-lra8j.com
 suffix,xn--p8j9a0d9c9a.xn--q9jyb4c
 suffix,xplr.co
 suffix,youtu.be
-suffix,youtube
 suffix,youtube-nocookie.com
 suffix,youtube.ae
 suffix,youtube.al
