@@ -319,7 +319,11 @@ def clean_and_parse_line(line):
 
 def optimize_domains(rules: dict):
     if 'suffix' not in rules or 'full' not in rules: return
-    safe_suffixes = {s if s.startswith('.') else '.' + s for s in rules['suffix'] if s}
+    raw_suffixes = rules['suffix']
+    raw_fulls = rules['full']
+    is_list_output = isinstance(raw_suffixes, list)
+    
+    safe_suffixes = {s if s.startswith('.') else '.' + s for s in raw_suffixes if s}
     sorted_suffixes = sorted(list(safe_suffixes), key=len)
     optimized_suffixes = set()
     
@@ -331,16 +335,23 @@ def optimize_domains(rules: dict):
                 break
         if not is_sub: optimized_suffixes.add(suf)
             
-    rules['suffix'] = {s.lstrip('.') for s in optimized_suffixes}
+    final_suffixes = {s.lstrip('.') for s in optimized_suffixes}
+    
     optimized_fulls = set()
-    for f_dom in rules['full']:
+    for f_dom in raw_fulls:
         is_covered = False
-        for suf in rules['suffix']:
+        for suf in final_suffixes:
             if f_dom == suf or f_dom.endswith('.' + suf):
                 is_covered = True
                 break
         if not is_covered: optimized_fulls.add(f_dom)
-    rules['full'] = optimized_fulls
+        
+    if is_list_output:
+        rules['suffix'] = sorted(list(final_suffixes))
+        rules['full'] = sorted(list(optimized_fulls))
+    else:
+        rules['suffix'] = final_suffixes
+        rules['full'] = optimized_fulls
 
 # ==========================================
 # 5. 网络 I/O 与规则聚合分发流
