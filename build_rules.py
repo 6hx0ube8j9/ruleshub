@@ -4,6 +4,7 @@ import json
 import re
 import urllib.request
 import urllib.error
+import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ==========================================
@@ -356,17 +357,26 @@ def optimize_domains(rules: dict):
 # ==========================================
 # 5. 网络 I/O 与规则聚合分发流
 # ==========================================
+import requests
+
 def fetch_single_url(remote_url):
     try:
-        req = urllib.request.Request(
-            remote_url, 
-            headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-        )
-        with urllib.request.urlopen(req, timeout=15) as response:
-            content = response.read().decode('utf-8', errors='ignore')
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
+        response = requests.get(remote_url, headers=headers, timeout=15)
+        if response.status_code == 200:
+            content = response.content.decode('utf-8', errors='ignore')
             return remote_url, content.splitlines()
+        else:
+            print(f"Warning: {remote_url} returned status {response.status_code}")
+            return remote_url, []
+            
+    except requests.exceptions.RequestException as e:
+        print(f"Warning: Network error fetching {remote_url} - {e}")
+        return remote_url, []
     except Exception as e:
-        print(f"Warning: Failed to fetch {remote_url} - {e}")
+        print(f"Warning: Unexpected error fetching {remote_url} - {e}")
         return remote_url, []
 
 def fetch_and_merge_rules(base_name, policy):
