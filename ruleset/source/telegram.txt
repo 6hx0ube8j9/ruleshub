@@ -1,5 +1,8 @@
 # === telegram Combined Base Rules ===
+
+# --- TYPE: REMOVE ---
 remove,tx.me
+
 # --- TYPE: FULL ---
 full,api.imem.app
 full,api.swiftgram.app
@@ -25,7 +28,6 @@ suffix,telegram.space
 suffix,telegramdownload.com
 suffix,telesco.pe
 suffix,tg.dev
-suffix,tx.me
 suffix,usercontent.dev
 
 # --- TYPE: KEYWORD ---
