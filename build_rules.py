@@ -649,7 +649,6 @@ def main():
                     else: f.write(f"  - {raw_type},{val}\n")
     
     # [Singbox]
-# [Singbox]
     for g_name, raw_rules in global_matrix['singbox'].items():
         sb_path = os.path.join(SINGBOX_DIR, f"{g_name}.json")
         g_rules = {k: list(v) if isinstance(v, (list, set, tuple)) else v for k, v in raw_rules.items()}
