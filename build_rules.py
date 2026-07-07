@@ -357,8 +357,6 @@ def optimize_domains(rules: dict):
 # ==========================================
 # 5. 网络 I/O 与规则聚合分发流
 # ==========================================
-import requests
-
 def fetch_single_url(remote_url):
     try:
         headers = {
