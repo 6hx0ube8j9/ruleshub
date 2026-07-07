@@ -15,6 +15,11 @@
       "process_name": [
         "telegram"
       ]
+    },
+    {
+      "port": [
+        443
+      ]
     }
   ]
 }

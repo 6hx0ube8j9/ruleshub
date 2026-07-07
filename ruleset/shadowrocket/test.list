@@ -1,6 +1,6 @@
 # Shadowrocket Rule-Set: test
 
-DST-PORT,(443, 443)
+DST-PORT,443
 DOMAIN-SUFFIX,google.com
 IP-CIDR,1.1.1.1/32,no-resolve
 IP-CIDR,192.168.1.1/32,no-resolve
