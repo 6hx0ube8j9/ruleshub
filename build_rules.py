@@ -192,7 +192,7 @@ def parse_ports_for_singbox(port_set):
 # ==========================================
 def clean_and_parse_line(line):
     line = line.strip()
-    if not line or line.startswith(('#', '//', ';')) or line == 'payload:':
+    if not line or line.startswith('#') or line.startswith('//') or line.startswith(';') or line == 'payload:':
         return None, None
     if line.startswith('-'):
         line = line.lstrip('-').strip()
@@ -200,6 +200,7 @@ def clean_and_parse_line(line):
     
     if not line: return None, None
 
+    # ================= 场景一：标准规则行 =================
     if ',' in line:
         possible_tag = line.split(',')[0].strip().upper()
         internal_type = RULE_TYPE_MAP.get(possible_tag)
@@ -207,6 +208,7 @@ def clean_and_parse_line(line):
             return None, None
             
         p1, p2 = [x.strip() for x in line.split(',', 1)]
+        
         if possible_tag not in ['DOMAIN-REGEX', 'REGEX', 'USER-AGENT', 'USERAGENT']:
             p2 = p2.split('#')[0].split('//')[0].strip()
 
@@ -215,15 +217,19 @@ def clean_and_parse_line(line):
             if ',' in p2_clean: p2_clean = p2_clean.split(',')[0].strip()
             if ':' in p2_clean or '-' in p2_clean:
                 splitter = ':' if ':' in p2_clean else '-'
-                s, e = p2_clean.split(splitter, 1)
-                try: 
+                try:
+                    s, e = p2_clean.split(splitter, 1)
                     return 'port', f"{int(s.strip())}-{int(e.strip())}"
                 except ValueError: return None, None
             else:
-                try: 
-                    return 'port', str(int(p2_clean))
+                try: return 'port', str(int(p2_clean))
                 except ValueError: return None, None
-                
+
+        if possible_tag in ['DOMAIN-REGEX', 'REGEX']:
+            return 'regex', p2
+        if possible_tag in ['USER-AGENT', 'USERAGENT']:
+            return 'useragent', p2
+
         p2_clean = p2.lower()
         if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
         elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
@@ -262,14 +268,19 @@ def clean_and_parse_line(line):
             return None, None
             
         if internal_type == 'process': return 'process', p2.lower()
-        return None, None
 
+        return internal_type, p2
+
+    # ================= 场景二：纯文本行（如纯域名列表、纯IP列表） =================
+	
     raw_val = line.lower().split('#')[0].split('//')[0].strip()
+
     if not raw_val or any(c in raw_val for c in ['*', '?', '(', ')', '|', '^', '$', '\\']):
         return None, None
 
     raw_val = raw_val.rstrip('.')
-    if not raw_val: return None, None
+    if not raw_val or len(raw_val) < 3: 
+        return None, None 
 
     if '/' in raw_val and not (IPV4_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val.split('/')[0])):
         return None, None
@@ -277,11 +288,14 @@ def clean_and_parse_line(line):
     if ':' in raw_val:
         if raw_val.count(':') == 1:
             possible_ip_or_domain, port = raw_val.split(':')
-            if port.isdigit() and possible_ip_or_domain: raw_val = possible_ip_or_domain
-            else: return None, None
+            if port.isdigit() and possible_ip_or_domain: 
+                raw_val = possible_ip_or_domain
+            else: 
+                return None, None
         else:
             clean_ipv6 = raw_val.strip('[]')
-            if not IPV6_REGEX.match(clean_ipv6): return None, None
+            if not IPV6_REGEX.match(clean_ipv6): 
+                return None, None
             raw_val = clean_ipv6
 
     if IPV4_REGEX.match(raw_val):
@@ -289,7 +303,8 @@ def clean_and_parse_line(line):
     if IPV6_REGEX.match(raw_val):
         return ('ip6', raw_val) if validate_ip_mask(raw_val, True) else (None, None)
         
-    if has_invalid_domain_chars(raw_val): return None, None
+    if has_invalid_domain_chars(raw_val): 
+        return None, None
 
     is_explicit_suffix = False
     if raw_val.startswith('+.'):   raw_val = raw_val[2:]; is_explicit_suffix = True
@@ -297,26 +312,35 @@ def clean_and_parse_line(line):
     elif raw_val.startswith('+'):  raw_val = raw_val[1:]; is_explicit_suffix = True
         
     raw_val = raw_val.lstrip('.')
-    if not raw_val: return None, None
-        
+    if not raw_val: 
+        return None, None
+
+    if '.' not in raw_val:
+        return None, None
+		
     raw_val = try_punycode_encode(raw_val)
-    if not raw_val or not DOMAIN_PATTERN.match(raw_val): return None, None
+    if not raw_val or not DOMAIN_PATTERN.match(raw_val): 
+        return None, None
 
     if is_explicit_suffix:
-        return 'suffix', raw_val
+        return 'suffix', (raw_val if raw_val.startswith('.') else '.' + raw_val)
     else:
         if 'PUBLIC_SUFFIX_BLACKLIST' in globals():
-            if raw_val in PUBLIC_SUFFIX_BLACKLIST: return None, None
+            if raw_val in PUBLIC_SUFFIX_BLACKLIST: 
+                return None, None
             parts = raw_val.split('.')
             parts_count = len(parts)
             last_2_parts = '.'.join(parts[-2:]) if parts_count >= 2 else ''
             is_compound_public = last_2_parts in PUBLIC_SUFFIX_BLACKLIST
 
-            if parts_count == 2: return 'suffix', raw_val
-            elif parts_count == 3: return ('suffix', raw_val) if is_compound_public else ('full', raw_val)
-            else: return 'full', raw_val
-                
-        return ('suffix', raw_val) if raw_val.count('.') == 1 else ('full', raw_val)
+            if parts_count == 2: 
+                return 'suffix', '.' + raw_val
+            elif parts_count == 3: 
+                return ('suffix', '.' + raw_val) if is_compound_public else ('full', raw_val)
+            else: 
+                return 'full', raw_val 
+
+        return ('suffix', '.' + raw_val) if raw_val.count('.') == 1 else ('full', raw_val)
 
 def optimize_domains(rules: dict):
     if 'suffix' not in rules or 'full' not in rules: return
