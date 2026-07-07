@@ -316,17 +316,22 @@ def clean_and_parse_line(line):
 
     if '.' not in raw_val:
         return None, None
-		
+        
     raw_val = try_punycode_encode(raw_val)
     if not raw_val or not DOMAIN_PATTERN.match(raw_val): 
         return None, None
-		
+
+    parts = raw_val.split('.')
+    parts_count = len(parts)
+    is_compound_public = False
+    if parts_count >= 2:
+        tail_2 = '.'.join(parts[-2:])
+        if 'PUBLIC_SUFFIX_BLACKLIST' in globals() and tail_2 in PUBLIC_SUFFIX_BLACKLIST:
+            is_compound_public = True
+
     if is_explicit_suffix:
         return 'suffix', raw_val.lstrip('+.')
-		
-    elif rule_type: 
-        return rule_type, raw_val
-		
+        
     else:
         if 'PUBLIC_SUFFIX_BLACKLIST' in globals():
             if parts_count == 2:
@@ -335,34 +340,42 @@ def clean_and_parse_line(line):
                 return ('suffix', raw_val.lstrip('+.')) if is_compound_public else ('full', raw_val)
             else: 
                 return 'full', raw_val 
-        return ('suffix', raw_val.lstrip('+.')) if raw_val.count('.') == 1 else ('full', raw_val)
+        return ('suffix', raw_val.lstrip('+.')) if parts_count == 2 else ('full', raw_val)
 
 def optimize_domains(rules: dict):
     if 'suffix' not in rules or 'full' not in rules: return
     raw_suffixes = rules['suffix']
     raw_fulls = rules['full']
     is_list_output = isinstance(raw_suffixes, list)
-    
+
     sorted_suffixes = sorted(list(raw_suffixes), key=len)
     optimized_suffixes = set()
     
     for suf in sorted_suffixes:
+        parts = suf.split('.')
         is_sub = False
-        for opt in optimized_suffixes:
-            if suf == opt or suf.endswith('.' + opt):
+        for i in range(1, len(parts)):
+            parent = '.'.join(parts[i:])
+            if parent in optimized_suffixes:
                 is_sub = True
                 break
-        if not is_sub: optimized_suffixes.add(suf)
+        if not is_sub: 
+            optimized_suffixes.add(suf)
             
     optimized_fulls = set()
     for f_dom in raw_fulls:
+        if f_dom in optimized_suffixes:
+            continue
+        parts = f_dom.split('.')
         is_covered = False
-        for suf in optimized_suffixes:
-            if f_dom == suf or f_dom.endswith('.' + suf):
+        for i in range(1, len(parts)):
+            parent = '.'.join(parts[i:])
+            if parent in optimized_suffixes:
                 is_covered = True
                 break
-        if not is_covered: optimized_fulls.add(f_dom)
-        
+        if not is_covered: 
+            optimized_fulls.add(f_dom)
+
     if is_list_output:
         rules['suffix'] = sorted(list(optimized_suffixes))
         rules['full'] = sorted(list(optimized_fulls))
@@ -462,10 +475,7 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys, source_ena
     if rules.get('port'):
         cleaned_ports = set()
         for v in rules['port']:
-            if isinstance(v, (tuple, list)):
-                cleaned_ports.add(f"{v[0]}-{v[1]}" if v[0] != v[1] else str(v[0]))
-            else:
-                cleaned_ports.add(str(v).replace(':', '-').strip())
+            cleaned_ports.add(str(v).replace(':', '-').strip())
         rules['port'] = cleaned_ports
 		
     with open(source_path, 'w', encoding='utf-8') as f_source:
@@ -525,13 +535,16 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
 # 6. 自动化本地源发现与编译期临时 Payload 生成
 # ==========================================
 def normalize_and_discover_local_sources(router_cleaned):
-    if not os.path.exists(SOURCE_DIR): return
+    if not os.path.exists(SOURCE_DIR): 
+        return
+        
     for f in os.listdir(SOURCE_DIR):
         if f.endswith('.txt'):
             if not f.islower():
                 old_path = os.path.join(SOURCE_DIR, f)
                 new_f = f.lower()
                 new_path = os.path.join(SOURCE_DIR, new_f)
+                
                 if os.path.exists(new_path):
                     try:
                         with open(old_path, 'r', encoding='utf-8') as f_old:
@@ -539,14 +552,18 @@ def normalize_and_discover_local_sources(router_cleaned):
                         with open(new_path, 'a', encoding='utf-8') as f_new:
                             f_new.write("\n" + old_content)
                         os.remove(old_path)
-                    except Exception: pass
+                    except Exception as e:
+                        print(f"⚠️ [WARN] Failed to merge local source '{f}': {e}")
                 else:
-                    try: os.rename(old_path, new_path)
-                    except Exception: pass
+                    try: 
+                        os.rename(old_path, new_path)
+                    except Exception as e: 
+                        print(f"⚠️ [WARN] Failed to rename local source '{f}': {e}")
                 f = new_f
 
             local_base_name = os.path.splitext(f)[0]
-            if local_base_name in router_cleaned: continue
+            if local_base_name in router_cleaned: 
+                continue
             router_cleaned[local_base_name] = {'name': local_base_name, 'url': []}
 
 def generate_mrs_srs_temp_files(base_name, policy, rules):
