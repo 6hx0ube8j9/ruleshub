@@ -1,7 +1,7 @@
 # === telegram Combined Base Rules ===
 
 # --- TYPE: REMOVE ---
-remove,tx.me
+full,tx.me
 
 # --- TYPE: FULL ---
 full,api.imem.app
