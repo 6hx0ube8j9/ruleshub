@@ -1,18 +1,23 @@
-测试脚本
-# --- 域名类 (对应 net_block) ---
-DOMAIN,test.com
-DOMAIN-SUFFIX,cn
-DOMAIN-KEYWORD,test
+# === appdw Combined Base Rules ===
 
-# --- IP类 (对应 net_block) ---
-IP-CIDR,10.0.0.0/24
-IP-CIDR,192.168.0.1/32
-IP-CIDR6,2000::/3
+# --- TYPE: PROCESS ---
+process,curl
 
-# --- 进程类 (独立 block) ---
-PROCESS-NAME,curl
+# --- TYPE: PORT ---
+port,1000-2000
+port,443
+port,80
 
-# --- 端口类 (独立 block) ---
-PORT,80
-PORT,443
-PORT,1000:2000
+# --- TYPE: FULL ---
+full,test.com
+
+# --- TYPE: KEYWORD ---
+keyword,test
+
+# --- TYPE: IP ---
+ip,10.0.0.0/24
+ip,192.168.0.1/32
+
+# --- TYPE: IP6 ---
+ip6,2000::/3
+

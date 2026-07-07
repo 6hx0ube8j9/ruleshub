@@ -2,8 +2,34 @@
   "version": 2,
   "rules": [
     {
-      "domain_suffix": [
-        "abc.cn"
+      "domain": [
+        "test.com"
+      ]
+    },
+    {
+      "domain_keyword": [
+        "test"
+      ]
+    },
+    {
+      "ip_cidr": [
+        "10.0.0.0/24",
+        "192.168.0.1/32",
+        "2000::/3"
+      ]
+    },
+    {
+      "process_name": [
+        "curl"
+      ]
+    },
+    {
+      "port": [
+        80,
+        443
+      ],
+      "port_range": [
+        "1000:2000"
       ]
     }
   ]
