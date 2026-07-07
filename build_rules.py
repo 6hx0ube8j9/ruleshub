@@ -381,6 +381,53 @@ def optimize_domains(rules: dict):
 # ==========================================
 # 5. 网络 I/O 与规则聚合分发流
 # ==========================================
+def load_local_rules(source_path, rule_keys):
+    local_rules = {k: set() for k in rule_keys}
+    if os.path.exists(source_path):
+        with open(source_path, 'r', encoding='utf-8') as f_local:
+            for line in f_local:
+                r_type, payload = clean_and_parse_line(line)
+                if payload and r_type in local_rules:
+                    local_rules[r_type].add(payload)
+    return local_rules
+
+
+def load_remote_rules_batch(url_cfg, rule_keys):
+    remote_rules = {k: set() for k in rule_keys}
+    url_list = url_cfg if isinstance(url_cfg, list) else ([url_cfg] if url_cfg else [])
+    if not url_list:
+        return remote_rules
+
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        future_to_url = {executor.submit(fetch_single_url, url): url for url in url_list}
+        for future in as_completed(future_to_url):
+            _, lines = future.result()
+            for line in lines:
+                r_type, payload = clean_and_parse_line(line)
+                if payload and r_type in remote_rules:
+                    remote_rules[r_type].add(payload)
+    return remote_rules
+
+def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_keys: list) -> dict:
+    merged = {k: local_rules[k].copy() | remote_rules[k] for k in rule_keys}
+
+    remove_set = merged.get('remove', set())
+    if remove_set:
+        for r_type in rule_keys:
+            if r_type != 'remove':
+                merged[r_type] -= remove_set
+
+    local_vessels = set().union(*(payloads for r_type, payloads in local_rules.items() if r_type != 'remove'))
+    
+    if local_vessels:
+        for r_type in rule_keys:
+            if r_type != 'remove':
+                conflict_items = (merged[r_type] & local_vessels) - local_rules[r_type]
+                if conflict_items:
+                    merged[r_type] -= conflict_items
+                    
+    return merged
+	
 def fetch_single_url(remote_url):
     try:
         headers = {
@@ -390,10 +437,8 @@ def fetch_single_url(remote_url):
         if response.status_code == 200:
             content = response.content.decode('utf-8', errors='ignore')
             return remote_url, content.splitlines()
-        else:
-            print(f"Warning: {remote_url} returned status {response.status_code}")
-            return remote_url, []
-            
+        print(f"Warning: {remote_url} returned status {response.status_code}")
+        return remote_url, []
     except requests.exceptions.RequestException as e:
         print(f"Warning: Network error fetching {remote_url} - {e}")
         return remote_url, []
@@ -402,89 +447,74 @@ def fetch_single_url(remote_url):
         return remote_url, []
 
 def fetch_and_merge_rules(base_name, policy):
-    rules = {k: set() for k in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}  
+    RULE_KEYS = ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']
+    
     source_enable, _ = parse_target_config(policy, 'source', base_name)
     source_file_name = base_name.lower()
     source_path = os.path.join(SOURCE_DIR, f"{source_file_name}.txt")
+    local_rules = load_local_rules(source_path, RULE_KEYS)
+    remote_rules = load_remote_rules_batch(policy.get('url', []), RULE_KEYS)
+    rules = merge_and_sovereignty_filter(local_rules, remote_rules, RULE_KEYS)
 
-    if os.path.exists(source_path):
-        with open(source_path, 'r', encoding='utf-8') as f_local:
-            for line in f_local:
-                r_type, payload = clean_and_parse_line(line)
-                if payload and r_type in rules: rules[r_type].add(payload)
+    optimize_domains(rules)
+    save_local_rules(source_path, source_file_name, rules, RULE_KEYS, source_enable)
 
-    remote_url_cfg = policy.get('url', [])
-    url_list = remote_url_cfg if isinstance(remote_url_cfg, list) else ([remote_url_cfg] if remote_url_cfg else [])
-
-    if url_list:
-        with ThreadPoolExecutor(max_workers=5) as executor:
-            future_to_url = {executor.submit(fetch_single_url, url): url for url in url_list}
-            for future in as_completed(future_to_url):
-                url, lines = future.result()
-                for line in lines:
-                    r_type, payload = clean_and_parse_line(line)
-                    if payload and r_type in rules: rules[r_type].add(payload)
-
-    if rules['remove']:
-        remove_set = rules['remove']
-        for r_type in rules:
-            if r_type != 'remove': rules[r_type] -= remove_set
-                
-    optimize_domains(rules) 
-
-    if source_enable and any(len(rules[k]) > 0 for k in rules):
-        if rules.get('port'):
-            cleaned_ports = set()
-            for v in rules['port']:
-                if isinstance(v, (tuple, list)):
-                    cleaned_ports.add(f"{v[0]}-{v[1]}" if v[0] != v[1] else str(v[0]))
-                else:
-                    cleaned_ports.add(str(v).replace(':', '-').strip())
-            rules['port'] = cleaned_ports
-
-        with open(source_path, 'w', encoding='utf-8') as f_source:
-            f_source.write(f"# === {source_file_name} Combined Base Rules ===\n\n")
-            for r_type in ['remove', 'process', 'port', 'full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']:
-                if rules[r_type]:
-                    f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
-                    for val in sorted(rules[r_type]):
-                        if r_type == 'ip': 
-                            f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
-                        elif r_type == 'ip6': 
-                            f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
-                        else: 
-                            f_source.write(f"{r_type},{val}\n")
-                    f_source.write("\n")
     return rules
 
+def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
+    if not source_enable or not any(len(rules[k]) > 0 for k in rule_keys):
+        return
+
+    if rules.get('port'):
+        cleaned_ports = set()
+        for v in rules['port']:
+            if isinstance(v, (tuple, list)):
+                cleaned_ports.add(f"{v[0]}-{v[1]}" if v[0] != v[1] else str(v[0]))
+            else:
+                cleaned_ports.add(str(v).replace(':', '-').strip())
+        rules['port'] = cleaned_ports
+
+    with open(source_path, 'w', encoding='utf-8') as f_source:
+        f_source.write(f"# === {source_file_name} Combined Base Rules ===\n\n")
+        for r_type in rule_keys:
+            if rules[r_type]:
+                f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
+                for val in sorted(rules[r_type]):
+                    if r_type == 'ip': 
+                        f_source.write(f"{r_type},{ensure_ip_mask(val)}\n")
+                    elif r_type == 'ip6': 
+                        f_source.write(f"{r_type},{ensure_ip_mask(val, True)}\n")
+                    else: 
+                        f_source.write(f"{r_type},{val}\n")
+                f_source.write("\n")
+
+
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
-    qx_en, qx_name = parse_target_config(policy, 'qx', base_name)
-    sr_en, sr_name = parse_target_config(policy, 'sr', base_name)
-    mhm_en, mhm_name = parse_target_config(policy, 'mihomo', base_name)
-    sb_en, sb_name = parse_target_config(policy, 'singbox', base_name)
-    
+    platforms = ['qx', 'sr', 'mihomo', 'singbox']
     qx_policy_label = policy.get('qx_policy', base_name.capitalize() if base_name.lower() not in ['direct', 'reject'] else base_name.lower())
 
-    if qx_en:
-        if qx_name not in global_matrix['qx']:
-            global_matrix['qx'][qx_name] = {'policy_label': qx_policy_label, 'full': set(), 'suffix': set(), 'keyword': set(), 'ip': set(), 'ip6': set(), 'useragent': set(), 'wildcard': set(), 'regex': set()}
-        for k in global_matrix['qx'][qx_name].keys():
-            if k != 'policy_label': global_matrix['qx'][qx_name][k].update(rules[k])
+    for plat in platforms:
+        enabled, target_name = parse_target_config(policy, plat, base_name)
+        if not enabled:
+            continue
 
-    if sr_en:
-        if sr_name not in global_matrix['sr']: global_matrix['sr'][sr_name] = {k: set() for k in rules.keys()}
-        for k in rules.keys(): global_matrix['sr'][sr_name][k].update(rules[k])
-
-    if mhm_en:
-        if mhm_name not in global_matrix['mihomo']: global_matrix['mihomo'][mhm_name] = {k: set() for k in rules.keys()}
-        for k in rules.keys(): global_matrix['mihomo'][mhm_name][k].update(rules[k])
-
-    if sb_en:
-        if sb_name not in global_matrix['singbox']: global_matrix['singbox'][sb_name] = {k: set() for k in rules.keys()}
-        for k in rules.keys(): global_matrix['singbox'][sb_name][k].update(rules[k])
+        if plat == 'qx':
+            if target_name not in global_matrix['qx']:
+                global_matrix['qx'][target_name] = {
+                    'policy_label': qx_policy_label,
+                    **{k: set() for k in ['full', 'suffix', 'keyword', 'ip', 'ip6', 'useragent', 'wildcard', 'regex']}
+                }
+            for k in global_matrix['qx'][target_name]:
+                if k != 'policy_label' and k in rules:
+                    global_matrix['qx'][target_name][k].update(rules[k])
+        else:
+            if target_name not in global_matrix[plat]:
+                global_matrix[plat][target_name] = {k: set() for k in rules.keys()}
+            for k, v in rules.items():
+                global_matrix[plat][target_name][k].update(v)
 
     pac_val = policy.get('pac')
-    if pac_val is not False and str(pac_val).lower() != 'false': 
+    if pac_val is not False and str(pac_val).lower() != 'false':
         pac_en = False
         pac_name = base_name
         if pac_val and pac_val is not True and str(pac_val).lower() != 'true':
@@ -493,9 +523,10 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
             pac_en = True
             
         if pac_en:
-            if pac_name not in global_matrix['pac']: global_matrix['pac'][pac_name] = set()
-            global_matrix['pac'][pac_name].update(rules['suffix'])
-            global_matrix['pac'][pac_name].update(rules['full'])
+            if pac_name not in global_matrix['pac']:
+                global_matrix['pac'][pac_name] = set()
+            global_matrix['pac'][pac_name].update(rules.get('suffix', set()))
+            global_matrix['pac'][pac_name].update(rules.get('full', set()))
 
 # ==========================================
 # 6. 【新提炼】独立专职 I/O 模块
