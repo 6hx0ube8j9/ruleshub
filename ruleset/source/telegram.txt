@@ -27,6 +27,7 @@ suffix,telesco.pe
 suffix,tg.dev
 suffix,tx.me
 suffix,usercontent.dev
+remove,t.me
 
 # --- TYPE: KEYWORD ---
 keyword,nicegram
