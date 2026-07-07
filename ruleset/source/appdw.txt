@@ -1,5 +1,18 @@
-# === appdw Combined Base Rules ===
+测试脚本
+# --- 域名类 (对应 net_block) ---
+DOMAIN,test.com
+DOMAIN-SUFFIX,cn
+DOMAIN-KEYWORD,test
 
-# --- TYPE: SUFFIX ---
-suffix,abc.cn
+# --- IP类 (对应 net_block) ---
+IP-CIDR,10.0.0.0/24
+IP-CIDR,192.168.0.1/32
+IP-CIDR6,2000::/3
 
+# --- 进程类 (独立 block) ---
+PROCESS-NAME,curl
+
+# --- 端口类 (独立 block) ---
+PORT,80
+PORT,443
+PORT,1000:2000
