@@ -871,3 +871,15 @@ ip,74.125.0.0/16
 # --- TYPE: IP6 ---
 ip6,2620:120:e000::/40
 
+# --- TYPE: USERAGENT ---
+useragent,%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*
+useragent,*YouTubeMusic*
+useragent,*com.google.Drive*
+useragent,*com.google.ios.youtubemusic*
+useragent,*youtube*
+useragent,Google.Drive*
+useragent,YouTube*
+useragent,YouTubeMusic*
+useragent,com.google.ios.youtube*
+useragent,com.google.ios.youtubemusic*
+

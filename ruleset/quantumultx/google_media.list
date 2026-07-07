@@ -861,3 +861,13 @@ ip-cidr, 173.194.0.0/16, GoogleGroup, no-resolve
 ip-cidr, 216.73.80.0/20, GoogleGroup, no-resolve
 ip-cidr, 74.125.0.0/16, GoogleGroup, no-resolve
 ip6-cidr, 2620:120:e000::/40, GoogleGroup, no-resolve
+user-agent, %E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*, GoogleGroup
+user-agent, *YouTubeMusic*, GoogleGroup
+user-agent, *com.google.Drive*, GoogleGroup
+user-agent, *com.google.ios.youtubemusic*, GoogleGroup
+user-agent, *youtube*, GoogleGroup
+user-agent, Google.Drive*, GoogleGroup
+user-agent, YouTube*, GoogleGroup
+user-agent, YouTubeMusic*, GoogleGroup
+user-agent, com.google.ios.youtube*, GoogleGroup
+user-agent, com.google.ios.youtubemusic*, GoogleGroup
