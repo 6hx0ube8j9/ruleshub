@@ -157,13 +157,19 @@ def extract_combined_cidrs(rules_dict):
     ipv4_list = [ensure_ip_mask(i, False) for i in rules_dict.get('ip', [])]
     ipv6_list = [ensure_ip_mask(i, True) for i in rules_dict.get('ip6', [])]
     return sorted(list(set(ipv4_list + ipv6_list)))
-import re
 
-import re
+def convert_wildcard_to_regex_safe(wildcard_str):
+    while '..' in wildcard_str:
+        wildcard_str = wildcard_str.replace('..', '.')
 
-def convert_wildcard_to_regex(wildcard_str):
+    if '*' not in wildcard_str and '?' not in wildcard_str:
+        if re.match(r'^[a-zA-Z0-9_\-\.]+$', wildcard_str):
+            return None 
+
     if wildcard_str.startswith('.*.'):
         wildcard_str = '*' + wildcard_str[3:]
+    while '**' in wildcard_str:
+        wildcard_str = wildcard_str.replace('**', '*')
 		
     pieces = re.split(r'([\*\?])', wildcard_str)
     regex_pieces = []
@@ -177,8 +183,9 @@ def convert_wildcard_to_regex(wildcard_str):
             regex_pieces.append(re.escape(piece))
             
     r_val = ''.join(regex_pieces)
+
     if r_val.startswith('.*\\.'):
-        r_val = r'(.+\.)?' + r_val[4:]
+        r_val = r'([^.]+\.)?' + r_val[4:]
         
     while '.*.*' in r_val:
         r_val = r_val.replace('.*.*', '.*')
