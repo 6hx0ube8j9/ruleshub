@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'ruleset/source/**'
+      - 'ruleset/**'
       - 'ruleset/ruleset.json'
       - 'build_rules.py'
       - '.github/workflows/build.yml'
