@@ -1,7 +1,7 @@
 # Quantumult X Aggregated Rule-Set: telegram
 
 host, api.imem.app, Telegram
-host, api.swiftgram.app, Telegram
+host-suffix, api.swiftgram.app, Telegram
 host-suffix, cdn-telegram.org, Telegram
 host-suffix, comments.app, Telegram
 host-suffix, contest.com, Telegram

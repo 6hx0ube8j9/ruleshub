@@ -2,10 +2,9 @@
 
 # --- TYPE: FULL ---
 full,api.imem.app
-suffix,api.swiftgram.app
-
 
 # --- TYPE: SUFFIX ---
+suffix,api.swiftgram.app
 suffix,cdn-telegram.org
 suffix,comments.app
 suffix,contest.com
