@@ -161,10 +161,17 @@ def extract_combined_cidrs(rules_dict):
 def convert_wildcard_to_regex(wildcard_str):
     if '*' not in wildcard_str and '?' not in wildcard_str:
         return f"^{re.escape(wildcard_str)}$"
+    
     escaped = re.escape(wildcard_str)
     r_val = escaped.replace(r'\*', '.*').replace(r'\?', '.')
+    if r_val.startswith(r'\..*'):
+        r_val = r_val[2:]
+    elif r_val.startswith(r'.*\.'):
+        r_val = '.*' + r_val[4:]
+
     while '.*.*' in r_val:
         r_val = r_val.replace('.*.*', '.*')
+        
     return f"^{r_val}$"
 
 def parse_ports_for_singbox(port_set):
