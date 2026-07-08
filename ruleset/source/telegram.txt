@@ -5,7 +5,6 @@ full,api.imem.app
 full,api.swiftgram.app
 
 # --- TYPE: SUFFIX ---
-suffix,cdn-telegram.org
 suffix,comments.app
 suffix,contest.com
 suffix,graph.org
