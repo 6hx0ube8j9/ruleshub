@@ -760,15 +760,24 @@ def main():
             regex_list = [convert_wildcard_to_regex(w) for w in g_rules.get('wildcard', [])] + g_rules.get('regex', [])
             sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
             
-        if g_rules.get('process'): 
-            sb_data["rules"].append({"process_name": sorted(list(g_rules['process']))})
-            
-        if g_rules.get('port'): 
-            p_list, p_range = parse_ports_for_singbox(g_rules['port'])
-            port_block = {}
-            if p_list: port_block["port"] = p_list
-            if p_range: port_block["port_range"] = p_range
-            if port_block: sb_data["rules"].append(port_block)
+	    if g_rules.get('process'): 
+            proc_set = set()
+            for p in g_rules['process']:
+                if not p: continue
+                name = os.path.basename(p.replace('\\', '/'))
+                if name.lower().endswith('.exe'): name = name[:-4]
+                proc_set.add(name)
+            if proc_set:
+                sb_data["rules"].append({"process_name": sorted(list(proc_set))})		
+				
+	   # ============ 端口逻辑 =============
+       # if g_rules.get('port'): 
+       #     p_list, p_range = parse_ports_for_singbox(g_rules['port'])
+       #     port_block = {}
+       #     if p_list: port_block["port"] = p_list
+       #     if p_range: port_block["port_range"] = p_range
+       #     if port_block: sb_data["rules"].append(port_block)
+       # ===================================		
 
         if g_rules.get('logical_and'):
             for and_rule in g_rules['logical_and']: 
