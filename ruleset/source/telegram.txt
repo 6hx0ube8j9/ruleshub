@@ -4,7 +4,6 @@
 full,api.imem.app
 
 # --- TYPE: SUFFIX ---
-suffix,api.swiftgram.app
 suffix,cdn-telegram.org
 suffix,comments.app
 suffix,contest.com
@@ -30,6 +29,7 @@ suffix,usercontent.dev
 
 # --- TYPE: KEYWORD ---
 keyword,nicegram
+keyword,cdn-telegram.org
 
 # --- TYPE: IP ---
 ip,109.239.140.0/24
