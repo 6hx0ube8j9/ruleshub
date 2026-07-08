@@ -579,7 +579,7 @@ def normalize_and_discover_local_sources(router_cleaned):
                 continue
             router_cleaned[local_base_name] = {'name': local_base_name, 'url': []}
 
-def generate_mrs_srs_temp_files(base_name, policy, rules):
+def generate_mrs_temp_files(base_name, policy, rules):
 
     if 'classic' in base_name.lower() or 'nodomain' in base_name.lower(): return
 
@@ -663,7 +663,7 @@ def main():
     for target_base_name, policy_card in router_cleaned.items():
         rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
         dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
-        generate_mrs_srs_temp_files(target_base_name, policy_card, rules_in_memory)
+        generate_mrs_temp_files(target_base_name, policy_card, rules_in_memory)
   
     # [QuantumultX]
     for g_name, g_rules in global_matrix['qx'].items():
