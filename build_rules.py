@@ -620,12 +620,12 @@ def generate_mrs_srs_temp_files(base_name, policy, rules):
         if target_ip_name:
             combined_ips = extract_combined_cidrs(rules)
             if combined_ips:
-                sb_tmp_ip = {"version": 5, "rules": [{"ip_cidr": combined_ips}]}
+                sb_tmp_ip = {"version": 2, "rules": [{"ip_cidr": combined_ips}]}
                 with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{target_ip_name}.json"), 'w', encoding='utf-8') as f:
                     json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
                     
         if target_domain_name:
-            sb_tmp_domain = {"version": 5, "rules": []}
+            sb_tmp_domain = {"version": 2, "rules": []}
             if rules.get('full'): sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})      
             if rules.get('suffix'): sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})      
             if rules.get('keyword'): sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
@@ -733,7 +733,7 @@ def main():
         
         optimize_domains(g_rules)
 
-        sb_data = {"version": 5, "rules": []}
+        sb_data = {"version": 2, "rules": []}
         
         if g_rules.get('full'):
             sb_data["rules"].append({"domain": sorted(list(g_rules['full']))})
