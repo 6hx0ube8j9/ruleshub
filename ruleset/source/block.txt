@@ -1,4 +1,5 @@
 # === block Combined Base Rules ===
 
-apple.com
-1111
+# --- TYPE: SUFFIX ---
+suffix,apple.com
+
