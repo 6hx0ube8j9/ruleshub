@@ -28,7 +28,6 @@ suffix,tx.me
 suffix,usercontent.dev
 
 # --- TYPE: KEYWORD ---
-keyword,cdn-telegram.org
 keyword,nicegram
 
 # --- TYPE: IP ---
