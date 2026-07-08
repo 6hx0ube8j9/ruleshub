@@ -3,12 +3,12 @@
   "rules": [
     {
       "domain": [
-        "api.imem.app",
-        "api.swiftgram.app"
+        "api.imem.app"
       ]
     },
     {
       "domain_suffix": [
+        "api.swiftgram.app",
         "cdn-telegram.org",
         "comments.app",
         "contest.com",
