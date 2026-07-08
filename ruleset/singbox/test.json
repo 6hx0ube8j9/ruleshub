@@ -15,9 +15,9 @@
     {
       "domain_regex": [
         "^.*$",
-        "^.*\\.netflix\\.\\.com$",
         "^.*google.*$",
         "^.*with\\-dash\\-and_underscore.*$",
+        "^\\..*\\..*\\.netflix\\.\\.com$",
         "^my\\+\\$app\\$\\.com$"
       ]
     },
