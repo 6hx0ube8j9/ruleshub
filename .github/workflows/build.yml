@@ -70,10 +70,8 @@ jobs:
           chmod +x sing-box
 
       - name: Run Parser
-        env:
-          FORCE_BUILD: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' && 'true' || 'false' }}
         run: python build_rules.py
-
+        
       - name: Build MRS
         run: |
           cd ruleset/mihomo
