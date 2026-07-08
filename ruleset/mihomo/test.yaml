@@ -1,18 +1,15 @@
 # Mihomo Payload Rule-Set: test
 payload:
-  - PROCESS-NAME,my custom app.exe
-  - DST-PORT,443
-  - DST-PORT,8080-8090
+  - PROCESS-NAME,c:\program files (x86)\my "cool" app\test.exe
+  - DST-PORT,0
+  - DST-PORT,1-65535
+  - DST-PORT,65535
+  - DST-PORT,80
   - DOMAIN,xn--fiqs8s.xn--fiqs8s
-  - DOMAIN,youtube.com
-  - DOMAIN-SUFFIX,a.b
-  - DOMAIN-SUFFIX,apple.com
-  - DOMAIN-SUFFIX,google.com
-  - DOMAIN-SUFFIX,xn--ldrr30i.xn--fiqs8s
-  - IP-CIDR,1.1.1.1/32,no-resolve
-  - IP-CIDR,192.168.1.1/24,no-resolve
-  - IP-CIDR6,2001:db8::/32,no-resolve
-  - IP-CIDR6,2001:db8::1/128,no-resolve
-  - DOMAIN-WILDCARD,*.google.com
-  - DOMAIN-WILDCARD,*twitter*
-  - DOMAIN-WILDCARD,.*.netflix.com
+  - DOMAIN-SUFFIX,internal.1234567890
+  - DOMAIN-SUFFIX,xn--ldrr30i.sub.xn--fiqs8s
+  - DOMAIN-WILDCARD,*
+  - DOMAIN-WILDCARD,****google****
+  - DOMAIN-WILDCARD,*with-dash-and_underscore*
+  - DOMAIN-WILDCARD,.*.*.netflix..com
+  - DOMAIN-WILDCARD,my+$app$.com

@@ -1,25 +1,25 @@
-# 恶意连续星号
-wildcard,****google****
-# 极端的点号与星号组合
-wildcard,.*.*.netflix..com
-# 空白字符与特殊符号混杂（测试 re.escape 范围）
-wildcard,*with-dash-and_underscore*
-# 包含正则控制字符的纯文本（看脚本是否会误把 $ 或 + 当成正则）
-wildcard,my+$app$.com
-# 只有通配符本身
-wildcard,*
-# 带有大写字母的 Punycode（测试是否会自动转小写或保持原样）
-full,XN--FIQS8S.XN--FIQS8S
-# 多层级 Punycode 混合
-suffix,xn--ldrr30i.sub.xn--fiqs8s
-# 新型长顶级域名和纯数字域名
-suffix,internal.1234567890
-# 带有特殊符号的进程名（测试 JSON 字符串转义）
-process,C:\Program Files (x86)\My "Cool" App\test.exe
-# 单个端口边界
+# === test Combined Base Rules ===
+
+# --- TYPE: PROCESS ---
+process,c:\program files (x86)\my "cool" app\test.exe
+
+# --- TYPE: PORT ---
 port,0
-port,65535
-# 跨度极大的端口范围（看是否会正确输出到 port_range 数组）
 port,1-65535
-# 包含空格的端口输入（测试 strip 过滤）
-port, 80 , 443
+port,65535
+port,80
+
+# --- TYPE: FULL ---
+full,xn--fiqs8s.xn--fiqs8s
+
+# --- TYPE: SUFFIX ---
+suffix,internal.1234567890
+suffix,xn--ldrr30i.sub.xn--fiqs8s
+
+# --- TYPE: WILDCARD ---
+wildcard,*
+wildcard,****google****
+wildcard,*with-dash-and_underscore*
+wildcard,.*.*.netflix..com
+wildcard,my+$app$.com
+

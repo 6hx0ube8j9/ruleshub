@@ -3,44 +3,37 @@
   "rules": [
     {
       "domain": [
-        "xn--fiqs8s.xn--fiqs8s",
-        "youtube.com"
+        "xn--fiqs8s.xn--fiqs8s"
       ]
     },
     {
       "domain_suffix": [
-        "a.b",
-        "apple.com",
-        "google.com",
-        "xn--ldrr30i.xn--fiqs8s"
-      ]
-    },
-    {
-      "ip_cidr": [
-        "1.1.1.1/32",
-        "192.168.1.1/24",
-        "2001:db8::/32",
-        "2001:db8::1/128"
+        "internal.1234567890",
+        "xn--ldrr30i.sub.xn--fiqs8s"
       ]
     },
     {
       "domain_regex": [
-        "^(.+\\.)?google\\.com$",
-        "^.*netflix\\.com$",
-        "^.*twitter.*$"
+        "^.*$",
+        "^.*\\.netflix\\.\\.com$",
+        "^.*google.*$",
+        "^.*with\\-dash\\-and_underscore.*$",
+        "^my\\+\\$app\\$\\.com$"
       ]
     },
     {
       "process_name": [
-        "my custom app.exe"
+        "c:\\program files (x86)\\my \"cool\" app\\test.exe"
       ]
     },
     {
       "port": [
-        443
+        0,
+        80,
+        65535
       ],
       "port_range": [
-        "8080:8090"
+        "1:65535"
       ]
     }
   ]
