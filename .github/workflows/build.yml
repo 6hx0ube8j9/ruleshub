@@ -118,13 +118,15 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-
-          git add ruleset/
+          git add -A ruleset/
           
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "No changes"
-          else
+          echo "==== 当前 Git 状态 ===="
+          git status
+          
+          if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Update [skip ci]"
             git pull --rebase origin main
             git push
+          else
+            echo "❌ 警告：即使强制添加了目录，Git 依然认为没有任何文件发生改变！"
           fi
