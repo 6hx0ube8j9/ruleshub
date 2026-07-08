@@ -3,43 +3,43 @@
   "rules": [
     {
       "domain": [
-        "google.com"
+        "xn--fiqs8s.xn--fiqs8s",
+        "youtube.com"
       ]
     },
     {
       "domain_suffix": [
-        "github.io"
-      ]
-    },
-    {
-      "domain_keyword": [
-        "openai"
+        "a.b",
+        "apple.com",
+        "google.com",
+        "xn--ldrr30i.xn--fiqs8s"
       ]
     },
     {
       "ip_cidr": [
-        "10.0.0.0/8",
-        "172.16.0.0/12",
-        "192.168.1.0/24"
+        "1.1.1.1/32",
+        "192.168.1.1/24",
+        "2001:db8::/32",
+        "2001:db8::1/128"
       ]
     },
     {
       "domain_regex": [
-        "^.*\\.jd\\..*$",
-        "^.*\\.netflix\\.com$",
-        "^.*\\.sub\\.domain\\.net$",
-        "^.*\\.tmall\\.com$",
-        "^anim[0-9]\\.Bilibili\\.com$"
+        "^.*\\.google\\.com$",
+        "^.*twitter.*$",
+        "^\\..*\\.netflix\\.com$"
+      ]
+    },
+    {
+      "process_name": [
+        "my custom app.exe"
       ]
     },
     {
       "port": [
-        22,
-        80,
         443
       ],
       "port_range": [
-        "3000:3010",
         "8080:8090"
       ]
     }

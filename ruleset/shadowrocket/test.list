@@ -1,16 +1,16 @@
 # Shadowrocket Rule-Set: test
 
-DST-PORT,22
 DST-PORT,443
-DST-PORT,80
-DOMAIN,google.com
-DOMAIN-SUFFIX,github.io
-DOMAIN-KEYWORD,openai
-IP-CIDR,10.0.0.0/8,no-resolve
-IP-CIDR,172.16.0.0/12,no-resolve
-IP-CIDR,192.168.1.0/24,no-resolve
-DOMAIN-WILDCARD,*.jd.*
-DOMAIN-WILDCARD,*.sub.domain.net
-DOMAIN-WILDCARD,*.tmall.com
-DOMAIN-REGEX,^.*\.netflix\.com$
-DOMAIN-REGEX,^anim[0-9]\.Bilibili\.com$
+DOMAIN,xn--fiqs8s.xn--fiqs8s
+DOMAIN,youtube.com
+DOMAIN-SUFFIX,a.b
+DOMAIN-SUFFIX,apple.com
+DOMAIN-SUFFIX,google.com
+DOMAIN-SUFFIX,xn--ldrr30i.xn--fiqs8s
+IP-CIDR,1.1.1.1/32,no-resolve
+IP-CIDR,192.168.1.1/24,no-resolve
+IP-CIDR6,2001:db8::/32,no-resolve
+IP-CIDR6,2001:db8::1/128,no-resolve
+DOMAIN-WILDCARD,*.google.com
+DOMAIN-WILDCARD,*twitter*
+DOMAIN-WILDCARD,.*.netflix.com
