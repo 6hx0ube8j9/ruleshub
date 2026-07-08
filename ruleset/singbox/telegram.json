@@ -9,6 +9,7 @@
     },
     {
       "domain_suffix": [
+        "cdn-telegram.org",
         "comments.app",
         "contest.com",
         "graph.org",
@@ -34,7 +35,6 @@
     },
     {
       "domain_keyword": [
-        "cdn-telegram.org",
         "nicegram"
       ]
     },

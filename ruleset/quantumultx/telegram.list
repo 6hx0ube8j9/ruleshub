@@ -2,6 +2,7 @@
 
 host, api.imem.app, Telegram
 host, api.swiftgram.app, Telegram
+host-suffix, cdn-telegram.org, Telegram
 host-suffix, comments.app, Telegram
 host-suffix, contest.com, Telegram
 host-suffix, graph.org, Telegram
@@ -23,7 +24,6 @@ host-suffix, telesco.pe, Telegram
 host-suffix, tg.dev, Telegram
 host-suffix, tx.me, Telegram
 host-suffix, usercontent.dev, Telegram
-host-keyword, cdn-telegram.org, Telegram
 host-keyword, nicegram, Telegram
 ip-cidr, 109.239.140.0/24, Telegram, no-resolve
 ip-cidr, 139.59.210.98/32, Telegram, no-resolve
