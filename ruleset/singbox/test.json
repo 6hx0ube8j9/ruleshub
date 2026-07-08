@@ -25,9 +25,9 @@
     },
     {
       "domain_regex": [
-        "^.*\\.netflix\\.com$",
-        "^.*google\\.com$",
-        "^.*twitter.*$"
+        "^.*\\.google\\.com$",
+        "^.*twitter.*$",
+        "^\\..*\\.netflix\\.com$"
       ]
     },
     {
