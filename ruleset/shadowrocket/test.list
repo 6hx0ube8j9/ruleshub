@@ -9,8 +9,8 @@ DOMAIN-KEYWORD,openai
 IP-CIDR,10.0.0.0/8,no-resolve
 IP-CIDR,172.16.0.0/12,no-resolve
 IP-CIDR,192.168.1.0/24,no-resolve
-DOMAIN-WILDCARD,*.Sub.Domain.Net
-DOMAIN-WILDCARD,*.Tmall.com
 DOMAIN-WILDCARD,*.jd.*
+DOMAIN-WILDCARD,*.sub.domain.net
+DOMAIN-WILDCARD,*.tmall.com
 DOMAIN-REGEX,^.*\.netflix\.com$
 DOMAIN-REGEX,^anim[0-9]\.Bilibili\.com$

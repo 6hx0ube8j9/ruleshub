@@ -25,10 +25,10 @@
     },
     {
       "domain_regex": [
-        "^.*\\.Sub\\.Domain\\.Net$",
-        "^.*\\.Tmall\\.com$",
         "^.*\\.jd\\..*$",
         "^.*\\.netflix\\.com$",
+        "^.*\\.sub\\.domain\\.net$",
+        "^.*\\.tmall\\.com$",
         "^anim[0-9]\\.Bilibili\\.com$"
       ]
     },

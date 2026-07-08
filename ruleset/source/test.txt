@@ -22,9 +22,9 @@ ip,172.16.0.0/12
 ip,192.168.1.0/24
 
 # --- TYPE: WILDCARD ---
-wildcard,*.Sub.Domain.Net
-wildcard,*.Tmall.com
 wildcard,*.jd.*
+wildcard,*.sub.domain.net
+wildcard,*.tmall.com
 
 # --- TYPE: REGEX ---
 regex,^.*\.netflix\.com$
