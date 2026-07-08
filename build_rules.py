@@ -158,39 +158,27 @@ def extract_combined_cidrs(rules_dict):
     ipv6_list = [ensure_ip_mask(i, True) for i in rules_dict.get('ip6', [])]
     return sorted(list(set(ipv4_list + ipv6_list)))
 
-def convert_wildcard_to_regex_safe(wildcard_str):
-    while '..' in wildcard_str:
-        wildcard_str = wildcard_str.replace('..', '.')
+import re
 
-    if '*' not in wildcard_str and '?' not in wildcard_str:
-        if re.match(r'^[a-zA-Z0-9_\-\.]+$', wildcard_str):
-            return None 
+def convert_wildcard_to_regex_improved(wildcard_str):
+    if not wildcard_str:
+        return "^$"
 
-    if wildcard_str.startswith('.*.'):
-        wildcard_str = '*' + wildcard_str[3:]
-    while '**' in wildcard_str:
-        wildcard_str = wildcard_str.replace('**', '*')
-		
-    pieces = re.split(r'([\*\?])', wildcard_str)
-    regex_pieces = []
+    is_star_dot = wildcard_str.startswith('*.')
+    if is_star_dot:
+        actual_domain = wildcard_str[2:]
+    else:
+        actual_domain = wildcard_str
+    escaped = re.escape(actual_domain)
+    r_val = escaped.replace(r'\*', '.*').replace(r'\?', '.')
     
-    for piece in pieces:
-        if piece == '*':
-            regex_pieces.append('.*')
-        elif piece == '?':
-            regex_pieces.append('.')
-        else:
-            regex_pieces.append(re.escape(piece))
-            
-    r_val = ''.join(regex_pieces)
-
-    if r_val.startswith('.*\\.'):
-        r_val = r'([^.]+\.)?' + r_val[4:]
-        
     while '.*.*' in r_val:
         r_val = r_val.replace('.*.*', '.*')
-        
-    return f"^{r_val}$"
+
+    if is_star_dot:
+        return f"^(.*\.)?{r_val}$"
+    else:
+        return f"^{r_val}$"
 
 def parse_ports_for_singbox(port_set):
     p_list, p_range = [], []
