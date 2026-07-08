@@ -1,6 +1,13 @@
 # Quantumult X Aggregated Rule-Set: test
 
-host-suffix, google.com, Test
-ip-cidr, 1.1.1.1/32, Test, no-resolve
-ip-cidr, 192.168.1.1/32, Test, no-resolve
-ip6-cidr, 2001:db8::1/128, Test, no-resolve
+host, google.com, Test
+host-suffix, github.io, Test
+host-keyword, openai, Test
+ip-cidr, 10.0.0.0/8, Test, no-resolve
+ip-cidr, 172.16.0.0/12, Test, no-resolve
+ip-cidr, 192.168.1.0/24, Test, no-resolve
+host-wildcard, *.Sub.Domain.Net, Test
+host-wildcard, *.Tmall.com, Test
+host-wildcard, *.jd.*, Test
+host-regex, ^.*\.netflix\.com$, Test
+host-regex, ^anim[0-9]\.Bilibili\.com$, Test

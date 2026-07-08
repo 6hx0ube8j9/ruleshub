@@ -2,25 +2,45 @@
   "version": 2,
   "rules": [
     {
-      "domain_suffix": [
+      "domain": [
         "google.com"
       ]
     },
     {
-      "ip_cidr": [
-        "1.1.1.1/32",
-        "192.168.1.1/32",
-        "2001:db8::1/128"
+      "domain_suffix": [
+        "github.io"
       ]
     },
     {
-      "process_name": [
-        "telegram"
+      "domain_keyword": [
+        "openai"
+      ]
+    },
+    {
+      "ip_cidr": [
+        "10.0.0.0/8",
+        "172.16.0.0/12",
+        "192.168.1.0/24"
+      ]
+    },
+    {
+      "domain_regex": [
+        "^.*\\.Sub\\.Domain\\.Net$",
+        "^.*\\.Tmall\\.com$",
+        "^.*\\.jd\\..*$",
+        "^.*\\.netflix\\.com$",
+        "^anim[0-9]\\.Bilibili\\.com$"
       ]
     },
     {
       "port": [
+        22,
+        80,
         443
+      ],
+      "port_range": [
+        "3000:3010",
+        "8080:8090"
       ]
     }
   ]

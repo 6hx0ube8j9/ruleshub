@@ -1,35 +1,32 @@
-# ==========================================
-# 1. 基础域名测试（检查大小写格式化与去重）
-# ==========================================
-DOMAIN,Google.com
-domain,GOOGLE.COM
-Domain,gOoGlE.cOm
-DOMAIN-SUFFIX,GitHub.io
-domain-suffix,github.io
-DOMAIN-KEYWORD,OpenAI
-domain-keyword,openai
+# === test Combined Base Rules ===
 
-# ==========================================
-# 2. 通配符与正则（高压测试：检验 Mihomo 剥离降级与 Sing-box 转化）
-# ==========================================
-DOMAIN-WILDCARD,*.Tmall.com
-domain-wildcard,*.jd.*
-DOMAIN-WILDCARD,*.Sub.Domain.Net
-DOMAIN-REGEX,^anim[0-9]\.Bilibili\.com$
-domain-regex,^.*\.netflix\.com$
-
-# ==========================================
-# 3. 基础 IP 与 CIDR（检查复合 IP 提取）
-# ==========================================
-IP-CIDR,192.168.1.0/24
-ip-cidr,10.0.0.0/8
-IP-CIDR,172.16.0.0/12
-
-# ==========================================
-# 4. 纯端口规则（极限界河：检验 Sing-box 端口不漏抓）
-# ==========================================
-PORT,80
-port,443
-PORT,22
-PORT,8080-8090
+# --- TYPE: PORT ---
+port,22
 port,3000-3010
+port,443
+port,80
+port,8080-8090
+
+# --- TYPE: FULL ---
+full,google.com
+
+# --- TYPE: SUFFIX ---
+suffix,github.io
+
+# --- TYPE: KEYWORD ---
+keyword,openai
+
+# --- TYPE: IP ---
+ip,10.0.0.0/8
+ip,172.16.0.0/12
+ip,192.168.1.0/24
+
+# --- TYPE: WILDCARD ---
+wildcard,*.Sub.Domain.Net
+wildcard,*.Tmall.com
+wildcard,*.jd.*
+
+# --- TYPE: REGEX ---
+regex,^.*\.netflix\.com$
+regex,^anim[0-9]\.Bilibili\.com$
+
