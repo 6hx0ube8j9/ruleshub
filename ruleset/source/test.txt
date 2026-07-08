@@ -1,32 +1,58 @@
-# === test Combined Base Rules ===
+# ==========================================
+# 压力测试场景一：标准规则行（极端/畸形/边界）
+# ==========================================
 
-# --- TYPE: PORT ---
-port,22
-port,3000-3010
-port,443
-port,80
-port,8080-8090
+# 1. 正则压力：复杂的 URL 正则，包含逗号、数量限定符、大小写混合、转义符和尾部多重注释
+URL-REGEX,^https://(api|v1)\.Example\.com/[a-zA-Z0-9]{1,3}\?token=A1b2C3&id=\d+, # 这是一个非常复杂的正则注释 // 嵌套注释
 
-# --- TYPE: FULL ---
-full,google.com
+# 2. 进程压力：带空格、大写、特殊后缀以及尾部混淆注释的进程
+PROCESS-NAME,My Custom App.exe # 这是一个带空格的大写进程名
 
-# --- TYPE: SUFFIX ---
-suffix,github.io
+# 3. 端口压力：各种畸形的端口范围、带括号或带多余逗号的端口
+PORT,(8080-8090),extra_garbage_data
+PORT, 443 , # 干净的单端口带注释
+PORT,abcdef # 错误的端口（预期应该返回 None, None）
 
-# --- TYPE: KEYWORD ---
-keyword,openai
+# 4. 通配符与前缀压力：各种魔改的通配符前缀，测试提前熔断机制
+DOMAIN,*.Google.com
+DOMAIN,.*.netflix.com
+DOMAIN,....youtube.com
+DOMAIN,*twitter*
 
-# --- TYPE: IP ---
-ip,10.0.0.0/8
-ip,172.16.0.0/12
-ip,192.168.1.0/24
+# 5. 国际化域名（Punycode）：包含中文域名和特殊符号
+DOMAIN-SUFFIX,前缀.中国 # 国际化域名测试
+DOMAIN,xn--fiqs8s.xn--fiqs8s # 已经是 Punycode 编码的域名
 
-# --- TYPE: WILDCARD ---
-wildcard,*.jd.*
-wildcard,*.sub.domain.net
-wildcard,*.tmall.com
+# 6. 异常注入与嵌套绕过（如 Clash 的逻辑规则，预期直接拦截）
+AND,((DOMAIN,google.com),(PORT,443))
+OR,(DOMAIN,baidu.com)
 
-# --- TYPE: REGEX ---
-regex,^.*\.netflix\.com$
-regex,^anim[0-9]\.Bilibili\.com$
+# 7. 异常 IP 与掩码边界
+IP-CIDR,192.168.1.1/24,no-resolve # 现代代理常见的带参数规则
+IP-CIDR6,2001:db8::/32,no-resolve
+IP-CIDR,999.999.999.999/32 # 错误的IPv4（预期返回 None, None）
 
+
+# ==========================================
+# 压力测试场景二：纯文本行（黑名单/纯域名列表）
+# ==========================================
+
+# 8. 正常纯文本与边界
+google.com
++..apple.com...
+1.1.1.1
+2001:db8::1
+
+# 9. 纯文本行带恶意逗号/畸形注入（预期必须直接拦截，返回 None, None）
+bad-domain.com, # 后面带了空逗号
+malicious.com,extra_data_here,attack
+1.1.1.1,80
+
+# 10. 纯文本行带特殊正则符号（预期直接拦截，返回 None, None）
+^.*strictly-malicious\.com$
+(group1|group2).com
+
+# 11. 极短或畸形纯文本
+a.b
+..
+/.com
