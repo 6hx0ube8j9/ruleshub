@@ -50,6 +50,9 @@ host-suffix, baselinestudy.com, GoogleGroup
 host-suffix, baselinestudy.org, GoogleGroup
 host-suffix, bazel.build, GoogleGroup
 host-suffix, bdn.dev, GoogleGroup
+host-suffix, beacons.gvt2.com, GoogleGroup
+host-suffix, beacons2.gvt2.com, GoogleGroup
+host-suffix, beacons3.gvt2.com, GoogleGroup
 host-suffix, beatthatquote.com, GoogleGroup
 host-suffix, blink.org, GoogleGroup
 host-suffix, blog.google, GoogleGroup
@@ -214,6 +217,7 @@ host-suffix, g.co, GoogleGroup
 host-suffix, g.dev, GoogleGroup
 host-suffix, g.page, GoogleGroup
 host-suffix, gateway.dev, GoogleGroup
+host-suffix, gcp.gvt2.com, GoogleGroup
 host-suffix, gcr.io, GoogleGroup
 host-suffix, gerritcodereview.com, GoogleGroup
 host-suffix, get.app, GoogleGroup
@@ -598,6 +602,10 @@ host-suffix, quiksee.com, GoogleGroup
 host-suffix, recaptcha-cn.net, GoogleGroup
 host-suffix, recaptcha.net, GoogleGroup
 host-suffix, redhotlabs.com, GoogleGroup
+host-suffix, redirector.gcpcdn.gvt1.com, GoogleGroup
+host-suffix, redirector.gvt1.com, GoogleGroup
+host-suffix, redirector.offline-maps.gvt1.com, GoogleGroup
+host-suffix, redirector.snap.gvt1.com, GoogleGroup
 host-suffix, registry.google, GoogleGroup
 host-suffix, revolv.com, GoogleGroup
 host-suffix, ridepenguin.com, GoogleGroup
@@ -648,6 +656,7 @@ host-suffix, verilylifesciences.com, GoogleGroup
 host-suffix, verilystudyhub.com, GoogleGroup
 host-suffix, verilystudywatch.com, GoogleGroup
 host-suffix, verilystudywatch.org, GoogleGroup
+host-suffix, video.google.com, GoogleGroup
 host-suffix, wallet.com, GoogleGroup
 host-suffix, waveprotocol.org, GoogleGroup
 host-suffix, waymo.com, GoogleGroup
@@ -660,6 +669,7 @@ host-suffix, webpkgcache.com, GoogleGroup
 host-suffix, webrtc.org, GoogleGroup
 host-suffix, weltweitwachsen.de, GoogleGroup
 host-suffix, whatbrowser.org, GoogleGroup
+host-suffix, wide-youtube.l.google.com, GoogleGroup
 host-suffix, widevine.com, GoogleGroup
 host-suffix, withgoogle.com, GoogleGroup
 host-suffix, withyoutube.com, GoogleGroup
@@ -683,6 +693,7 @@ host-suffix, xn--p8j9a0d9c9a.xn--q9jyb4c, GoogleGroup
 host-suffix, xplr.co, GoogleGroup
 host-suffix, youtu.be, GoogleGroup
 host-suffix, youtube-nocookie.com, GoogleGroup
+host-suffix, youtube-ui.l.google.com, GoogleGroup
 host-suffix, youtube.ae, GoogleGroup
 host-suffix, youtube.al, GoogleGroup
 host-suffix, youtube.am, GoogleGroup
@@ -778,6 +789,7 @@ host-suffix, youtube.es, GoogleGroup
 host-suffix, youtube.fi, GoogleGroup
 host-suffix, youtube.fr, GoogleGroup
 host-suffix, youtube.ge, GoogleGroup
+host-suffix, youtube.googleapis.com, GoogleGroup
 host-suffix, youtube.gr, GoogleGroup
 host-suffix, youtube.gt, GoogleGroup
 host-suffix, youtube.hk, GoogleGroup
@@ -835,6 +847,7 @@ host-suffix, youtube.ug, GoogleGroup
 host-suffix, youtube.uy, GoogleGroup
 host-suffix, youtube.vn, GoogleGroup
 host-suffix, youtubeeducation.com, GoogleGroup
+host-suffix, youtubeembeddedplayer.googleapis.com, GoogleGroup
 host-suffix, youtubefanfest.com, GoogleGroup
 host-suffix, youtubegaming.com, GoogleGroup
 host-suffix, youtubego.co.id, GoogleGroup
@@ -843,6 +856,7 @@ host-suffix, youtubego.com, GoogleGroup
 host-suffix, youtubego.com.br, GoogleGroup
 host-suffix, youtubego.id, GoogleGroup
 host-suffix, youtubego.in, GoogleGroup
+host-suffix, youtubei.googleapis.com, GoogleGroup
 host-suffix, youtubekids.com, GoogleGroup
 host-suffix, youtubemobilesupport.com, GoogleGroup
 host-suffix, yt.be, GoogleGroup

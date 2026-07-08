@@ -50,6 +50,9 @@ payload:
   - DOMAIN-SUFFIX,baselinestudy.org
   - DOMAIN-SUFFIX,bazel.build
   - DOMAIN-SUFFIX,bdn.dev
+  - DOMAIN-SUFFIX,beacons.gvt2.com
+  - DOMAIN-SUFFIX,beacons2.gvt2.com
+  - DOMAIN-SUFFIX,beacons3.gvt2.com
   - DOMAIN-SUFFIX,beatthatquote.com
   - DOMAIN-SUFFIX,blink.org
   - DOMAIN-SUFFIX,blog.google
@@ -214,6 +217,7 @@ payload:
   - DOMAIN-SUFFIX,g.dev
   - DOMAIN-SUFFIX,g.page
   - DOMAIN-SUFFIX,gateway.dev
+  - DOMAIN-SUFFIX,gcp.gvt2.com
   - DOMAIN-SUFFIX,gcr.io
   - DOMAIN-SUFFIX,gerritcodereview.com
   - DOMAIN-SUFFIX,get.app
@@ -598,6 +602,10 @@ payload:
   - DOMAIN-SUFFIX,recaptcha-cn.net
   - DOMAIN-SUFFIX,recaptcha.net
   - DOMAIN-SUFFIX,redhotlabs.com
+  - DOMAIN-SUFFIX,redirector.gcpcdn.gvt1.com
+  - DOMAIN-SUFFIX,redirector.gvt1.com
+  - DOMAIN-SUFFIX,redirector.offline-maps.gvt1.com
+  - DOMAIN-SUFFIX,redirector.snap.gvt1.com
   - DOMAIN-SUFFIX,registry.google
   - DOMAIN-SUFFIX,revolv.com
   - DOMAIN-SUFFIX,ridepenguin.com
@@ -648,6 +656,7 @@ payload:
   - DOMAIN-SUFFIX,verilystudyhub.com
   - DOMAIN-SUFFIX,verilystudywatch.com
   - DOMAIN-SUFFIX,verilystudywatch.org
+  - DOMAIN-SUFFIX,video.google.com
   - DOMAIN-SUFFIX,wallet.com
   - DOMAIN-SUFFIX,waveprotocol.org
   - DOMAIN-SUFFIX,waymo.com
@@ -660,6 +669,7 @@ payload:
   - DOMAIN-SUFFIX,webrtc.org
   - DOMAIN-SUFFIX,weltweitwachsen.de
   - DOMAIN-SUFFIX,whatbrowser.org
+  - DOMAIN-SUFFIX,wide-youtube.l.google.com
   - DOMAIN-SUFFIX,widevine.com
   - DOMAIN-SUFFIX,withgoogle.com
   - DOMAIN-SUFFIX,withyoutube.com
@@ -683,6 +693,7 @@ payload:
   - DOMAIN-SUFFIX,xplr.co
   - DOMAIN-SUFFIX,youtu.be
   - DOMAIN-SUFFIX,youtube-nocookie.com
+  - DOMAIN-SUFFIX,youtube-ui.l.google.com
   - DOMAIN-SUFFIX,youtube.ae
   - DOMAIN-SUFFIX,youtube.al
   - DOMAIN-SUFFIX,youtube.am
@@ -778,6 +789,7 @@ payload:
   - DOMAIN-SUFFIX,youtube.fi
   - DOMAIN-SUFFIX,youtube.fr
   - DOMAIN-SUFFIX,youtube.ge
+  - DOMAIN-SUFFIX,youtube.googleapis.com
   - DOMAIN-SUFFIX,youtube.gr
   - DOMAIN-SUFFIX,youtube.gt
   - DOMAIN-SUFFIX,youtube.hk
@@ -835,6 +847,7 @@ payload:
   - DOMAIN-SUFFIX,youtube.uy
   - DOMAIN-SUFFIX,youtube.vn
   - DOMAIN-SUFFIX,youtubeeducation.com
+  - DOMAIN-SUFFIX,youtubeembeddedplayer.googleapis.com
   - DOMAIN-SUFFIX,youtubefanfest.com
   - DOMAIN-SUFFIX,youtubegaming.com
   - DOMAIN-SUFFIX,youtubego.co.id
@@ -843,6 +856,7 @@ payload:
   - DOMAIN-SUFFIX,youtubego.com.br
   - DOMAIN-SUFFIX,youtubego.id
   - DOMAIN-SUFFIX,youtubego.in
+  - DOMAIN-SUFFIX,youtubei.googleapis.com
   - DOMAIN-SUFFIX,youtubekids.com
   - DOMAIN-SUFFIX,youtubemobilesupport.com
   - DOMAIN-SUFFIX,yt.be

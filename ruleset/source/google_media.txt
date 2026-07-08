@@ -53,6 +53,9 @@ suffix,baselinestudy.com
 suffix,baselinestudy.org
 suffix,bazel.build
 suffix,bdn.dev
+suffix,beacons.gvt2.com
+suffix,beacons2.gvt2.com
+suffix,beacons3.gvt2.com
 suffix,beatthatquote.com
 suffix,blink.org
 suffix,blog.google
@@ -217,6 +220,7 @@ suffix,g.co
 suffix,g.dev
 suffix,g.page
 suffix,gateway.dev
+suffix,gcp.gvt2.com
 suffix,gcr.io
 suffix,gerritcodereview.com
 suffix,get.app
@@ -601,6 +605,10 @@ suffix,quiksee.com
 suffix,recaptcha-cn.net
 suffix,recaptcha.net
 suffix,redhotlabs.com
+suffix,redirector.gcpcdn.gvt1.com
+suffix,redirector.gvt1.com
+suffix,redirector.offline-maps.gvt1.com
+suffix,redirector.snap.gvt1.com
 suffix,registry.google
 suffix,revolv.com
 suffix,ridepenguin.com
@@ -651,6 +659,7 @@ suffix,verilylifesciences.com
 suffix,verilystudyhub.com
 suffix,verilystudywatch.com
 suffix,verilystudywatch.org
+suffix,video.google.com
 suffix,wallet.com
 suffix,waveprotocol.org
 suffix,waymo.com
@@ -663,6 +672,7 @@ suffix,webpkgcache.com
 suffix,webrtc.org
 suffix,weltweitwachsen.de
 suffix,whatbrowser.org
+suffix,wide-youtube.l.google.com
 suffix,widevine.com
 suffix,withgoogle.com
 suffix,withyoutube.com
@@ -686,6 +696,7 @@ suffix,xn--p8j9a0d9c9a.xn--q9jyb4c
 suffix,xplr.co
 suffix,youtu.be
 suffix,youtube-nocookie.com
+suffix,youtube-ui.l.google.com
 suffix,youtube.ae
 suffix,youtube.al
 suffix,youtube.am
@@ -781,6 +792,7 @@ suffix,youtube.es
 suffix,youtube.fi
 suffix,youtube.fr
 suffix,youtube.ge
+suffix,youtube.googleapis.com
 suffix,youtube.gr
 suffix,youtube.gt
 suffix,youtube.hk
@@ -838,6 +850,7 @@ suffix,youtube.ug
 suffix,youtube.uy
 suffix,youtube.vn
 suffix,youtubeeducation.com
+suffix,youtubeembeddedplayer.googleapis.com
 suffix,youtubefanfest.com
 suffix,youtubegaming.com
 suffix,youtubego.co.id
@@ -846,6 +859,7 @@ suffix,youtubego.com
 suffix,youtubego.com.br
 suffix,youtubego.id
 suffix,youtubego.in
+suffix,youtubei.googleapis.com
 suffix,youtubekids.com
 suffix,youtubemobilesupport.com
 suffix,yt.be
