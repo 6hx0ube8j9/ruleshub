@@ -201,16 +201,19 @@ def clean_and_parse_line(line):
     
     if not line: return None, None
 
-    # ================= 场景一：标准规则行 =================
+    # ================= 场景一：标准规则行（带标签、带逗号） =================
     if ',' in line:
         possible_tag = line.split(',')[0].strip().upper()
         internal_type = RULE_TYPE_MAP.get(possible_tag)
+        
         if not internal_type or possible_tag in ['AND', 'OR', 'NOT']:
             return None, None
             
         p1, p2 = [x.strip() for x in line.split(',', 1)]
         
-        if possible_tag not in ['DOMAIN-REGEX', 'REGEX', 'USER-AGENT', 'USERAGENT']:
+        is_sensitive = (internal_type in ['regex', 'useragent']) or ('REGEX' in possible_tag) or ('USER' in possible_tag)
+        
+        if not is_sensitive:
             p2 = p2.split('#')[0].split('//')[0].strip()
 
         if internal_type == 'port':
@@ -226,12 +229,14 @@ def clean_and_parse_line(line):
                 try: return 'port', str(int(p2_clean))
                 except ValueError: return None, None
 
-        if possible_tag in ['DOMAIN-REGEX', 'REGEX']:
-            return 'regex', p2
-        if possible_tag in ['USER-AGENT', 'USERAGENT']:
-            return 'useragent', p2
+        if is_sensitive:
+            return internal_type if internal_type else 'regex', p2
 
         p2_clean = p2.lower()
+        
+        if '*' in p2_clean or '?' in p2_clean:
+            return 'wildcard', p2_clean
+
         if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
         elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
         elif p2_clean.startswith('.'): p2_clean = p2_clean[1:]
@@ -245,7 +250,6 @@ def clean_and_parse_line(line):
             return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if internal_type == 'full': 
-            if '*' in p2_clean or '?' in p2_clean: return 'wildcard', p2.lower()
             if IPV4_REGEX.match(p2_clean): 
                 return ('ip', p2_clean) if validate_ip_mask(p2_clean, False) else (None, None)
             if IPV6_REGEX.match(p2_clean) or IPV6_REGEX.match(p2_clean.split('/')[0]): 
@@ -255,7 +259,7 @@ def clean_and_parse_line(line):
             return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
         if internal_type == 'keyword': return 'keyword', p2_clean
-            
+
         if internal_type in ['ip', 'ip6']:
             raw_ip = p2_clean.split(',')[0].strip()  
             if ':' in raw_ip and '[' not in raw_ip and raw_ip.count(':') == 1:
@@ -271,10 +275,16 @@ def clean_and_parse_line(line):
         return internal_type, p2
 
     # ================= 场景二：纯文本行（如纯域名列表、纯IP列表） =================
-	
-    raw_val = line.lower().split('#')[0].split('//')[0].strip()
+    raw_line = line.split('#')[0].split('//')[0].strip()
+    if not raw_line: 
+        return None, None
 
-    if not raw_val or any(c in raw_val for c in ['*', '?', '(', ')', '|', '^', '$', '\\']):
+    if ',' in raw_line:
+        return None, None
+
+    raw_val = raw_line.lower()
+
+    if any(c in raw_val for c in ['*', '?', '(', ')', '|', '^', '$', '\\']):
         return None, None
 
     raw_val = raw_val.rstrip('.')
@@ -331,7 +341,6 @@ def clean_and_parse_line(line):
 
     if is_explicit_suffix:
         return 'suffix', raw_val.lstrip('+.')
-        
     else:
         if 'PUBLIC_SUFFIX_BLACKLIST' in globals():
             if parts_count == 2:
