@@ -1,7 +1,7 @@
 # Mihomo Payload Rule-Set: telegram
 payload:
   - DOMAIN,api.imem.app
-  - DOMAIN-SUFFIX,api.swiftgram.app
+  - DOMAIN,api.swiftgram.app
   - DOMAIN-SUFFIX,cdn-telegram.org
   - DOMAIN-SUFFIX,comments.app
   - DOMAIN-SUFFIX,contest.com
@@ -24,6 +24,7 @@ payload:
   - DOMAIN-SUFFIX,tg.dev
   - DOMAIN-SUFFIX,tx.me
   - DOMAIN-SUFFIX,usercontent.dev
+  - DOMAIN-KEYWORD,cdn-telegram.org
   - DOMAIN-KEYWORD,nicegram
   - IP-CIDR,109.239.140.0/24,no-resolve
   - IP-CIDR,139.59.210.98/32,no-resolve

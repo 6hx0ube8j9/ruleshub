@@ -2,6 +2,7 @@
 
 # --- TYPE: FULL ---
 full,api.imem.app
+full,api.swiftgram.app
 
 # --- TYPE: SUFFIX ---
 suffix,cdn-telegram.org
@@ -28,8 +29,8 @@ suffix,tx.me
 suffix,usercontent.dev
 
 # --- TYPE: KEYWORD ---
-keyword,nicegram
 keyword,cdn-telegram.org
+keyword,nicegram
 
 # --- TYPE: IP ---
 ip,109.239.140.0/24
