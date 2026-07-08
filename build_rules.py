@@ -751,8 +751,8 @@ def main():
         if g_rules.get('wildcard') or g_rules.get('regex'):
             regex_list = [convert_wildcard_to_regex(w) for w in g_rules.get('wildcard', [])] + g_rules.get('regex', [])
             sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
-            
-	    if g_rules.get('process'): 
+
+        if g_rules.get('process'): 
             proc_set = set()
             for p in g_rules['process']:
                 if not p: continue
@@ -760,7 +760,7 @@ def main():
                 if name.lower().endswith('.exe'): name = name[:-4]
                 proc_set.add(name)
             if proc_set:
-                sb_data["rules"].append({"process_name": sorted(list(proc_set))})		
+                sb_data["rules"].append({"process_name": sorted(list(proc_set))})	
 				
 	   # ============ 端口逻辑 =============
        # if g_rules.get('port'): 
