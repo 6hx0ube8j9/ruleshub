@@ -114,19 +114,20 @@ jobs:
           rm -f tmp_ip_*.json tmp_domain_*.json
           cd ../..
 
-      - name: Commit
+      - name: Commit and Push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          
+          # Stage all changes including deletions
           git add -A ruleset/
           
-          echo "==== 当前 Git 状态 ===="
-          git status
-          
+          # Check for changes and push if any exist
           if [ -n "$(git status --porcelain)" ]; then
+            echo "Changes detected. Committing and pushing..."
             git commit -m "Update [skip ci]"
             git pull --rebase origin main
             git push
           else
-            echo "❌ 警告：即使强制添加了目录，Git 依然认为没有任何文件发生改变！"
+            echo "No changes detected. Skipping commit."
           fi
