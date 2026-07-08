@@ -158,9 +158,7 @@ def extract_combined_cidrs(rules_dict):
     ipv6_list = [ensure_ip_mask(i, True) for i in rules_dict.get('ip6', [])]
     return sorted(list(set(ipv4_list + ipv6_list)))
 
-import re
-
-def convert_wildcard_to_regex_improved(wildcard_str):
+def convert_wildcard_to_regex(wildcard_str): 
     if not wildcard_str:
         return "^$"
 
