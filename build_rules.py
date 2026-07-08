@@ -342,39 +342,40 @@ def clean_and_parse_line(line):
                 return 'full', raw_val 
         return ('suffix', raw_val.lstrip('+.')) if parts_count == 2 else ('full', raw_val)
 
-def optimize_domains(rules: dict):
-    if 'suffix' not in rules or 'full' not in rules: return
-    raw_suffixes = rules['suffix']
-    raw_fulls = rules['full']
-    is_list_output = isinstance(raw_suffixes, list)
+def optimize_domains(rules: dict, local_rules: dict = None):
+    if 'suffix' not in rules or 'full' not in rules: 
+        return
+		
+    protected_fulls = set(local_rules.get('full', [])) if local_rules else set()
+    protected_suffixes = set(local_rules.get('suffix', [])) if local_rules else set()
+    is_list_output = isinstance(rules['suffix'], list)
+    optimized_suffixes = set(rules['suffix'])
 
-    sorted_suffixes = sorted(list(raw_suffixes), key=len)
-    optimized_suffixes = set()
-    
-    for suf in sorted_suffixes:
-        parts = suf.split('.')
-        is_sub = False
-        for i in range(1, len(parts)):
-            parent = '.'.join(parts[i:])
-            if parent in optimized_suffixes:
-                is_sub = True
-                break
-        if not is_sub: 
-            optimized_suffixes.add(suf)
-            
     optimized_fulls = set()
+    raw_fulls = set(rules['full'])
+
     for f_dom in raw_fulls:
+        if f_dom in protected_fulls:
+            optimized_fulls.add(f_dom)
+            continue
+            
         if f_dom in optimized_suffixes:
             continue
+            
         parts = f_dom.split('.')
-        is_covered = False
+        is_covered_by_local = False
+        
         for i in range(1, len(parts)):
             parent = '.'.join(parts[i:])
-            if parent in optimized_suffixes:
-                is_covered = True
+
+            if parent in protected_suffixes:
+                is_covered_by_local = True
                 break
-        if not is_covered: 
-            optimized_fulls.add(f_dom)
+        
+        if is_covered_by_local:
+            continue
+
+        optimized_fulls.add(f_dom)
 
     if is_list_output:
         rules['suffix'] = sorted(list(optimized_suffixes))
