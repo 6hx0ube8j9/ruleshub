@@ -178,26 +178,18 @@ def convert_wildcard_to_regex(wildcard_str):
     else:
         return f"^{r_val}$"
 
-def parse_ports_for_singbox(port_set):
-    p_list, p_range = [], []
-    for p in port_set:
-        if isinstance(p, tuple):
-            p = str(p[0]) if p else ""
-        else:
-            p = str(p)
-        p = p.strip()
-        if not p: continue
-
-        if '-' in p: 
-            p_range.append(p.replace('-', ':'))
-        elif ':' in p: 
-            p_range.append(p)
-        else: 
-            try:
-                p_list.append(int(p))
-            except ValueError:
-                pass 
-    return sorted(p_list), sorted(p_range)
+# ===============Singbox端口转换===================
+# def parse_ports_for_singbox(port_set):
+#     p_list, p_range = [], []
+#     for p in port_set:
+#         p = str(p[0]) if isinstance(p, tuple) else str(p)
+#         p = p.strip().replace('-', ':')
+#         if not p: continue
+#         if ':' in p: p_range.append(p)
+#         else:
+#            try: p_list.append(int(p))
+#             except ValueError: pass
+#     return sorted(p_list), sorted(p_range)
 
 # ==========================================
 # 4. 核心规则树清洗与高级优化算法
