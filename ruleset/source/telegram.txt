@@ -2,7 +2,8 @@
 
 # --- TYPE: FULL ---
 full,api.imem.app
-full,api.swiftgram.app
+suffix,api.swiftgram.app
+
 
 # --- TYPE: SUFFIX ---
 suffix,cdn-telegram.org
