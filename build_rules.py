@@ -157,18 +157,24 @@ def extract_combined_cidrs(rules_dict):
     ipv4_list = [ensure_ip_mask(i, False) for i in rules_dict.get('ip', [])]
     ipv6_list = [ensure_ip_mask(i, True) for i in rules_dict.get('ip6', [])]
     return sorted(list(set(ipv4_list + ipv6_list)))
+import re
 
 def convert_wildcard_to_regex(wildcard_str):
-    if '*' not in wildcard_str and '?' not in wildcard_str:
-        return f"^{re.escape(wildcard_str)}$"
+    pieces = re.split(r'([\*\?])', wildcard_str)
     
-    escaped = re.escape(wildcard_str)
-    r_val = escaped.replace(r'\*', '.*').replace(r'\?', '.')
-    if r_val.startswith(r'\..*'):
-        r_val = r_val[2:]
-    elif r_val.startswith(r'.*\.'):
-        r_val = '.*' + r_val[4:]
-
+    regex_pieces = []
+    for piece in pieces:
+        if piece == '*':
+            regex_pieces.append('.*')
+        elif piece == '?':
+            regex_pieces.append('.')
+        else:
+            regex_pieces.append(re.escape(piece))
+            
+    r_val = ''.join(regex_pieces)
+    if r_val.startswith(r'\.\*'):
+         r_val = r_val[4:]
+    
     while '.*.*' in r_val:
         r_val = r_val.replace('.*.*', '.*')
         
