@@ -711,8 +711,10 @@ def main():
             for loon_tag, rule_set in loon_rendering_pipeline:
                 if rule_set:
                     for val in sorted(list(rule_set)):
-                        if loon_tag == 'IP-CIDR': f.write(f"IP-CIDR,{val},no-resolve\n")
-                        else: f.write(f"{loon_tag},{val}\n")
+						if loon_tag == 'IP-CIDR':
+							f.write(f"IP-CIDR,{val},no-resolve\n")
+                        else: 
+							f.write(f"{loon_tag},{val}\n")
                             
         print(f"Successfully generated Master LSR Ruleset: {g_name}.lsr")
 		
