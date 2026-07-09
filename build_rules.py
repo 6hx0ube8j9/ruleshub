@@ -159,26 +159,6 @@ def extract_combined_cidrs(rules_dict):
     ipv6_list = [ensure_ip_mask(i, True) for i in rules_dict.get('ip6', [])]
     return sorted(list(set(ipv4_list + ipv6_list)))
 
-def convert_wildcard_to_regex(wildcard_str): 
-    if not wildcard_str:
-        return "^$"
-
-    is_star_dot = wildcard_str.startswith('*.')
-    if is_star_dot:
-        actual_domain = wildcard_str[2:]
-    else:
-        actual_domain = wildcard_str
-    escaped = re.escape(actual_domain)
-    r_val = escaped.replace(r'\*', '.*').replace(r'\?', '.')
-    
-    while '.*.*' in r_val:
-        r_val = r_val.replace('.*.*', '.*')
-
-    if is_star_dot:
-        return fr"^(.*\.)?{r_val}$"
-    else:
-        return f"^{r_val}$"
-
 def clean_and_parse_line(line):
     line = line.strip()
     if not line or line.startswith('#') or line.startswith('//') or line.startswith(';') or line == 'payload:':
@@ -728,9 +708,8 @@ def main():
         if combined_ips: 
             dest_rule["ip_cidr"] = combined_ips
             
-        if g_rules.get('wildcard') or g_rules.get('regex'):
-            regex_list = [convert_wildcard_to_regex(w) for w in g_rules.get('wildcard', [])] + g_rules.get('regex', [])
-            dest_rule["domain_regex"] = sorted(list(set(regex_list)))
+        if g_rules.get('regex'):
+			dest_rule["domain_regex"] = sorted(list(set(g_rules['regex'])))
 
         if dest_rule:
             sb_data["rules"].append(dest_rule)
