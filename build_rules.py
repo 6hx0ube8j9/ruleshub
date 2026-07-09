@@ -242,29 +242,41 @@ def clean_and_parse_line(line):
         return None, None
 
     raw_val = raw_line
-
-    if any(c in raw_val for c in ['*', '?', '(', ')', '|', '^', '$', '\\']):
+	
+    if any(c in raw_val for c in ['?', '(', ')', '|', '^', '$', '\\']):
+        return None, None
+    if '*' in raw_val and not raw_val.startswith('*.'):
         return None, None
 
     raw_val = raw_val.rstrip('.')
     if not raw_val or len(raw_val) < 3: 
         return None, None 
 
-    if '/' in raw_val and not (IPV4_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val.split('/')[0])):
-        return None, None
-
     if ':' in raw_val:
-        if raw_val.count(':') == 1:
-            possible_ip_or_domain, port = raw_val.split(':')
+        if ']:' in raw_val:
+            parts = raw_val.split(']:')
+            if len(parts) == 2 and parts[1].split('/')[0].isdigit():
+                raw_val = parts[0].lstrip('[')
+            else:
+                return None, None
+        elif raw_val.count(':') == 1:
+            possible_ip_or_domain, port_part = raw_val.split(':')
+            port = port_part.split('/')[0]
             if port.isdigit() and possible_ip_or_domain: 
                 raw_val = possible_ip_or_domain
+                if '/' in port_part:
+                    raw_val += '/' + port_part.split('/', 1)[1]
             else: 
                 return None, None
         else:
             clean_ipv6 = raw_val.strip('[]')
-            if not IPV6_REGEX.match(clean_ipv6): 
+            pure_ipv6 = clean_ipv6.split('/')[0]
+            if not IPV6_REGEX.match(pure_ipv6): 
                 return None, None
             raw_val = clean_ipv6
+
+    if '/' in raw_val and not (IPV4_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val) or IPV6_REGEX.match(raw_val.split('/')[0])):
+        return None, None
 
     if IPV4_REGEX.match(raw_val):
         return ('ip', raw_val) if validate_ip_mask(raw_val, False) else (None, None)
