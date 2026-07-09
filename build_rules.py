@@ -15,6 +15,7 @@ RULESET_BASE_DIR = 'ruleset'
 SOURCE_DIR = os.path.join(RULESET_BASE_DIR, 'source')
 SHADOWROCKET_DIR = os.path.join(RULESET_BASE_DIR, 'shadowrocket')
 QUANTUMULTX_DIR = os.path.join(RULESET_BASE_DIR, 'quantumultx')
+LOON_DIR = os.path.join(RULESET_BASE_DIR, 'loon')
 MIHOMO_DIR = os.path.join(RULESET_BASE_DIR, 'mihomo')
 PAC_DIR = os.path.join(RULESET_BASE_DIR, 'pac')
 SINGBOX_DIR = os.path.join(RULESET_BASE_DIR, 'singbox')
@@ -480,7 +481,7 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys, source_ena
                 f_source.write("\n")
 
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
-    platforms = ['qx', 'sr', 'mihomo', 'singbox']
+    platforms = ['qx', 'sr', 'loon', 'mihomo', 'singbox']
     qx_policy_label = policy.get('qx_policy', base_name.capitalize() if base_name.lower() not in ['direct', 'reject'] else base_name.lower())
 
     for plat in platforms:
@@ -637,7 +638,7 @@ def main():
     normalize_and_discover_local_sources(router_cleaned)
 
     global_matrix = {
-        'qx': {}, 'sr': {}, 'mihomo': {}, 'singbox': {}, 'pac': {}
+        'qx': {}, 'sr': {}, 'loon': {}, 'mihomo': {}, 'singbox': {}, 'pac': {}
     }
 
     for target_base_name, policy_card in router_cleaned.items():
@@ -690,6 +691,31 @@ def main():
                     if ik in ['ip', 'ip6']: f.write(f"{raw_type},{ensure_ip_mask(val, ik=='ip6')},no-resolve\n")
                     else: f.write(f"{raw_type},{val}\n")
 
+    # [Loon]
+    for g_name, g_rules in global_matrix['loon'].items():
+        loon_path = os.path.join(LOON_DIR, f"{g_name}.lsr")
+        optimize_domains(g_rules)
+        with open(loon_path, 'w', encoding='utf-8') as f:
+            f.write(f"# Loon Shunt Rules: {g_name}\n")
+            f.write(f"# Generated automatically via script\n\n")
+
+            loon_ordered_types = [
+                ('DOMAIN', 'full'), 
+                ('DOMAIN-SUFFIX', 'suffix'), 
+                ('DOMAIN-KEYWORD', 'keyword'),
+                ('IP-CIDR', 'ip'), 
+                ('IP-CIDR', 'ip6'), 
+                ('USER-AGENT', 'useragent')
+            ]
+            for raw_type, ik in loon_ordered_types:
+                for val in sorted(g_rules.get(ik, [])):
+                    if ik in ['ip', 'ip6']: 
+                        f.write(f"{raw_type},{ensure_ip_mask(val, ik=='ip6')},no-resolve\n")
+                    else: 
+                        f.write(f"{raw_type},{val}\n")
+                        
+        print(f"Successfully generated Loon Ruleset: {g_name}.lsr")
+		
     # [Mihomo]
     for g_name, g_rules in global_matrix['mihomo'].items():
         mihomo_path = os.path.join(MIHOMO_DIR, f"{g_name}.yaml")
