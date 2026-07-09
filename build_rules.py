@@ -175,7 +175,7 @@ def convert_wildcard_to_regex(wildcard_str):
         r_val = r_val.replace('.*.*', '.*')
 
     if is_star_dot:
-        return f"^(.*\.)?{r_val}$"
+        return fr"^(.*\.)?{r_val}$"
     else:
         return f"^{r_val}$"
 
