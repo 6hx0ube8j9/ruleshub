@@ -28,4 +28,6 @@ useragent,AppleNews*
 useragent,Telegram*
 useragent,Twitter*
 useragent,YouTube*
-
+regex,^https?:\/\/.*\.googlevideo\.com\/
+regex,(^|\.)ttwstatic\.com$
+regex,^amdc\..+\.com$
