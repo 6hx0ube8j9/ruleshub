@@ -742,7 +742,7 @@ def main():
     # [PAC ]
     for g_name, raw_domains in global_matrix['pac'].items():
         pac_path = os.path.join(PAC_DIR, f"{g_name}.pac")
-
+        
         if isinstance(raw_domains, dict):
             combined_domains = set(raw_domains.get('suffix', []))
         else:
@@ -752,17 +752,27 @@ def main():
         
         with open(pac_path, 'w', encoding='utf-8') as f:
             f.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
-            f.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';\n\n")
-
+            f.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; SOCKS ' + IP_ADDRESS + '; DIRECT';\n\n")
+            
             f.write("var DIRECT_DOMAINS = {\n")
             for i, domain in enumerate(direct_domains):
                 comma = "," if i < len(direct_domains) - 1 else ""
                 f.write(f'    "{domain}": 1{comma}\n')
             f.write("};\n\n")
+            
+            js_function = """var PRIVATE_IP_REGEXP = /^(127|10|192\\.168|172\\.(1[6-9]|2[0-9]|3[01]))\\./;
+var IS_IPV4_REGEXP = /^\\d+\\.\\d+\\.\\d+\\.\\d+$/;
+var IS_IPV6_REGEXP = /^\\[.*\\]$/;
 
-            js_function = """function FindProxyForURL(url, host) {
-    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {
+function FindProxyForURL(url, host) {
+    if (isPlainHostName(host)) {
         return "DIRECT";
+    }
+
+    if (IS_IPV4_REGEXP.test(host)) {
+        if (PRIVATE_IP_REGEXP.test(host)) return "DIRECT"; 
+    } else if (IS_IPV6_REGEXP.test(host)) {
+        if (host === "[::1]" || host.indexOf("[fe80") === 0) return "DIRECT"; 
     }
 
     var suffix = host.toLowerCase();
