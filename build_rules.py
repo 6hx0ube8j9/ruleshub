@@ -21,7 +21,7 @@ PAC_DIR = os.path.join(RULESET_BASE_DIR, 'pac')
 SINGBOX_DIR = os.path.join(RULESET_BASE_DIR, 'singbox')
 
 # 确保所有基础目录存在
-for d in [RULESET_BASE_DIR, SOURCE_DIR, SHADOWROCKET_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SINGBOX_DIR]:
+for d in [RULESET_BASE_DIR, SOURCE_DIR, SHADOWROCKET_DIR, LOON_DIR, QUANTUMULTX_DIR, MIHOMO_DIR, PAC_DIR, SINGBOX_DIR]:
     if not os.path.exists(d):
         os.makedirs(d, exist_ok=True)
 
