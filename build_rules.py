@@ -244,7 +244,7 @@ def clean_and_parse_line(line):
     if ',' in raw_line:
         return None, None
 
-    raw_val = raw_line.lower()
+    raw_val = raw_line
 
     if any(c in raw_val for c in ['*', '?', '(', ')', '|', '^', '$', '\\']):
         return None, None
@@ -288,6 +288,8 @@ def clean_and_parse_line(line):
         raw_val = raw_val[1:]
         is_explicit_suffix = True
 
+	raw_val = raw_val.lower()
+
     if not raw_val or '.' not in raw_val:
         return None, None
         
@@ -304,15 +306,14 @@ def clean_and_parse_line(line):
             is_compound_public = True
 
     if is_explicit_suffix:
-        return 'suffix', raw_val.lstrip('+.')
+        return 'suffix', raw_val
     else:
         if 'PUBLIC_SUFFIX_BLACKLIST' in globals() and PUBLIC_SUFFIX_BLACKLIST:
-            is_direct_public = raw_val in PUBLIC_SUFFIX_BLACKLIST
-            
-			if is_direct_public or is_compound_public:
-                return 'suffix', raw_val.lstrip('+.')
-				
-         return 'full', raw_val 
+            is_direct_public = raw_val in PUBLIC_SUFFIX_BLACKLIST          
+            if is_direct_public or is_compound_public:
+                return 'suffix', raw_val
+
+        return 'full', raw_val
 
 def optimize_domains(rules: dict, local_rules: dict = None):
     if 'suffix' not in rules or 'full' not in rules: 
