@@ -696,12 +696,10 @@ def main():
         with open(loon_path, 'w', encoding='utf-8') as f:
             f.write(f"# Name = {g_name.capitalize()}\n")
             f.write(f"# Shunt Rule-Set generated automatically via script\n\n")
-            
+
             combined_loon_ips = set()
-            for val in g_rules.get('ip', set()):
-                combined_loon_ips.add(ensure_ip_mask(val, False))
-            for val in g_rules.get('ip6', set()):
-                combined_loon_ips.add(ensure_ip_mask(val, True))
+            for val in g_rules.get('ip', set()): combined_loon_ips.add(ensure_ip_mask(val, False))
+            for val in g_rules.get('ip6', set()): combined_loon_ips.add(ensure_ip_mask(val, True))
 
             loon_rendering_pipeline = [
                 ('IP-CIDR', combined_loon_ips),
@@ -714,10 +712,8 @@ def main():
             for loon_tag, rule_set in loon_rendering_pipeline:
                 if rule_set:
                     for val in sorted(list(rule_set)):
-                        if loon_tag == 'IP-CIDR':
-                            f.write(f"IP-CIDR,{val},no-resolve\n")
-                        else:
-                            f.write(f"{loon_tag},{val}\n")
+                        if loon_tag == 'IP-CIDR': f.write(f"IP-CIDR,{val},no-resolve\n")
+                        else: f.write(f"{loon_tag},{val}\n")
                             
         print(f"Successfully generated Master LSR Ruleset: {g_name}.lsr")
 		
