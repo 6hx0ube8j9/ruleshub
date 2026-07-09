@@ -199,10 +199,14 @@ def clean_and_parse_line(line):
             
         p1, p2 = [x.strip() for x in line.split(',', 1)]
         
-        is_sensitive = (internal_type in ['regex', 'useragent']) or ('REGEX' in possible_tag) or ('USER' in possible_tag)
+        is_sensitive = (internal_type in ['regex', 'useragent', 'wildcard']) or any(k in possible_tag for k in ['REGEX', 'USER', 'WILD'])
         
-        if not is_sensitive:
-            p2 = p2.split('#')[0].split('//')[0].strip()
+        if is_sensitive:
+            p2_raw = p2.split('#')[0].split('//')[0].strip().strip("'").strip('"').strip()
+            return internal_type if internal_type else 'regex', p2_raw
+			
+        p2 = p2.split('#')[0].split('//')[0].strip()
+        p2_clean = p2.lower()
 
         if internal_type == 'port':
             p2_clean = p2.lower().replace('(', '').replace(')', '').strip()
@@ -216,14 +220,6 @@ def clean_and_parse_line(line):
             else:
                 try: return 'port', str(int(p2_clean))
                 except ValueError: return None, None
-
-        if is_sensitive:
-            return internal_type if internal_type else 'regex', p2
-
-        p2_clean = p2.lower()
-        
-        if '*' in p2_clean or '?' in p2_clean:
-            return 'wildcard', p2_clean
 
         if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
         elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
