@@ -649,7 +649,7 @@ def main():
         qx_policy = g_rules['policy_label']
         optimize_domains(g_rules)
         with open(qx_path, 'w', encoding='utf-8') as f:
-            f.write(f"# Quantumult X Aggregated Rule-Set: {g_name}\n\n")
+            f.write(f"# Quantumult X Rule-Set: {g_name}\n\n")
             
             qx_ordered_types = [
                 ('host', 'full'), ('host-suffix', 'suffix'), ('host-keyword', 'keyword'),
@@ -694,8 +694,7 @@ def main():
         optimize_domains(g_rules)
         
         with open(loon_path, 'w', encoding='utf-8') as f:
-            f.write(f"# Name = {g_name.capitalize()}\n")
-            f.write(f"# Shunt Rule-Set generated automatically via script\n\n")
+            f.write(f"# Loon Rule-Set: {g_name}\n\n")
 
             combined_loon_ips = set()
             for val in g_rules.get('ip', set()): combined_loon_ips.add(ensure_ip_mask(val, False))
