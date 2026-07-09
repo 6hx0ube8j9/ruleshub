@@ -178,22 +178,6 @@ def convert_wildcard_to_regex(wildcard_str):
     else:
         return f"^{r_val}$"
 
-# ===============Singbox端口转换===================
-# def parse_ports_for_singbox(port_set):
-#     p_list, p_range = [], []
-#     for p in port_set:
-#         p = str(p[0]) if isinstance(p, tuple) else str(p)
-#         p = p.strip().replace('-', ':')
-#         if not p: continue
-#         if ':' in p: p_range.append(p)
-#         else:
-#            try: p_list.append(int(p))
-#             except ValueError: pass
-#     return sorted(p_list), sorted(p_range)
-
-# ==========================================
-# 4. 核心规则树清洗与高级优化算法
-# ==========================================
 def clean_and_parse_line(line):
     line = line.strip()
     if not line or line.startswith('#') or line.startswith('//') or line.startswith(';') or line == 'payload:':
@@ -734,25 +718,28 @@ def main():
         optimize_domains(g_rules)
 
         sb_data = {"version": 2, "rules": []}
-        
+        dest_rule = {}
         if g_rules.get('full'):
-            sb_data["rules"].append({"domain": sorted(list(g_rules['full']))})
+			dest_rule["domain"] = sorted(list(g_rules['full']))
             
         if g_rules.get('suffix'):
-            sb_data["rules"].append({"domain_suffix": sorted(list(g_rules['suffix']))})
+            dest_rule["domain_suffix"] = sorted(list(g_rules['suffix']))
             
         if g_rules.get('keyword'):
-            sb_data["rules"].append({"domain_keyword": sorted(list(g_rules['keyword']))})
+            dest_rule["domain_keyword"] = sorted(list(g_rules['keyword']))
             
         combined_ips = extract_combined_cidrs(g_rules)
         if combined_ips: 
-            sb_data["rules"].append({"ip_cidr": combined_ips})
+            dest_rule["ip_cidr"] = combined_ips
             
         if g_rules.get('wildcard') or g_rules.get('regex'):
-            regex_list = [convert_wildcard_to_regex(w) for w in g_rules.get('wildcard', [])] + g_rules.get('regex', [])
-            sb_data["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
+			regex_list = [convert_wildcard_to_regex(w) for w in g_rules.get('wildcard', [])] + g_rules.get('regex', [])
+            dest_rule["domain_regex"] = sorted(list(set(regex_list)))
 
-        if g_rules.get('process'): 
+		if dest_rule:
+			sb_data["rules"].append(dest_rule)
+
+        if g_rules.get('process'):
             proc_set = set()
             for p in g_rules['process']:
                 if not p: continue
@@ -760,19 +747,10 @@ def main():
                 if name.lower().endswith('.exe'): name = name[:-4]
                 proc_set.add(name)
             if proc_set:
-                sb_data["rules"].append({"process_name": sorted(list(proc_set))})	
-				
-	   # ============ 端口逻辑 =============
-       # if g_rules.get('port'): 
-       #     p_list, p_range = parse_ports_for_singbox(g_rules['port'])
-       #     port_block = {}
-       #     if p_list: port_block["port"] = p_list
-       #     if p_range: port_block["port_range"] = p_range
-       #     if port_block: sb_data["rules"].append(port_block)
-       # ===================================		
+                sb_data["rules"].append({"process_name": sorted(list(proc_set))})
 
         if g_rules.get('logical_and'):
-            for and_rule in g_rules['logical_and']: 
+            for and_rule in g_rules['logical_and']:
                 sb_data["rules"].append(and_rule)
 
         with open(sb_path, 'w', encoding='utf-8') as f:
