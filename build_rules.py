@@ -184,7 +184,7 @@ def clean_and_parse_line(line):
         if is_sensitive:
             p2_raw = p2.split('#')[0].split('//')[0].strip().strip("'").strip('"').strip()
             return internal_type if internal_type else 'regex', p2_raw
-			
+            
         p2 = p2.split('#')[0].split('//')[0].strip()
         p2_clean = p2.lower()
 
@@ -198,7 +198,7 @@ def clean_and_parse_line(line):
                 return None, None
             return 'port', '-'.join(parts)
 
-       if internal_type == 'suffix': 
+        if internal_type == 'suffix': 
             if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
             elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
             elif p2_clean.startswith('.'): p2_clean = p2_clean[1:]
@@ -273,7 +273,7 @@ def clean_and_parse_line(line):
         
     if has_invalid_domain_chars(raw_val): 
         return None, None
-		
+        
     is_explicit_suffix = False
     if raw_val.startswith('+.'):
         raw_val = raw_val[2:]
@@ -285,7 +285,7 @@ def clean_and_parse_line(line):
         raw_val = raw_val[1:]
         is_explicit_suffix = True
 
-	raw_val = raw_val.lower()
+    raw_val = raw_val.lower()
 
     if not raw_val or '.' not in raw_val:
         return None, None
