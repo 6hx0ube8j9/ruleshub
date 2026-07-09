@@ -742,7 +742,12 @@ def main():
     # [PAC ]
     for g_name, raw_domains in global_matrix['pac'].items():
         pac_path = os.path.join(PAC_DIR, f"{g_name}.pac")
-        combined_domains = set(raw_domains.get('full', [])) | set(raw_domains.get('suffix', [])) if isinstance(raw_domains, dict) else (set(raw_domains) if raw_domains else set())
+
+        if isinstance(raw_domains, dict):
+            combined_domains = set(raw_domains.get('suffix', []))
+        else:
+            combined_domains = set(raw_domains) if raw_domains else set()
+            
         direct_domains = sorted(list(combined_domains))
         
         with open(pac_path, 'w', encoding='utf-8') as f:
