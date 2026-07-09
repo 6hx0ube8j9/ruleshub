@@ -565,14 +565,17 @@ def normalize_and_discover_local_sources(router_cleaned):
             router_cleaned[local_base_name] = {'name': local_base_name, 'url': []}
 
 def generate_mrs_temp_files(base_name, policy, rules):
-    if 'classic' in base_name.lower() or 'nodomain' in base_name.lower(): return
-	mrs_en, mrs_name = parse_target_config(policy, 'mrs', base_name)	
+    if 'classic' in base_name.lower() or 'nodomain' in base_name.lower():
+        return
 
-    if not mrs_en and not srs_en: return
+    mrs_en, mrs_name = parse_target_config(policy, 'mrs', base_name)
+    if not mrs_en and not srs_en:
+        return
 
     has_ipcidr_cfg = is_truthy_cfg(policy, 'ipcidr')
     has_domain_cfg = is_truthy_cfg(policy, 'domain')
-	
+
+    # ─── 1. Mihomo IP 规则生成与本地编译 ───
     if mrs_en:
         target_ip_name = mrs_name if is_ip_centric_name(mrs_name) else (f"{mrs_name}_ip" if has_ipcidr_cfg else None)
         target_domain_name = f"{mrs_name}_domain" if is_ip_centric_name(mrs_name) and has_domain_cfg else (mrs_name if not is_ip_centric_name(mrs_name) else None)
@@ -585,8 +588,9 @@ def generate_mrs_temp_files(base_name, policy, rules):
                 
                 with open(tmp_yaml_path, 'w', encoding='utf-8') as f:
                     f.write("payload:\n")
-                    for item in combined_ips: f.write(f"  - '{item}'\n")
-                
+                    for item in combined_ips:
+                        f.write(f"  - '{item}'\n")
+						
                 if os.path.exists('./mihomo-bin'):
                     try:
                         subprocess.run(['./mihomo-bin', 'convert-ruleset', 'ipcidr', 'yaml', tmp_yaml_path, mrs_out_path], check=True)
@@ -594,8 +598,10 @@ def generate_mrs_temp_files(base_name, policy, rules):
                     except subprocess.CalledProcessError as e:
                         print(f"❌ Error: Failed to compile Mihomo IP {target_ip_name}! {e}")
                     finally:
-                        if os.path.exists(tmp_yaml_path): os.remove(tmp_yaml_path)
+                        if os.path.exists(tmp_yaml_path):
+                            os.remove(tmp_yaml_path)
 
+        # ─── 2. Mihomo Domain 规则生成与本地编译 ───
         if target_domain_name:
             if rules.get('suffix') or rules.get('full') or rules.get('keyword') or rules.get('wildcard') or rules.get('regex'):
                 tmp_yaml_path = os.path.join(MIHOMO_DIR, f"tmp_domain_{target_domain_name}.yaml")
@@ -616,7 +622,8 @@ def generate_mrs_temp_files(base_name, policy, rules):
                     except subprocess.CalledProcessError as e:
                         print(f"❌ Error: Failed to compile Mihomo Domain {target_domain_name}! {e}")
                     finally:
-                        if os.path.exists(tmp_yaml_path): os.remove(tmp_yaml_path)
+                        if os.path.exists(tmp_yaml_path):
+                            os.remove(tmp_yaml_path)
 
 # ==========================================
 # 7. 主程序流调度核心
