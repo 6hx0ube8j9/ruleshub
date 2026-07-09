@@ -180,19 +180,22 @@ def clean_and_parse_line(line):
         p1, p2 = [x.strip() for x in line.split(',', 1)]
         
         is_sensitive = (internal_type in ['regex', 'useragent', 'wildcard']) or any(k in possible_tag for k in ['REGEX', 'USER', 'WILD'])
-        
+
         if is_sensitive:
             p2_raw = p2.split('#')[0].split('//')[0].strip().strip("'").strip('"').strip()
+            if ',' in p2_raw:
+                parts = p2_raw.rsplit(',', 1)
+                if not any(c in parts[1] for c in ['^', '$', '*', '+', '\\', '/', '(', ')', '{', '}']):
+                    p2_raw = parts[0].strip().strip("'").strip('"').strip()
             return internal_type if internal_type else 'regex', p2_raw
             
-        p2 = p2.split('#')[0].split('//')[0].strip()
-        p2_clean = p2.lower()
+        p2_clean_base = p2.split('#')[0].split('//')[0].strip()
+        if ',' in p2_clean_base:
+            p2_clean_base = p2_clean_base.split(',')[0].strip()
+        p2_clean = p2_clean_base.lower()
 
         if internal_type == 'port':
-            p2_clean = p2.lower().replace('(', '').replace(')', '').strip()
-            if ',' in p2_clean: 
-                p2_clean = p2_clean.split(',')[0].strip()
-            p2_clean = p2_clean.replace(':', '-')
+            p2_clean = p2_clean.replace('(', '').replace(')', '').replace(':', '-')
             parts = [p.strip() for p in p2_clean.split('-') if p.strip()]
             if not parts or len(parts) > 2 or not all(p.isdigit() for p in parts):
                 return None, None
@@ -217,21 +220,22 @@ def clean_and_parse_line(line):
             encoded_d = try_punycode_encode(p2_clean)
             return ('full', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
-        if internal_type == 'keyword': return 'keyword', p2_clean
+        if internal_type == 'keyword': 
+            return 'keyword', p2_clean
 
         if internal_type in ['ip', 'ip6']:
-            raw_ip = p2_clean.split(',')[0].strip()  
-            if ':' in raw_ip and '[' not in raw_ip and raw_ip.count(':') == 1:
-                raw_ip = raw_ip.split(':')[0] 
-            if IPV6_REGEX.match(raw_ip) or IPV6_REGEX.match(raw_ip.split('/')[0]):
-                return ('ip6', raw_ip) if validate_ip_mask(raw_ip, True) else (None, None)
-            if IPV4_REGEX.match(raw_ip) or IPV4_REGEX.match(raw_ip.split('/')[0]):
-                return ('ip', raw_ip) if validate_ip_mask(raw_ip, False) else (None, None)
+            if ':' in p2_clean and '[' not in p2_clean and p2_clean.count(':') == 1:
+                p2_clean = p2_clean.split(':')[0] 
+            if IPV6_REGEX.match(p2_clean) or IPV6_REGEX.match(p2_clean.split('/')[0]):
+                return ('ip6', p2_clean) if validate_ip_mask(p2_clean, True) else (None, None)
+            if IPV4_REGEX.match(p2_clean) or IPV4_REGEX.match(p2_clean.split('/')[0]):
+                return ('ip', p2_clean) if validate_ip_mask(p2_clean, False) else (None, None)
             return None, None
             
-        if internal_type == 'process': return 'process', p2.lower()
+        if internal_type == 'process': 
+            return 'process', p2_clean
 
-        return internal_type, p2
+        return internal_type, p2_clean
 
     # ================= 场景二：纯文本行（如纯域名列表、纯IP列表） =================
     raw_line = line.split('#')[0].split('//')[0].strip()
