@@ -554,9 +554,6 @@ def normalize_and_discover_local_sources(router_cleaned):
                 continue
             router_cleaned[local_base_name] = {'name': local_base_name, 'url': []}
 
-import os
-import subprocess
-
 def compile_mihomo_mrs(base_name, policy, rules):
     if 'classic' in base_name.lower() or 'nodomain' in base_name.lower():
         return
