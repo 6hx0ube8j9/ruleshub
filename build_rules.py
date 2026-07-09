@@ -192,13 +192,9 @@ def clean_and_parse_line(line):
             p2_clean = p2.lower().replace('(', '').replace(')', '').strip()
             if ',' in p2_clean: p2_clean = p2_clean.split(',')[0].strip()
             p2_clean = p2_clean.replace(':', '-')
-            parts = p2_clean.split('-')
-            if len(parts) == 2:
-                try: return 'port', f"{int(parts[0].strip())}-{int(parts[1].strip())}"
-                except ValueError: return None, None
-            elif len(parts) == 1:
-                try: return 'port', str(int(parts[0].strip()))
-                except ValueError: return None, None
+            parts = [p.strip() for p in p2_clean.split('-')]
+            if len(parts) == 1 and parts[0].isdigit(): return 'port', str(int(parts[0]))
+            if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit(): return 'port', f"{int(parts[0])}-{int(parts[1])}"
             return None, None
 
        if internal_type == 'suffix': 
