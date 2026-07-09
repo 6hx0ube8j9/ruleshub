@@ -17,3 +17,6 @@ user-agent, AppleNews*, Test
 user-agent, Telegram*, Test
 user-agent, Twitter*, Test
 user-agent, YouTube*, Test
+host-regex, (^|\.)ttwstatic\.com$, Test
+host-regex, ^amdc\..+\.com$, Test
+host-regex, ^https?:\/\/.*\.googlevideo\.com\/, Test

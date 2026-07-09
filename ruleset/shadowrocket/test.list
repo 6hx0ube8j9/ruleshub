@@ -17,3 +17,6 @@ USER-AGENT,AppleNews*
 USER-AGENT,Telegram*
 USER-AGENT,Twitter*
 USER-AGENT,YouTube*
+DOMAIN-REGEX,(^|\.)ttwstatic\.com$
+DOMAIN-REGEX,^amdc\..+\.com$
+DOMAIN-REGEX,^https?:\/\/.*\.googlevideo\.com\/
