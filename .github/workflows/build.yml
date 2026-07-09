@@ -94,26 +94,6 @@ jobs:
           rm -f tmp_ip_*.yaml tmp_domain_*.yaml
           cd ../..
 
-      - name: Build SRS
-        run: |
-          cd ruleset/singbox
-          shopt -s nullglob
-          
-          echo "IP SRS"
-          for ip_json in tmp_ip_*.json; do
-            base_name=$(echo "$ip_json" | sed 's/tmp_ip_//' | sed 's/.json//')
-            ../../sing-box rule-set compile "$ip_json" -o "${base_name}.srs"
-          done
-          
-          echo "Domain SRS"
-          for dm_json in tmp_domain_*.json; do
-            base_name=$(echo "$dm_json" | sed 's/tmp_domain_//' | sed 's/.json//')
-            ../../sing-box rule-set compile "$dm_json" -o "${base_name}.srs"
-          done
-          
-          rm -f tmp_ip_*.json tmp_domain_*.json
-          cd ../..
-
       - name: Commit and Push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
