@@ -15,3 +15,9 @@ IP-CIDR6,2400:cb00:2048:1::c629:d7a2
 USER-AGENT,Telegram*
 USER-AGENT,Twitter*
 USER-AGENT,AppleNews*
+# 这是一个高难度的混合测试源
+DOMAIN-SUFFIX,google.com
+DOMAIN,www.google.com
+IP-CIDR,8.8.8.8/32
+USER-AGENT,YouTube*
+URL-REGEX,^https?:\/\/.*\.googlevideo\.com\/
