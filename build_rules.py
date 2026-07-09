@@ -221,15 +221,13 @@ def clean_and_parse_line(line):
                 try: return 'port', str(int(p2_clean))
                 except ValueError: return None, None
 
-        if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
-        elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
-        elif p2_clean.startswith('.'): p2_clean = p2_clean[1:]
-        elif p2_clean.startswith('+'): p2_clean = p2_clean[1:]
-        p2_clean = p2_clean.lstrip('.')
-
-        if internal_type == 'suffix': 
+       if internal_type == 'suffix': 
+            if p2_clean.startswith('+.'): p2_clean = p2_clean[2:]
+            elif p2_clean.startswith('*.'): p2_clean = p2_clean[2:]
+            elif p2_clean.startswith('.'): p2_clean = p2_clean[1:]
+            p2_clean = p2_clean.lstrip('.')
+            
             if has_invalid_domain_chars(p2_clean): return None, None
-            p2_clean = p2_clean.lstrip('+.')
             encoded_d = try_punycode_encode(p2_clean)
             return ('suffix', encoded_d) if (encoded_d and DOMAIN_PATTERN.match(encoded_d)) else (None, None)
             
@@ -298,17 +296,19 @@ def clean_and_parse_line(line):
         
     if has_invalid_domain_chars(raw_val): 
         return None, None
-
+		
     is_explicit_suffix = False
-    if raw_val.startswith('+.'):   raw_val = raw_val[2:]; is_explicit_suffix = True
-    elif raw_val.startswith('.'):  raw_val = raw_val[1:]; is_explicit_suffix = True
-    elif raw_val.startswith('+'):  raw_val = raw_val[1:]; is_explicit_suffix = True
-        
-    raw_val = raw_val.lstrip('.')
-    if not raw_val: 
-        return None, None
+    if raw_val.startswith('+.'):
+        raw_val = raw_val[2:]
+        is_explicit_suffix = True
+    elif raw_val.startswith('*.'):
+        raw_val = raw_val[2:]
+        is_explicit_suffix = True
+    elif raw_val.startswith('.'):
+        raw_val = raw_val[1:]
+        is_explicit_suffix = True
 
-    if '.' not in raw_val:
+    if not raw_val or '.' not in raw_val:
         return None, None
         
     raw_val = try_punycode_encode(raw_val)
