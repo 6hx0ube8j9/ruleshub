@@ -8,13 +8,6 @@
       "domain_suffix": [
         "internal.1234567890",
         "xn--ldrr30i.sub.xn--fiqs8s"
-      ],
-      "domain_regex": [
-        "^.*$",
-        "^.*google.*$",
-        "^.*with\\-dash\\-and_underscore.*$",
-        "^\\..*\\..*\\.netflix\\.\\.com$",
-        "^my\\+\\$app\\$\\.com$"
       ]
     },
     {
