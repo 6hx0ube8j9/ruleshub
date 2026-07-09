@@ -1,0 +1,8 @@
+# Quantumult X Aggregated Rule-Set: appdw
+
+host, test.com, Appdw
+host-suffix, abc.cn, Appdw
+host-keyword, test, Appdw
+ip-cidr, 10.0.0.0/24, Appdw, no-resolve
+ip-cidr, 192.168.0.1/32, Appdw, no-resolve
+ip6-cidr, 2000::/3, Appdw, no-resolve

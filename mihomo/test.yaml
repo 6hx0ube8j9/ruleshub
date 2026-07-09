@@ -1,0 +1,15 @@
+# Mihomo Payload Rule-Set: test
+payload:
+  - PROCESS-NAME,c:\program files (x86)\my "cool" app\test.exe
+  - DST-PORT,0
+  - DST-PORT,1-65535
+  - DST-PORT,65535
+  - DST-PORT,80
+  - DOMAIN,xn--fiqs8s.xn--fiqs8s
+  - DOMAIN-SUFFIX,internal.1234567890
+  - DOMAIN-SUFFIX,xn--ldrr30i.sub.xn--fiqs8s
+  - DOMAIN-WILDCARD,*
+  - DOMAIN-WILDCARD,****google****
+  - DOMAIN-WILDCARD,*with-dash-and_underscore*
+  - DOMAIN-WILDCARD,.*.*.netflix..com
+  - DOMAIN-WILDCARD,my+$app$.com
