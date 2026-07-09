@@ -5,6 +5,7 @@ import re
 import urllib.request
 import urllib.error
 import requests
+import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ==========================================
@@ -596,35 +597,6 @@ def generate_mrs_temp_files(base_name, policy, rules):
                     for val in sorted(rules.get('wildcard', [])): f.write(f"  - DOMAIN-WILDCARD,{val}\n")
                     for item in sorted(rules.get('regex', [])): f.write(f"  - DOMAIN-REGEX,{item}\n")
 
-    # Singbox 临时 JSON 生成
-    if srs_en:
-        target_ip_name = srs_name if is_ip_centric_name(srs_name) else (f"{srs_name}_ip" if has_ipcidr_cfg else None)
-        target_domain_name = f"{srs_name}_domain" if is_ip_centric_name(srs_name) and has_domain_cfg else (srs_name if not is_ip_centric_name(srs_name) else None)
-
-        if target_ip_name:
-            combined_ips = extract_combined_cidrs(rules)
-            if combined_ips:
-                sb_tmp_ip = {"version": 2, "rules": [{"ip_cidr": combined_ips}]}
-                with open(os.path.join(SINGBOX_DIR, f"tmp_ip_{target_ip_name}.json"), 'w', encoding='utf-8') as f:
-                    json.dump(sb_tmp_ip, f, indent=2, ensure_ascii=False)
-                    
-        if target_domain_name:
-            sb_tmp_domain = {"version": 2, "rules": []}
-            if rules.get('full'): sb_tmp_domain["rules"].append({"domain": sorted(list(rules['full']))})      
-            if rules.get('suffix'): sb_tmp_domain["rules"].append({"domain_suffix": sorted(list(rules['suffix']))})      
-            if rules.get('keyword'): sb_tmp_domain["rules"].append({"domain_keyword": sorted(list(rules['keyword']))})
-            if rules.get('port'): 
-                p_list, p_range = parse_ports_for_singbox(rules['port'])
-                if p_list: sb_tmp_domain["rules"].append({"port": p_list})
-                if p_range: sb_tmp_domain["rules"].append({"port_range": p_range})
-            if rules.get('wildcard') or rules.get('regex'):
-                regex_list = [convert_wildcard_to_regex(w) for w in rules.get('wildcard', [])] + list(rules.get('regex', []))
-                sb_tmp_domain["rules"].append({"domain_regex": sorted(list(set(regex_list)))})
-                
-            if sb_tmp_domain["rules"]:
-                with open(os.path.join(SINGBOX_DIR, f"tmp_domain_{target_domain_name}.json"), 'w', encoding='utf-8') as f:
-                    json.dump(sb_tmp_domain, f, indent=2, ensure_ascii=False)
-
 # ==========================================
 # 7. 主程序流调度核心
 # ==========================================
@@ -738,7 +710,7 @@ def main():
 
 		if dest_rule:
 			sb_data["rules"].append(dest_rule)
-
+			
         if g_rules.get('process'):
             proc_set = set()
             for p in g_rules['process']:
@@ -755,6 +727,16 @@ def main():
 
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
+
+        sb_srs_path = sb_path.replace('.json', '.srs')  
+        if os.path.exists('./sing-box'):
+            try:
+                subprocess.run(['./sing-box', 'rule-set', 'compile', sb_path, '-o', sb_srs_path], check=True)
+                print(f"Successfully compiled: {g_name}.srs")
+            except subprocess.CalledProcessError as e:
+                print(f"❌ Error: Failed to compile {g_name}.json into SRS! Details: {e}")
+        else:
+            print(f"⚠️ Warning: ./sing-box binary not found at root, skipped local compilation for {g_name}")			
 
     # [PAC ]
     for g_name, raw_domains in global_matrix['pac'].items():
