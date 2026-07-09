@@ -326,14 +326,13 @@ def clean_and_parse_line(line):
     if is_explicit_suffix:
         return 'suffix', raw_val.lstrip('+.')
     else:
-        if 'PUBLIC_SUFFIX_BLACKLIST' in globals():
-            if parts_count == 2:
+        if 'PUBLIC_SUFFIX_BLACKLIST' in globals() and PUBLIC_SUFFIX_BLACKLIST:
+            is_direct_public = raw_val in PUBLIC_SUFFIX_BLACKLIST
+            
+			if is_direct_public or is_compound_public:
                 return 'suffix', raw_val.lstrip('+.')
-            elif parts_count == 3:
-                return ('suffix', raw_val.lstrip('+.')) if is_compound_public else ('full', raw_val)
-            else: 
-                return 'full', raw_val 
-        return ('suffix', raw_val.lstrip('+.')) if parts_count == 2 else ('full', raw_val)
+				
+         return 'full', raw_val 
 
 def optimize_domains(rules: dict, local_rules: dict = None):
     if 'suffix' not in rules or 'full' not in rules: 
