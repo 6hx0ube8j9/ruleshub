@@ -1,5 +1,4 @@
-# Name = Test
-# Shunt Rule-Set generated automatically via script
+# Loon Rule-Set: test
 
 DOMAIN,xn--fiqs8s.xn--fiqs8s
 DOMAIN-SUFFIX,internal.1234567890

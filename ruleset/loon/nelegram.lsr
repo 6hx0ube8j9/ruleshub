@@ -1,5 +1,4 @@
-# Name = Nelegram
-# Shunt Rule-Set generated automatically via script
+# Loon Rule-Set: nelegram
 
 IP-CIDR,109.239.140.0/24,no-resolve
 IP-CIDR,139.59.210.98/32,no-resolve

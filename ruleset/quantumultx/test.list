@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: test
+# Quantumult X Rule-Set: test
 
 host, xn--fiqs8s.xn--fiqs8s, Test
 host-suffix, internal.1234567890, Test

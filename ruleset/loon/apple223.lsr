@@ -1,5 +1,4 @@
-# Name = Apple223
-# Shunt Rule-Set generated automatically via script
+# Loon Rule-Set: apple223
 
 IP-CIDR,12.34.56.78/32,no-resolve
 DOMAIN,badguy.com

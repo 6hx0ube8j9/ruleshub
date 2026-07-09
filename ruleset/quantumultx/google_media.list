@@ -1,4 +1,4 @@
-# Quantumult X Aggregated Rule-Set: google_media
+# Quantumult X Rule-Set: google_media
 
 host, voice.telephony.goog, GoogleGroup
 host-suffix, 0emm.com, GoogleGroup

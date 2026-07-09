@@ -1,4 +1,3 @@
-# Name = Block
-# Shunt Rule-Set generated automatically via script
+# Loon Rule-Set: block
 
 DOMAIN-SUFFIX,apple.com

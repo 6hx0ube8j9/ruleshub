@@ -1,3 +1,3 @@
-# Quantumult X Aggregated Rule-Set: block
+# Quantumult X Rule-Set: block
 
 host-suffix, apple.com, Block

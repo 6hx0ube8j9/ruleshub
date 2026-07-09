@@ -1,5 +1,4 @@
-# Name = Google_media
-# Shunt Rule-Set generated automatically via script
+# Loon Rule-Set: google_media
 
 IP-CIDR,172.110.32.0/21,no-resolve
 IP-CIDR,173.194.0.0/16,no-resolve
