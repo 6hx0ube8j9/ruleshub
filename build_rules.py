@@ -707,7 +707,7 @@ def main():
             dest_rule["ip_cidr"] = combined_ips
 			
         if g_rules.get('regex'):
-            dest_rule["domain_regex"] = sorted(list(set(g_rules['regex'])))
+            dest_rule["domain_regex"] = sorted(list(set(g_rules['regex']))
 
         if dest_rule:
             sb_data["rules"].append(dest_rule)
