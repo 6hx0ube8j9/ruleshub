@@ -1,0 +1,5 @@
+# Name = Apple223
+# Shunt Rule-Set generated automatically via script
+
+IP-CIDR,12.34.56.78/32,no-resolve
+DOMAIN,badguy.com
