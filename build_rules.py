@@ -705,9 +705,9 @@ def main():
         combined_ips = extract_combined_cidrs(g_rules)
         if combined_ips: 
             dest_rule["ip_cidr"] = combined_ips
-			
+
         if g_rules.get('regex'):
-			dest_rule["domain_regex"] = sorted(list(set(g_rules['regex'])))
+            dest_rule["domain_regex"] = sorted(list(set(g_rules['regex'])))
 
         if dest_rule:
             sb_data["rules"].append(dest_rule)
@@ -737,8 +737,8 @@ def main():
             except subprocess.CalledProcessError as e:
                 print(f"❌ Error: Failed to compile {g_name}.json into SRS! Details: {e}")
         else:
-            print(f"⚠️ Warning: ./sing-box binary not found at root, skipped local compilation for {g_name}")		
-
+            print(f"⚠️ Warning: ./sing-box binary not found at root, skipped local compilation for {g_name}")
+			
     # [PAC ]
     for g_name, raw_domains in global_matrix['pac'].items():
         pac_path = os.path.join(PAC_DIR, f"{g_name}.pac")
