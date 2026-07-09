@@ -713,7 +713,7 @@ def main():
                     for val in sorted(list(rule_set)):
 						if loon_tag == 'IP-CIDR':
 							f.write(f"IP-CIDR,{val},no-resolve\n")
-                        else: 
+                        else:
 							f.write(f"{loon_tag},{val}\n")
                             
         print(f"Successfully generated Master LSR Ruleset: {g_name}.lsr")
