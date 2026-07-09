@@ -564,11 +564,12 @@ def normalize_and_discover_local_sources(router_cleaned):
                 continue
             router_cleaned[local_base_name] = {'name': local_base_name, 'url': []}
 
-def generate_mrs_temp_files(base_name, policy, rules):
+def compile_mihomo_mrs(base_name, policy, rules):
     if 'classic' in base_name.lower() or 'nodomain' in base_name.lower():
         return
 
     mrs_en, mrs_name = parse_target_config(policy, 'mrs', base_name)
+    srs_en, srs_name = parse_target_config(policy, 'srs', base_name)
     if not mrs_en and not srs_en:
         return
 
@@ -590,7 +591,7 @@ def generate_mrs_temp_files(base_name, policy, rules):
                     f.write("payload:\n")
                     for item in combined_ips:
                         f.write(f"  - '{item}'\n")
-						
+                
                 if os.path.exists('./mihomo-bin'):
                     try:
                         subprocess.run(['./mihomo-bin', 'convert-ruleset', 'ipcidr', 'yaml', tmp_yaml_path, mrs_out_path], check=True)
@@ -647,7 +648,7 @@ def main():
     for target_base_name, policy_card in router_cleaned.items():
         rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
         dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
-        generate_mrs_temp_files(target_base_name, policy_card, rules_in_memory)
+        compile_mihomo_mrs(target_base_name, policy_card, rules_in_memory)
   
     # [QuantumultX]
     for g_name, g_rules in global_matrix['qx'].items():
@@ -720,7 +721,7 @@ def main():
         sb_data = {"version": 2, "rules": []}
         dest_rule = {}
         if g_rules.get('full'):
-			dest_rule["domain"] = sorted(list(g_rules['full']))
+            dest_rule["domain"] = sorted(list(g_rules['full']))
             
         if g_rules.get('suffix'):
             dest_rule["domain_suffix"] = sorted(list(g_rules['suffix']))
@@ -733,12 +734,12 @@ def main():
             dest_rule["ip_cidr"] = combined_ips
             
         if g_rules.get('wildcard') or g_rules.get('regex'):
-			regex_list = [convert_wildcard_to_regex(w) for w in g_rules.get('wildcard', [])] + g_rules.get('regex', [])
+            regex_list = [convert_wildcard_to_regex(w) for w in g_rules.get('wildcard', [])] + g_rules.get('regex', [])
             dest_rule["domain_regex"] = sorted(list(set(regex_list)))
 
-		if dest_rule:
-			sb_data["rules"].append(dest_rule)
-			
+        if dest_rule:
+            sb_data["rules"].append(dest_rule)
+            
         if g_rules.get('process'):
             proc_set = set()
             for p in g_rules['process']:
@@ -764,7 +765,7 @@ def main():
             except subprocess.CalledProcessError as e:
                 print(f"❌ Error: Failed to compile {g_name}.json into SRS! Details: {e}")
         else:
-            print(f"⚠️ Warning: ./sing-box binary not found at root, skipped local compilation for {g_name}")			
+            print(f"⚠️ Warning: ./sing-box binary not found at root, skipped local compilation for {g_name}")		
 
     # [PAC ]
     for g_name, raw_domains in global_matrix['pac'].items():
