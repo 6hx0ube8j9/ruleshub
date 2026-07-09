@@ -565,17 +565,14 @@ def normalize_and_discover_local_sources(router_cleaned):
             router_cleaned[local_base_name] = {'name': local_base_name, 'url': []}
 
 def generate_mrs_temp_files(base_name, policy, rules):
-
     if 'classic' in base_name.lower() or 'nodomain' in base_name.lower(): return
+	mrs_en, mrs_name = parse_target_config(policy, 'mrs', base_name)	
 
-    mrs_en, mrs_name = parse_target_config(policy, 'mrs', base_name)
-    srs_en, srs_name = parse_target_config(policy, 'srs', base_name)
     if not mrs_en and not srs_en: return
 
     has_ipcidr_cfg = is_truthy_cfg(policy, 'ipcidr')
     has_domain_cfg = is_truthy_cfg(policy, 'domain')
-
-    # Mihomo 临时 Payload 生成
+	
     if mrs_en:
         target_ip_name = mrs_name if is_ip_centric_name(mrs_name) else (f"{mrs_name}_ip" if has_ipcidr_cfg else None)
         target_domain_name = f"{mrs_name}_domain" if is_ip_centric_name(mrs_name) and has_domain_cfg else (mrs_name if not is_ip_centric_name(mrs_name) else None)
@@ -583,19 +580,43 @@ def generate_mrs_temp_files(base_name, policy, rules):
         if target_ip_name:
             combined_ips = extract_combined_cidrs(rules)
             if combined_ips:
-                with open(os.path.join(MIHOMO_DIR, f"tmp_ip_{target_ip_name}.yaml"), 'w', encoding='utf-8') as f:
+                tmp_yaml_path = os.path.join(MIHOMO_DIR, f"tmp_ip_{target_ip_name}.yaml")
+                mrs_out_path = os.path.join(MIHOMO_DIR, f"{target_ip_name}.mrs")
+                
+                with open(tmp_yaml_path, 'w', encoding='utf-8') as f:
                     f.write("payload:\n")
                     for item in combined_ips: f.write(f"  - '{item}'\n")
+                
+                if os.path.exists('./mihomo-bin'):
+                    try:
+                        subprocess.run(['./mihomo-bin', 'convert-ruleset', 'ipcidr', 'yaml', tmp_yaml_path, mrs_out_path], check=True)
+                        print(f"Successfully compiled Mihomo IP: {target_ip_name}.mrs")
+                    except subprocess.CalledProcessError as e:
+                        print(f"❌ Error: Failed to compile Mihomo IP {target_ip_name}! {e}")
+                    finally:
+                        if os.path.exists(tmp_yaml_path): os.remove(tmp_yaml_path)
 
         if target_domain_name:
             if rules.get('suffix') or rules.get('full') or rules.get('keyword') or rules.get('wildcard') or rules.get('regex'):
-                with open(os.path.join(MIHOMO_DIR, f"tmp_domain_{target_domain_name}.yaml"), 'w', encoding='utf-8') as f:
+                tmp_yaml_path = os.path.join(MIHOMO_DIR, f"tmp_domain_{target_domain_name}.yaml")
+                mrs_out_path = os.path.join(MIHOMO_DIR, f"{target_domain_name}.mrs")
+                
+                with open(tmp_yaml_path, 'w', encoding='utf-8') as f:
                     f.write("payload:\n")
                     for item in sorted(rules.get('full', [])): f.write(f"  - DOMAIN,{item}\n")
                     for item in sorted(rules.get('suffix', [])): f.write(f"  - DOMAIN-SUFFIX,{item}\n")
                     for item in sorted(rules.get('keyword', [])): f.write(f"  - DOMAIN-KEYWORD,{item}\n")
                     for val in sorted(rules.get('wildcard', [])): f.write(f"  - DOMAIN-WILDCARD,{val}\n")
                     for item in sorted(rules.get('regex', [])): f.write(f"  - DOMAIN-REGEX,{item}\n")
+                
+                if os.path.exists('./mihomo-bin'):
+                    try:
+                        subprocess.run(['./mihomo-bin', 'convert-ruleset', 'domain', 'yaml', tmp_yaml_path, mrs_out_path], check=True)
+                        print(f"Successfully compiled Mihomo Domain: {target_domain_name}.mrs")
+                    except subprocess.CalledProcessError as e:
+                        print(f"❌ Error: Failed to compile Mihomo Domain {target_domain_name}! {e}")
+                    finally:
+                        if os.path.exists(tmp_yaml_path): os.remove(tmp_yaml_path)
 
 # ==========================================
 # 7. 主程序流调度核心
