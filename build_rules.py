@@ -751,10 +751,34 @@ def main():
         direct_domains = sorted(list(combined_domains))
         
         with open(pac_path, 'w', encoding='utf-8') as f:
-            f.write("var IP_ADDRESS = '127.0.0.1:7891';\nvar PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';\n\nvar DIRECT_DOMAINS = {\n")
-            for i, domain in enumerate(direct_domains):
-                f.write(f'    "{domain}": 1{"," if i < len(direct_domains) - 1 else ""}\n')
-            f.write("};\n\nfunction FindProxyForURL(url, host) {\n    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {\n        return \"DIRECT\";\n    }\n\n    var suffix = host.toLowerCase();\n    while (suffix) {\n        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {\n            return \"DIRECT\";\n        }\n        var pos = suffix.indexOf(\'.\');\n        if (pos === -1) break;\n        suffix = suffix.substring(pos + 1);\n    }\n\n    return PROXY_METHOD;\n}\n")
+            f.write("var IP_ADDRESS = '127.0.0.1:7891';\n")
+            f.write("var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; DIRECT';\n\n")
 
+            f.write("var DIRECT_DOMAINS = {\n")
+            for i, domain in enumerate(direct_domains):
+                comma = "," if i < len(direct_domains) - 1 else ""
+                f.write(f'    "{domain}": 1{comma}\n')
+            f.write("};\n\n")
+
+            js_function = """function FindProxyForURL(url, host) {
+    if (isPlainHostName(host) || /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host)) {
+        return "DIRECT";
+    }
+
+    var suffix = host.toLowerCase();
+    while (suffix) {
+        if (DIRECT_DOMAINS.hasOwnProperty(suffix)) {
+            return "DIRECT";
+        }
+        var pos = suffix.indexOf('.');
+        if (pos === -1) break;
+        suffix = suffix.substring(pos + 1);
+    }
+
+    return PROXY_METHOD;
+}
+"""
+            f.write(js_function)
+			
 if __name__ == '__main__':
     main()
