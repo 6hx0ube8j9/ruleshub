@@ -3,16 +3,25 @@
   "rules": [
     {
       "domain": [
-        "xn--fiqs8s.xn--fiqs8s"
+        "api.telegram.org",
+        "icloud.com",
+        "www.google.com"
       ],
       "domain_suffix": [
-        "internal.1234567890",
-        "xn--ldrr30i.sub.xn--fiqs8s"
-      ]
-    },
-    {
-      "process_name": [
-        "test"
+        "apple.com",
+        "google.com",
+        "telegram.dog",
+        "telegram.org"
+      ],
+      "domain_keyword": [
+        "tele-cdn"
+      ],
+      "ip_cidr": [
+        "1.1.1.1/32",
+        "149.154.160.0/20",
+        "2001:b28:f23d::/48",
+        "8.8.8.8/32",
+        "91.108.4.0/22"
       ]
     }
   ]

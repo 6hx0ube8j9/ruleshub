@@ -1,5 +1,19 @@
 # Loon Rule-Set: test
 
-DOMAIN,xn--fiqs8s.xn--fiqs8s
-DOMAIN-SUFFIX,internal.1234567890
-DOMAIN-SUFFIX,xn--ldrr30i.sub.xn--fiqs8s
+IP-CIDR,1.1.1.1/32,no-resolve
+IP-CIDR,149.154.160.0/20,no-resolve
+IP-CIDR,2001:b28:f23d::/48,no-resolve
+IP-CIDR,8.8.8.8/32,no-resolve
+IP-CIDR,91.108.4.0/22,no-resolve
+DOMAIN,api.telegram.org
+DOMAIN,icloud.com
+DOMAIN,www.google.com
+DOMAIN-KEYWORD,tele-cdn
+DOMAIN-SUFFIX,apple.com
+DOMAIN-SUFFIX,google.com
+DOMAIN-SUFFIX,telegram.dog
+DOMAIN-SUFFIX,telegram.org
+USER-AGENT,AppleNews*
+USER-AGENT,Telegram*
+USER-AGENT,Twitter*
+USER-AGENT,YouTube*

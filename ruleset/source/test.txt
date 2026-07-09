@@ -1,23 +1,31 @@
-# 经典 Telegram 与 Apple 混合测试集
-DOMAIN-SUFFIX,telegram.org
-DOMAIN-SUFFIX,telegram.dog
-DOMAIN,api.telegram.org
-DOMAIN-KEYWORD,tele-cdn
-DOMAIN-SUFFIX,apple.com
-DOMAIN,icloud.com
-# IP 测试，包含未带掩码的裸 IP 边界测试
-IP-CIDR,91.108.4.0/22
-IP-CIDR,149.154.160.0/20
-IP-CIDR6,2001:b28:f23d::/48
-IP-CIDR,1.1.1.1
-IP-CIDR6,2400:cb00:2048:1::c629:d7a2
-# 移动端和客户端的 UA 规则
-USER-AGENT,Telegram*
-USER-AGENT,Twitter*
-USER-AGENT,AppleNews*
-# 这是一个高难度的混合测试源
-DOMAIN-SUFFIX,google.com
-DOMAIN,www.google.com
-IP-CIDR,8.8.8.8/32
-USER-AGENT,YouTube*
-URL-REGEX,^https?:\/\/.*\.googlevideo\.com\/
+# === test Combined Base Rules ===
+
+# --- TYPE: FULL ---
+full,api.telegram.org
+full,icloud.com
+full,www.google.com
+
+# --- TYPE: SUFFIX ---
+suffix,apple.com
+suffix,google.com
+suffix,telegram.dog
+suffix,telegram.org
+
+# --- TYPE: KEYWORD ---
+keyword,tele-cdn
+
+# --- TYPE: IP ---
+ip,1.1.1.1/32
+ip,149.154.160.0/20
+ip,8.8.8.8/32
+ip,91.108.4.0/22
+
+# --- TYPE: IP6 ---
+ip6,2001:b28:f23d::/48
+
+# --- TYPE: USERAGENT ---
+useragent,AppleNews*
+useragent,Telegram*
+useragent,Twitter*
+useragent,YouTube*
+
