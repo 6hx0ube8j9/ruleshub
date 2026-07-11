@@ -39,7 +39,6 @@ jobs:
         run: |
           echo "==== Fetching latest Mihomo ===="
           MIHOMO_VERSION=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4)
-          
           if [ -z "$MIHOMO_VERSION" ] || [ "$MIHOMO_VERSION" = "null" ]; then
             echo "❌ Error: Mihomo version fetch failed."
             exit 1
@@ -56,7 +55,6 @@ jobs:
 
           echo "==== Fetching latest Sing-box ===="
           SB_VERSION=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
-          
           if [ -z "$SB_VERSION" ] || [ "$SB_VERSION" = "null" ]; then
             echo "❌ Error: Sing-box version fetch failed."
             exit 1
@@ -76,6 +74,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
+          # 只对生成的成果物 ruleset/ 目录进行追踪提交
           git add -A ruleset/
 
           if git diff --staged --quiet; then
