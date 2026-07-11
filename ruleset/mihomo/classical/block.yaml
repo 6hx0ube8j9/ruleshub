@@ -1,3 +1,0 @@
-# Mihomo Payload Rule-Set: block
-payload:
-  - DOMAIN-SUFFIX,apple.com
