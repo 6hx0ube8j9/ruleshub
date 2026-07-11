@@ -5,9 +5,8 @@ on:
     branches:
       - main
     paths:
+      - 'scripts/**'
       - 'ruleset/**'
-      - 'ruleset/ruleset.json'
-      - 'build_rules.py'
       - '.github/workflows/build.yml'
   schedule:
     - cron: '0 22 */6 * *'
@@ -48,12 +47,12 @@ jobs:
           echo "Mihomo version: ${MIHOMO_VERSION}"
           
           curl -L -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
-          gunzip -c mihomo.gz > mihomo-bin
-          chmod +x mihomo-bin
+          gunzip -c mihomo.gz > scripts/mihomo-bin
+          chmod +x scripts/mihomo-bin
           
           mkdir -p ~/.config/mihomo
           curl -L -o ~/.config/mihomo/Country.mmdb "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
-          cp ~/.config/mihomo/Country.mmdb ./Country.mmdb
+          cp ~/.config/mihomo/Country.mmdb ./scripts/Country.mmdb
 
           echo "==== Fetching latest Sing-box ===="
           SB_VERSION=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
@@ -66,16 +65,17 @@ jobs:
           
           curl -L -o sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/v${SB_VERSION}/sing-box-${SB_VERSION}-linux-amd64.tar.gz"
           tar -xzvf sing-box.tar.gz
-          cp sing-box-*/sing-box ./sing-box
-          chmod +x sing-box
+          cp sing-box-*/sing-box ./scripts/sing-box
+          chmod +x scripts/sing-box
 
       - name: Run Parser
-        run: python build_rules.py
+        run: python scripts/main.py
 
       - name: Commit and Push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          
           git add -A ruleset/
 
           if git diff --staged --quiet; then
