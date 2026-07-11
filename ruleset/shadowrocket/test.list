@@ -1,8 +1,8 @@
 # Shadowrocket Rule-Set: test
 
-DOMAIN,icloud.com
 DOMAIN-SUFFIX,apple.com
 DOMAIN-SUFFIX,google.com
+DOMAIN-SUFFIX,icloud.com
 DOMAIN-SUFFIX,telegram.dog
 DOMAIN-SUFFIX,telegram.org
 DOMAIN-KEYWORD,tele-cdn

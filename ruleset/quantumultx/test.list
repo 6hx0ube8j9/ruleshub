@@ -1,8 +1,8 @@
 # Quantumult X Rule-Set: test
 
-host, icloud.com, Test
 host-suffix, apple.com, Test
 host-suffix, google.com, Test
+host-suffix, icloud.com, Test
 host-suffix, telegram.dog, Test
 host-suffix, telegram.org, Test
 host-keyword, tele-cdn, Test

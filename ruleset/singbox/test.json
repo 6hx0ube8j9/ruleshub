@@ -2,12 +2,10 @@
   "version": 2,
   "rules": [
     {
-      "domain": [
-        "icloud.com"
-      ],
       "domain_suffix": [
         "apple.com",
         "google.com",
+        "icloud.com",
         "telegram.dog",
         "telegram.org"
       ],
