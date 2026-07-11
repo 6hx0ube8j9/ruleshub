@@ -164,11 +164,11 @@ def generate_loon(matrix_data, output_dir):
         combined_loon_ips = set(g_rules.get('ip', set()) | g_rules.get('ip6', set()))
 
         # 构建渲染管线统一格式化输出
-        loon_rendering_pipeline = [
-            ('IP-CIDR', combined_loon_ips),
+        loon_rendering_pipeline = [   
             ('DOMAIN', g_rules.get('full', set())),
-            ('DOMAIN-KEYWORD', g_rules.get('keyword', set())),
             ('DOMAIN-SUFFIX', g_rules.get('suffix', set())),
+            ('DOMAIN-KEYWORD', g_rules.get('keyword', set())),        
+            ('IP-CIDR', combined_loon_ips),
             ('USER-AGENT', g_rules.get('useragent', set()))
         ]
         for loon_tag, rule_set in loon_rendering_pipeline:
