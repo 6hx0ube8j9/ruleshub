@@ -55,7 +55,6 @@ MIHOMO_MRS_TUNNEL_MATRIX = {
 # ==========================================
 # 初始化基础静态目录集合
 REQUIRED_DIRS = {
-    SCRIPT_DIR,
     RULESET_BASE_DIR, 
     SOURCE_DIR, 
     MIHOMO_DIR,
