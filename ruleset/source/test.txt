@@ -1,7 +1,7 @@
 # === test Combined Base Rules ===
 
 # --- TYPE: FULL ---
-full,icloud.com
+suffix,icloud.com
 
 # --- TYPE: SUFFIX ---
 suffix,apple.com
