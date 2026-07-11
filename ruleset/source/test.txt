@@ -1,9 +1,7 @@
 # === test Combined Base Rules ===
 
 # --- TYPE: FULL ---
-full,api.telegram.org
 full,icloud.com
-full,www.google.com
 
 # --- TYPE: SUFFIX ---
 suffix,apple.com

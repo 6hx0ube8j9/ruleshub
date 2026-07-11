@@ -1,8 +1,6 @@
 # Quantumult X Rule-Set: test
 
-host, api.telegram.org, Test
 host, icloud.com, Test
-host, www.google.com, Test
 host-suffix, apple.com, Test
 host-suffix, google.com, Test
 host-suffix, telegram.dog, Test
