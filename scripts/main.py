@@ -219,22 +219,24 @@ def fetch_single_url(remote_url):
 
 def parse_source_config(base_name, policy):
     """
-    【严密防守：本地源配置解析】
-    彻底过滤各种异常类型，确保返回准确的开关状态和文件列表。
+    【本地源配置解析：全面激活纯本地手动流】
+    严格防守类型边界。只要没有明确拒绝，就默认对本地底稿进行全量加载。
     """
     source_cfg = policy.get('source', None)
     
-    # 明确拦截 False 或字符串 'false'
+    # 1. 明确拦截 False 或字符串 'false'
     if source_cfg is False or str(source_cfg).strip().lower() == 'false':
         return False, []
     
-    # 归一化处理：空、True、空列表皆视为默认映射 base_name.txt
+    # 2. 【激进激活】空配置、True、空列表皆视为默认激活：映射加载 base_name.txt
     if source_cfg is None or source_cfg is True or str(source_cfg).strip().lower() == 'true' or (isinstance(source_cfg, list) and len(source_cfg) == 0):
         return True, [base_name.lower()]
         
+    # 3. 显式列表配置，过滤掉里面写错的 false 字符串
     if isinstance(source_cfg, list):
         return True, [str(x) for x in source_cfg if str(x).strip().lower() != 'false']
         
+    # 4. 显式单字符串配置
     if isinstance(source_cfg, str):
         return True, [source_cfg]
         
@@ -242,11 +244,9 @@ def parse_source_config(base_name, policy):
 
 def fetch_and_merge_rules(base_name, policy):
     """
-    【架构重塑：彻底的三相分流与只读保护】
-    1. 斩断 URL 交叉污染：明确区分“旁路落盘流”与“主干网络流”。
-    2. 解决布尔值解析漏洞：用高强度逻辑精准捕获 True、"true"、"" 等异常状态。
-    3. 守护底稿真相源：全局大管道清洗结果绝对不再反向覆写本地磁盘！
+    【架构重塑：彻底的三相分流、本地底稿只读保护、全面支持纯本地流】
     """
+    # 1. 解析本地源激活状态
     source_enable, source_list = parse_source_config(base_name, policy)
     
     urls_config = policy.get('url', [])
@@ -258,7 +258,7 @@ def fetch_and_merge_rules(base_name, policy):
     trunk_urls = set() # 主干路由池：纯粹参与内存大清洗的 URL
     
     # ==========================================
-    # 1. 严格解析 URL 路由意图 (解决解析 Bug 与 交叉污染 Bug)
+    # 核心解析：对 URL 进行精准路由分流
     # ==========================================
     for item in urls_config:
         url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
@@ -269,38 +269,36 @@ def fetch_and_merge_rules(base_name, policy):
         if isinstance(item, dict) and 'sync_source' in item:
             sync_target = item['sync_source']
             
-            # 严密过滤明确的 False 意图，直接打入主干池
+            # 过滤明确的 False 意图，直接打入主干池
             if sync_target is False or str(sync_target).strip().lower() == 'false':
                 trunk_urls.add(url_str)
                 continue
                 
-            # 【致命 BUG 修复处】命中默认映射: 布尔 True, 字符串 'true', 空字符串 ''
+            # 命中网络同步默认映射: 布尔 True, 字符串 'true', 空字符串 ''
             if sync_target is True or str(sync_target).strip().lower() == 'true' or sync_target == "":
                 sf_name = base_name.lower() + '.txt'
                 sync_routes[url_str] = sf_name
                 
-            # 命中自定义映射: 手写的其他具体文件名
+            # 命中网络同步自定义映射
             elif isinstance(sync_target, str):
                 sf_name = sync_target.strip().lower()
                 if not sf_name.endswith('.txt'): sf_name += '.txt'
                 sync_routes[url_str] = sf_name
-                
             else:
-                trunk_urls.add(url_str) # 异常类型兜底，不阻断网络流，降级为主干流
+                trunk_urls.add(url_str)
         else:
-            # 未声明 sync_source 的传统 URL，纯主干网络流
             trunk_urls.add(url_str)
 
-    # 统一并发拉取所有远程资源
+    # 统一并发拉取远程资源（如果是纯本地手动流，这里拿到的 remote_data_map 为空，不影响后续执行）
     remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
 
     # ==========================================
-    # 三相分流 Phase A: 旁路落盘流 (独立静默更新)
+    # 三相分流 Phase A: 旁路网络同步流 (写缓存，绝不污染人类手写底稿)
     # ==========================================
     if sync_routes:
         sync_tasks = {}
         for url_str, sf_name in sync_routes.items():
-            # 【终极修正】将网络自动同步的目标命名为 .sync.txt，与用户手写的 .txt 物理隔离
+            # 物理级解耦：网络更新目标变更为 .sync.txt 缓存文件
             sync_sf_name = sf_name.replace('.txt', '.sync.txt')
             t_path = os.path.join(SOURCE_DIR, sync_sf_name)
             p_name = os.path.splitext(sync_sf_name)[0]
@@ -310,19 +308,19 @@ def fetch_and_merge_rules(base_name, policy):
             sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
             
         for target_path, task in sync_tasks.items():
-            # 这里的 pipeline 只有纯网络流的自我去重，并静默落盘为 xxx.sync.txt
+            # 缓存保持无状态干净特性：仅洗网络最新流，静默刷新 .sync.txt
             sub_rules = rules_processor.execute_rules_pipeline([], task["remote_lines"])
             save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
 
     # ==========================================
-    # 三相分流 Phase B: 主干网络流 (精准隔离)
+    # 三相分流 Phase B: 主干网络流 (非同步旁路的临时网络数据)
     # ==========================================
     all_remote_raw = []
     for url_str in trunk_urls:
         all_remote_raw.extend(remote_data_map.get(url_str, []))
 
     # ==========================================
-    # 三相分流 Phase C: 主干本地流 (多源真相双向加载)
+    # 三相分流 Phase C: 主干本地流 (多源真相融合，人类手写底稿最高优先级)
     # ==========================================
     all_local_raw = []
     if source_enable:
@@ -330,21 +328,21 @@ def fetch_and_merge_rules(base_name, policy):
             if not isinstance(src_item, str): continue
             src_base = os.path.splitext(src_item.lower())[0]
             
-            # 1. 绝对只读地加载用户手写的原始底稿 (google.txt) -> 哪怕网络怎么洗，这里永远安全
+            # ① 加载你手动编辑的绝对真相源 (如：source/google.txt) -> 地老天荒也不会被代码反向覆盖
             user_src_path = os.path.join(SOURCE_DIR, f"{src_base}.txt")
             all_local_raw.extend(load_local_raw_lines(user_src_path))
             
-            # 2. 自动加载刚刚旁路静默同步下来的网络缓存 (google.sync.txt)
+            # ② 顺便加载可能存在的网络同步缓存文件 (如：source/google.sync.txt)
             sync_src_path = os.path.join(SOURCE_DIR, f"{src_base}.sync.txt")
             all_local_raw.extend(load_local_raw_lines(sync_src_path))
 
     # ==========================================
-    # 终局：大管道清洗与输出
+    # 终局：大管道内存清洗、去重与输出 (完美释放纯本地手动流)
     # ==========================================
-    # 此时送入 execute_rules_pipeline 的，是干净且互不干扰的主干网络流与主干本地流。
+    # 此时送入 execute_rules_pipeline 的，是干净且互不干扰的所有原材料
     final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
     rules_processor.optimize_domains(final_rules)
-    
+
     return final_rules
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
