@@ -345,6 +345,10 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys, source_ena
                 f_source.write("\n")
 
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
+    """
+    【修复版分发矩阵】
+    无论传入的是 list 还是 set，一律将其 update 进 global_matrix 的集合中，确保去重阶段不报错。
+    """
     for plat, config in GLOBAL_PLATFORM_MATRIX.items():
         enabled, target_name = evaluate_routing_decision(policy, config, base_name)
         if not enabled:
@@ -352,7 +356,6 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
 
         if plat == 'quantumultx':
             policy_cfg_field = config.get('policy_cfg', 'qx_policy')
-            # 兼容大小写特性的默认策略
             fallback_label = base_name.capitalize() if base_name.lower() not in ['direct', 'reject'] else base_name.lower()
             qx_policy_label = policy.get(policy_cfg_field, fallback_label)
             
@@ -368,14 +371,15 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
         elif plat == 'pac':
             if target_name not in global_matrix[plat]:
                 global_matrix[plat][target_name] = set()
-            global_matrix[plat][target_name].update(rules.get('suffix', set()))
-            global_matrix[plat][target_name].update(rules.get('full', set()))
+            global_matrix[plat][target_name].update(rules.get('suffix', []))
+            global_matrix[plat][target_name].update(rules.get('full', []))
             
         else:
             if target_name not in global_matrix[plat]:
                 global_matrix[plat][target_name] = {k: set() for k in rules.keys()}
             for k, v in rules.items():
-                global_matrix[plat][target_name][k].update(v)
+                if k in global_matrix[plat][target_name]:
+                    global_matrix[plat][target_name][k].update(v)
 
 def normalize_and_discover_local_sources(router_cleaned):
     """
@@ -492,19 +496,25 @@ def main():
   
     output_directories = {plat: cfg['dir'] for plat, cfg in GLOBAL_PLATFORM_MATRIX.items()}
 
-    # 3. 终极域名敛并优化
+    # 3. 终极域名敛并优化与【🔥 关键类型修复强制转换】
     for plat, targets in global_matrix.items():
         for target_name, rules in targets.items():
             if isinstance(rules, dict):
+                # 3.1 丢给处理器优化域名（内部会转换为处理后的 set 或 list）
                 rules_processor.optimize_domains(rules)
+                
+                # 3.2 彻底阻断静默失败：强行将里面的 set 统一强转并排序为符合 rules_formatter 预期的 list
+                for k, v in list(rules.items()):
+                    if k != 'policy_label' and isinstance(v, (set, list)):
+                        rules[k] = sorted(list(v))
 
-    # 4. 调用格式化模块全平台导出
+    # 4. 调用格式化模块全平台导出 (此时传入的已经是干干净净的标准已排序 list 矩阵)
     rules_formatter.export_all(
         global_matrix = global_matrix,
         dir_map = output_directories
     )
 
-    # 5. Singbox 二进制编译
+    # 5. Singbox 二进制编译 (此时写出的本地 .json 绝对存在且内容完备，不再触发 continue 闪退)
     compile_singbox_srs(global_matrix, output_directories['singbox'])
 
 if __name__ == '__main__':
