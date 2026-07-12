@@ -244,9 +244,8 @@ def parse_source_config(base_name, policy):
 
 def fetch_and_merge_rules(base_name, policy):
     """
-    【架构重塑：彻底的三相分流、本地底稿只读保护、全面支持纯本地流】
+    【大管道全面接管版：完美融合同步流与纯本地手动流】
     """
-    # 1. 解析本地源激活状态
     source_enable, source_list = parse_source_config(base_name, policy)
     
     urls_config = policy.get('url', [])
@@ -254,32 +253,22 @@ def fetch_and_merge_rules(base_name, policy):
         urls_config = [urls_config] if urls_config else []
         
     all_remote_urls = []
-    sync_routes = {}   # 旁路路由池：URL -> 同步目标文件名
-    trunk_urls = set() # 主干路由池：纯粹参与内存大清洗的 URL
+    sync_routes = {}   
+    trunk_urls = set() 
     
-    # ==========================================
-    # 核心解析：对 URL 进行精准路由分流
-    # ==========================================
     for item in urls_config:
         url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
         if not url_str: continue
             
         all_remote_urls.append(url_str)
-        
         if isinstance(item, dict) and 'sync_source' in item:
             sync_target = item['sync_source']
-            
-            # 过滤明确的 False 意图，直接打入主干池
             if sync_target is False or str(sync_target).strip().lower() == 'false':
                 trunk_urls.add(url_str)
                 continue
-                
-            # 命中网络同步默认映射: 布尔 True, 字符串 'true', 空字符串 ''
             if sync_target is True or str(sync_target).strip().lower() == 'true' or sync_target == "":
                 sf_name = base_name.lower() + '.txt'
                 sync_routes[url_str] = sf_name
-                
-            # 命中网络同步自定义映射
             elif isinstance(sync_target, str):
                 sf_name = sync_target.strip().lower()
                 if not sf_name.endswith('.txt'): sf_name += '.txt'
@@ -289,61 +278,55 @@ def fetch_and_merge_rules(base_name, policy):
         else:
             trunk_urls.add(url_str)
 
-    # 统一并发拉取远程资源（如果是纯本地手动流，这里拿到的 remote_data_map 为空，不影响后续执行）
     remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
 
-    # ==========================================
-    # 三相分流 Phase A: 旁路网络同步流 (写缓存，绝不污染人类手写底稿)
-    # ==========================================
+    # Phase A: 旁路网络同步流 (写缓存 .sync.txt)
     if sync_routes:
         sync_tasks = {}
         for url_str, sf_name in sync_routes.items():
-            # 物理级解耦：网络更新目标变更为 .sync.txt 缓存文件
             sync_sf_name = sf_name.replace('.txt', '.sync.txt')
             t_path = os.path.join(SOURCE_DIR, sync_sf_name)
             p_name = os.path.splitext(sync_sf_name)[0]
-            
             if t_path not in sync_tasks:
                 sync_tasks[t_path] = {"pure_name": p_name, "remote_lines": []}
             sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
             
         for target_path, task in sync_tasks.items():
-            # 缓存保持无状态干净特性：仅洗网络最新流，静默刷新 .sync.txt
-            sub_rules = rules_processor.execute_rules_pipeline([], task["remote_lines"])
-            save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
+            sub_rules = execute_rules_pipeline([], task["remote_lines"])
+            # 兼容处理：确保写缓存时也是 list 形式
+            sub_rules_list = {k: sorted(list(v)) if isinstance(v, set) else v for k, v in sub_rules.items()}
+            save_local_rules(target_path, task["pure_name"], sub_rules_list, source_keys, True)
 
-    # ==========================================
-    # 三相分流 Phase B: 主干网络流 (非同步旁路的临时网络数据)
-    # ==========================================
+    # Phase B: 主干网络流
     all_remote_raw = []
     for url_str in trunk_urls:
         all_remote_raw.extend(remote_data_map.get(url_str, []))
 
-    # ==========================================
-    # 三相分流 Phase C: 主干本地流 (多源真相融合，人类手写底稿最高优先级)
-    # ==========================================
+    # Phase C: 主干本地流 (全力保卫你手写的原始底稿)
     all_local_raw = []
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
             src_base = os.path.splitext(src_item.lower())[0]
             
-            # ① 加载你手动编辑的绝对真相源 (如：source/google.txt) -> 地老天荒也不会被代码反向覆盖
+            # 加载你手写的原版底稿 (例如：source/google.txt)
             user_src_path = os.path.join(SOURCE_DIR, f"{src_base}.txt")
             all_local_raw.extend(load_local_raw_lines(user_src_path))
             
-            # ② 顺便加载可能存在的网络同步缓存文件 (如：source/google.sync.txt)
+            # 加载可能存在的网络同步缓存
             sync_src_path = os.path.join(SOURCE_DIR, f"{src_base}.sync.txt")
             all_local_raw.extend(load_local_raw_lines(sync_src_path))
 
     final_rules = execute_rules_pipeline(all_local_raw, all_remote_raw)
     optimize_domains(final_rules)
+    
     final_rules_list_output = {}
     for k, v in final_rules.items():
         if isinstance(v, set):
             final_rules_list_output[k] = sorted(list(v))
         else:
             final_rules_list_output[k] = sorted(list(v)) if v else []
+
     return final_rules_list_output
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
