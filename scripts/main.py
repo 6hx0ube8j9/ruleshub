@@ -244,8 +244,9 @@ def parse_source_config(base_name, policy):
 
 def fetch_and_merge_rules(base_name, policy):
     """
-    【大管道完全体：对齐 rules_processor 命名空间，GitHub Actions 专用版】
+    【架构重塑：彻底的三相分流、本地底稿只读保护、全面支持纯本地流】
     """
+    # 1. 解析本地源激活状态
     source_enable, source_list = parse_source_config(base_name, policy)
     
     urls_config = policy.get('url', [])
@@ -253,22 +254,32 @@ def fetch_and_merge_rules(base_name, policy):
         urls_config = [urls_config] if urls_config else []
         
     all_remote_urls = []
-    sync_routes = {}   
-    trunk_urls = set() 
+    sync_routes = {}   # 旁路路由池：URL -> 同步目标文件名
+    trunk_urls = set() # 主干路由池：纯粹参与内存大清洗的 URL
     
+    # ==========================================
+    # 核心解析：对 URL 进行精准路由分流
+    # ==========================================
     for item in urls_config:
         url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
         if not url_str: continue
             
         all_remote_urls.append(url_str)
+        
         if isinstance(item, dict) and 'sync_source' in item:
             sync_target = item['sync_source']
+            
+            # 过滤明确的 False 意图，直接打入主干池
             if sync_target is False or str(sync_target).strip().lower() == 'false':
                 trunk_urls.add(url_str)
                 continue
+                
+            # 命中网络同步默认映射: 布尔 True, 字符串 'true', 空字符串 ''
             if sync_target is True or str(sync_target).strip().lower() == 'true' or sync_target == "":
                 sf_name = base_name.lower() + '.txt'
                 sync_routes[url_str] = sf_name
+                
+            # 命中网络同步自定义映射
             elif isinstance(sync_target, str):
                 sf_name = sync_target.strip().lower()
                 if not sf_name.endswith('.txt'): sf_name += '.txt'
@@ -278,59 +289,61 @@ def fetch_and_merge_rules(base_name, policy):
         else:
             trunk_urls.add(url_str)
 
+    # 统一并发拉取远程资源（如果是纯本地手动流，这里拿到的 remote_data_map 为空，不影响后续执行）
     remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
 
-    # Phase A: 旁路网络同步流 (写缓存 .sync.txt)
+    # ==========================================
+    # 三相分流 Phase A: 旁路网络同步流 (写缓存，绝不污染人类手写底稿)
+    # ==========================================
     if sync_routes:
         sync_tasks = {}
         for url_str, sf_name in sync_routes.items():
+            # 物理级解耦：网络更新目标变更为 .sync.txt 缓存文件
             sync_sf_name = sf_name.replace('.txt', '.sync.txt')
             t_path = os.path.join(SOURCE_DIR, sync_sf_name)
             p_name = os.path.splitext(sync_sf_name)[0]
+            
             if t_path not in sync_tasks:
                 sync_tasks[t_path] = {"pure_name": p_name, "remote_lines": []}
             sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
             
         for target_path, task in sync_tasks.items():
-            # 🎯 修复点：调用挂载 rules_processor 空间
+            # 缓存保持无状态干净特性：仅洗网络最新流，静默刷新 .sync.txt
             sub_rules = rules_processor.execute_rules_pipeline([], task["remote_lines"])
-            sub_rules_list = {k: sorted(list(v)) if isinstance(v, set) else v for k, v in sub_rules.items()}
-            save_local_rules(target_path, task["pure_name"], sub_rules_list, rules_processor.source_keys, True)
+            save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
 
-    # Phase B: 主干网络流
+    # ==========================================
+    # 三相分流 Phase B: 主干网络流 (非同步旁路的临时网络数据)
+    # ==========================================
     all_remote_raw = []
     for url_str in trunk_urls:
         all_remote_raw.extend(remote_data_map.get(url_str, []))
 
-    # Phase C: 主干本地流 (全力保卫你手动维护的 GitHub 真迹底稿)
+    # ==========================================
+    # 三相分流 Phase C: 主干本地流 (多源真相融合，人类手写底稿最高优先级)
+    # ==========================================
     all_local_raw = []
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
             src_base = os.path.splitext(src_item.lower())[0]
             
-            # 加载你手动编辑的绝对真相源 (例如：source/google.txt)
+            # ① 加载你手动编辑的绝对真相源 (如：source/google.txt) -> 地老天荒也不会被代码反向覆盖
             user_src_path = os.path.join(SOURCE_DIR, f"{src_base}.txt")
             all_local_raw.extend(load_local_raw_lines(user_src_path))
             
-            # 加载可能存在的网络同步缓存 (.sync.txt)
+            # ② 顺便加载可能存在的网络同步缓存文件 (如：source/google.sync.txt)
             sync_src_path = os.path.join(SOURCE_DIR, f"{src_base}.sync.txt")
             all_local_raw.extend(load_local_raw_lines(sync_src_path))
 
-    # 终局：送入深度清洗大管道
-    # 🎯 修复点：调用挂载 rules_processor 空间
+    # ==========================================
+    # 终局：大管道内存清洗、去重与输出 (完美释放纯本地手动流)
+    # ==========================================
+    # 此时送入 execute_rules_pipeline 的，是干净且互不干扰的所有原材料
     final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
     rules_processor.optimize_domains(final_rules)
-    
-    # 统一强转防御，高保真输出为下游各客户端分发模块兼容的已排序 List
-    final_rules_list_output = {}
-    for k, v in final_rules.items():
-        if isinstance(v, set):
-            final_rules_list_output[k] = sorted(list(v))
-        else:
-            final_rules_list_output[k] = sorted(list(v)) if v else []
 
-    return final_rules_list_output
+    return final_rules
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
     if not source_enable or not any(len(rules[k]) > 0 for k in rule_keys):
@@ -345,10 +358,6 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys, source_ena
                 f_source.write("\n")
 
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
-    """
-    【修复版分发矩阵】
-    无论传入的是 list 还是 set，一律将其 update 进 global_matrix 的集合中，确保去重阶段不报错。
-    """
     for plat, config in GLOBAL_PLATFORM_MATRIX.items():
         enabled, target_name = evaluate_routing_decision(policy, config, base_name)
         if not enabled:
@@ -356,6 +365,7 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
 
         if plat == 'quantumultx':
             policy_cfg_field = config.get('policy_cfg', 'qx_policy')
+            # 兼容大小写特性的默认策略
             fallback_label = base_name.capitalize() if base_name.lower() not in ['direct', 'reject'] else base_name.lower()
             qx_policy_label = policy.get(policy_cfg_field, fallback_label)
             
@@ -371,15 +381,14 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
         elif plat == 'pac':
             if target_name not in global_matrix[plat]:
                 global_matrix[plat][target_name] = set()
-            global_matrix[plat][target_name].update(rules.get('suffix', []))
-            global_matrix[plat][target_name].update(rules.get('full', []))
+            global_matrix[plat][target_name].update(rules.get('suffix', set()))
+            global_matrix[plat][target_name].update(rules.get('full', set()))
             
         else:
             if target_name not in global_matrix[plat]:
                 global_matrix[plat][target_name] = {k: set() for k in rules.keys()}
             for k, v in rules.items():
-                if k in global_matrix[plat][target_name]:
-                    global_matrix[plat][target_name][k].update(v)
+                global_matrix[plat][target_name][k].update(v)
 
 def normalize_and_discover_local_sources(router_cleaned):
     """
@@ -490,26 +499,19 @@ def main():
 
     # 2. 拉取、独立同步落盘、主线合并加工与 MRS 编译
     for target_base_name, policy_card in router_cleaned.items():
-        print(f"👉 [正在处理卡片] 名为: {target_base_name} | 配置详情: {policy_card}")
-        
         rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
-        
-        total_count = sum(len(v) for v in rules_in_memory.values() if isinstance(v, (set, list)))
-        print(f"   ↳ 📦 清洗完成: 内存中总共包含 {total_count} 条有效规则")
-        
         dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
         compile_mihomo_mrs(target_base_name, policy_card, rules_in_memory)
   
     output_directories = {plat: cfg['dir'] for plat, cfg in GLOBAL_PLATFORM_MATRIX.items()}
 
-    # 3. 终极域名敛并优化【🔥 迎合 rules_formatter 核心修复：纯 Set 交付】
+    # 3. 终极域名敛并优化
     for plat, targets in global_matrix.items():
         for target_name, rules in targets.items():
             if isinstance(rules, dict):
-                # 丢给处理器优化域名（优化完后确保其内部维持纯 set，不被干扰）
                 rules_processor.optimize_domains(rules)
 
-    # 4. 调用格式化模块全平台导出 (此时 global_matrix 内部全都是 set，完美契合 `|` 运算)
+    # 4. 调用格式化模块全平台导出
     rules_formatter.export_all(
         global_matrix = global_matrix,
         dir_map = output_directories
