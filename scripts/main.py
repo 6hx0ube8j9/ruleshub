@@ -336,14 +336,15 @@ def fetch_and_merge_rules(base_name, policy):
             sync_src_path = os.path.join(SOURCE_DIR, f"{src_base}.sync.txt")
             all_local_raw.extend(load_local_raw_lines(sync_src_path))
 
-    # ==========================================
-    # 终局：大管道内存清洗、去重与输出 (完美释放纯本地手动流)
-    # ==========================================
-    # 此时送入 execute_rules_pipeline 的，是干净且互不干扰的所有原材料
-    final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
-    rules_processor.optimize_domains(final_rules)
-
-    return final_rules
+    final_rules = execute_rules_pipeline(all_local_raw, all_remote_raw)
+    optimize_domains(final_rules)
+    final_rules_list_output = {}
+    for k, v in final_rules.items():
+        if isinstance(v, set):
+            final_rules_list_output[k] = sorted(list(v))
+        else:
+            final_rules_list_output[k] = sorted(list(v)) if v else []
+    return final_rules_list_output
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
     if not source_enable or not any(len(rules[k]) > 0 for k in rule_keys):
