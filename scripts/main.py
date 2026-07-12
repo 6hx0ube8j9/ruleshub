@@ -244,7 +244,7 @@ def parse_source_config(base_name, policy):
 
 def fetch_and_merge_rules(base_name, policy):
     """
-    【大管道全面接管版：完美融合同步流与纯本地手动流】
+    【大管道完全体：对齐 rules_processor 命名空间，GitHub Actions 专用版】
     """
     source_enable, source_list = parse_source_config(base_name, policy)
     
@@ -292,34 +292,37 @@ def fetch_and_merge_rules(base_name, policy):
             sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
             
         for target_path, task in sync_tasks.items():
-            sub_rules = execute_rules_pipeline([], task["remote_lines"])
-            # 兼容处理：确保写缓存时也是 list 形式
+            # 🎯 修复点：调用挂载 rules_processor 空间
+            sub_rules = rules_processor.execute_rules_pipeline([], task["remote_lines"])
             sub_rules_list = {k: sorted(list(v)) if isinstance(v, set) else v for k, v in sub_rules.items()}
-            save_local_rules(target_path, task["pure_name"], sub_rules_list, source_keys, True)
+            save_local_rules(target_path, task["pure_name"], sub_rules_list, rules_processor.source_keys, True)
 
     # Phase B: 主干网络流
     all_remote_raw = []
     for url_str in trunk_urls:
         all_remote_raw.extend(remote_data_map.get(url_str, []))
 
-    # Phase C: 主干本地流 (全力保卫你手写的原始底稿)
+    # Phase C: 主干本地流 (全力保卫你手动维护的 GitHub 真迹底稿)
     all_local_raw = []
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
             src_base = os.path.splitext(src_item.lower())[0]
             
-            # 加载你手写的原版底稿 (例如：source/google.txt)
+            # 加载你手动编辑的绝对真相源 (例如：source/google.txt)
             user_src_path = os.path.join(SOURCE_DIR, f"{src_base}.txt")
             all_local_raw.extend(load_local_raw_lines(user_src_path))
             
-            # 加载可能存在的网络同步缓存
+            # 加载可能存在的网络同步缓存 (.sync.txt)
             sync_src_path = os.path.join(SOURCE_DIR, f"{src_base}.sync.txt")
             all_local_raw.extend(load_local_raw_lines(sync_src_path))
 
-    final_rules = execute_rules_pipeline(all_local_raw, all_remote_raw)
-    optimize_domains(final_rules)
+    # 终局：送入深度清洗大管道
+    # 🎯 修复点：调用挂载 rules_processor 空间
+    final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
+    rules_processor.optimize_domains(final_rules)
     
+    # 统一强转防御，高保真输出为下游各客户端分发模块兼容的已排序 List
     final_rules_list_output = {}
     for k, v in final_rules.items():
         if isinstance(v, set):
