@@ -14,7 +14,7 @@ import rules_formatter
 # 1. 基础物理路径与工具链定义
 # ==========================================
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__)) # /project/scripts
-PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)                 # /project
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)                  # /project
 
 # 规则输出根目录与子目录
 RULESET_BASE_DIR = os.path.join(PROJECT_ROOT, 'ruleset')
@@ -85,21 +85,49 @@ except json.JSONDecodeError as e:
     sys.exit(1) 
 
 # ==========================================
-# 4. 基础工具函数集
+# 4. 基础工具函数集与决策引擎
 # ==========================================
-def is_truthy_cfg(policy, key):
-    """判断配置项是否为真值"""
-    val = policy.get(key)
-    return val is True or str(val).lower() == 'true'
-    
-def parse_target_config(policy, field_name, default_base_name):
-    """解析目标平台的启用状态与输出别名"""
+def evaluate_routing_decision(policy, config, base_name):
+    """
+    统一路由决策引擎
+    职责: 收拢所有平台的黑名单、白名单、显式开关、别名更名、正则保底等过滤逻辑
+    返回: (is_enabled: bool, target_name: str or None)
+    """
+    field_name = config.get('field')
     val = policy.get(field_name)
+    name_lower = base_name.lower()
+
+    # 1. 最高优先级：物理黑名单拦截（如 Mihomo MRS 的 classic, nodomain）
+    if 'blacklist' in config and any(b in name_lower for b in config['blacklist']):
+        return False, None
+
+    # 2. 最高优先级：显式赋值为 False / 'false'，强行拦截跳过
     if val is False or str(val).lower() == 'false':
         return False, None
+
+    # 3. 特殊平台分流分支 A：PAC 白名单机制与独立逻辑
+    if field_name == 'pac':
+        if val is True or str(val).lower() == 'true' or name_lower in config.get('whitelist', []):
+            return True, base_name
+        if isinstance(val, str) and val.strip():
+            return True, val.strip()
+        return False, None
+
+    # 4. 特殊平台分流分支 B：Mihomo MRS 二进制规则集的正则/强开判定
+    if 'regex' in config:
+        has_explicit_value = (val is not None) and (str(val).strip() != "")
+        if has_explicit_value:
+            return True, base_name
+        # 激活名称正则保底机制
+        if re.search(config['regex'], name_lower):
+            return True, base_name
+        return False, None
+
+    # 5. 通用流 (Loon, Singbox, QX, Shadowrocket, mhm_classical, source 等)
     if val is None or val == '' or val is True or str(val).lower() == 'true':
-        return True, default_base_name
-    return True, str(val).strip()
+        return True, base_name # 全流通/保底生成，使用默认名
+        
+    return True, str(val).strip() # 显式填写了自定义别名，更名生成
     
 def get_smart_base_name(name, policy, existing_names):
     """基于规则名称或URL动态提取并生成唯一的合法文件名"""
@@ -173,7 +201,8 @@ def fetch_single_url(remote_url):
 
 def fetch_and_merge_rules(base_name, policy):
     """汇总、去重并持久化本地与远程规则集"""
-    source_enable, _ = parse_target_config(policy, 'source', base_name)
+    # 修复点：复用统一决策引擎判定 source 是否启用
+    source_enable, _ = evaluate_routing_decision(policy, {'field': 'source'}, base_name)
     source_file_name = base_name.lower()
     source_path = os.path.join(SOURCE_DIR, f"{source_file_name}.txt")
     
@@ -181,7 +210,7 @@ def fetch_and_merge_rules(base_name, policy):
     local_raw = load_local_raw_lines(source_path)
     remote_raw = load_remote_raw_lines_batch(policy.get('url', []))
     
-    # 2. 扔给黑盒子：一键送入处理器的大管道（解析、合并、主权过滤、域名优化全在里面闭环）
+    # 2. 扔给黑盒子：一键送入处理器的大管道
     rules = rules_processor.execute_rules_pipeline(local_raw, remote_raw)
     
     # 3. 搬运工干活：把完美的成品落盘
@@ -206,11 +235,12 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys, source_ena
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
     """将内存中的规则分流到各平台对应的全局矩阵结构中"""
     for plat, config in GLOBAL_PLATFORM_MATRIX.items():
-        field_name = config['field']
-        enabled, target_name = parse_target_config(policy, field_name, base_name)
+        # 统一调用决策引擎
+        enabled, target_name = evaluate_routing_decision(policy, config, base_name)
         if not enabled:
             continue
 
+        # 针对不同数据结构进行微调落盘（属于平台特性，不属于路由决策）
         if plat == 'quantumultx':
             policy_cfg_field = config.get('policy_cfg', 'qx_policy')
             qx_policy_label = policy.get(policy_cfg_field, base_name.capitalize() if base_name.lower() not in ['direct', 'reject'] else base_name.lower())
@@ -225,20 +255,11 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
                     global_matrix[plat][target_name][k].update(rules[k])
                     
         elif plat == 'pac':
-            pac_val = policy.get('pac')
-            pac_en, pac_name = False, None
+            if target_name not in global_matrix[plat]:
+                global_matrix[plat][target_name] = set()
+            global_matrix[plat][target_name].update(rules.get('suffix', set()))
+            global_matrix[plat][target_name].update(rules.get('full', set()))
             
-            if pac_val is True or str(pac_val).lower() == 'true' or base_name.lower() in config.get('whitelist', []):
-                pac_en, pac_name = True, base_name
-            elif isinstance(pac_val, str) and pac_val.strip() and str(pac_val).lower() != 'false':
-                pac_en, pac_name = True, pac_val.strip()
-
-            if pac_en:
-                if pac_name not in global_matrix[plat]:
-                    global_matrix[plat][pac_name] = set()
-                global_matrix[plat][pac_name].update(rules.get('suffix', set()))
-                global_matrix[plat][pac_name].update(rules.get('full', set()))
-                
         else:
             if target_name not in global_matrix[plat]:
                 global_matrix[plat][target_name] = {k: set() for k in rules.keys()}
@@ -287,18 +308,17 @@ def compile_mihomo_mrs(base_name, policy, rules):
     name_lower = base_name.lower()
     
     for tunnel_type, config in MIHOMO_MRS_TUNNEL_MATRIX.items():
-        # 1. 策略与黑名单拦截 (紧凑门禁)
-        if any(b in name_lower for b in config.get('blacklist', [])): continue
-        if 'regex' in config and not re.search(config['regex'], name_lower): continue
-        if not is_truthy_cfg(policy, config['field']): continue
+        # 统一调用决策引擎，MRS 是否需要编译一目了然
+        enabled, _ = evaluate_routing_decision(policy, config, base_name)
+        if not enabled: 
+            continue
 
-        # 2. 动态路由派发 (干掉 if/elif 核心)
+        # 动态路由派发与编译逻辑
         sub_dir = tunnel_type.split('_')[1]
         formatter = getattr(rules_formatter, f"generate_{tunnel_type}", None)
         content = formatter(rules) if formatter else ""
         if not content: continue
 
-        # 3. 执行落盘与编译
         yaml_path = os.path.join(MIHOMO_DIR, sub_dir, f"{name_lower}.yaml")
         mrs_out_path = os.path.join(MIHOMO_DIR, sub_dir, f"{name_lower}.mrs")
         
@@ -354,17 +374,16 @@ def main():
         dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
         compile_mihomo_mrs(target_base_name, policy_card, rules_in_memory)
   
-    # 提取输出目录映射（为后半段的落盘做准备）
+    # 提取输出目录映射
     output_directories = {plat: cfg['dir'] for plat, cfg in GLOBAL_PLATFORM_MATRIX.items()}
 
-
-    # 3. 终极域名敛并优化（调用外部处理器：rules_processor）
+    # 3. 终极域名敛并优化
     for plat, targets in global_matrix.items():
         for target_name, rules in targets.items():
             if isinstance(rules, dict):
                 rules_processor.optimize_domains(rules)
 
-    # 4. 动态导出并调用格式化模块（调用外部格式化器：rules_formatter）
+    # 4. 动态导出并调用格式化模块
     rules_formatter.export_all(
         global_matrix = global_matrix,
         dir_map = output_directories
