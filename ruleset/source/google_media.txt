@@ -1,5 +1,5 @@
 # === google_media Combined Base Rules ===
-
+DOMAIN-SUFFIX,1ucrs.com
 # --- TYPE: FULL ---
 full,voice.telephony.goog
 
