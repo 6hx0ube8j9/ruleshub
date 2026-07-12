@@ -243,106 +243,49 @@ def parse_source_config(base_name, policy):
     return True, []
 
 def fetch_and_merge_rules(base_name, policy):
-    """
-    【架构重塑：彻底的三相分流、本地底稿只读保护、全面支持纯本地流】
-    """
-    # 1. 解析本地源激活状态
-    source_enable, source_list = parse_source_config(base_name, policy)
+    """【极简无干扰测试版】剔除所有外部决策过滤，纯粹测试管道衔接"""
+    source_file_name = base_name.lower()
+    source_path = os.path.join(SOURCE_DIR, f"{source_file_name}.txt")
     
-    urls_config = policy.get('url', [])
-    if not isinstance(urls_config, list):
-        urls_config = [urls_config] if urls_config else []
-        
-    all_remote_urls = []
-    sync_routes = {}   # 旁路路由池：URL -> 同步目标文件名
-    trunk_urls = set() # 主干路由池：纯粹参与内存大清洗的 URL
+    # 1. 纯物理读取原材料（不带任何过滤逻辑）
+    local_raw = load_local_raw_lines(source_path)
+    remote_raw = load_remote_raw_lines_batch(policy.get('url', []))
     
-    # ==========================================
-    # 核心解析：对 URL 进行精准路由分流
-    # ==========================================
-    for item in urls_config:
-        url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
-        if not url_str: continue
-            
-        all_remote_urls.append(url_str)
-        
-        if isinstance(item, dict) and 'sync_source' in item:
-            sync_target = item['sync_source']
-            
-            # 过滤明确的 False 意图，直接打入主干池
-            if sync_target is False or str(sync_target).strip().lower() == 'false':
-                trunk_urls.add(url_str)
-                continue
-                
-            # 命中网络同步默认映射: 布尔 True, 字符串 'true', 空字符串 ''
-            if sync_target is True or str(sync_target).strip().lower() == 'true' or sync_target == "":
-                sf_name = base_name.lower() + '.txt'
-                sync_routes[url_str] = sf_name
-                
-            # 命中网络同步自定义映射
-            elif isinstance(sync_target, str):
-                sf_name = sync_target.strip().lower()
-                if not sf_name.endswith('.txt'): sf_name += '.txt'
-                sync_routes[url_str] = sf_name
-            else:
-                trunk_urls.add(url_str)
-        else:
-            trunk_urls.add(url_str)
+    # 🎯 节点日志一：检查物理 IO 是否真的读到了你的手动修改
+    print(f"\n🔍 [测试断点 1 - 物理读取] 卡片: {base_name}")
+    print(f"   ↳ 📂 尝试读取路径: {source_path}")
+    print(f"   ↳ 📝 本地 .txt 原始文本行数: {len(local_raw)}")
+    print(f"   ↳ 🌐 网络流下载原始文本行数: {len(remote_raw)}")
+    
+    # 2. 衔接大管道（把原材料喂给 rules_processor）
+    # 注意：确保你的 rules_processor 内部有全局定义的 source_keys 变量
+    final_rules = rules_processor.execute_rules_pipeline(local_raw, remote_raw)
+    
+    # 🎯 节点日志二：检查大管道吐出来的数据结构和长度
+    print(f"🔍 [测试断点 2 - 管道输出] 经过 execute_rules_pipeline 后:")
+    if isinstance(final_rules, dict):
+        for k, v in final_rules.items():
+            print(f"   ↳ 🔑 Key: [{k}] 里面包含 {len(v)} 条规则 (数据类型: {type(v)})")
+    else:
+        print(f"   ❌ 警告: 大管道返回的竟然不是字典(dict)类型，而是: {type(final_rules)}")
 
-    # 统一并发拉取远程资源（如果是纯本地手动流，这里拿到的 remote_data_map 为空，不影响后续执行）
-    remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
-
-    # ==========================================
-    # 三相分流 Phase A: 旁路网络同步流 (写缓存，绝不污染人类手写底稿)
-    # ==========================================
-    if sync_routes:
-        sync_tasks = {}
-        for url_str, sf_name in sync_routes.items():
-            # 物理级解耦：网络更新目标变更为 .sync.txt 缓存文件
-            sync_sf_name = sf_name.replace('.txt', '.sync.txt')
-            t_path = os.path.join(SOURCE_DIR, sync_sf_name)
-            p_name = os.path.splitext(sync_sf_name)[0]
-            
-            if t_path not in sync_tasks:
-                sync_tasks[t_path] = {"pure_name": p_name, "remote_lines": []}
-            sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
-            
-        for target_path, task in sync_tasks.items():
-            # 缓存保持无状态干净特性：仅洗网络最新流，静默刷新 .sync.txt
-            sub_rules = rules_processor.execute_rules_pipeline([], task["remote_lines"])
-            save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
-
-    # ==========================================
-    # 三相分流 Phase B: 主干网络流 (非同步旁路的临时网络数据)
-    # ==========================================
-    all_remote_raw = []
-    for url_str in trunk_urls:
-        all_remote_raw.extend(remote_data_map.get(url_str, []))
-
-    # ==========================================
-    # 三相分流 Phase C: 主干本地流 (多源真相融合，人类手写底稿最高优先级)
-    # ==========================================
-    all_local_raw = []
-    if source_enable:
-        for src_item in source_list:
-            if not isinstance(src_item, str): continue
-            src_base = os.path.splitext(src_item.lower())[0]
-            
-            # ① 加载你手动编辑的绝对真相源 (如：source/google.txt) -> 地老天荒也不会被代码反向覆盖
-            user_src_path = os.path.join(SOURCE_DIR, f"{src_base}.txt")
-            all_local_raw.extend(load_local_raw_lines(user_src_path))
-            
-            # ② 顺便加载可能存在的网络同步缓存文件 (如：source/google.sync.txt)
-            sync_src_path = os.path.join(SOURCE_DIR, f"{src_base}.sync.txt")
-            all_local_raw.extend(load_local_raw_lines(sync_src_path))
-
-    # ==========================================
-    # 终局：大管道内存清洗、去重与输出 (完美释放纯本地手动流)
-    # ==========================================
-    # 此时送入 execute_rules_pipeline 的，是干净且互不干扰的所有原材料
-    final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
+    # 3. 强制敛并优化
     rules_processor.optimize_domains(final_rules)
-
+    
+    # 4. 强制物理落盘（不经过任何 save_local_rules 的 if 判定拦截）
+    print(f"🔍 [测试断点 3 - 强行落盘] 正在无条件重写: {source_path}")
+    with open(source_path, 'w', encoding='utf-8') as f_source:
+        f_source.write(f"# === {source_file_name} Test Combined Rules ===\n\n")
+        # 探测当前可以用来落盘的 keys
+        keys_to_write = getattr(rules_processor, 'source_keys', ['suffix', 'full', 'ip', 'ip6', 'keyword'])
+        for r_type in keys_to_write:
+            current_data = final_rules.get(r_type, []) if isinstance(final_rules, dict) else []
+            if current_data:
+                f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
+                for val in sorted(list(current_data)):
+                    f_source.write(f"{r_type},{val}\n")
+                f_source.write("\n")
+                
     return final_rules
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
