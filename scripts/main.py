@@ -490,13 +490,10 @@ def main():
 
     # 2. 拉取、独立同步落盘、主线合并加工与 MRS 编译
     for target_base_name, policy_card in router_cleaned.items():
-        
-        # 🎯 【放大镜 1：打印当前正在编译的卡片名字，看看有没有你的本地 txt 名字】
         print(f"👉 [正在处理卡片] 名为: {target_base_name} | 配置详情: {policy_card}")
         
         rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
         
-        # 🎯 【放大镜 2：打印这个卡片从本地和网络一共洗出了多少条规则】
         total_count = sum(len(v) for v in rules_in_memory.values() if isinstance(v, (set, list)))
         print(f"   ↳ 📦 清洗完成: 内存中总共包含 {total_count} 条有效规则")
         
@@ -505,25 +502,20 @@ def main():
   
     output_directories = {plat: cfg['dir'] for plat, cfg in GLOBAL_PLATFORM_MATRIX.items()}
 
-    # 3. 终极域名敛并优化与【🔥 关键类型修复强制转换】
+    # 3. 终极域名敛并优化【🔥 迎合 rules_formatter 核心修复：纯 Set 交付】
     for plat, targets in global_matrix.items():
         for target_name, rules in targets.items():
             if isinstance(rules, dict):
-                # 3.1 丢给处理器优化域名（内部会转换为处理后的 set 或 list）
+                # 丢给处理器优化域名（优化完后确保其内部维持纯 set，不被干扰）
                 rules_processor.optimize_domains(rules)
-                
-                # 3.2 彻底阻断静默失败：强行将里面的 set 统一强转并排序为符合 rules_formatter 预期的 list
-                for k, v in list(rules.items()):
-                    if k != 'policy_label' and isinstance(v, (set, list)):
-                        rules[k] = sorted(list(v))
 
-    # 4. 调用格式化模块全平台导出 (此时传入的已经是干干净净的标准已排序 list 矩阵)
+    # 4. 调用格式化模块全平台导出 (此时 global_matrix 内部全都是 set，完美契合 `|` 运算)
     rules_formatter.export_all(
         global_matrix = global_matrix,
         dir_map = output_directories
     )
 
-    # 5. Singbox 二进制编译 (此时写出的本地 .json 绝对存在且内容完备，不再触发 continue 闪退)
+    # 5. Singbox 二进制编译
     compile_singbox_srs(global_matrix, output_directories['singbox'])
 
 if __name__ == '__main__':
