@@ -58,22 +58,10 @@ source_keys = list(_GROUPS.keys())
 RULE_MAP = {rule: category for category, rules in _GROUPS.items() for rule in rules}
 
 def execute_rules_pipeline(local_raw_lines: list, remote_raw_lines: list) -> dict:
-    # 1. 正常解析本地和网络
     local_rules = process_raw_lines_batch(local_raw_lines, source_keys)
     remote_rules = process_raw_lines_batch(remote_raw_lines, source_keys)
     
-    # 2. 调换顺序测试：如果原本是 local 在前，我们试试让它作为绝对主权
-    # 如果下面这行依然被过滤，说明 merge_and_sovereignty_filter 内部逻辑重构歪了
     merged_rules = merge_and_sovereignty_filter(local_rules, remote_rules, source_keys)
-    
-    # 🔥【终极强保底补丁】强行把本地手写的数据，绝对无条件地重新塞回合并结果中！
-    # 确保无论网络怎么过滤，你本地手动加的规则 100% 留下来
-    for key in source_keys:
-        if key in local_rules and key in merged_rules:
-            # 用 set 的并集，把本地解析出来的规则硬塞进去，谁也别想过滤它
-            merged_rules[key] = set(merged_rules[key]) | set(local_rules[key])
-    
-    # 3. 统一敛并优化
     optimize_domains(merged_rules)
     
     return merged_rules
