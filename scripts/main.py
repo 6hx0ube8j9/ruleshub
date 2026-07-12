@@ -490,7 +490,16 @@ def main():
 
     # 2. 拉取、独立同步落盘、主线合并加工与 MRS 编译
     for target_base_name, policy_card in router_cleaned.items():
+        
+        # 🎯 【放大镜 1：打印当前正在编译的卡片名字，看看有没有你的本地 txt 名字】
+        print(f"👉 [正在处理卡片] 名为: {target_base_name} | 配置详情: {policy_card}")
+        
         rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
+        
+        # 🎯 【放大镜 2：打印这个卡片从本地和网络一共洗出了多少条规则】
+        total_count = sum(len(v) for v in rules_in_memory.values() if isinstance(v, (set, list)))
+        print(f"   ↳ 📦 清洗完成: 内存中总共包含 {total_count} 条有效规则")
+        
         dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
         compile_mihomo_mrs(target_base_name, policy_card, rules_in_memory)
   
