@@ -1,2 +1,2 @@
-# === microsoft Combined Base Rules ===
+# === microsoft Test Combined Rules ===
 

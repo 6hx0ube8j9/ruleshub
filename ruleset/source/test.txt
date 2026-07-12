@@ -1,4 +1,4 @@
-# === test Combined Base Rules ===
+# === test Test Combined Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,apple.com
