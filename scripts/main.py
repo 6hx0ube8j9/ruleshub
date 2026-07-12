@@ -41,7 +41,8 @@ GLOBAL_PLATFORM_MATRIX = {
 MIHOMO_MRS_TUNNEL_MATRIX = {
     'mihomo_ipcidr': {
         'field': 'mhm_ipcidr',                                    
-        'regex': r'(^|[_0-9-])ip([_0-9-]|$)',         
+        'regex': r'(^|[_0-9-])ip([_0-9-]|$)',  
+        'blacklist': ['classic', 'nodomain']
     },
     'mihomo_domain': {
         'field': 'mhm_domain',
