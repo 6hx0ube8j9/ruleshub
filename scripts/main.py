@@ -249,7 +249,7 @@ def fetch_and_merge_rules(base_name, policy):
     
     # 1. 纯物理读取原材料（不带任何过滤逻辑）
     local_raw = load_local_raw_lines(source_path)
-    remote_raw = load_remote_raw_lines_batch(policy.get('url', []))
+    remote_raw = load_remote_raw_lines_mapped(policy.get('url', []))
     
     # 🎯 节点日志一：检查物理 IO 是否真的读到了你的手动修改
     print(f"\n🔍 [测试断点 1 - 物理读取] 卡片: {base_name}")
