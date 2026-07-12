@@ -346,16 +346,32 @@ def fetch_and_merge_rules(base_name, policy):
     return final_rules
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
-    if not source_enable or not any(len(rules[k]) > 0 for k in rule_keys):
+    """保存合并加工后的规则到本地 source 目录 (🔥 彻底修复重构后的静默拦截内鬼)"""
+    # 只要 source 没被显式关闭，就必须允许写入，不被内存长度校验逻辑拦截
+    if not source_enable:
         return
+
+    # 兼容处理：防范重构后 rule_keys 在模块内拿不到的幽灵现象
+    keys_to_use = rule_keys if rule_keys else ['suffix', 'full', 'ip', 'ip6', 'keyword']
+
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {source_file_name} Combined Base Rules ===\n\n")
-        for r_type in rule_keys:
-            if rules.get(r_type):
+        
+        has_written = False
+        for r_type in keys_to_use:
+            # 兼容支持 set, list 等多种洗完后的数据格式
+            current_rules = rules.get(r_type, [])
+            if current_rules:
                 f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
-                for val in sorted(rules[r_type]):
+                # 强制转化为 sorted list 进行标准落盘
+                for val in sorted(list(current_rules)):
                     f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
+                has_written = True
+                
+        # 保底机制：如果洗完后真变空了，也要留下痕迹，而不是静默死锁
+        if not has_written:
+            f_source.write("# No rules active in this ruleset currently.\n")
 
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
     for plat, config in GLOBAL_PLATFORM_MATRIX.items():
