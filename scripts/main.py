@@ -6,22 +6,20 @@ import requests
 import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# 导入配套自定义模块
+# 外部公共组件绝对解耦导入
 import rules_processor
 import rules_formatter
 
 # ==========================================
 # 1. 基础物理路径与工具链定义
 # ==========================================
-SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__)) # /project/scripts
-PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)                  # /project
+SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__)) 
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)                  
 
-# 规则输出根目录与子目录
 RULESET_BASE_DIR = os.path.join(PROJECT_ROOT, 'ruleset')
 SOURCE_DIR       = os.path.join(RULESET_BASE_DIR, 'source')
 MIHOMO_DIR       = os.path.join(RULESET_BASE_DIR, 'mihomo')
 
-# 二进制工具链与配置文件路径（存放于 /scripts 目录）
 RULESET_JSON_PATH = os.path.join(SCRIPT_DIR, 'ruleset.json')
 MIHOMO_BIN        = os.path.join(SCRIPT_DIR, 'mihomo-bin')
 SINGBOX_BIN       = os.path.join(SCRIPT_DIR, 'sing-box')
@@ -52,7 +50,7 @@ MIHOMO_MRS_TUNNEL_MATRIX = {
 }
 
 # ==========================================
-# 3. 运行环境自举（自动创建目录与配置文件）
+# 3. 运行环境自举
 # ==========================================
 REQUIRED_DIRS = {
     RULESET_BASE_DIR, 
@@ -61,7 +59,6 @@ REQUIRED_DIRS = {
     os.path.join(MIHOMO_DIR, 'domain'),
     os.path.join(MIHOMO_DIR, 'ipcidr')
 }
-
 REQUIRED_DIRS.update(plat_cfg['dir'] for plat_cfg in GLOBAL_PLATFORM_MATRIX.values() if 'dir' in plat_cfg)
 
 for d in sorted(REQUIRED_DIRS):
@@ -82,11 +79,11 @@ except json.JSONDecodeError as e:
 # ==========================================
 # 4. 基础工具函数集与决策引擎
 # ==========================================
-# 重构代码
 def normalize_policy_card(policy, base_name):
     """
-    数据防腐层 (Anti-Corruption Layer)
-    动态提取矩阵配置，将卡片中所有工具字段及 source 字段的 "true"、True、"" 强行重写归一化为最具象化的 base_name
+    【架构修复一：精细化防腐层】
+    只对逻辑控制符 (true/false/"") 归一化。
+    原样保留用户手写的自定义别名大小写（如 Quantumult X 的 "Apple", "Proxy"）。
     """
     target_fields = ['source']
     for cfg in GLOBAL_PLATFORM_MATRIX.values():
@@ -94,10 +91,12 @@ def normalize_policy_card(policy, base_name):
     for cfg in MIHOMO_MRS_TUNNEL_MATRIX.values():
         if 'field' in cfg: target_fields.append(cfg['field'])
 
+    # 强制将基础名称设为小写，确保物理路径调用的绝对安全
+    base_name_lower = base_name.lower()
+
     for field in target_fields:
         if field not in policy:
             continue
-        
         val = policy[field]
         
         if isinstance(val, list):
@@ -107,10 +106,11 @@ def normalize_policy_card(policy, base_name):
                 cleaned = []
                 for x in val:
                     x_str = str(x).strip()
+                    # 仅改写控制符，绝对禁止对普通字符串 lower()
                     if x_str.lower() == 'true' or x_str == '':
-                        cleaned.append(base_name)
+                        cleaned.append(base_name_lower)
                     else:
-                        cleaned.append(x_str.lower())
+                        cleaned.append(x_str)
                 policy[field] = list(dict.fromkeys(cleaned))
         
         elif val is not None:
@@ -118,55 +118,52 @@ def normalize_policy_card(policy, base_name):
             if val_str.lower() == 'false':
                 policy[field] = False
             elif val_str.lower() == 'true' or val_str == '':
-                policy[field] = base_name
+                policy[field] = base_name_lower
             else:
+                # 原样保留手写别名大小写
                 policy[field] = val_str
 
-# 重构代码
 def evaluate_routing_decision(policy, config, base_name):
     """
-    统一路由决策引擎
-    职责: 收拢所有平台的黑名单、白名单、显式开关、别名更名、正则保底等过滤逻辑
-    返回: (is_enabled: bool, target_name: str or None)
+    【架构修复二：统一路由决策真相源】
+    所有判断逻辑收口于此。对外统一输出明确的 (is_enabled, target_name)。
     """
     field_name = config.get('field')
     val = policy.get(field_name)
     name_lower = base_name.lower()
 
-    # 1. 最高优先级：物理黑名单拦截（如 Mihomo MRS 的 classic, nodomain）
+    # 1. 物理黑名单拦截
     if 'blacklist' in config and any(b in name_lower for b in config['blacklist']):
         return False, None
 
-    # 2. 最高优先级：显式赋值为 False / 'false'，强行拦截跳过
+    # 2. 显式 False 拦截
     if val is False or str(val).lower() == 'false':
         return False, None
 
-    # 3. 特殊平台分流分支 A：PAC 白名单机制与独立逻辑
+    # 3. PAC 白名单分流
     if field_name == 'pac':
         if val is True or str(val).lower() == 'true' or name_lower in config.get('whitelist', []):
-            return True, base_name
+            return True, name_lower
         if isinstance(val, str) and val.strip():
             return True, val.strip()
         return False, None
 
-    # 4. 特殊平台分流分支 B：Mihomo MRS 二进制规则集的正则/强开判定
+    # 4. MRS 正则保底机制
     if 'regex' in config:
-        has_explicit_value = (val is not None) and (str(val).strip() != "")
-        if has_explicit_value:
-            return True, base_name
-        # 激活名称正则保底机制
+        if (val is not None) and (str(val).strip() != ""):
+            return True, str(val).strip()
         if re.search(config['regex'], name_lower):
-            return True, base_name
+            return True, name_lower
         return False, None
 
-    # 5. 通用流 (Loon, Singbox, QX, Shadowrocket, mhm_classical, source 等)
+    # 5. 通用流处理
     if val is None or val == '' or val is True or str(val).lower() == 'true':
-        return True, base_name
+        return True, name_lower
         
+    # 直接返回包含正确大小写的 val
     return True, str(val).strip() 
     
 def get_smart_base_name(name, policy, existing_names):
-    """基于规则名称或URL动态提取并生成唯一的合法文件名"""
     if name.strip():
         base = name.strip().lower() 
     else:
@@ -198,10 +195,7 @@ def load_local_raw_lines(source_path):
     with open(source_path, 'r', encoding='utf-8') as f_local:
         return f_local.readlines() 
 
-
-# 重构代码
 def load_remote_raw_lines_mapped(url_list):
-
     if not url_list:
         return {}
     result_map = {}
@@ -212,47 +206,35 @@ def load_remote_raw_lines_mapped(url_list):
             result_map[url] = lines
     return result_map
 
-
 def fetch_single_url(remote_url):
-    """执行单条网络请求获取远程文件内容"""
     try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        }
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
         response = requests.get(remote_url, headers=headers, timeout=15)
         if response.status_code == 200:
-            content = response.content.decode('utf-8', errors='ignore')
-            return remote_url, content.splitlines()
-        print(f"Warning: {remote_url} returned status {response.status_code}")
-        return remote_url, []
-    except requests.exceptions.RequestException as e:
-        print(f"Warning: Network error fetching {remote_url} - {e}")
+            return remote_url, response.content.decode('utf-8', errors='ignore').splitlines()
         return remote_url, []
     except Exception as e:
-        print(f"Warning: Unexpected error fetching {remote_url} - {e}")
+        print(f"⚠️ Warning: Fetch failed for {remote_url} - {e}")
         return remote_url, []
 
-# 重构代码        
 def parse_source_config(base_name, policy):
-
     source_cfg = policy.get('source', None)
-    
     if source_cfg is False:
         return False, []
-        
     if source_cfg is None or (isinstance(source_cfg, list) and len(source_cfg) == 0):
         return True, [base_name.lower()]
-
     if isinstance(source_cfg, list):
         return True, [str(x) for x in source_cfg]
-
     if isinstance(source_cfg, str):
         return True, [source_cfg]
-        
     return True, []
     
-# 重构代码    
 def fetch_and_merge_rules(base_name, policy):
+    """
+    【架构修复三：大管道与控制流彻底解耦】
+    将网络同步(sync_source)作为静默旁路任务执行。
+    保证本地流与远程流双线无条件汇合，最后唯一一次送入底层清洗管道。
+    """
     source_enable, source_list = parse_source_config(base_name, policy)
     
     urls_config = policy.get('url', [])
@@ -268,14 +250,23 @@ def fetch_and_merge_rules(base_name, policy):
         
         if url_str:
             all_remote_urls.append(url_str)
-            if isinstance(sync_target, str):
-                sf_name = base_name.lower() if sync_target == "" else sync_target.lower()
-                if not sf_name.endswith('.txt'): sf_name += '.txt'
-                url_to_sync_target[url_str] = sf_name
+            if sync_target is not False and sync_target is not None:
+                if sync_target is True or str(sync_target).strip().lower() == 'true' or sync_target == "":
+                    sf_name = base_name.lower() + '.txt'
+                    url_to_sync_target[url_str] = sf_name
+                elif isinstance(sync_target, str):
+                    sf_name = sync_target.strip().lower()
+                    if not sf_name.endswith('.txt'): 
+                        sf_name += '.txt'
+                    url_to_sync_target[url_str] = sf_name
 
+    # 并发拉取网络资源
     remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
 
-    if source_enable and url_to_sync_target:
+    # -------------------------------------------------------------
+    # 旁路系统：独立的静默网络同步与落盘逻辑 (完全不受 source_enable 影响)
+    # -------------------------------------------------------------
+    if url_to_sync_target:
         sync_tasks = {}
         for url_str, sf_name in url_to_sync_target.items():
             t_path = os.path.join(SOURCE_DIR, sf_name)
@@ -286,24 +277,30 @@ def fetch_and_merge_rules(base_name, policy):
             
         for target_path, task in sync_tasks.items():
             sub_local_raw = load_local_raw_lines(target_path)
+            # 局部清洗合并，直接落盘
             sub_rules = rules_processor.execute_rules_pipeline(sub_local_raw, task["remote_lines"])
-            save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, source_enable)
+            save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
 
+    # -------------------------------------------------------------
+    # 主干系统：双流汇聚与单一防线去重
+    # -------------------------------------------------------------
     all_local_raw = []
+    # 只要 source 允许，无条件拉取本地文件进内存
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
             if not src_item.endswith('.txt'): src_item += '.txt'
             src_path = os.path.join(SOURCE_DIR, src_item.lower())
-            if not os.path.exists(src_path): continue
             all_local_raw.extend(load_local_raw_lines(src_path))
 
     all_remote_raw = []
     for lines in remote_data_map.values():
         all_remote_raw.extend(lines)
 
+    # 全局【有且仅有一次】管道清洗
     final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
     
+    # 统一级联优化
     rules_processor.optimize_domains(final_rules)
     
     return final_rules
@@ -311,7 +308,6 @@ def fetch_and_merge_rules(base_name, policy):
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
     if not source_enable or not any(len(rules[k]) > 0 for k in rule_keys):
         return
-
     with open(source_path, 'w', encoding='utf-8') as f_source:
         f_source.write(f"# === {source_file_name} Combined Base Rules ===\n\n")
         for r_type in rule_keys:
@@ -321,19 +317,17 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys, source_ena
                     f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
 
-# 重构代码
 def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
-    """将内存中的规则分流到各平台对应的全局矩阵结构中"""
     for plat, config in GLOBAL_PLATFORM_MATRIX.items():
-        # 统一调用决策引擎
         enabled, target_name = evaluate_routing_decision(policy, config, base_name)
         if not enabled:
             continue
 
-        # 针对不同数据结构进行微调落盘（属于平台特性，不属于路由决策）
         if plat == 'quantumultx':
             policy_cfg_field = config.get('policy_cfg', 'qx_policy')
-            qx_policy_label = policy.get(policy_cfg_field, base_name.capitalize() if base_name.lower() not in ['direct', 'reject'] else base_name.lower())
+            # 兼容大小写特性的默认策略
+            fallback_label = base_name.capitalize() if base_name.lower() not in ['direct', 'reject'] else base_name.lower()
+            qx_policy_label = policy.get(policy_cfg_field, fallback_label)
             
             if target_name not in global_matrix[plat]:
                 global_matrix[plat][target_name] = {
@@ -356,15 +350,17 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
             for k, v in rules.items():
                 global_matrix[plat][target_name][k].update(v)
 
-# 重构代码
 def normalize_and_discover_local_sources(router_cleaned):
+    """
+    【架构修复四：稳定安全的本地源发现机制】
+    提前处理文件系统的重命名逻辑，规避 IO 延迟引起的幽灵路径问题。
+    """
     if not os.path.exists(SOURCE_DIR): 
         return
         
     explicitly_consumed_sources = set()
     for b_name, policy in router_cleaned.items():
         source_cfg = policy.get('source', None)
-        
         if source_cfg is None or source_cfg is True or (isinstance(source_cfg, list) and len(source_cfg) == 0):
             explicitly_consumed_sources.add(b_name.lower())
         elif isinstance(source_cfg, list):
@@ -376,60 +372,56 @@ def normalize_and_discover_local_sources(router_cleaned):
         
     for f in os.listdir(SOURCE_DIR):
         if f.endswith('.txt'):
+            # 处理非小写文件名的兼容并规避 IO 冲突
             if not f.islower():
                 old_path = os.path.join(SOURCE_DIR, f)
                 new_f = f.lower()
                 new_path = os.path.join(SOURCE_DIR, new_f)
+                
                 if os.path.exists(new_path):
                     try:
                         with open(old_path, 'r', encoding='utf-8') as f_old: old_content = f_old.read()
                         with open(new_path, 'a', encoding='utf-8') as f_new: f_new.write("\n" + old_content)
                         os.remove(old_path)
-                    except Exception as e: print(f"⚠️ [WARN] Failed to merge local source '{f}': {e}")
+                    except Exception as e: print(f"⚠️ [WARN] Merge failed for '{f}': {e}")
                 else:
                     try: os.rename(old_path, new_path)
-                    except Exception as e: print(f"⚠️ [WARN] Failed to rename local source '{f}': {e}")
+                    except Exception as e: print(f"⚠️ [WARN] Rename failed for '{f}': {e}")
                 f = new_f
 
             local_base_name = os.path.splitext(f)[0]
-            
             if local_base_name in router_cleaned or local_base_name in explicitly_consumed_sources: 
                 continue
+            
+            # 为野生底稿创建虚拟映射
             router_cleaned[local_base_name] = {'name': local_base_name, 'url': []}
 
 def compile_mihomo_mrs(base_name, policy, rules):
-    """将 YAML 规则集过滤、清洗并编译为 Mihomo 二进制 .mrs 格式"""
     if not os.path.exists(MIHOMO_BIN):
-        print(f"❌ Error: '{MIHOMO_BIN}' not found.")
         return
 
-    name_lower = base_name.lower()
-    
     for tunnel_type, config in MIHOMO_MRS_TUNNEL_MATRIX.items():
-        # 统一调用决策引擎，MRS 是否需要编译一目了然
         enabled, _ = evaluate_routing_decision(policy, config, base_name)
         if not enabled: 
             continue
 
-        # 动态路由派发与编译逻辑
         sub_dir = tunnel_type.split('_')[1]
         formatter = getattr(rules_formatter, f"generate_{tunnel_type}", None)
         content = formatter(rules) if formatter else ""
         if not content: continue
 
-        yaml_path = os.path.join(MIHOMO_DIR, sub_dir, f"{name_lower}.yaml")
-        mrs_out_path = os.path.join(MIHOMO_DIR, sub_dir, f"{name_lower}.mrs")
+        yaml_path = os.path.join(MIHOMO_DIR, sub_dir, f"{base_name.lower()}.yaml")
+        mrs_out_path = os.path.join(MIHOMO_DIR, sub_dir, f"{base_name.lower()}.mrs")
         
         try:
             with open(yaml_path, 'w', encoding='utf-8') as f:
                 f.write(content)
-            subprocess.run([MIHOMO_BIN, 'convert-ruleset', sub_dir, 'yaml', yaml_path, mrs_out_path], check=True)
-            print(f"Successfully compiled Mihomo {sub_dir.upper()}: {name_lower}.mrs")
-        except subprocess.CalledProcessError as e:
-            print(f"❌ Error: Failed to compile {name_lower} ({sub_dir}): {e}")
+            subprocess.run([MIHOMO_BIN, 'convert-ruleset', sub_dir, 'yaml', yaml_path, mrs_out_path], check=True, capture_output=True)
+            print(f"✅ Compiled MRS: {base_name.lower()}.mrs ({sub_dir})")
+        except subprocess.CalledProcessError:
+            print(f"❌ Failed to compile {base_name.lower()} ({sub_dir})")
 
 def compile_singbox_srs(global_matrix, singbox_dir):
-    """调用 sing-box 二进制工具链将 JSON 编译为二进制 .srs 规则集"""
     if not os.path.exists(SINGBOX_BIN) or not global_matrix.get('singbox'): 
         return
 
@@ -437,15 +429,14 @@ def compile_singbox_srs(global_matrix, singbox_dir):
         sb_path = os.path.join(singbox_dir, f"{g_name}.json")
         sb_srs_path = os.path.join(singbox_dir, f"{g_name}.srs")
 
-        if not os.path.exists(sb_path): continue        
-        if not any(raw_rules.values()):
+        if not os.path.exists(sb_path) or not any(raw_rules.values()): 
             continue
 
         try:
-            subprocess.run([SINGBOX_BIN, 'rule-set', 'compile', sb_path, '-o', sb_srs_path], check=True)
-            print(f"Successfully compiled Singbox SRS: {g_name}.srs")
-        except subprocess.CalledProcessError as e:
-            print(f"❌ Error: Failed to compile {g_name}.json to SRS: {e}")
+            subprocess.run([SINGBOX_BIN, 'rule-set', 'compile', sb_path, '-o', sb_srs_path], check=True, capture_output=True)
+            print(f"✅ Compiled SRS: {g_name}.srs")
+        except subprocess.CalledProcessError:
+            print(f"❌ Failed to compile SRS: {g_name}.json")
 
 # ==========================================
 # 6. 主控业务流程入口
@@ -454,28 +445,25 @@ def main():
     router_cleaned = {}
     allocated_names = set()
     
-    # 1. 路由表清洗、入口数据防腐归一化与本地源发现
+    # 1. 路由表清洗与入口数据防腐
     for policy_card in FILE_POLICY_ROUTER:
         raw_name = policy_card.get('name', '')
         real_name = get_smart_base_name(raw_name, policy_card, allocated_names)
         allocated_names.add(real_name)
-        
         normalize_policy_card(policy_card, real_name)
-        
         router_cleaned[real_name] = policy_card
 
+    # 优先执行本地源发现机制，稳定文件系统状态
     normalize_and_discover_local_sources(router_cleaned)
 
-    # 动态初始化平台数据收集容器
     global_matrix = {plat: {} for plat in GLOBAL_PLATFORM_MATRIX.keys()}
 
-    # 2. 多线程拉取、合并加工与 Mihomo MRS 二进制转换
+    # 2. 拉取、独立同步落盘、主线合并加工与 MRS 编译
     for target_base_name, policy_card in router_cleaned.items():
         rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
         dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
         compile_mihomo_mrs(target_base_name, policy_card, rules_in_memory)
   
-    # 提取输出目录映射
     output_directories = {plat: cfg['dir'] for plat, cfg in GLOBAL_PLATFORM_MATRIX.items()}
 
     # 3. 终极域名敛并优化
@@ -484,15 +472,14 @@ def main():
             if isinstance(rules, dict):
                 rules_processor.optimize_domains(rules)
 
-    # 4. 动态导出并调用格式化模块
+    # 4. 调用格式化模块全平台导出
     rules_formatter.export_all(
         global_matrix = global_matrix,
         dir_map = output_directories
     )
 
-    # 5. Singbox SRS 后置二进制打包编译
+    # 5. Singbox 二进制编译
     compile_singbox_srs(global_matrix, output_directories['singbox'])
-
 
 if __name__ == '__main__':
     main()
