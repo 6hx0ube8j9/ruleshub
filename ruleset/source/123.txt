@@ -1,0 +1,12 @@
+suffix,appledaily.com
+suffix,appledaily.com.hk
+suffix,appledaily.com.tw
+suffix,appledaily.hk
+suffix,applefruity.com
+suffix,applehealth.com.hk
+suffix,atnext.com
+suffix,bestmallawards.com
+suffix,deluxe.com.hk
+suffix,eracom.com.tw
+suffix,next.hk
+suffix,nextdigital.com.hk
