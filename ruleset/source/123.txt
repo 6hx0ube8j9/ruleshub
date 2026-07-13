@@ -46,14 +46,14 @@ suffix,usercontent.dev
 keyword,nicegram
 
 # --- TYPE: IP ---
-ip,109.239.140.0/24,no-resolve
-ip,139.59.210.98/32,no-resolve
-ip,149.154.160.0/20,no-resolve
-ip,196.55.216.167/32,no-resolve
-ip,5.28.192.0/18,no-resolve
-ip,91.108.0.0/16,no-resolve
+ip,109.239.140.0/24
+ip,139.59.210.98/32
+ip,149.154.160.0/20
+ip,196.55.216.167/32
+ip,5.28.192.0/18
+ip,91.108.0.0/16
 
 # --- TYPE: IP6 ---
-ip6,2001:67c:4e8::/48,no-resolve
-ip6,2001:b28:f23c::/47,no-resolve
+ip6,2001:67c:4e8::/48
+ip6,2001:b28:f23c::/47
 
