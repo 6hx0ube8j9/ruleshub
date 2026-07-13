@@ -1,3 +1,6 @@
+# === 123 Combined Base Rules ===
+
+# --- TYPE: SUFFIX ---
 suffix,appledaily.com
 suffix,appledaily.com.hk
 suffix,appledaily.com.tw
@@ -10,3 +13,4 @@ suffix,deluxe.com.hk
 suffix,eracom.com.tw
 suffix,next.hk
 suffix,nextdigital.com.hk
+
