@@ -242,7 +242,6 @@ def parse_source_config(base_name, policy):
 	
 def _extract_and_normalize_routes(base_name, urls_config):
     """
-    【解体组件 1：路由意图规范化】
     纯粹做配置清洗，把各种异常字符串、布尔值统一转化为规范的路由池。
     """
     all_remote_urls = []
@@ -279,7 +278,6 @@ def _extract_and_normalize_routes(base_name, urls_config):
 	
 def _process_local_storage_and_sync(source_enable, source_list, sync_routes, remote_data_map):
     """
-    【解体组件 2：存储与落盘自治】
     包揽所有本地文件的读写、本地自清理、旁路落盘同步。
     返回干净的、用于最终内存融合的本地总数据。
     """
