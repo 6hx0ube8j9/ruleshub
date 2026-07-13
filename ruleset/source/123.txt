@@ -1,5 +1,19 @@
 # === 123 Combined Base Rules ===
 
+host, voice.telephony.goog, Google_media
+host-suffix, 0emm.com, Google_media
+host-suffix, 1e100.net, Google_media
+host-suffix, 1ucrs.com, Google_media
+host-suffix, 265.com, Google_media
+host-suffix, 2mdn-cn.net, Google_media
+host-suffix, 2mdn.net, Google_media
+host-suffix, 466453.com, Google_media
+host-suffix, abc.xyz, Google_media
+host-suffix, adgoogle.net, Google_media
+host-suffix, admeld.com, Google_media
+host-suffix, admob-cn.com, Google_media
+host-suffix, admob.com, Google_media
+host-suffix, adsense.com, Google_media
 # --- TYPE: SUFFIX ---
 suffix,blogspot.ru
 suffix,blogspot.se
