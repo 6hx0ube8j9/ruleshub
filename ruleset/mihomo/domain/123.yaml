@@ -1,4 +1,21 @@
 payload:
+    - voice.telephony.goog
+    - +.0emm.com
+    - +.1e100.net
+    - +.1ucrs.com
+    - +.265.com
+    - +.2mdn-cn.net
+    - +.2mdn.net
+    - +.466453.com
+    - +.abc.xyz
+    - +.adgoogle.net
+    - +.admeld.com
+    - +.admob-cn.com
+    - +.admob.com
+    - +.adsense.com
+    - +.adsensecustomsearchads.com
+    - +.adsenseformobileapps.com
+    - +.advertisercommunity.com
     - +.blogspot.co.at
     - +.blogspot.co.id
     - +.blogspot.co.il

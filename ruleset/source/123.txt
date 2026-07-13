@@ -1,23 +1,25 @@
 # === 123 Combined Base Rules ===
-payload:
-  - DOMAIN,voice.telephony.goog
-  - DOMAIN-SUFFIX,0emm.com
-  - DOMAIN-SUFFIX,1e100.net
-  - DOMAIN-SUFFIX,1ucrs.com
-  - DOMAIN-SUFFIX,265.com
-  - DOMAIN-SUFFIX,2mdn-cn.net
-  - DOMAIN-SUFFIX,2mdn.net
-  - DOMAIN-SUFFIX,466453.com
-  - DOMAIN-SUFFIX,abc.xyz
-  - DOMAIN-SUFFIX,adgoogle.net
-  - DOMAIN-SUFFIX,admeld.com
-  - DOMAIN-SUFFIX,admob-cn.com
-  - DOMAIN-SUFFIX,admob.com
-  - DOMAIN-SUFFIX,adsense.com
-  - DOMAIN-SUFFIX,adsensecustomsearchads.com
-  - DOMAIN-SUFFIX,adsenseformobileapps.com
-  - DOMAIN-SUFFIX,advertisercommunity.com
+
+# --- TYPE: FULL ---
+full,voice.telephony.goog
+
 # --- TYPE: SUFFIX ---
+suffix,0emm.com
+suffix,1e100.net
+suffix,1ucrs.com
+suffix,265.com
+suffix,2mdn-cn.net
+suffix,2mdn.net
+suffix,466453.com
+suffix,abc.xyz
+suffix,adgoogle.net
+suffix,admeld.com
+suffix,admob-cn.com
+suffix,admob.com
+suffix,adsense.com
+suffix,adsensecustomsearchads.com
+suffix,adsenseformobileapps.com
+suffix,advertisercommunity.com
 suffix,blogspot.co.at
 suffix,blogspot.co.id
 suffix,blogspot.co.il
