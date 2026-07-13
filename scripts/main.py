@@ -218,68 +218,86 @@ def fetch_single_url(remote_url):
         return remote_url, []
 
 def parse_source_config(base_name, policy):
-    """
-    【严密防守：本地源配置解析】
-    彻底过滤各种异常类型，确保返回准确的开关状态和文件列表。
-    """
     source_cfg = policy.get('source', None)
-    
-    # 明确拦截 False 或字符串 'false'
-    if source_cfg is False or str(source_cfg).strip().lower() == 'false':
+    if source_cfg is False:
         return False, []
-    
-    # 归一化处理：空、True、空列表皆视为默认映射 base_name.txt
-    if source_cfg is None or source_cfg is True or str(source_cfg).strip().lower() == 'true' or (isinstance(source_cfg, list) and len(source_cfg) == 0):
+    if source_cfg is None or (isinstance(source_cfg, list) and len(source_cfg) == 0):
         return True, [base_name.lower()]
-        
     if isinstance(source_cfg, list):
-        return True, [str(x) for x in source_cfg if str(x).strip().lower() != 'false']
-        
+        return True, [str(x) for x in source_cfg]
     if isinstance(source_cfg, str):
         return True, [source_cfg]
-        
     return True, []
-
+    
 def fetch_and_merge_rules(base_name, policy):
     """
-    【骨架强制落地版】用来测试本地文件到底能不能被清洗
+    【架构修复三：大管道与控制流彻底解耦】
+    将网络同步(sync_source)作为静默旁路任务执行。
+    保证本地流与远程流双线无条件汇合，最后唯一一次送入底层清洗管道。
     """
     source_enable, source_list = parse_source_config(base_name, policy)
     
-    # 1. 严格恢复本地数据读取（打印行数确保读到了）
+    urls_config = policy.get('url', [])
+    if not isinstance(urls_config, list):
+        urls_config = [urls_config] if urls_config else []
+        
+    all_remote_urls = []
+    url_to_sync_target = {}
+    
+    for item in urls_config:
+        url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
+        sync_target = item.get('sync_source', False) if isinstance(item, dict) else False
+        
+        if url_str:
+            all_remote_urls.append(url_str)
+            if isinstance(sync_target, str):
+                sf_name = base_name.lower() if sync_target == "" else sync_target.lower()
+                if not sf_name.endswith('.txt'): sf_name += '.txt'
+                url_to_sync_target[url_str] = sf_name
+
+    # 并发拉取网络资源
+    remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
+
+    # -------------------------------------------------------------
+    # 旁路系统：独立的静默网络同步与落盘逻辑 (完全不受 source_enable 影响)
+    # -------------------------------------------------------------
+    if url_to_sync_target:
+        sync_tasks = {}
+        for url_str, sf_name in url_to_sync_target.items():
+            t_path = os.path.join(SOURCE_DIR, sf_name)
+            p_name = os.path.splitext(sf_name)[0]
+            if t_path not in sync_tasks:
+                sync_tasks[t_path] = {"pure_name": p_name, "remote_lines": []}
+            sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
+            
+        for target_path, task in sync_tasks.items():
+            sub_local_raw = load_local_raw_lines(target_path)
+            # 局部清洗合并，直接落盘
+            sub_rules = rules_processor.execute_rules_pipeline(sub_local_raw, task["remote_lines"])
+            save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
+
+    # -------------------------------------------------------------
+    # 主干系统：双流汇聚与单一防线去重
+    # -------------------------------------------------------------
     all_local_raw = []
+    # 只要 source 允许，无条件拉取本地文件进内存
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
-            # 统一先转小写，再确保有 .txt 后缀，防止大小写路径错配
-            src_item_fixed = src_item.lower()
-            if not src_item_fixed.endswith('.txt'): 
-                src_item_fixed += '.txt'
-                
-            src_path = os.path.join(SOURCE_DIR, src_item_fixed)
-            
-            # 【调试日志】如果这里是 0，说明路径错了，根本没读到你编辑的那个文件！
-            lines = load_local_raw_lines(src_path)
-            print(f"--- [DEBUG] 读取本地文件 {src_path} , 行数 = {len(lines)} ---")
-            all_local_raw.extend(lines)
+            if not src_item.endswith('.txt'): src_item += '.txt'
+            src_path = os.path.join(SOURCE_DIR, src_item.lower())
+            all_local_raw.extend(load_local_raw_lines(src_path))
 
-    # 2. 忽略网络流，只洗本地流
-    final_rules = rules_processor.execute_rules_pipeline(all_local_raw, [])
+    all_remote_raw = []
+    for lines in remote_data_map.values():
+        all_remote_raw.extend(lines)
+
+    # 全局【有且仅有一次】管道清洗
+    final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
+    
+    # 统一级联优化
     rules_processor.optimize_domains(final_rules)
     
-    # 3. 【核心缺失】：重构前一定有这一步！必须把洗干净的数据写回本地文件！
-    if source_enable and source_list:
-        for src_item in source_list:
-            src_item_fixed = src_item.lower()
-            if not src_item_fixed.endswith('.txt'): 
-                src_item_fixed += '.txt'
-            src_path = os.path.join(SOURCE_DIR, src_item_fixed)
-            pure_name = os.path.splitext(src_item_fixed)[0]
-            
-            print(f"--- [DEBUG] 正在将清洗后的去重数据写回本地: {src_path} ---")
-            # 调用你原封未动的外部落盘函数
-            save_local_rules(src_path, pure_name, final_rules, rules_processor.source_keys, True)
-            
     return final_rules
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
@@ -329,9 +347,8 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
 
 def normalize_and_discover_local_sources(router_cleaned):
     """
-    【架构级联动补丁：稳定安全的本地源发现机制】
+    【架构修复四：稳定安全的本地源发现机制】
     提前处理文件系统的重命名逻辑，规避 IO 延迟引起的幽灵路径问题。
-    严格排除机器生成的 .sync.txt 网络缓存，只对纯粹的人类野生底稿进行虚拟卡片映射。
     """
     if not os.path.exists(SOURCE_DIR): 
         return
@@ -349,7 +366,8 @@ def normalize_and_discover_local_sources(router_cleaned):
             explicitly_consumed_sources.add(os.path.splitext(source_cfg.lower())[0])
         
     for f in os.listdir(SOURCE_DIR):
-        if f.endswith('.txt') and not f.endswith('.sync.txt'):
+        if f.endswith('.txt'):
+            # 处理非小写文件名的兼容并规避 IO 冲突
             if not f.islower():
                 old_path = os.path.join(SOURCE_DIR, f)
                 new_f = f.lower()
@@ -369,7 +387,8 @@ def normalize_and_discover_local_sources(router_cleaned):
             local_base_name = os.path.splitext(f)[0]
             if local_base_name in router_cleaned or local_base_name in explicitly_consumed_sources: 
                 continue
-
+            
+            # 为野生底稿创建虚拟映射
             router_cleaned[local_base_name] = {'name': local_base_name, 'url': []}
 
 def compile_mihomo_mrs(base_name, policy, rules):
