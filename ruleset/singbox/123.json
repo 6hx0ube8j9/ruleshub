@@ -3,7 +3,46 @@
   "rules": [
     {
       "domain": [
-        "app.icloud.com"
+        "app.icloud.com",
+        "voice.telephony.goog"
+      ],
+      "domain_suffix": [
+        "0emm.com",
+        "1e100.net",
+        "1ucrs.com",
+        "265.com",
+        "2mdn-cn.net",
+        "2mdn.net",
+        "466453.com",
+        "abc.xyz",
+        "adgoogle.net",
+        "admeld.com",
+        "admob-cn.com",
+        "admob.com",
+        "adsense.com",
+        "adsensecustomsearchads.com",
+        "adsenseformobileapps.com",
+        "advertisercommunity.com",
+        "advertiserscommunity.com",
+        "adwords-community.com",
+        "adwords.com",
+        "adwordsexpress.com",
+        "amp.dev",
+        "ampproject.com",
+        "ampproject.net",
+        "ampproject.org",
+        "android.com",
+        "androidify.com",
+        "androidtv.com",
+        "angulardart.org",
+        "api.ai",
+        "apigee.com",
+        "app-analytics-services.com",
+        "app-measurement-cn.com",
+        "app-measurement.com",
+        "app-measurement.net",
+        "appbridge.ca",
+        "appbridge.io"
       ]
     }
   ]
