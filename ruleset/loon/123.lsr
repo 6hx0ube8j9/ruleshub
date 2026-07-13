@@ -1,5 +1,28 @@
 # Loon Rule-Set: 123
 
+DOMAIN-SUFFIX,blogspot.ru
+DOMAIN-SUFFIX,blogspot.se
+DOMAIN-SUFFIX,blogspot.sg
+DOMAIN-SUFFIX,blogspot.si
+DOMAIN-SUFFIX,blogspot.sk
+DOMAIN-SUFFIX,blogspot.sn
+DOMAIN-SUFFIX,blogspot.td
+DOMAIN-SUFFIX,blogspot.tw
+DOMAIN-SUFFIX,blogspot.ug
+DOMAIN-SUFFIX,blogspot.vn
+DOMAIN-SUFFIX,brocaproject.com
+DOMAIN-SUFFIX,brotli.org
+DOMAIN-SUFFIX,bumpshare.com
+DOMAIN-SUFFIX,bumptop.ca
+DOMAIN-SUFFIX,bumptop.com
+DOMAIN-SUFFIX,bumptop.net
+DOMAIN-SUFFIX,bumptop.org
+DOMAIN-SUFFIX,bumptunes.com
+DOMAIN-SUFFIX,c.gle
+DOMAIN-SUFFIX,campuslondon.com
+DOMAIN-SUFFIX,capitalg.com
+DOMAIN-SUFFIX,certificate-transp
+DOMAIN-SUFFIX,certificate-transparency.dev
 DOMAIN-SUFFIX,mbrx.app
 DOMAIN-SUFFIX,quiz.directory
 DOMAIN-SUFFIX,stel.com

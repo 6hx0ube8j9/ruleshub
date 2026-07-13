@@ -1,5 +1,28 @@
 # Quantumult X Rule-Set: 123
 
+host-suffix, blogspot.ru, 123
+host-suffix, blogspot.se, 123
+host-suffix, blogspot.sg, 123
+host-suffix, blogspot.si, 123
+host-suffix, blogspot.sk, 123
+host-suffix, blogspot.sn, 123
+host-suffix, blogspot.td, 123
+host-suffix, blogspot.tw, 123
+host-suffix, blogspot.ug, 123
+host-suffix, blogspot.vn, 123
+host-suffix, brocaproject.com, 123
+host-suffix, brotli.org, 123
+host-suffix, bumpshare.com, 123
+host-suffix, bumptop.ca, 123
+host-suffix, bumptop.com, 123
+host-suffix, bumptop.net, 123
+host-suffix, bumptop.org, 123
+host-suffix, bumptunes.com, 123
+host-suffix, c.gle, 123
+host-suffix, campuslondon.com, 123
+host-suffix, capitalg.com, 123
+host-suffix, certificate-transp, 123
+host-suffix, certificate-transparency.dev, 123
 host-suffix, mbrx.app, 123
 host-suffix, quiz.directory, 123
 host-suffix, stel.com, 123
