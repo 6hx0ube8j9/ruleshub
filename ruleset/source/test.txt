@@ -1,5 +1,22 @@
 # === test Combined Base Rules ===
-
+host-suffix, cobrasearch.com, Google_media
+host-suffix, codespot.com, Google_media
+host-suffix, conscrypt.com, Google_media
+host-suffix, conscrypt.org, Google_media
+host-suffix, cookiechoices.org, Google_media
+host-suffix, coova.com, Google_media
+host-suffix, coova.net, Google_media
+host-suffix, coova.org, Google_media
+host-suffix, crashlytics.com, Google_media
+host-suffix, crbug.com, Google_media
+host-suffix, creativelab5.com, Google_media
+host-suffix, crossmediapanel.com, Google_media
+host-suffix, crr.com, Google_media
+host-suffix, crrev.com, Google_media
+host-suffix, cs4hs.com, Google_media
+host-suffix, dart.dev, Google_media
+host-suffix, dartlang.org, Google_media
+host-suffix, dartpad.dev, Google_media
 # --- TYPE: SUFFIX ---
 suffix,adsenseformobileapps.com
 suffix,advertisercommunity.com
