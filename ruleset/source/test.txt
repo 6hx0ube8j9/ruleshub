@@ -1,32 +1,6 @@
-# === test Combined Base Rules ===
-
-# --- TYPE: SUFFIX ---
-suffix,apple.com
-suffix,google.com
-suffix,icloud.com
-suffix,telegram.dog
-suffix,telegram.org
-
-# --- TYPE: KEYWORD ---
-keyword,tele-cdn
-
-# --- TYPE: IP ---
-ip,1.1.1.1/32
-ip,149.154.160.0/20
-ip,8.8.8.8/32
-ip,91.108.4.0/22
-
-# --- TYPE: IP6 ---
-ip6,2001:b28:f23d::/48
-
-# --- TYPE: USERAGENT ---
-useragent,AppleNews*
-useragent,Telegram*
-useragent,Twitter*
-useragent,YouTube*
-
-# --- TYPE: REGEX ---
-regex,(^|\.)ttwstatic\.com$
-regex,^amdc\..+\.com$
-regex,^https?:\/\/.*\.googlevideo\.com\/
-
+host-suffix, adsenseformobileapps.com 
+host-suffix, advertisercommunity.com 
+host-suffix, advertiserscommunity.com 
+host-suffix, adwords-community.com 
+host-suffix, adwords.com 
+host-suffix, adwordsexpress.com 
