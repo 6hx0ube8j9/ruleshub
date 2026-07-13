@@ -1,4 +1,5 @@
-# === 123 Test Combined Rules ===
+# === 123.txt Combined & Cleaned Rules ===
+# === Total Rules: 38 ===
 
 # --- TYPE: FULL ---
 full,app.icloud.com

@@ -1,2 +1,3 @@
-# === microsoft Test Combined Rules ===
+# === microsoft.txt Combined & Cleaned Rules ===
+# === Total Rules: 0 ===
 
