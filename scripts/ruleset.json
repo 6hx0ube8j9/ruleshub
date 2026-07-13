@@ -3,7 +3,8 @@
     "name": "all_proxy",
     "source": [
       "proxy",
-      "youtube"
+      "youtube",
+      "123"     
     ],
     "url": {
       "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/YouTube/YouTube.list": "sync:google",
