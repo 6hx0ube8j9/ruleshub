@@ -278,42 +278,46 @@ def _extract_and_normalize_routes(base_name, urls_config):
 	
 def _process_local_storage_and_sync(source_enable, source_list, sync_routes, remote_data_map):
     """
-    包揽所有本地文件的读写、本地自清理、旁路落盘同步。
-    返回干净的、用于最终内存融合的本地总数据。
+    【终极解体组件 2：统一任务池调度】
+    将主干清洗与旁路同步合并为“单文件单次处理”模型，彻底消除脏读与重复 I/O。
+    完全尊重用户的 sync_source 命名，不强制添加后缀。
     """
     all_local_raw = []
     
-    # 1. 主干本地流自清洗与加载 (原 Phase C)
+    # 核心：构建以文件名为 Key 的任务调度池
+    # 结构: { "google.txt": {"in_source": True, "remote_lines": [...]} }
+    tasks = {}
+
+    # 1. 注册主干本地文件任务 (即使不参与网络同步，也需要自清洗)
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
-            src_item_fixed = src_item.lower()
-            if not src_item_fixed.endswith('.txt'): 
-                src_item_fixed += '.txt'
-            src_path = os.path.join(SOURCE_DIR, src_item_fixed)
-            pure_name = os.path.splitext(src_item_fixed)[0]
-            
-            local_raw = load_local_raw_lines(src_path)
-            local_self_clean = rules_processor.execute_rules_pipeline(local_raw, [])
-            save_local_rules(src_path, pure_name, local_self_clean, rules_processor.source_keys, True)
-            
-            all_local_raw.extend(load_local_raw_lines(src_path))
+            filename = src_item.strip().lower()
+            if not filename.endswith('.txt'): filename += '.txt'
+            tasks[filename] = {"in_source": True, "remote_lines": []}
 
-    # 2. 旁路网络流落盘同步 (原 Phase A)
+    # 2. 注册网络旁路同步任务 (完美解耦：无论 source 是否开启，旁路任务照常挂载)
     if sync_routes:
-        sync_tasks = {}
         for url_str, sf_name in sync_routes.items():
-            t_path = os.path.join(SOURCE_DIR, sf_name)
-            p_name = os.path.splitext(sf_name)[0]
-            if t_path not in sync_tasks:
-                sync_tasks[t_path] = {"pure_name": p_name, "remote_lines": []}
-            sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
-            
-        for target_path, task in sync_tasks.items():
-            sub_local_raw = load_local_raw_lines(target_path)
-            sub_rules = rules_processor.execute_rules_pipeline(sub_local_raw, task["remote_lines"])
-            save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
-            
+            # sf_name 是用户严格定义的 (例如 google.txt 或 google.sync.txt)
+            if sf_name not in tasks:
+                tasks[sf_name] = {"in_source": False, "remote_lines": []}
+            # 将该 URL 拉取的数据注入对应的文件任务中
+            tasks[sf_name]["remote_lines"].extend(remote_data_map.get(url_str, []))
+
+    # 3. 统一执行：每个文件只读一次、洗一次、写一次！
+    for filename, task_info in tasks.items():
+        file_path = os.path.join(SOURCE_DIR, filename)
+        pure_name = os.path.splitext(filename)[0]
+        local_raw = load_local_raw_lines(file_path)
+        cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, task_info["remote_lines"])
+        save_local_rules(file_path, pure_name, cleaned_rules, rules_processor.source_keys, True)
+
+        # 提取：如果该文件是主干声明的 source 源，则将清洗后的最新数据推入内存，参与最终的全局大融合
+        if task_info["in_source"]:
+            # 从磁盘读取刚洗好的干净字符串 (利用 OS 缓存，耗时极低且保证格式绝对正确)
+            all_local_raw.extend(load_local_raw_lines(file_path))
+
     return all_local_raw
 
 def fetch_and_merge_rules(base_name, policy):
