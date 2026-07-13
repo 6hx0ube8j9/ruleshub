@@ -1,12 +1,5 @@
 # === block Combined Base Rules ===
-host-suffix, 1e100.net, Google_media
-host, voice.telephony.goog, Google_media
-host-suffix, 0emm.com, Google_media
-host-suffix, 1e100.net, Google_media
-host-suffix, 1ucrs.com, Google_media
-host-suffix, 265.com, Google_media
-host-suffix, 2mdn-cn.net, Google_media
-host-suffix, 2mdn.net, Google_media
+
 # --- TYPE: SUFFIX ---
 suffix,apple.com
 
