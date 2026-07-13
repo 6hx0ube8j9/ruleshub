@@ -3,7 +3,6 @@
   "rules": [
     {
       "domain": [
-        "app.icloud.com",
         "voice.telephony.goog"
       ],
       "domain_suffix": [

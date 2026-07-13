@@ -1,6 +1,5 @@
 # Quantumult X Rule-Set: 123
 
-host, app.icloud.com, 123
 host, voice.telephony.goog, 123
 host-suffix, 0emm.com, 123
 host-suffix, 1e100.net, 123
