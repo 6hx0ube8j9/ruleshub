@@ -1,39 +1,43 @@
-  - DOMAIN-SUFFIX,blogspot.co.at
-  - DOMAIN-SUFFIX,blogspot.co.id
-  - DOMAIN-SUFFIX,blogspot.co.il
-  - DOMAIN-SUFFIX,blogspot.co.ke
-  - DOMAIN-SUFFIX,blogspot.co.nz
-  - DOMAIN-SUFFIX,blogspot.co.uk
-  - DOMAIN-SUFFIX,blogspot.co.za
-  - DOMAIN-SUFFIX,blogspot.com
-  - DOMAIN-SUFFIX,blogspot.com.ar
-  - DOMAIN-SUFFIX,blogspot.com.au
-  - DOMAIN-SUFFIX,blogspot.com.br
-  - DOMAIN-SUFFIX,blogspot.com.by
-  - DOMAIN-SUFFIX,blogspot.com.co
-  - DOMAIN-SUFFIX,blogspot.com.cy
-  - DOMAIN-SUFFIX,blogspot.com.ee
-  - DOMAIN-SUFFIX,blogspot.com.eg
-  - DOMAIN-SUFFIX,blogspot.com.es
-  - DOMAIN-SUFFIX,blogspot.com.mt
-  - DOMAIN-SUFFIX,blogspot.com.ng
-  - DOMAIN-SUFFIX,blogspot.com.tr
-  - DOMAIN-SUFFIX,blogspot.com.uy
-  - DOMAIN-SUFFIX,blogspot.cv
-  - DOMAIN-SUFFIX,blogspot.cz
-  - DOMAIN-SUFFIX,blogspot.de
-  - DOMAIN-SUFFIX,blogspot.dk
-  - DOMAIN-SUFFIX,blogspot.fi
-  - DOMAIN-SUFFIX,blogspot.fr
-  - DOMAIN-SUFFIX,blogspot.gr
-  - DOMAIN-SUFFIX,blogspot.hk
-  - DOMAIN-SUFFIX,blogspot.hr
-  - DOMAIN-SUFFIX,blogspot.hu
-  - DOMAIN-SUFFIX,blogspot.ie
-  - DOMAIN-SUFFIX,blogspot.in
-  - DOMAIN-SUFFIX,blogspot.is
-  - DOMAIN-SUFFIX,blogspot.it
-  - DOMAIN-SUFFIX,blogspot.jp
-  - DOMAIN-SUFFIX,blogspot.kr
-  - DOMAIN-SUFFIX,blogspot.li
-  - DOMAIN-SUFFIX,blogspot.lt
+# === 123 Combined Base Rules ===
+
+# --- TYPE: SUFFIX ---
+suffix,blogspot.co.at
+suffix,blogspot.co.id
+suffix,blogspot.co.il
+suffix,blogspot.co.ke
+suffix,blogspot.co.nz
+suffix,blogspot.co.uk
+suffix,blogspot.co.za
+suffix,blogspot.com
+suffix,blogspot.com.ar
+suffix,blogspot.com.au
+suffix,blogspot.com.br
+suffix,blogspot.com.by
+suffix,blogspot.com.co
+suffix,blogspot.com.cy
+suffix,blogspot.com.ee
+suffix,blogspot.com.eg
+suffix,blogspot.com.es
+suffix,blogspot.com.mt
+suffix,blogspot.com.ng
+suffix,blogspot.com.tr
+suffix,blogspot.com.uy
+suffix,blogspot.cv
+suffix,blogspot.cz
+suffix,blogspot.de
+suffix,blogspot.dk
+suffix,blogspot.fi
+suffix,blogspot.fr
+suffix,blogspot.gr
+suffix,blogspot.hk
+suffix,blogspot.hr
+suffix,blogspot.hu
+suffix,blogspot.ie
+suffix,blogspot.in
+suffix,blogspot.is
+suffix,blogspot.it
+suffix,blogspot.jp
+suffix,blogspot.kr
+suffix,blogspot.li
+suffix,blogspot.lt
+
