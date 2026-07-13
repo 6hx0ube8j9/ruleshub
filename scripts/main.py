@@ -6,7 +6,7 @@ import requests
 import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# 外部公共组件绝对解耦导入
+# 外部组件
 import rules_processor
 import rules_formatter
 
@@ -91,14 +91,11 @@ def normalize_policy_card(policy, base_name):
 
     base_name_lower = base_name.lower()
 
-    # --- 新增逻辑：精准清洗并改写新版 url 字典矩阵 ---
     if 'url' in policy and isinstance(policy['url'], dict):
         for u, act in list(policy['url'].items()):
-            # 如果发现值是空字符串，在内存中等价改写为布尔值 False (回写 JSON 后即为 false)
             if act == '' or (isinstance(act, str) and act.strip() == ''):
                 policy['url'][u] = False
 
-    # --- 原有矩阵字段清洗（融入拼写手误防呆） ---
     for field in target_fields:
         if field not in policy:
             continue
