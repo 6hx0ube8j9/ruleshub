@@ -1,32 +1,5 @@
 # === 123 Combined Base Rules ===
-host-suffix, 1e100.net, Google_media
-host-suffix, 1ucrs.com, Google_media
-host-suffix, 265.com, Google_media
-host-suffix, 2mdn-cn.net, Google_media
-host-suffix, 2mdn.net, Google_media
-host-suffix, 466453.com, Google_media
-host-suffix, abc.xyz, Google_media
-host-suffix, adgoogle.net, Google_media
-host-suffix, admeld.com, Google_media
-host-suffix, admob-cn.com, Google_media
-host-suffix, admob.com, Google_media
-host-suffix, adsense.com, Google_media
-host-suffix, adsensecustomsearchads.com, Google_media
-host-suffix, adsenseformobileapps.com, Google_media
-host-suffix, advertisercommunity.com, Google_media
-host-suffix, advertiserscommunity.com, Google_media
-host-suffix, adwords-community.com, Google_media
-host-suffix, adwords.com, Google_media
-host-suffix, adwordsexpress.com, Google_media
-host-suffix, amp.dev, Google_media
-host-suffix, ampproject.com, Google_media
-host-suffix, ampproject.net, Google_media
-host-suffix, ampproject.org, Google_media
-host-suffix, android.com, Google_media
-host-suffix, androidify.com, Google_media
-host-suffix, androidtv.com, Google_media
-host-suffix, angulardart.org, Google_media
-host-suffix, api.ai, Google_media
+
 # --- TYPE: SUFFIX ---
 suffix,blogspot.ru
 suffix,blogspot.se
