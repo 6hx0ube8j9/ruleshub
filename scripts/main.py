@@ -271,33 +271,34 @@ def _extract_and_normalize_routes(base_name, urls_config):
 
 def _process_local_storage_and_sync(source_enable, source_list, sync_map, remote_data_map):
     """
-    【重构：物理存储安全调度中心】
-    彻底解耦读写。改为“先安全落盘更新，后单向读取底稿”的线性流水线。
+    【终极修复版：物理存储安全调度中心】
+    既保留了“先落盘、后单向读取”的线性流水线，又完美恢复了本地文件的“手工编辑自动清洗整理”功能！
     """
-    # --- 第一步：旁路热更新落盘 (纯 Write 动作) ---
+    all_local_raw = []
+    processed_filenames = set()  # 核心防线：记录今天谁已经被洗过了
+    
+    # --- 第一步：旁路热更新落盘 (带远程规则的复合清洗) ---
     if sync_map:
         for url_str, filename in sync_map.items():
             remote_lines = remote_data_map.get(url_str, [])
             
-            # 【🔥 GitHub Actions 核心防空保命机制】
-            # 如果因网络抽风、超时导致拉取到的数据为空，绝对不覆写本地！保护 Git 历史底稿不被洗白。
+            # 【GitHub Actions 防空保护】网络彻底断开时，跳过此步，留给第二步做本地保命清洗
             if not remote_lines:
-                print(f"⚠️ [防空保护] URL 下载失败或规则为空，已跳过覆写本地物理文件: {filename}")
+                print(f"⚠️ [防空保护] URL 下载失败，已跳过网络覆盖更新: {filename}")
                 continue
                 
             file_path = os.path.join(SOURCE_DIR, filename)
             pure_name = os.path.splitext(filename)[0]
             
-            # 加载已有的本地底稿，与最新的网络流进行增量管道清洗合并
+            # 读取手工改动，融合最新网络流，清洗并覆写磁盘
             local_raw = load_local_raw_lines(file_path)
             cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, remote_lines)
             
-            # 覆盖写入磁盘
             save_local_rules(file_path, pure_name, cleaned_rules, rules_processor.source_keys, True)
-            print(f"💾 [热更新落盘成功] 规则已安全同步至本地: {filename}")
+            processed_filenames.add(filename)  # 标记已完成高规格清洗
+            print(f"💾 [热更新落盘] 网络与本地成功融合并格式化: {filename}")
 
-    # --- 第二步：纯粹的本地底稿加载 (纯 Read 动作) ---
-    all_local_raw = []
+    # --- 第二步：本地底稿加载与“纯本地文件”自清洗 (Read & Backup Write) ---
     if source_enable and source_list:
         for src_item in source_list:
             if not isinstance(src_item, str): 
@@ -307,13 +308,28 @@ def _process_local_storage_and_sync(source_enable, source_list, sync_map, remote
                 filename += '.txt'
                 
             file_path = os.path.join(SOURCE_DIR, filename)
+            
             if os.path.exists(file_path):
+                # 【核心修复逻辑】
+                # 如果这个底稿文件没有经历过第一步的网络同步清洗（例如纯本地手写文件 custom_ips.txt）
+                # 或者因为刚才网络挂了导致它没洗成功，在这里强行触发“纯本地自清洗整理”
+                if filename not in processed_filenames:
+                    pure_name = os.path.splitext(filename)[0]
+                    local_raw = load_local_raw_lines(file_path)
+                    
+                    # 纯本地格式化：远程流传入空列表 []
+                    cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, [])
+                    save_local_rules(file_path, pure_name, cleaned_rules, rules_processor.source_keys, True)
+                    
+                    processed_filenames.add(filename)
+                    print(f"✨ [本地自清洗] 已自动排序、去重并格式化本地物理文件: {filename}")
+                
+                # 最终，把磁盘上已经绝对干净的规则行加载到大融合内存中
                 all_local_raw.extend(load_local_raw_lines(file_path))
             else:
                 print(f"⚠️ [提示] 声明的本地底稿文件不存在，已跳过读取: {filename}")
                 
     return all_local_raw
-
 
 def fetch_and_merge_rules(base_name, policy):
     """
