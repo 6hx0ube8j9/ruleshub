@@ -1,7 +1,7 @@
 [
   {
     "name": "proxy",
-    "source": ["google", "youtube"],
+    "source": ["ture", "youtube"],
 
     "url": {
       "https://.../proxy_google.txt": "sync:google",
