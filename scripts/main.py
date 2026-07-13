@@ -81,8 +81,7 @@ except json.JSONDecodeError as e:
 # ==========================================
 def normalize_policy_card(policy, base_name):
     """
-    【适配升级：精细化防腐层】
-    保持原逻辑不变，但要在首层安全绕过已经升级为字典的 'url' 字段，防止引发类型遍历崩溃。
+    【防腐层终极觉醒：支持双向改写与防呆容错】
     """
     target_fields = ['source']
     for cfg in GLOBAL_PLATFORM_MATRIX.values():
@@ -92,6 +91,14 @@ def normalize_policy_card(policy, base_name):
 
     base_name_lower = base_name.lower()
 
+    # --- 新增逻辑：精准清洗并改写新版 url 字典矩阵 ---
+    if 'url' in policy and isinstance(policy['url'], dict):
+        for u, act in list(policy['url'].items()):
+            # 如果发现值是空字符串，在内存中等价改写为布尔值 False (回写 JSON 后即为 false)
+            if act == '' or (isinstance(act, str) and act.strip() == ''):
+                policy['url'][u] = False
+
+    # --- 原有矩阵字段清洗（融入拼写手误防呆） ---
     for field in target_fields:
         if field not in policy:
             continue
@@ -104,7 +111,8 @@ def normalize_policy_card(policy, base_name):
                 cleaned = []
                 for x in val:
                     x_str = str(x).strip()
-                    if x_str.lower() == 'true' or x_str == '':
+                    # 容错防呆：同时识别 'true' 和拼错的 'ture'
+                    if x_str.lower() in ['true', 'ture'] or x_str == '':
                         cleaned.append(base_name_lower)
                     else:
                         cleaned.append(x_str)
@@ -114,7 +122,8 @@ def normalize_policy_card(policy, base_name):
             val_str = str(val).strip()
             if val_str.lower() == 'false':
                 policy[field] = False
-            elif val_str.lower() == 'true' or val_str == '':
+            # 容错防呆：同时识别 'true' 和拼错的 'ture'
+            elif val_str.lower() in ['true', 'ture'] or val_str == '':
                 policy[field] = base_name_lower
             else:
                 policy[field] = val_str
@@ -517,6 +526,15 @@ def main():
 
     # 优先执行本地源发现机制，稳定文件系统状态
     normalize_and_discover_local_sources(router_cleaned)
+
+    # 【🔥 核心修复：反向重写落盘机制】
+    # 将内存中经过防腐层规范化（如纠正 ture、改写 "" 为 false）的配置，重新反向覆写回 ruleset.json 文件
+    try:
+        with open(RULESET_JSON_PATH, 'w', encoding='utf-8') as f_json:
+            json.dump(FILE_POLICY_ROUTER, f_json, indent=2, ensure_ascii=False)
+        print("📝 [配置自动重写] ruleset.json 已成功纠正拼写并自动格式化为显式直观模型！")
+    except Exception as e:
+        print(f"⚠️ [WARN] 反向回写 ruleset.json 失败: {e}")
 
     global_matrix = {plat: {} for plat in GLOBAL_PLATFORM_MATRIX.keys()}
 
