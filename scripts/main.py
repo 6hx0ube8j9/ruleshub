@@ -278,44 +278,68 @@ def _extract_and_normalize_routes(base_name, urls_config):
 	
 def _process_local_storage_and_sync(source_enable, source_list, sync_routes, remote_data_map):
     """
-    【解体组件 2：存储与落盘自治】
-    包揽所有本地文件的读写、本地自清理、旁路落盘同步。
-    返回干净的、用于最终内存融合的本地总数据。
+    【精益优化版组件 2：存储与落盘自治】
+    解决问题：通过内存合并，确保每个文件只洗一次、只落盘一次。
+    完美恢复本地底稿编辑保存后的自动清洗整理，同时断绝重复磁盘 I/O。
     """
-    all_local_raw = []
-    
-    # 1. 主干本地流自清洗与加载 (原 Phase C)
+    # ==========================================
+    # 1. 任务大合并：以“目标文件”为核心，构建唯一的批处理任务池
+    # ==========================================
+    file_tasks = {}
+
+    # 1.1 收集主干本地源（policy 里的 source 文件）
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
             src_item_fixed = src_item.lower()
             if not src_item_fixed.endswith('.txt'): 
                 src_item_fixed += '.txt'
+            
             src_path = os.path.join(SOURCE_DIR, src_item_fixed)
-            pure_name = os.path.splitext(src_item_fixed)[0]
-            
-            local_raw = load_local_raw_lines(src_path)
-            local_self_clean = rules_processor.execute_rules_pipeline(local_raw, [])
-            save_local_rules(src_path, pure_name, local_self_clean, rules_processor.source_keys, True)
-            
-            all_local_raw.extend(load_local_raw_lines(src_path))
+            if src_path not in file_tasks:
+                file_tasks[src_path] = {
+                    "pure_name": os.path.splitext(src_item_fixed)[0],
+                    "remote_lines": [],
+                    "is_local_source": True  # 标记它是本地源，后续需要收录
+                }
+            else:
+                file_tasks[src_path]["is_local_source"] = True
 
-    # 2. 旁路网络流落盘同步 (原 Phase A)
+    # 1.2 收集旁路落盘流（sync_source），将属于同一个文件的不同 URL 数据直接在内存中合并
     if sync_routes:
-        sync_tasks = {}
         for url_str, sf_name in sync_routes.items():
             t_path = os.path.join(SOURCE_DIR, sf_name)
-            p_name = os.path.splitext(sf_name)[0]
-            if t_path not in sync_tasks:
-                sync_tasks[t_path] = {"pure_name": p_name, "remote_lines": []}
-            sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
+            if t_path not in file_tasks:
+                file_tasks[t_path] = {
+                    "pure_name": os.path.splitext(sf_name)[0],
+                    "remote_lines": [],
+                    "is_local_source": False
+                }
+            # 关键优化：多个 URL 写入同一个文件时，数据在内存先合并
+            file_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
+
+    # ==========================================
+    # 2. 统一单次执行：每个文件“只读一次、只洗一次、只写一次”
+    # ==========================================
+    all_local_raw = []
+    
+    for file_path, task in file_tasks.items():
+        # 无论文件是何种身份，此时只读一次最原始的本地磁盘底稿
+        local_raw = load_local_raw_lines(file_path)
+        
+        # 核心清洗：
+        # 如果是纯本地底稿，task["remote_lines"] 为空 []，完美触发本地自清洗去重排序！
+        # 如果带有同步源，此时 local_raw 与合并后的网络数据一同送入大管道，一次性洗净
+        merged_rules = rules_processor.execute_rules_pipeline(local_raw, task["remote_lines"])
+        
+        # 真正的落盘：最终执行且仅执行一次磁盘写回，确保你保存的底稿被正确整理覆写
+        save_local_rules(file_path, task["pure_name"], merged_rules, rules_processor.source_keys, True)
+        
+        # 3. 收集主干本地流：如果是 policy 要求的本地源，将清洗后落盘的干净数据收录到内存中
+        if task["is_local_source"]:
+            all_local_raw.extend(load_local_raw_lines(file_path))
             
-        for target_path, task in sync_tasks.items():
-            sub_local_raw = load_local_raw_lines(target_path)
-            sub_rules = rules_processor.execute_rules_pipeline(sub_local_raw, task["remote_lines"])
-            save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
-            
-    return all_local_raw	
+    return all_local_raw
 	
 	
 def fetch_and_merge_rules(base_name, policy):
