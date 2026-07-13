@@ -129,25 +129,25 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
             payload = f"{payload}/128" if internal_type == 'ip6' else f"{payload}/32"
 
     return payload
-
+    
 def parse_line(line: str) -> Tuple[Optional[str], str]:
     """
-    规则解析主入口：自适应分流标准逗号规则和纯文本规则
-    支持自动切除标准规则及纯文本规则后方附带的任意多段策略组/垃圾后缀
+    规则解析主入口：利用特征分流机制，优雅实现多格式自适应解析
     """
     clean_line = filter_raw_line(line)
     if not clean_line:
         return None, ""
 
-    if ',' in clean_line:
-        first_part = clean_line.split(',')[0].strip().upper()
-        if first_part in RULE_MAP:
-            return parse_standard_rule(clean_line)
-            
-        pure_payload = clean_line.split(',')[0].strip()
-        return parse_pure_text_rule(pure_payload)
+    if clean_line.startswith('|'):
+        return parse_adguard_rule(clean_line)
         
-    return parse_pure_text_rule(clean_line)
+    head, _, _ = clean_line.partition(',')
+    head = head.strip()
+
+    if head.upper() in RULE_MAP:
+        return parse_standard_rule(clean_line)
+        
+    return parse_pure_text_rule(head)
 
 
 def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
@@ -225,7 +225,24 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
         return None, ""
 
     return internal_type, final_payload
-    
+
+def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
+    """
+    解析 AdGuard 语法：将 || 映射为 suffix，| 映射为 full，剥离 ^ 断言符
+    """
+    core_content = line.split('^')[0].strip()
+    for prefix, internal_type in [('||', 'suffix'), ('|', 'full')]:
+        if core_content.startswith(prefix):
+            raw_payload = core_content[len(prefix):].strip()
+            break
+    else:
+        return None, "" 
+
+    if not raw_payload or any(c in raw_payload for c in ' @=%&;/'):
+        return None, ""
+
+    final_payload = normalize_rule_line(raw_payload, internal_type)
+    return (internal_type, final_payload) if final_payload else (None, "")
 
 def process_raw_lines_batch(lines: list, rule_keys: list) -> dict:
     """
