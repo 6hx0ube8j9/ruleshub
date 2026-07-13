@@ -1,41 +1,49 @@
-# === 123 Combined Base Rules ===
-
-# --- TYPE: FULL ---
-full,api.imem.app
-full,api.swiftgram.app
-
-# --- TYPE: SUFFIX ---
-suffix,cdn-telegram.org
-suffix,comments.app
-suffix,contest.com
-suffix,graph.org
-suffix,legra.ph
-suffix,mbrx.app
-suffix,quiz.directory
-suffix,stel.com
-suffix,t.me
-suffix,tdesktop.com
-suffix,telega.one
-suffix,telegra.ph
-suffix,telegram-cdn.org
-suffix,telegram.dog
-suffix,telegram.me
-suffix,telegram.org
-suffix,telegram.space
-suffix,telegramdownload.com
-suffix,telesco.pe
-suffix,tg.dev
-suffix,tx.me
-suffix,usercontent.dev
-
-# --- TYPE: KEYWORD ---
-keyword,nicegram
-
-# --- TYPE: IP ---
-ip,109.239.140.0/24
-ip,139.59.210.98/32
-ip,149.154.160.0/20
-ip,196.55.216.167/32
-ip,5.28.192.0/18
-ip,91.108.0.0/16
-
+host-suffix, amp.dev, Google_media
+host-suffix, ampproject.com, Google_media
+host-suffix, ampproject.net, Google_media
+host-suffix, ampproject.org, Google_media
+host-suffix, android.com, Google_media
+host-suffix, androidify.com, Google_media
+host-suffix, androidtv.com, Google_media
+host-suffix, angulardart.org, Google_media
+host-suffix, api.ai, Google_media
+host-suffix, apigee.com, Google_media
+host-suffix, app-analytics-services.com, Google_media
+host-suffix, app-measurement-cn.com, Google_media
+host-suffix, app-measurement.com, Google_media
+host-suffix, app-measurement.net, Google_media
+host-suffix, appbridge.ca, Google_media
+host-suffix, appbridge.io, Google_media
+host-suffix, appbridge.it, Google_media
+host-suffix, apps5.oingo.com, Google_media
+host-suffix, appspot.com, Google_media
+host-suffix, apture.com, Google_media
+host-suffix, area120.com, Google_media
+host-suffix, asp-cc.com, Google_media
+host-suffix, autodraw.com, Google_media
+host-suffix, avail.googleflights.net, Google_media
+host-suffix, bandpage.com, Google_media
+host-suffix, baselinestudy.com, Google_media
+host-suffix, baselinestudy.org, Google_media
+host-suffix, bazel.build, Google_media
+host-suffix, bdn.dev, Google_media
+host-suffix, beacons.gvt2.com, Google_media
+host-suffix, beacons2.gvt2.com, Google_media
+host-suffix, beacons3.gvt2.com, Google_media
+host-suffix, beatthatquote.com, Google_media
+host-suffix, blink.org, Google_media
+host-suffix, blog.google, Google_media
+host-suffix, blogblog.com, Google_media
+host-suffix, blogger.com, Google_media
+host-suffix, blogspot.ae, Google_media
+host-suffix, blogspot.al, Google_media
+host-suffix, blogspot.am, Google_media
+host-suffix, blogspot.ba, Google_media
+host-suffix, blogspot.be, Google_media
+host-suffix, blogspot.bg, Google_media
+host-suffix, blogspot.bj, Google_media
+host-suffix, blogspot.ca, Google_media
+host-suffix, blogspot.cf, Google_media
+host-suffix, blogspot.ch, Google_media
+host-suffix, blogspot.cl, Google_media
+host-suffix, blogspot.co.at, Google_media
