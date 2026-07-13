@@ -4,7 +4,7 @@
 # --- TYPE: FULL ---
 full,voice.telephony.goog
 full,voice1111111.telephony.goog
-
+host, api.imem.app, Telegram
 # --- TYPE: SUFFIX ---
 suffix,0emm.com
 suffix,1e100.net
