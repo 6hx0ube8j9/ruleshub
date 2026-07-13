@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "name": "proxy",
+    "source": ["google", "youtube"],
+
+    "url": {
+      "https://.../proxy_google.txt": "sync:google",
+      "https://.../proxy_youtube.txt": "sync:youtube",
+      "https://.../proxy_custom_ips.txt": "",
+      "https://.../proxy_only_merge.txt": false
+    }
+  }
+]
