@@ -1,6 +1,7 @@
 # Quantumult X Rule-Set: 123
 
 host, voice.telephony.goog, 123
+host, voice1111111.telephony.goog, 123
 host-suffix, 0emm.com, 123
 host-suffix, 1e100.net, 123
 host-suffix, 1ucrs.com, 123

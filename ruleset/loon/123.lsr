@@ -1,6 +1,7 @@
 # Loon Rule-Set: 123
 
 DOMAIN,voice.telephony.goog
+DOMAIN,voice1111111.telephony.goog
 DOMAIN-SUFFIX,0emm.com
 DOMAIN-SUFFIX,1e100.net
 DOMAIN-SUFFIX,1ucrs.com

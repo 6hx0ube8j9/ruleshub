@@ -1,8 +1,9 @@
 # === 123.txt Combined & Cleaned Rules ===
-# === Total Rules: 37 ===
-host, voice1111111.telephony.goog
+# === Total Rules: 38 ===
+
 # --- TYPE: FULL ---
 full,voice.telephony.goog
+full,voice1111111.telephony.goog
 
 # --- TYPE: SUFFIX ---
 suffix,0emm.com
