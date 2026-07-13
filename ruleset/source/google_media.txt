@@ -1,4 +1,4 @@
-# === google_media Test Combined Rules ===
+# === google_media Combined Base Rules ===
 
 # --- TYPE: FULL ---
 full,voice.telephony.goog
