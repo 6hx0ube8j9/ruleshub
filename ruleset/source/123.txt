@@ -1,5 +1,5 @@
 # Quantumult X Rule-Set: google_media
-
+host-suffix, 1e100.net, Google_media
 host, voice.telephony.goog, Google_media
 host-suffix, 0emm.com, Google_media
 host-suffix, 1e100.net, Google_media
