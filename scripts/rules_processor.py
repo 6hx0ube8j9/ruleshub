@@ -130,50 +130,57 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
 
     return payload
 
-
 def parse_line(line: str) -> Tuple[Optional[str], str]:
     """
     规则解析主入口：自适应分流标准逗号规则和纯文本规则
+    支持自动切除标准规则及纯文本规则后方附带的任意多段策略组/垃圾后缀
     """
     clean_line = filter_raw_line(line)
     if not clean_line:
         return None, ""
 
     if ',' in clean_line:
-        parts = [x.strip() for x in clean_line.split(',', 1)]
-        tag = parts[0].upper()
-        if tag in RULE_MAP:
+        first_part = clean_line.split(',')[0].strip().upper()
+        if first_part in RULE_MAP:
             return parse_standard_rule(clean_line)
-        return None, ""
-
+            
+        pure_payload = clean_line.split(',')[0].strip()
+        return parse_pure_text_rule(pure_payload)
+        
     return parse_pure_text_rule(clean_line)
 
 
 def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
     """
-    解析带标签的标准逗号规则
+    解析带标签的标准逗号规则：精准提取 Payload，完美剥离尾部策略组，并兼容防错切机制
     """
-    parts = [x.strip() for x in line.split(',', 1)]
+    parts = [x.strip() for x in line.split(',')]
+    if not parts:
+        return None, ""
+
     tag = parts[0].upper()
     internal_type = RULE_MAP[tag]
+
+    if internal_type in ['regex', 'wildcard', 'useragent']:
+        if len(parts) > 2:
+            raw_payload = ','.join(parts[1:-1]).strip()
+        else:
+            raw_payload = parts[1] if len(parts) >= 2 else ""
+        return internal_type, raw_payload
 
     raw_payload = parts[1] if len(parts) >= 2 else ""
     if not raw_payload:
         return None, ""
 
-    if internal_type in ['regex', 'wildcard', 'useragent']:
-        return internal_type, raw_payload
-
     if internal_type in ['full', 'suffix', 'keyword', 'remove', 'process']:
         if any(c in raw_payload for c in [' ', '@', '=', '%', '&', ';']):
             return None, ""
-
+            
     final_payload = normalize_rule_line(raw_payload, internal_type)
     if not final_payload:
         return None, ""
 
     return internal_type, final_payload
-
 
 def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     """
