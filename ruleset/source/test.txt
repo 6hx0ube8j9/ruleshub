@@ -1,6 +1,10 @@
-host-suffix, adsenseformobileapps.com 
-host-suffix, advertisercommunity.com 
-host-suffix, advertiserscommunity.com 
-host-suffix, adwords-community.com 
-host-suffix, adwords.com 
-host-suffix, adwordsexpress.com 
+# === test Combined Base Rules ===
+
+# --- TYPE: SUFFIX ---
+suffix,adsenseformobileapps.com
+suffix,advertisercommunity.com
+suffix,advertiserscommunity.com
+suffix,adwords-community.com
+suffix,adwords.com
+suffix,adwordsexpress.com
+
