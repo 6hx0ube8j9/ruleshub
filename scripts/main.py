@@ -242,7 +242,7 @@ def parse_source_config(base_name, policy):
 	
 def _extract_and_normalize_routes(base_name, urls_config):
     """
-    纯粹做配置清洗，把各种异常字符串、布尔值统一转化为规范的路由池。
+    【组件 1：路由意图规范化（严格 Opt-in 安全版）
     """
     all_remote_urls = []
     sync_routes = {}   
@@ -250,24 +250,32 @@ def _extract_and_normalize_routes(base_name, urls_config):
     
     for item in urls_config:
         url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
-        if not url_str: continue
+        if not url_str: 
+            continue
             
-        all_remote_urls.append(url_str)
+        if url_str not in all_remote_urls:
+            all_remote_urls.append(url_str)
         
-        if isinstance(item, dict) and 'sync_source' in item:
+        if isinstance(item, dict):
+            if 'sync_source' not in item:
+                trunk_urls.add(url_str)
+                continue
+                
             sync_target = item['sync_source']
             
             if sync_target is False or str(sync_target).strip().lower() == 'false':
                 trunk_urls.add(url_str)
-                continue
                 
-            if sync_target is True or str(sync_target).strip().lower() == 'true' or sync_target == "":
+            elif sync_target is True or str(sync_target).strip().lower() == 'true' or sync_target == "":
                 sf_name = base_name.lower() + '.txt'
                 sync_routes[url_str] = sf_name
-            elif isinstance(sync_target, str):
+                
+            elif isinstance(sync_target, str) and sync_target.strip():
                 sf_name = sync_target.strip().lower()
-                if not sf_name.endswith('.txt'): sf_name += '.txt'
+                if not sf_name.endswith('.txt'): 
+                    sf_name += '.txt'
                 sync_routes[url_str] = sf_name
+                
             else:
                 trunk_urls.add(url_str)
         else:
