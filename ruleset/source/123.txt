@@ -1,20 +1,22 @@
 # === 123 Combined Base Rules ===
 
-host, voice.telephony.goog, Google_media
-host-suffix, 0emm.com, Google_media
-host-suffix, 1e100.net, Google_media
-host-suffix, 1ucrs.com, Google_media
-host-suffix, 265.com, Google_media
-host-suffix, 2mdn-cn.net, Google_media
-host-suffix, 2mdn.net, Google_media
-host-suffix, 466453.com, Google_media
-host-suffix, abc.xyz, Google_media
-host-suffix, adgoogle.net, Google_media
-host-suffix, admeld.com, Google_media
-host-suffix, admob-cn.com, Google_media
-host-suffix, admob.com, Google_media
-host-suffix, adsense.com, Google_media
+# --- TYPE: FULL ---
+full,voice.telephony.goog
+
 # --- TYPE: SUFFIX ---
+suffix,0emm.com
+suffix,1e100.net
+suffix,1ucrs.com
+suffix,265.com
+suffix,2mdn-cn.net
+suffix,2mdn.net
+suffix,466453.com
+suffix,abc.xyz
+suffix,adgoogle.net
+suffix,admeld.com
+suffix,admob-cn.com
+suffix,admob.com
+suffix,adsense.com
 suffix,blogspot.ru
 suffix,blogspot.se
 suffix,blogspot.sg
