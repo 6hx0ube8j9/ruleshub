@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'scripts/**'
-      - 'ruleset/**'
       - 'scripts/ruleset.json'
       - '.github/workflows/build.yml'
   schedule:
@@ -76,6 +75,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           
           git add -A ruleset/
+          git add scripts/source/
           
           if [ -f "scripts/ruleset.json" ]; then
             git add scripts/ruleset.json
