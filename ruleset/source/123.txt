@@ -1,6 +1,19 @@
 # === 123 Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
+suffix,001union.com
+suffix,0024aaaa.com
+suffix,0024aadd.com
+suffix,0026645142c89aeb1.com
+suffix,002lzj.com
+suffix,003store.com
+suffix,006a039c957c142bb.com
+suffix,0082tv.net
+suffix,0086555.com
+suffix,00880808.com
+suffix,008844.cc
+suffix,00aaa2d81c1d174.com
+suffix,00ae8b5a9c1d597.com
 suffix,appledaily.com
 suffix,appledaily.com.hk
 suffix,appledaily.com.tw
@@ -14,16 +27,3 @@ suffix,eracom.com.tw
 suffix,next.hk
 suffix,nextdigital.com.hk
 
-||001union.com^
-||0024aaaa.com^
-||0024aadd.com^
-||0026645142c89aeb1.com^
-||002lzj.com^
-||003store.com^
-||006a039c957c142bb.com^
-||0082tv.net^
-||0086555.com^
-||00880808.com^
-||008844.cc^
-||00aaa2d81c1d174.com^
-||00ae8b5a9c1d597.com^

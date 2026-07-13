@@ -1,6 +1,19 @@
 # Quantumult X Rule-Set: all_proxy
 
 host, voice.telephony.goog, All_proxy
+host-suffix, 001union.com, All_proxy
+host-suffix, 0024aaaa.com, All_proxy
+host-suffix, 0024aadd.com, All_proxy
+host-suffix, 0026645142c89aeb1.com, All_proxy
+host-suffix, 002lzj.com, All_proxy
+host-suffix, 003store.com, All_proxy
+host-suffix, 006a039c957c142bb.com, All_proxy
+host-suffix, 0082tv.net, All_proxy
+host-suffix, 0086555.com, All_proxy
+host-suffix, 00880808.com, All_proxy
+host-suffix, 008844.cc, All_proxy
+host-suffix, 00aaa2d81c1d174.com, All_proxy
+host-suffix, 00ae8b5a9c1d597.com, All_proxy
 host-suffix, 0emm.com, All_proxy
 host-suffix, 1e100.net, All_proxy
 host-suffix, 1ucrs.com, All_proxy
