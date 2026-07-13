@@ -1,42 +1,12 @@
 # Mihomo Payload Rule-Set: 123
 payload:
-  - DOMAIN,voice.telephony.goog
-  - DOMAIN-SUFFIX,0emm.com
-  - DOMAIN-SUFFIX,1e100.net
-  - DOMAIN-SUFFIX,1ucrs.com
-  - DOMAIN-SUFFIX,265.com
-  - DOMAIN-SUFFIX,2mdn-cn.net
-  - DOMAIN-SUFFIX,2mdn.net
-  - DOMAIN-SUFFIX,466453.com
-  - DOMAIN-SUFFIX,abc.xyz
-  - DOMAIN-SUFFIX,adgoogle.net
-  - DOMAIN-SUFFIX,admeld.com
-  - DOMAIN-SUFFIX,admob-cn.com
-  - DOMAIN-SUFFIX,admob.com
-  - DOMAIN-SUFFIX,adsense.com
-  - DOMAIN-SUFFIX,blogspot.ru
-  - DOMAIN-SUFFIX,blogspot.se
-  - DOMAIN-SUFFIX,blogspot.sg
-  - DOMAIN-SUFFIX,blogspot.si
-  - DOMAIN-SUFFIX,blogspot.sk
-  - DOMAIN-SUFFIX,blogspot.sn
-  - DOMAIN-SUFFIX,blogspot.td
-  - DOMAIN-SUFFIX,blogspot.tw
-  - DOMAIN-SUFFIX,blogspot.ug
-  - DOMAIN-SUFFIX,blogspot.vn
-  - DOMAIN-SUFFIX,brocaproject.com
-  - DOMAIN-SUFFIX,brotli.org
-  - DOMAIN-SUFFIX,bumpshare.com
-  - DOMAIN-SUFFIX,bumptop.ca
-  - DOMAIN-SUFFIX,bumptop.com
-  - DOMAIN-SUFFIX,bumptop.net
-  - DOMAIN-SUFFIX,bumptop.org
-  - DOMAIN-SUFFIX,bumptunes.com
-  - DOMAIN-SUFFIX,c.gle
-  - DOMAIN-SUFFIX,campuslondon.com
-  - DOMAIN-SUFFIX,capitalg.com
-  - DOMAIN-SUFFIX,certificate-transp
-  - DOMAIN-SUFFIX,certificate-transparency.dev
+  - DOMAIN,api.imem.app
+  - DOMAIN,api.swiftgram.app
+  - DOMAIN-SUFFIX,cdn-telegram.org
+  - DOMAIN-SUFFIX,comments.app
+  - DOMAIN-SUFFIX,contest.com
+  - DOMAIN-SUFFIX,graph.org
+  - DOMAIN-SUFFIX,legra.ph
   - DOMAIN-SUFFIX,mbrx.app
   - DOMAIN-SUFFIX,quiz.directory
   - DOMAIN-SUFFIX,stel.com
@@ -61,5 +31,3 @@ payload:
   - IP-CIDR,196.55.216.167/32,no-resolve
   - IP-CIDR,5.28.192.0/18,no-resolve
   - IP-CIDR,91.108.0.0/16,no-resolve
-  - IP-CIDR6,2001:67c:4e8::/48,no-resolve
-  - IP-CIDR6,2001:b28:f23c::/47,no-resolve

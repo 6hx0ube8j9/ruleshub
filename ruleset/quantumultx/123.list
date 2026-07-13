@@ -1,42 +1,12 @@
 # Quantumult X Rule-Set: 123
 
-host, voice.telephony.goog, 123
-host-suffix, 0emm.com, 123
-host-suffix, 1e100.net, 123
-host-suffix, 1ucrs.com, 123
-host-suffix, 265.com, 123
-host-suffix, 2mdn-cn.net, 123
-host-suffix, 2mdn.net, 123
-host-suffix, 466453.com, 123
-host-suffix, abc.xyz, 123
-host-suffix, adgoogle.net, 123
-host-suffix, admeld.com, 123
-host-suffix, admob-cn.com, 123
-host-suffix, admob.com, 123
-host-suffix, adsense.com, 123
-host-suffix, blogspot.ru, 123
-host-suffix, blogspot.se, 123
-host-suffix, blogspot.sg, 123
-host-suffix, blogspot.si, 123
-host-suffix, blogspot.sk, 123
-host-suffix, blogspot.sn, 123
-host-suffix, blogspot.td, 123
-host-suffix, blogspot.tw, 123
-host-suffix, blogspot.ug, 123
-host-suffix, blogspot.vn, 123
-host-suffix, brocaproject.com, 123
-host-suffix, brotli.org, 123
-host-suffix, bumpshare.com, 123
-host-suffix, bumptop.ca, 123
-host-suffix, bumptop.com, 123
-host-suffix, bumptop.net, 123
-host-suffix, bumptop.org, 123
-host-suffix, bumptunes.com, 123
-host-suffix, c.gle, 123
-host-suffix, campuslondon.com, 123
-host-suffix, capitalg.com, 123
-host-suffix, certificate-transp, 123
-host-suffix, certificate-transparency.dev, 123
+host, api.imem.app, 123
+host, api.swiftgram.app, 123
+host-suffix, cdn-telegram.org, 123
+host-suffix, comments.app, 123
+host-suffix, contest.com, 123
+host-suffix, graph.org, 123
+host-suffix, legra.ph, 123
 host-suffix, mbrx.app, 123
 host-suffix, quiz.directory, 123
 host-suffix, stel.com, 123
@@ -61,5 +31,3 @@ ip-cidr, 149.154.160.0/20, 123, no-resolve
 ip-cidr, 196.55.216.167/32, 123, no-resolve
 ip-cidr, 5.28.192.0/18, 123, no-resolve
 ip-cidr, 91.108.0.0/16, 123, no-resolve
-ip6-cidr, 2001:67c:4e8::/48, 123, no-resolve
-ip6-cidr, 2001:b28:f23c::/47, 123, no-resolve

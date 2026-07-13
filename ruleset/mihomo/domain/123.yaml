@@ -1,41 +1,11 @@
 payload:
-    - voice.telephony.goog
-    - +.0emm.com
-    - +.1e100.net
-    - +.1ucrs.com
-    - +.265.com
-    - +.2mdn-cn.net
-    - +.2mdn.net
-    - +.466453.com
-    - +.abc.xyz
-    - +.adgoogle.net
-    - +.admeld.com
-    - +.admob-cn.com
-    - +.admob.com
-    - +.adsense.com
-    - +.blogspot.ru
-    - +.blogspot.se
-    - +.blogspot.sg
-    - +.blogspot.si
-    - +.blogspot.sk
-    - +.blogspot.sn
-    - +.blogspot.td
-    - +.blogspot.tw
-    - +.blogspot.ug
-    - +.blogspot.vn
-    - +.brocaproject.com
-    - +.brotli.org
-    - +.bumpshare.com
-    - +.bumptop.ca
-    - +.bumptop.com
-    - +.bumptop.net
-    - +.bumptop.org
-    - +.bumptunes.com
-    - +.c.gle
-    - +.campuslondon.com
-    - +.capitalg.com
-    - +.certificate-transp
-    - +.certificate-transparency.dev
+    - api.imem.app
+    - api.swiftgram.app
+    - +.cdn-telegram.org
+    - +.comments.app
+    - +.contest.com
+    - +.graph.org
+    - +.legra.ph
     - +.mbrx.app
     - +.quiz.directory
     - +.stel.com
