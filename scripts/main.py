@@ -242,43 +242,41 @@ def parse_source_config(base_name, policy):
 	
 def _extract_and_normalize_routes(base_name, urls_config):
     """
-    【组件 1：路由意图规范化（严格 Opt-in 安全版）
+    纯粹做配置清洗，把各种异常字符串、布尔值统一转化为规范的路由池。
     """
     all_remote_urls = []
+    seen_urls = set() 
     sync_routes = {}   
     trunk_urls = set() 
     
     for item in urls_config:
         url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
+        url_str = url_str.strip()
         if not url_str: 
             continue
-            
-        if url_str not in all_remote_urls:
+
+        if url_str not in seen_urls:
             all_remote_urls.append(url_str)
+            seen_urls.add(url_str)
         
-        if isinstance(item, dict):
-            if 'sync_source' not in item:
-                trunk_urls.add(url_str)
-                continue
-                
+        is_trunk = True
+        if isinstance(item, dict) and 'sync_source' in item:
             sync_target = item['sync_source']
+            target_str = str(sync_target).strip().lower()
             
-            if sync_target is False or str(sync_target).strip().lower() == 'false':
-                trunk_urls.add(url_str)
-                
-            elif sync_target is True or str(sync_target).strip().lower() == 'true' or sync_target == "":
-                sf_name = base_name.lower() + '.txt'
-                sync_routes[url_str] = sf_name
-                
+            if sync_target is False or target_str == 'false':
+                pass
+            elif sync_target is True or target_str == 'true' or sync_target == "":
+                sync_routes[url_str] = f"{base_name.lower()}.txt"
+                is_trunk = False
             elif isinstance(sync_target, str) and sync_target.strip():
                 sf_name = sync_target.strip().lower()
                 if not sf_name.endswith('.txt'): 
                     sf_name += '.txt'
                 sync_routes[url_str] = sf_name
+                is_trunk = False
                 
-            else:
-                trunk_urls.add(url_str)
-        else:
+        if is_trunk:
             trunk_urls.add(url_str)
             
     return all_remote_urls, sync_routes, trunk_urls
