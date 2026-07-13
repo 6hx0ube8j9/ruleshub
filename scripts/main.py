@@ -269,7 +269,7 @@ def _extract_and_normalize_routes(base_name, urls_config):
         
         # 2. 解析落盘意图：仅拦截以 "sync:" 开头的合法动作值
         if isinstance(action, str) and action.strip().lower().startswith('sync:'):
-            target_name = action.strip()[5:].strip().lower()  # 剥离 "sync:" 前缀
+            target_name = action.strip()[5:].strip().lower() 
             if target_name:
                 if not target_name.endswith('.txt'): 
                     target_name += '.txt'
@@ -280,31 +280,28 @@ def _extract_and_normalize_routes(base_name, urls_config):
 
 def _process_local_storage_and_sync(source_enable, source_list, sync_map, remote_data_map):
     """
-    【终极修复版：物理存储安全调度中心】
-    既保留了“先落盘、后单向读取”的线性流水线，又完美恢复了本地文件的“手工编辑自动清洗整理”功能！
+    【物理存储安全调度中心】
     """
     all_local_raw = []
-    processed_filenames = set()  # 核心防线：记录今天谁已经被洗过了
+    processed_filenames = set() 
     
     # --- 第一步：旁路热更新落盘 (带远程规则的复合清洗) ---
     if sync_map:
         for url_str, filename in sync_map.items():
             remote_lines = remote_data_map.get(url_str, [])
             
-            # 【GitHub Actions 防空保护】网络彻底断开时，跳过此步，留给第二步做本地保命清洗
             if not remote_lines:
                 print(f"⚠️ [防空保护] URL 下载失败，已跳过网络覆盖更新: {filename}")
                 continue
                 
             file_path = os.path.join(SOURCE_DIR, filename)
             pure_name = os.path.splitext(filename)[0]
-            
-            # 读取手工改动，融合最新网络流，清洗并覆写磁盘
+
             local_raw = load_local_raw_lines(file_path)
             cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, remote_lines)
             
             save_local_rules(file_path, pure_name, cleaned_rules, rules_processor.source_keys, True)
-            processed_filenames.add(filename)  # 标记已完成高规格清洗
+            processed_filenames.add(filename)
             print(f"💾 [热更新落盘] 网络与本地成功融合并格式化: {filename}")
 
     # --- 第二步：本地底稿加载与“纯本地文件”自清洗 (Read & Backup Write) ---
@@ -319,14 +316,10 @@ def _process_local_storage_and_sync(source_enable, source_list, sync_map, remote
             file_path = os.path.join(SOURCE_DIR, filename)
             
             if os.path.exists(file_path):
-                # 【核心修复逻辑】
-                # 如果这个底稿文件没有经历过第一步的网络同步清洗（例如纯本地手写文件 custom_ips.txt）
-                # 或者因为刚才网络挂了导致它没洗成功，在这里强行触发“纯本地自清洗整理”
                 if filename not in processed_filenames:
                     pure_name = os.path.splitext(filename)[0]
                     local_raw = load_local_raw_lines(file_path)
                     
-                    # 纯本地格式化：远程流传入空列表 []
                     cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, [])
                     save_local_rules(file_path, pure_name, cleaned_rules, rules_processor.source_keys, True)
                     
@@ -364,7 +357,6 @@ def fetch_and_merge_rules(base_name, policy):
     all_local_raw = _process_local_storage_and_sync(source_enable, source_list, sync_map, remote_data_map)
 
     # 6. 【核心巨变：无门控通航机制】
-    # 直接将 remote_data_map 中下载到的所有网络规则（不论值写的是 sync、"" 还是 false）100% 灌入内存主干流
     all_remote_raw = []
     for url_str, lines in remote_data_map.items():
         if lines:
@@ -396,7 +388,6 @@ def dispatch_rules_to_targets(base_name, policy, rules, global_matrix):
 
         if plat == 'quantumultx':
             policy_cfg_field = config.get('policy_cfg', 'qx_policy')
-            # 兼容大小写特性的默认策略
             fallback_label = base_name.capitalize() if base_name.lower() not in ['direct', 'reject'] else base_name.lower()
             qx_policy_label = policy.get(policy_cfg_field, fallback_label)
             
@@ -443,7 +434,6 @@ def normalize_and_discover_local_sources(router_cleaned):
         
     for f in os.listdir(SOURCE_DIR):
         if f.endswith('.txt'):
-            # 处理非小写文件名的兼容并规避 IO 冲突
             if not f.islower():
                 old_path = os.path.join(SOURCE_DIR, f)
                 new_f = f.lower()
@@ -464,7 +454,6 @@ def normalize_and_discover_local_sources(router_cleaned):
             if local_base_name in router_cleaned or local_base_name in explicitly_consumed_sources: 
                 continue
             
-            # 为野生底稿创建虚拟映射
             router_cleaned[local_base_name] = {'name': local_base_name, 'url': []}
 
 def compile_mihomo_mrs(base_name, policy, rules):
@@ -527,7 +516,6 @@ def main():
     # 优先执行本地源发现机制，稳定文件系统状态
     normalize_and_discover_local_sources(router_cleaned)
 
-    # 【🔥 核心修复：反向重写落盘机制】
     # 将内存中经过防腐层规范化（如纠正 ture、改写 "" 为 false）的配置，重新反向覆写回 ruleset.json 文件
     try:
         with open(RULESET_JSON_PATH, 'w', encoding='utf-8') as f_json:
@@ -538,7 +526,7 @@ def main():
 
     global_matrix = {plat: {} for plat in GLOBAL_PLATFORM_MATRIX.keys()}
 
-    # 2. 拉取、独立同步落盘、主线合并加工与 MRS 编译
+    # 拉取、独立同步落盘、主线合并加工与 MRS 编译
     for target_base_name, policy_card in router_cleaned.items():
         rules_in_memory = fetch_and_merge_rules(target_base_name, policy_card)       
         dispatch_rules_to_targets(target_base_name, policy_card, rules_in_memory, global_matrix)
@@ -546,19 +534,13 @@ def main():
   
     output_directories = {plat: cfg['dir'] for plat, cfg in GLOBAL_PLATFORM_MATRIX.items()}
 
-    # 3. 终极域名敛并优化
-    for plat, targets in global_matrix.items():
-        for target_name, rules in targets.items():
-            if isinstance(rules, dict):
-                rules_processor.optimize_domains(rules)
-
-    # 4. 调用格式化模块全平台导出
+    # 调用格式化模块全平台导出
     rules_formatter.export_all(
         global_matrix = global_matrix,
         dir_map = output_directories
     )
 
-    # 5. Singbox 二进制编译
+    # Singbox 二进制编译
     compile_singbox_srs(global_matrix, output_directories['singbox'])
 
 if __name__ == '__main__':
