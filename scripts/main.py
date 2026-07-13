@@ -295,23 +295,22 @@ def fetch_and_merge_rules(base_name, policy):
     remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
 
     # ==========================================
-    # 三相分流 Phase A: 旁路落盘流 (独立静默更新，绝不覆盖用户手写源)
+    # 三相分流 Phase A: 旁路落盘流 (独立静默更新)
     # ==========================================
     if sync_routes:
         sync_tasks = {}
         for url_str, sf_name in sync_routes.items():
-            # 【终极修正】将网络自动同步的目标命名为 .sync.txt，与用户手写的 .txt 物理隔离
-            sync_sf_name = sf_name.replace('.txt', '.sync.txt')
-            t_path = os.path.join(SOURCE_DIR, sync_sf_name)
-            p_name = os.path.splitext(sync_sf_name)[0]
-            
+            t_path = os.path.join(SOURCE_DIR, sf_name)
+            p_name = os.path.splitext(sf_name)[0]
             if t_path not in sync_tasks:
                 sync_tasks[t_path] = {"pure_name": p_name, "remote_lines": []}
+            # 旁路池中的 URL 数据仅注入到对应的同步任务中
             sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
             
         for target_path, task in sync_tasks.items():
-            # 这里的 pipeline 只有纯网络流的自我去重，并静默落盘为 xxx.sync.txt
-            sub_rules = rules_processor.execute_rules_pipeline([], task["remote_lines"])
+            # 仅针对特定的同步文件进行“增量安全合并”与落盘
+            sub_local_raw = load_local_raw_lines(target_path)
+            sub_rules = rules_processor.execute_rules_pipeline(sub_local_raw, task["remote_lines"])
             save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
 
     # ==========================================
@@ -319,24 +318,19 @@ def fetch_and_merge_rules(base_name, policy):
     # ==========================================
     all_remote_raw = []
     for url_str in trunk_urls:
+        # 仅限未开启 sync_source 的 URL 数据流入内存主干，彻底斩断交叉污染
         all_remote_raw.extend(remote_data_map.get(url_str, []))
 
     # ==========================================
-    # 三相分流 Phase C: 主干本地流 (多源真相双向加载)
+    # 三相分流 Phase C: 主干本地流 (底稿只读保护)
     # ==========================================
     all_local_raw = []
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
-            src_base = os.path.splitext(src_item.lower())[0]
-            
-            # 1. 绝对只读地加载用户手写的原始底稿 (google.txt) -> 哪怕网络怎么洗，这里永远安全
-            user_src_path = os.path.join(SOURCE_DIR, f"{src_base}.txt")
-            all_local_raw.extend(load_local_raw_lines(user_src_path))
-            
-            # 2. 自动加载刚刚旁路静默同步下来的网络缓存 (google.sync.txt)
-            sync_src_path = os.path.join(SOURCE_DIR, f"{src_base}.sync.txt")
-            all_local_raw.extend(load_local_raw_lines(sync_src_path))
+            if not src_item.endswith('.txt'): src_item += '.txt'
+            src_path = os.path.join(SOURCE_DIR, src_item.lower())
+            all_local_raw.extend(load_local_raw_lines(src_path)) # 只读（Read-Only）拉取底稿
 
     # ==========================================
     # 终局：大管道清洗与输出
