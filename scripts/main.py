@@ -17,7 +17,7 @@ SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)                  
 
 RULESET_BASE_DIR = os.path.join(PROJECT_ROOT, 'ruleset')
-SOURCE_DIR       = os.path.join(RULESET_BASE_DIR, 'source')
+SOURCE_DIR       = os.path.join(SCRIPT_DIR, 'source')
 MIHOMO_DIR       = os.path.join(RULESET_BASE_DIR, 'mihomo')
 
 RULESET_JSON_PATH = os.path.join(SCRIPT_DIR, 'ruleset.json')
