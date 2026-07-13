@@ -277,73 +277,46 @@ def _extract_and_normalize_routes(base_name, urls_config):
     return all_remote_urls, sync_routes, trunk_urls
 	
 def _process_local_storage_and_sync(source_enable, source_list, sync_routes, remote_data_map):
-    print("\n====== [DEBUG START] 本地自治处理器开始运行 ======")
-    print(f"输入参数: source_enable={source_enable}, source_list={source_list}")
-    print(f"输入参数: sync_routes={sync_routes}")
+    """
+    【安全解体组件 2：存储流自治】
+    不再在循环内部调用可能含有状态污染的大管道。
+    纯粹合并、读取原始磁盘数据，彻底杜绝 save_local_rules 拒绝落盘的问题。
+    """
+    all_local_raw = []
     
-    file_tasks = {}
-
+    # 1. 纯粹、安全地把所有本地源文件的原始内容读出来
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
             src_item_fixed = src_item.lower()
             if not src_item_fixed.endswith('.txt'): 
                 src_item_fixed += '.txt'
-            
             src_path = os.path.join(SOURCE_DIR, src_item_fixed)
-            if src_path not in file_tasks:
-                file_tasks[src_path] = {
-                    "pure_name": os.path.splitext(src_item_fixed)[0],
-                    "remote_lines": [],
-                    "is_local_source": True
-                }
-            else:
-                file_tasks[src_path]["is_local_source"] = True
+            
+            # 直接追加最原始的底稿内容，完全对齐未解体前的全功能大函数 Phase C 收集时序
+            all_local_raw.extend(load_local_raw_lines(src_path))
 
+    # 2. 旁路网络流落盘同步：同样采用合并同类项，但直接使用原始落盘逻辑
     if sync_routes:
+        sync_tasks = {}
         for url_str, sf_name in sync_routes.items():
             t_path = os.path.join(SOURCE_DIR, sf_name)
-            if t_path not in file_tasks:
-                file_tasks[t_path] = {
-                    "pure_name": os.path.splitext(sf_name)[0],
-                    "remote_lines": [],
-                    "is_local_source": False
-                }
-            file_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
-
-    print(f"构建的合并任务池 file_tasks 共有 {len(file_tasks)} 个目标文件:")
-    for path, info in file_tasks.items():
-        print(f"  -> 路径: {path} | 身份: is_local_source={info['is_local_source']} | 网络流条数: {len(info['remote_lines'])}")
-
-    all_local_raw = []
-    
-    for file_path, task in file_tasks.items():
-        print(f"\n正在处理文件: {file_path}")
-        local_raw = load_local_raw_lines(file_path)
-        print(f"  1. 从磁盘读取到原始数据: {len(local_raw)} 行")
-        
-        # 调用大管道清洗
-        merged_rules = rules_processor.execute_rules_pipeline(local_raw, task["remote_lines"])
-        print(f"  2. 经过大管道清洗后结果: {len(merged_rules)} 行")
-        
-        # 落盘
-        save_local_rules(file_path, task["pure_name"], merged_rules, rules_processor.source_keys, True)
-        print(f"  3. 已执行 save_local_rules 落盘")
-        
-        # 再次读取用于返回
-        if task["is_local_source"]:
-            read_back = load_local_raw_lines(file_path)
-            print(f"  4. 该文件为主干本地源，重新读出 {len(read_back)} 行用于内存大融合")
-            all_local_raw.extend(read_back)
+            p_name = os.path.splitext(sf_name)[0]
+            if t_path not in sync_tasks:
+                sync_tasks[t_path] = {"pure_name": p_name, "remote_lines": []}
+            sync_tasks[t_path]["remote_lines"].extend(remote_data_map.get(url_str, []))
             
-    print("\n====== [DEBUG END] 本地自治处理器运行结束 ======\n")
+        for target_path, task in sync_tasks.items():
+            sub_local_raw = load_local_raw_lines(target_path)
+            # 在这里调用，确保与网络流落盘生命周期完全隔离
+            sub_rules = rules_processor.execute_rules_pipeline(sub_local_raw, task["remote_lines"])
+            save_local_rules(target_path, task["pure_name"], sub_rules, rules_processor.source_keys, True)
+            
     return all_local_raw
-	
 	
 def fetch_and_merge_rules(base_name, policy):
     """
     【核心大脑：纯粹的业务流编排官】
-    代码完全无搬砖逻辑，只负责三大组件的宏观调度。
     """
     # 1. 外部原生配置导入
     source_enable, source_list = parse_source_config(base_name, policy)
@@ -351,25 +324,38 @@ def fetch_and_merge_rules(base_name, policy):
     if not isinstance(urls_config, list):
         urls_config = [urls_config] if urls_config else []
         
-    # 2. 调度【组件 1】— 纯净清洗配置并提取路由意图
+    # 2. 调度组件 1 — 提取路由意图
     all_remote_urls, sync_routes, trunk_urls = _extract_and_normalize_routes(base_name, urls_config)
 
     # 3. 统一并发拉取远程资源
     remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
 
-    # 4. 调度【组件 2】— 隔离处理所有磁盘操作（本地清洗、旁路同步），并要回洗干净的本地底稿
+    # 4. 调度组件 2 — 收集干净的本地底稿内容
     all_local_raw = _process_local_storage_and_sync(source_enable, source_list, sync_routes, remote_data_map)
 
-    # 5. 主干网络流收集 (原 Phase B)
+    # 5. 主干网络流收集 (Phase B)
     all_remote_raw = []
     for url_str in trunk_urls:
         all_remote_raw.extend(remote_data_map.get(url_str, []))
 
-    # 6. 终局内存大融合，直接纯内存返回，底稿只读保护
+    # 6. 终局大融合：整个函数生命周期中，【主管道只在这里被调用一次】
     final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
     rules_processor.optimize_domains(final_rules)
     
-    return final_rules	
+    # 7. 完美恢复底稿自动整理清洗功能：
+    # 将最终纯内存大清洗去重、排序后的最高杰作，安全无污染地覆写回你的本地底稿中！
+    if source_enable:
+        for src_item in source_list:
+            if not isinstance(src_item, str): continue
+            src_item_fixed = src_item.lower()
+            if not src_item_fixed.endswith('.txt'): src_item_fixed += '.txt'
+            src_path = os.path.join(SOURCE_DIR, src_item_fixed)
+            pure_name = os.path.splitext(src_item_fixed)[0]
+            
+            # 这一步落盘，用的是最终在内存完成大合流、无污染的最高统治数据
+            save_local_rules(src_path, pure_name, final_rules, rules_processor.source_keys, True)
+    
+    return final_rules
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
     if not source_enable or not any(len(rules[k]) > 0 for k in rule_keys):
