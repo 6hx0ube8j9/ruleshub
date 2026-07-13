@@ -1,54 +1,39 @@
-# === 123 Combined Base Rules ===
-
-# --- TYPE: FULL ---
-full,voice.telephony.goog
-
-# --- TYPE: SUFFIX ---
-suffix,0emm.com
-suffix,1e100.net
-suffix,1ucrs.com
-suffix,265.com
-suffix,2mdn-cn.net
-suffix,2mdn.net
-suffix,466453.com
-suffix,abc.xyz
-suffix,adgoogle.net
-suffix,admeld.com
-suffix,admob-cn.com
-suffix,admob.com
-suffix,adsense.com
-suffix,adsensecustomsearchads.com
-suffix,adsenseformobileapps.com
-suffix,advertisercommunity.com
-suffix,advertiserscommunity.com
-suffix,adwords-community.com
-suffix,adwords.com
-suffix,adwordsexpress.com
-suffix,amp.dev
-suffix,ampproject.com
-suffix,ampproject.net
-suffix,ampproject.org
-suffix,android.com
-suffix,androidify.com
-suffix,androidtv.com
-suffix,angulardart.org
-suffix,api.ai
-suffix,apigee.com
-suffix,app-analytics-services.com
-suffix,app-measurement-cn.com
-suffix,app-measurement.com
-suffix,app-measurement.net
-suffix,appbridge.ca
-suffix,appbridge.io
-suffix,appbridge.it
-suffix,apps5.oingo.com
-suffix,appspot.com
-suffix,apture.com
-suffix,area120.com
-suffix,asp-cc.com
-suffix,autodraw.com
-suffix,avail.googleflights.net
-suffix,bandpage.com
-suffix,baselinestudy.com
-suffix,baselinestudy.org
-
+  - DOMAIN-SUFFIX,blogspot.co.at
+  - DOMAIN-SUFFIX,blogspot.co.id
+  - DOMAIN-SUFFIX,blogspot.co.il
+  - DOMAIN-SUFFIX,blogspot.co.ke
+  - DOMAIN-SUFFIX,blogspot.co.nz
+  - DOMAIN-SUFFIX,blogspot.co.uk
+  - DOMAIN-SUFFIX,blogspot.co.za
+  - DOMAIN-SUFFIX,blogspot.com
+  - DOMAIN-SUFFIX,blogspot.com.ar
+  - DOMAIN-SUFFIX,blogspot.com.au
+  - DOMAIN-SUFFIX,blogspot.com.br
+  - DOMAIN-SUFFIX,blogspot.com.by
+  - DOMAIN-SUFFIX,blogspot.com.co
+  - DOMAIN-SUFFIX,blogspot.com.cy
+  - DOMAIN-SUFFIX,blogspot.com.ee
+  - DOMAIN-SUFFIX,blogspot.com.eg
+  - DOMAIN-SUFFIX,blogspot.com.es
+  - DOMAIN-SUFFIX,blogspot.com.mt
+  - DOMAIN-SUFFIX,blogspot.com.ng
+  - DOMAIN-SUFFIX,blogspot.com.tr
+  - DOMAIN-SUFFIX,blogspot.com.uy
+  - DOMAIN-SUFFIX,blogspot.cv
+  - DOMAIN-SUFFIX,blogspot.cz
+  - DOMAIN-SUFFIX,blogspot.de
+  - DOMAIN-SUFFIX,blogspot.dk
+  - DOMAIN-SUFFIX,blogspot.fi
+  - DOMAIN-SUFFIX,blogspot.fr
+  - DOMAIN-SUFFIX,blogspot.gr
+  - DOMAIN-SUFFIX,blogspot.hk
+  - DOMAIN-SUFFIX,blogspot.hr
+  - DOMAIN-SUFFIX,blogspot.hu
+  - DOMAIN-SUFFIX,blogspot.ie
+  - DOMAIN-SUFFIX,blogspot.in
+  - DOMAIN-SUFFIX,blogspot.is
+  - DOMAIN-SUFFIX,blogspot.it
+  - DOMAIN-SUFFIX,blogspot.jp
+  - DOMAIN-SUFFIX,blogspot.kr
+  - DOMAIN-SUFFIX,blogspot.li
+  - DOMAIN-SUFFIX,blogspot.lt
