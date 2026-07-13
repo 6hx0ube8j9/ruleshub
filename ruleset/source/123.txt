@@ -1,31 +1,26 @@
-# Quantumult X Rule-Set: google_media
-host-suffix, 1e100.net, Google_media
-host, voice.telephony.goog, Google_media
-host-suffix, 0emm.com, Google_media
-host-suffix, 1e100.net, Google_media
-host-suffix, 1ucrs.com, Google_media
-host-suffix, 265.com, Google_media
-host-suffix, 2mdn-cn.net, Google_media
-host-suffix, 2mdn.net, Google_media
-host-suffix, 466453.com, Google_media
-host-suffix, abc.xyz, Google_media
-host-suffix, adgoogle.net, Google_media
-host-suffix, admeld.com, Google_media
-host-suffix, admob-cn.com, Google_media
-host-suffix, admob.com, Google_media
-host-suffix, adsense.com, Google_media
-host-suffix, adsensecustomsearchads.com, Google_media
-host-suffix, adsenseformobileapps.com, Google_media
-host-suffix, advertisercommunity.com, Google_media
-host-suffix, advertiserscommunity.com, Google_media
-host-suffix, adwords-community.com, Google_media
-host-suffix, adwords.com, Google_media
-host-suffix, adwordsexpress.com, Google_media
-host-suffix, amp.dev, Google_media
-host-suffix, ampproject.com, Google_media
-host-suffix, ampproject.net, Google_media
-host-suffix, ampproject.org, Google_media
-host-suffix, android.com, Google_media
-host-suffix, androidify.com, Google_media
-host-suffix, androidtv.com, Google_media
-host-suffix, angulardart.org, Google_media
+DOMAIN-SUFFIX,mbrx.app
+DOMAIN-SUFFIX,quiz.directory
+DOMAIN-SUFFIX,stel.com
+DOMAIN-SUFFIX,t.me
+DOMAIN-SUFFIX,tdesktop.com
+DOMAIN-SUFFIX,telega.one
+DOMAIN-SUFFIX,telegra.ph
+DOMAIN-SUFFIX,telegram-cdn.org
+DOMAIN-SUFFIX,telegram.dog
+DOMAIN-SUFFIX,telegram.me
+DOMAIN-SUFFIX,telegram.org
+DOMAIN-SUFFIX,telegram.space
+DOMAIN-SUFFIX,telegramdownload.com
+DOMAIN-SUFFIX,telesco.pe
+DOMAIN-SUFFIX,tg.dev
+DOMAIN-SUFFIX,tx.me
+DOMAIN-SUFFIX,usercontent.dev
+DOMAIN-KEYWORD,nicegram
+IP-CIDR,109.239.140.0/24,no-resolve
+IP-CIDR,139.59.210.98/32,no-resolve
+IP-CIDR,149.154.160.0/20,no-resolve
+IP-CIDR,196.55.216.167/32,no-resolve
+IP-CIDR,5.28.192.0/18,no-resolve
+IP-CIDR,91.108.0.0/16,no-resolve
+IP-CIDR6,2001:67c:4e8::/48,no-resolve
+IP-CIDR6,2001:b28:f23c::/47,no-resolve
