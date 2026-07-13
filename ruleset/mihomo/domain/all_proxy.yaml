@@ -39,11 +39,18 @@ payload:
     - +.appbridge.ca
     - +.appbridge.io
     - +.appbridge.it
+    - +.appledaily.com
+    - +.appledaily.com.hk
+    - +.appledaily.com.tw
+    - +.appledaily.hk
+    - +.applefruity.com
+    - +.applehealth.com.hk
     - +.apps5.oingo.com
     - +.appspot.com
     - +.apture.com
     - +.area120.com
     - +.asp-cc.com
+    - +.atnext.com
     - +.autodraw.com
     - +.avail.googleflights.net
     - +.bandpage.com
@@ -55,6 +62,7 @@ payload:
     - +.beacons2.gvt2.com
     - +.beacons3.gvt2.com
     - +.beatthatquote.com
+    - +.bestmallawards.com
     - +.blink.org
     - +.blog.google
     - +.blogblog.com
@@ -190,6 +198,7 @@ payload:
     - +.debugproject.com
     - +.deepmind.com
     - +.deja.com
+    - +.deluxe.com.hk
     - +.deps.dev
     - +.deps.info
     - +.devsitetest.how
@@ -201,6 +210,7 @@ payload:
     - +.doubleclick.com
     - +.doubleclick.net
     - +.episodic.com
+    - +.eracom.com.tw
     - +.fastlane.ci
     - +.fastlane.tools
     - +.feedburner.com
@@ -557,6 +567,8 @@ payload:
     - +.near.by
     - +.nest.com
     - +.neverware.com
+    - +.next.hk
+    - +.nextdigital.com.hk
     - +.nomulus.foo
     - +.oasisfeng.com
     - +.oauthz.com

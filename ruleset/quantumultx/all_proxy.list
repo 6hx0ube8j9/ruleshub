@@ -40,11 +40,18 @@ host-suffix, app-measurement.net, All_proxy
 host-suffix, appbridge.ca, All_proxy
 host-suffix, appbridge.io, All_proxy
 host-suffix, appbridge.it, All_proxy
+host-suffix, appledaily.com, All_proxy
+host-suffix, appledaily.com.hk, All_proxy
+host-suffix, appledaily.com.tw, All_proxy
+host-suffix, appledaily.hk, All_proxy
+host-suffix, applefruity.com, All_proxy
+host-suffix, applehealth.com.hk, All_proxy
 host-suffix, apps5.oingo.com, All_proxy
 host-suffix, appspot.com, All_proxy
 host-suffix, apture.com, All_proxy
 host-suffix, area120.com, All_proxy
 host-suffix, asp-cc.com, All_proxy
+host-suffix, atnext.com, All_proxy
 host-suffix, autodraw.com, All_proxy
 host-suffix, avail.googleflights.net, All_proxy
 host-suffix, bandpage.com, All_proxy
@@ -56,6 +63,7 @@ host-suffix, beacons.gvt2.com, All_proxy
 host-suffix, beacons2.gvt2.com, All_proxy
 host-suffix, beacons3.gvt2.com, All_proxy
 host-suffix, beatthatquote.com, All_proxy
+host-suffix, bestmallawards.com, All_proxy
 host-suffix, blink.org, All_proxy
 host-suffix, blog.google, All_proxy
 host-suffix, blogblog.com, All_proxy
@@ -191,6 +199,7 @@ host-suffix, debug.com, All_proxy
 host-suffix, debugproject.com, All_proxy
 host-suffix, deepmind.com, All_proxy
 host-suffix, deja.com, All_proxy
+host-suffix, deluxe.com.hk, All_proxy
 host-suffix, deps.dev, All_proxy
 host-suffix, deps.info, All_proxy
 host-suffix, devsitetest.how, All_proxy
@@ -202,6 +211,7 @@ host-suffix, doubleclick-cn.net, All_proxy
 host-suffix, doubleclick.com, All_proxy
 host-suffix, doubleclick.net, All_proxy
 host-suffix, episodic.com, All_proxy
+host-suffix, eracom.com.tw, All_proxy
 host-suffix, fastlane.ci, All_proxy
 host-suffix, fastlane.tools, All_proxy
 host-suffix, feedburner.com, All_proxy
@@ -558,6 +568,8 @@ host-suffix, moodstocks.com, All_proxy
 host-suffix, near.by, All_proxy
 host-suffix, nest.com, All_proxy
 host-suffix, neverware.com, All_proxy
+host-suffix, next.hk, All_proxy
+host-suffix, nextdigital.com.hk, All_proxy
 host-suffix, nomulus.foo, All_proxy
 host-suffix, oasisfeng.com, All_proxy
 host-suffix, oauthz.com, All_proxy
