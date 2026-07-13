@@ -1,17 +1,21 @@
-
-||519332da.rtc.youme.im^
-||86file.megajoy.com^
-||86get.joy.cn^
-||86log.joy.cn^
-||a.baidu.com^
-||a.cctv.com^
-||a.cntv.cn^
-||ad.cctv.com^
-||ad.doubleclick.net^
-||ad.hpplay.cn^
-||ad.mi.com^
-||ad.xiaomi.com^
-||ad1.xiaomi.com^
-||adc.hpplay.cn^
-||adcdn.hpplay.cn^
-||adeng.hpplay.cn^
+host-suffix, 0emm.com, Proxy
+host-suffix, 1e100.net, Proxy
+host-suffix, 1ucrs.com, Proxy
+host-suffix, 265.com, Proxy
+host-suffix, 2mdn-cn.net, Proxy
+host-suffix, 2mdn.net, Proxy
+host-suffix, 466453.com, Proxy
+host-suffix, 95599.cn, Proxy
+host-suffix, abc.xyz, Proxy
+host-suffix, abchina.com, Proxy
+host-suffix, adgoogle.net, Proxy
+host-suffix, admeld.com, Proxy
+host-suffix, admob-cn.com, Proxy
+host-suffix, admob.com, Proxy
+host-suffix, adsense.com, Proxy
+host-suffix, adsensecustomsearchads.com, Proxy
+host-suffix, adsenseformobileapps.com, Proxy
+host-suffix, advertisercommunity.com, Proxy
+host-suffix, advertiserscommunity.com, Proxy
+host-suffix, adwords-community.com, Proxy
+host-suffix, adwords.com, Proxy
