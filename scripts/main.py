@@ -242,42 +242,44 @@ def parse_source_config(base_name, policy):
 
 def fetch_and_merge_rules(base_name, policy):
     """
-    【精简骨架版：用于定位本地清洗去重 BUG】
-    仅保留核心干道：解析配置 -> 读取本地 -> 拉取远程 -> 内存合并 -> 返回
+    【骨架强制落地版】用来测试本地文件到底能不能被清洗
     """
-    # 1. 解析本地源配置（保持不变）
     source_enable, source_list = parse_source_config(base_name, policy)
     
-    # 2. 解析远程 URL 配置
-    urls_config = policy.get('url', [])
-    if not isinstance(urls_config, list):
-        urls_config = [urls_config] if urls_config else []
-        
-    all_remote_urls = []
-    for item in urls_config:
-        url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
-        if url_str:
-            all_remote_urls.append(url_str)
-
-    # 3. 统一拉取远程数据
-    remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
-    all_remote_raw = []
-    for url_str in all_remote_urls:
-        all_remote_raw.extend(remote_data_map.get(url_str, []))
-
-    # 4. 加载本地底稿数据
+    # 1. 严格恢复本地数据读取（打印行数确保读到了）
     all_local_raw = []
     if source_enable:
         for src_item in source_list:
             if not isinstance(src_item, str): continue
-            if not src_item.endswith('.txt'): src_item += '.txt'
-            src_path = os.path.join(SOURCE_DIR, src_item.lower())
-            all_local_raw.extend(load_local_raw_lines(src_path))
+            # 统一先转小写，再确保有 .txt 后缀，防止大小写路径错配
+            src_item_fixed = src_item.lower()
+            if not src_item_fixed.endswith('.txt'): 
+                src_item_fixed += '.txt'
+                
+            src_path = os.path.join(SOURCE_DIR, src_item_fixed)
+            
+            # 【调试日志】如果这里是 0，说明路径错了，根本没读到你编辑的那个文件！
+            lines = load_local_raw_lines(src_path)
+            print(f"--- [DEBUG] 读取本地文件 {src_path} , 行数 = {len(lines)} ---")
+            all_local_raw.extend(lines)
 
-    # 5. 终局：送入大管道清洗并返回
-    final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
+    # 2. 忽略网络流，只洗本地流
+    final_rules = rules_processor.execute_rules_pipeline(all_local_raw, [])
     rules_processor.optimize_domains(final_rules)
     
+    # 3. 【核心缺失】：重构前一定有这一步！必须把洗干净的数据写回本地文件！
+    if source_enable and source_list:
+        for src_item in source_list:
+            src_item_fixed = src_item.lower()
+            if not src_item_fixed.endswith('.txt'): 
+                src_item_fixed += '.txt'
+            src_path = os.path.join(SOURCE_DIR, src_item_fixed)
+            pure_name = os.path.splitext(src_item_fixed)[0]
+            
+            print(f"--- [DEBUG] 正在将清洗后的去重数据写回本地: {src_path} ---")
+            # 调用你原封未动的外部落盘函数
+            save_local_rules(src_path, pure_name, final_rules, rules_processor.source_keys, True)
+            
     return final_rules
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
