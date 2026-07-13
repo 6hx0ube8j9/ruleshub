@@ -1,5 +1,4 @@
-# === google_media.txt Combined & Cleaned Rules ===
-# === Total Rules: 884 ===
+# === google_media Test Combined Rules ===
 
 # --- TYPE: FULL ---
 full,voice.telephony.goog

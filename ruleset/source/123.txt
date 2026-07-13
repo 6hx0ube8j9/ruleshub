@@ -1,5 +1,4 @@
-# === 123.txt Combined & Cleaned Rules ===
-# === Total Rules: 38 ===
+# === 123 Test Combined Rules ===
 
 # --- TYPE: FULL ---
 full,voice.telephony.goog

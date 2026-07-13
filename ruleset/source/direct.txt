@@ -1,3 +1,2 @@
-# === direct.txt Combined & Cleaned Rules ===
-# === Total Rules: 0 ===
+# === direct Test Combined Rules ===
 

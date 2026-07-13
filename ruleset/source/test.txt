@@ -1,5 +1,4 @@
-# === test.txt Combined & Cleaned Rules ===
-# === Total Rules: 18 ===
+# === test Test Combined Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,apple.com
