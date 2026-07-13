@@ -81,9 +81,8 @@ except json.JSONDecodeError as e:
 # ==========================================
 def normalize_policy_card(policy, base_name):
     """
-    【架构修复一：精细化防腐层】
-    只对逻辑控制符 (true/false/"") 归一化。
-    原样保留用户手写的自定义别名大小写（如 Quantumult X 的 "Apple", "Proxy"）。
+    【适配升级：精细化防腐层】
+    保持原逻辑不变，但要在首层安全绕过已经升级为字典的 'url' 字段，防止引发类型遍历崩溃。
     """
     target_fields = ['source']
     for cfg in GLOBAL_PLATFORM_MATRIX.values():
@@ -91,7 +90,6 @@ def normalize_policy_card(policy, base_name):
     for cfg in MIHOMO_MRS_TUNNEL_MATRIX.values():
         if 'field' in cfg: target_fields.append(cfg['field'])
 
-    # 强制将基础名称设为小写，确保物理路径调用的绝对安全
     base_name_lower = base_name.lower()
 
     for field in target_fields:
@@ -106,7 +104,6 @@ def normalize_policy_card(policy, base_name):
                 cleaned = []
                 for x in val:
                     x_str = str(x).strip()
-                    # 仅改写控制符，绝对禁止对普通字符串 lower()
                     if x_str.lower() == 'true' or x_str == '':
                         cleaned.append(base_name_lower)
                     else:
@@ -120,7 +117,6 @@ def normalize_policy_card(policy, base_name):
             elif val_str.lower() == 'true' or val_str == '':
                 policy[field] = base_name_lower
             else:
-                # 原样保留手写别名大小写
                 policy[field] = val_str
 
 def evaluate_routing_decision(policy, config, base_name):
@@ -242,120 +238,118 @@ def parse_source_config(base_name, policy):
 	
 def _extract_and_normalize_routes(base_name, urls_config):
     """
-    纯粹做配置清洗，把各种异常字符串、布尔值统一转化为规范的路由池。
+    【重构：网络矩阵解析官】
+    适配新版扁平化单大括号字典模型。
+    1. 100% 提取所有 URL 键名，建立无门控全量通航的物理基础。
+    2. 精准提炼 "sync:" 动作，构建纯净的物理落盘映射表。
     """
     all_remote_urls = []
-    seen_urls = set() 
-    sync_routes = {}   
-    trunk_urls = set() 
+    sync_map = {}
     
-    for item in urls_config:
-        url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
+    if not isinstance(urls_config, dict):
+        return all_remote_urls, sync_map
+
+    for url_str, action in urls_config.items():
         url_str = url_str.strip()
         if not url_str: 
             continue
 
-        if url_str not in seen_urls:
+        # 1. 无门控全量收集所有远程 URL（只要存在，就必须参与并发下载）
+        if url_str not in all_remote_urls:
             all_remote_urls.append(url_str)
-            seen_urls.add(url_str)
         
-        is_trunk = True
-        if isinstance(item, dict) and 'sync_source' in item:
-            sync_target = item['sync_source']
-            target_str = str(sync_target).strip().lower()
-            
-            if sync_target is False or target_str == 'false':
-                pass
-            elif sync_target is True or target_str == 'true' or sync_target == "":
-                sync_routes[url_str] = f"{base_name.lower()}.txt"
-                is_trunk = False
-            elif isinstance(sync_target, str) and sync_target.strip():
-                sf_name = sync_target.strip().lower()
-                if not sf_name.endswith('.txt'): 
-                    sf_name += '.txt'
-                sync_routes[url_str] = sf_name
-                is_trunk = False
+        # 2. 解析落盘意图：仅拦截以 "sync:" 开头的合法动作值
+        if isinstance(action, str) and action.strip().lower().startswith('sync:'):
+            target_name = action.strip()[5:].strip().lower()  # 剥离 "sync:" 前缀
+            if target_name:
+                if not target_name.endswith('.txt'): 
+                    target_name += '.txt'
+                sync_map[url_str] = target_name
                 
-        if is_trunk:
-            trunk_urls.add(url_str)
+    return all_remote_urls, sync_map
+
+
+def _process_local_storage_and_sync(source_enable, source_list, sync_map, remote_data_map):
+    """
+    【重构：物理存储安全调度中心】
+    彻底解耦读写。改为“先安全落盘更新，后单向读取底稿”的线性流水线。
+    """
+    # --- 第一步：旁路热更新落盘 (纯 Write 动作) ---
+    if sync_map:
+        for url_str, filename in sync_map.items():
+            remote_lines = remote_data_map.get(url_str, [])
             
-    return all_remote_urls, sync_routes, trunk_urls
-	
-	
-def _process_local_storage_and_sync(source_enable, source_list, sync_routes, remote_data_map):
-    """
-    【终极解体组件 2：统一任务池调度】
-    将主干清洗与旁路同步合并为“单文件单次处理”模型，彻底消除脏读与重复 I/O。
-    完全尊重用户的 sync_source 命名，不强制添加后缀。
-    """
+            # 【🔥 GitHub Actions 核心防空保命机制】
+            # 如果因网络抽风、超时导致拉取到的数据为空，绝对不覆写本地！保护 Git 历史底稿不被洗白。
+            if not remote_lines:
+                print(f"⚠️ [防空保护] URL 下载失败或规则为空，已跳过覆写本地物理文件: {filename}")
+                continue
+                
+            file_path = os.path.join(SOURCE_DIR, filename)
+            pure_name = os.path.splitext(filename)[0]
+            
+            # 加载已有的本地底稿，与最新的网络流进行增量管道清洗合并
+            local_raw = load_local_raw_lines(file_path)
+            cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, remote_lines)
+            
+            # 覆盖写入磁盘
+            save_local_rules(file_path, pure_name, cleaned_rules, rules_processor.source_keys, True)
+            print(f"💾 [热更新落盘成功] 规则已安全同步至本地: {filename}")
+
+    # --- 第二步：纯粹的本地底稿加载 (纯 Read 动作) ---
     all_local_raw = []
-    
-    # 核心：构建以文件名为 Key 的任务调度池
-    # 结构: { "google.txt": {"in_source": True, "remote_lines": [...]} }
-    tasks = {}
-
-    # 1. 注册主干本地文件任务 (即使不参与网络同步，也需要自清洗)
-    if source_enable:
+    if source_enable and source_list:
         for src_item in source_list:
-            if not isinstance(src_item, str): continue
+            if not isinstance(src_item, str): 
+                continue
             filename = src_item.strip().lower()
-            if not filename.endswith('.txt'): filename += '.txt'
-            tasks[filename] = {"in_source": True, "remote_lines": []}
-
-    # 2. 注册网络旁路同步任务 (完美解耦：无论 source 是否开启，旁路任务照常挂载)
-    if sync_routes:
-        for url_str, sf_name in sync_routes.items():
-            # sf_name 是用户严格定义的 (例如 google.txt 或 google.sync.txt)
-            if sf_name not in tasks:
-                tasks[sf_name] = {"in_source": False, "remote_lines": []}
-            # 将该 URL 拉取的数据注入对应的文件任务中
-            tasks[sf_name]["remote_lines"].extend(remote_data_map.get(url_str, []))
-
-    # 3. 统一执行：每个文件只读一次、洗一次、写一次！
-    for filename, task_info in tasks.items():
-        file_path = os.path.join(SOURCE_DIR, filename)
-        pure_name = os.path.splitext(filename)[0]
-        local_raw = load_local_raw_lines(file_path)
-        cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, task_info["remote_lines"])
-        save_local_rules(file_path, pure_name, cleaned_rules, rules_processor.source_keys, True)
-
-        # 提取：如果该文件是主干声明的 source 源，则将清洗后的最新数据推入内存，参与最终的全局大融合
-        if task_info["in_source"]:
-            # 从磁盘读取刚洗好的干净字符串 (利用 OS 缓存，耗时极低且保证格式绝对正确)
-            all_local_raw.extend(load_local_raw_lines(file_path))
-
+            if not filename.endswith('.txt'): 
+                filename += '.txt'
+                
+            file_path = os.path.join(SOURCE_DIR, filename)
+            if os.path.exists(file_path):
+                all_local_raw.extend(load_local_raw_lines(file_path))
+            else:
+                print(f"⚠️ [提示] 声明的本地底稿文件不存在，已跳过读取: {filename}")
+                
     return all_local_raw
+
 
 def fetch_and_merge_rules(base_name, policy):
     """
-    【核心大脑：纯粹的业务流编排官】
-    代码完全无搬砖逻辑，只负责三大组件的宏观调度。
+    【重构：核心大脑编排官】
+    全面贯彻“数据无门控全量通航”理念。
+    网络数据流直接在内存中汇合，彻底根除“因设置落盘导致不参与全局合并”的底层 Bug。
     """
-    # 1. 外部原生配置导入
+    # 1. 导入并解析本地底稿配置
     source_enable, source_list = parse_source_config(base_name, policy)
-    urls_config = policy.get('url', [])
-    if not isinstance(urls_config, list):
-        urls_config = [urls_config] if urls_config else []
+    
+    # 2. 规整新版 URL 字典矩阵配置
+    urls_config = policy.get('url', {})
+    if not isinstance(urls_config, dict):
+        urls_config = {}
         
-    # 2. 调度【组件 1】— 纯净清洗配置并提取路由意图
-    all_remote_urls, sync_routes, trunk_urls = _extract_and_normalize_routes(base_name, urls_config)
+    # 3. 清洗并提取路由意图（全量 URL 列表 与 精准落盘映射）
+    all_remote_urls, sync_map = _extract_and_normalize_routes(base_name, urls_config)
 
-    # 3. 统一并发拉取远程资源
+    # 4. 统一发起无门控高并发网络拉取
     remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
 
-    # 4. 调度【组件 2】— 隔离处理所有磁盘操作（本地清洗、旁路同步），并要回洗干净的本地底稿
-    all_local_raw = _process_local_storage_and_sync(source_enable, source_list, sync_routes, remote_data_map)
+    # 5. 执行解耦调度：旁路安全更新落盘，并要回最新、最干净的本地底稿流
+    all_local_raw = _process_local_storage_and_sync(source_enable, source_list, sync_map, remote_data_map)
 
-    # 5. 主干网络流收集 (原 Phase B)
+    # 6. 【核心巨变：无门控通航机制】
+    # 直接将 remote_data_map 中下载到的所有网络规则（不论值写的是 sync、"" 还是 false）100% 灌入内存主干流
     all_remote_raw = []
-    for url_str in trunk_urls:
-        all_remote_raw.extend(remote_data_map.get(url_str, []))
+    for url_str, lines in remote_data_map.items():
+        if lines:
+            all_remote_raw.extend(lines)
 
-    # 6. 终局内存大融合，直接纯内存返回，底稿只读保护
+    # 7. 终局纯内存大融合（最新的本地物理底稿 + 100%全量网络流）
     final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
     rules_processor.optimize_domains(final_rules)
     
-    return final_rules	
+    return final_rules
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
     if not source_enable or not any(len(rules[k]) > 0 for k in rule_keys):
