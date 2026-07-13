@@ -1,12 +1,14 @@
 [
   {
     "name": "proxy",
-    "source": ["ture", "youtube"],
-
+    "source": [
+      "proxy",
+      "youtube"
+    ],
     "url": {
       "https://.../proxy_google.txt": "sync:google",
       "https://.../proxy_youtube.txt": "sync:youtube",
-      "https://.../proxy_custom_ips.txt": "",
+      "https://.../proxy_custom_ips.txt": false,
       "https://.../proxy_only_merge.txt": false
     }
   }
