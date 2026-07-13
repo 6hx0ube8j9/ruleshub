@@ -240,50 +240,131 @@ def parse_source_config(base_name, policy):
         
     return True, []
 
-def fetch_and_merge_rules(base_name, policy):
-    """【极简无干扰测试版】剔除所有外部决策过滤，纯粹测试管道衔接"""
-    source_file_name = base_name.lower()
-    source_path = os.path.join(SOURCE_DIR, f"{source_file_name}.txt")
-    
-    # 1. 纯物理读取原材料（不带任何过滤逻辑）
-    local_raw = load_local_raw_lines(source_path)
-    remote_raw = load_remote_raw_lines_mapped(policy.get('url', []))
-    
-    # 🎯 节点日志一：检查物理 IO 是否真的读到了你的手动修改
-    print(f"\n🔍 [测试断点 1 - 物理读取] 卡片: {base_name}")
-    print(f"   ↳ 📂 尝试读取路径: {source_path}")
-    print(f"   ↳ 📝 本地 .txt 原始文本行数: {len(local_raw)}")
-    print(f"   ↳ 🌐 网络流下载原始文本行数: {len(remote_raw)}")
-    
-    # 2. 衔接大管道（把原材料喂给 rules_processor）
-    # 注意：确保你的 rules_processor 内部有全局定义的 source_keys 变量
-    final_rules = rules_processor.execute_rules_pipeline(local_raw, remote_raw)
-    
-    # 🎯 节点日志二：检查大管道吐出来的数据结构和长度
-    print(f"🔍 [测试断点 2 - 管道输出] 经过 execute_rules_pipeline 后:")
-    if isinstance(final_rules, dict):
-        for k, v in final_rules.items():
-            print(f"   ↳ 🔑 Key: [{k}] 里面包含 {len(v)} 条规则 (数据类型: {type(v)})")
-    else:
-        print(f"   ❌ 警告: 大管道返回的竟然不是字典(dict)类型，而是: {type(final_rules)}")
 
-    # 3. 强制敛并优化
+def fetch_and_merge_rules(base_name, policy):
+    """
+    【融合增强测试版】
+    架构：先全量汇流清洗去重 -> 产出绝对干净数据 -> 最终安全分发落盘
+    """
+    print(f"\n================ 🚀 开始处理卡片: {base_name} ================")
+    
+    # ==========================================
+    # 1. 解析基础配置 (兼容各种异常类型)
+    # ==========================================
+    source_enable, source_list = parse_source_config(base_name, policy)
+    urls_config = policy.get('url', [])
+    if not isinstance(urls_config, list):
+        urls_config = [urls_config] if urls_config else []
+
+    # ==========================================
+    # 2. 收集【全量】本地原材料 (Phase C 增强)
+    # ==========================================
+    all_local_raw = []
+    loaded_files = []
+    
+    if source_enable and source_list:
+        for src_item in source_list:
+            if not isinstance(src_item, str): continue
+            if not src_item.endswith('.txt'): src_item += '.txt'
+            src_path = os.path.join(SOURCE_DIR, src_item.lower())
+            all_local_raw.extend(load_local_raw_lines(src_path))
+            loaded_files.append(src_item.lower())
+    else:
+        # 兜底：若未配置 source_list，读取默认的同名文件
+        default_file = f"{base_name.lower()}.txt"
+        src_path = os.path.join(SOURCE_DIR, default_file)
+        all_local_raw = load_local_raw_lines(src_path)
+        loaded_files.append(default_file)
+
+    # ==========================================
+    # 3. 收集【全量】网络原材料 (彻底解决分流导致的无法去重问题)
+    # ==========================================
+    all_remote_urls = []
+    sync_targets = set() # 记录哪些文件需要参与旁路同步
+    
+    for item in urls_config:
+        url_str = item.get('url', '') if isinstance(item, dict) else (item if isinstance(item, str) else '')
+        if not url_str: 
+            continue
+        all_remote_urls.append(url_str)
+        
+        # 顺便解析是否有同步落盘的需求 (增强健壮性)
+        if isinstance(item, dict) and 'sync_source' in item:
+            sync_target = item['sync_source']
+            if sync_target is False or str(sync_target).strip().lower() == 'false':
+                continue
+            if sync_target is True or str(sync_target).strip().lower() in ['true', '']:
+                sync_targets.add(f"{base_name.lower()}.txt")
+            elif isinstance(sync_target, str):
+                sf_name = sync_target.strip().lower()
+                if not sf_name.endswith('.txt'): sf_name += '.txt'
+                sync_targets.add(sf_name)
+
+    # 统一并发拉取所有远程资源
+    remote_data_map = load_remote_raw_lines_mapped(all_remote_urls)
+    all_remote_raw = []
+    for url_str, lines in remote_data_map.items():
+        all_remote_raw.extend(lines)
+
+    # 🎯 统计功能 1：打印清洗前的原始物理总数
+    raw_total_count = len(all_local_raw) + len(all_remote_raw)
+    print(f"🔍 [测试断点 1 - 物理输入汇总]")
+    print(f"   ↳ 📂 已读取本地文件: {loaded_files} (共 {len(all_local_raw)} 行)")
+    print(f"   ↳ 🌐 已下载网络链接: {len(all_remote_urls)} 个 (共 {len(all_remote_raw)} 行)")
+    print(f"   ↳ 📊 管道前原始数据总行数 (未去重): {raw_total_count}")
+
+    # ==========================================
+    # 4. 交付大管道合流：核心清洗与去重
+    # ==========================================
+    # 本地全量 + 网络全量 拧成一股绳喂进去，确保 100% 能够全局去重
+    final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
     rules_processor.optimize_domains(final_rules)
     
-    # 4. 强制物理落盘（不经过任何 save_local_rules 的 if 判定拦截）
-    print(f"🔍 [测试断点 3 - 强行落盘] 正在无条件重写: {source_path}")
-    with open(source_path, 'w', encoding='utf-8') as f_source:
-        f_source.write(f"# === {source_file_name} Test Combined Rules ===\n\n")
-        # 探测当前可以用来落盘的 keys
-        keys_to_write = getattr(rules_processor, 'source_keys', ['suffix', 'full', 'ip', 'ip6', 'keyword'])
-        for r_type in keys_to_write:
-            current_data = final_rules.get(r_type, []) if isinstance(final_rules, dict) else []
-            if current_data:
-                f_source.write(f"# --- TYPE: {r_type.upper()} ---\n")
-                for val in sorted(list(current_data)):
-                    f_source.write(f"{r_type},{val}\n")
-                f_source.write("\n")
+    # 🎯 统计功能 2：直观展示大管道去重后的清洗成果
+    clean_total_count = 0
+    if isinstance(final_rules, dict):
+        print(f"🔍 [测试断点 2 - 管道去重输出]")
+        for k, v in final_rules.items():
+            clean_total_count += len(v)
+            print(f"   ↳ 🔑 分类 [{k.upper()}]: {len(v)} 条")
+        
+        # 计算清洗率
+        dup_count = raw_total_count - clean_total_count
+        dup_rate = (dup_count / raw_total_count * 100) if raw_total_count > 0 else 0
+        print(f"   ⚖️  统计: 成功过滤掉重复/垃圾规则 {dup_count} 条 (脱水率: {dup_rate:.2f}%)")
+    else:
+        print(f"   ❌ 警告: 管道返回异常类型: {type(final_rules)}")
+
+    # ==========================================
+    # 5. 安全落盘分发 (不污染其他未授权文件)
+    # ==========================================
+    keys_to_write = getattr(rules_processor, 'source_keys', ['suffix', 'full', 'ip', 'ip6', 'keyword'])
+    
+    # 确定需要写入的本地文件队列（主文件 + 旁路同步文件）
+    main_file = f"{base_name.lower()}.txt"
+    files_to_write = {main_file} | sync_targets  # 取并集
+    
+    print(f"🔍 [测试断点 3 - 安全落盘分发]")
+    for target_file in files_to_write:
+        target_path = os.path.join(SOURCE_DIR, target_file)
+        print(f"   ↳ 💾 正在写入清洗后的最新数据 -> {target_path}")
+        
+        try:
+            with open(target_path, 'w', encoding='utf-8') as f_out:
+                f_out.write(f"# === {target_file} Combined & Cleaned Rules ===\n")
+                f_out.write(f"# === Total Rules: {clean_total_count} ===\n\n")
                 
+                for r_type in keys_to_write:
+                    current_data = final_rules.get(r_type, []) if isinstance(final_rules, dict) else []
+                    if current_data:
+                        f_out.write(f"# --- TYPE: {r_type.upper()} ---\n")
+                        for val in sorted(list(current_data)):
+                            f_out.write(f"{r_type},{val}\n")
+                        f_out.write("\n")
+        except Exception as e:
+            print(f"   ❌ 写入文件 {target_file} 失败: {str(e)}")
+
+    print(f"================ ✨ 卡片 {base_name} 处理完毕 ================\n")
     return final_rules
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys, source_enable):
