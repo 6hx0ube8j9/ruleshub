@@ -480,8 +480,6 @@ def main():
         
     # 4.3. 编译 Sing-box SRS 格式二进制文件
     compile_singbox_srs(global_matrix, output_directories['singbox'])
-    
-    print("\n🌟 [重构成功] 规则同步分发编译系统运行完毕！全平台数据流处理圆满结束。")
 
 if __name__ == '__main__':
     main()
