@@ -10,6 +10,7 @@
       "name": "all_proxy",
       "inputs": [
         "proxy",
+        "ture",        
         "youtube"
       ]
     },
