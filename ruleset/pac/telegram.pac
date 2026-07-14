@@ -2,10 +2,13 @@ var IP_ADDRESS = '127.0.0.1:7891';
 var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; SOCKS ' + IP_ADDRESS + '; DIRECT';
 
 var DIRECT_DOMAINS = {
+    "api.imem.app": 1,
+    "api.swiftgram.app": 1,
     "cdn-telegram.org": 1,
     "comments.app": 1,
     "contest.com": 1,
     "graph.org": 1,
+    "ip-asn": 1,
     "legra.ph": 1,
     "mbrx.app": 1,
     "quiz.directory": 1,
