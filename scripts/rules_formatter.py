@@ -225,14 +225,9 @@ def generate_singbox(matrix_data, output_dir):
 
 def generate_pac(matrix_data, output_dir):
     """生成标准 Proxy Auto-Config (PAC) 脚本文件 (.pac)"""
-    for g_name, raw_domains in matrix_data.items():
+    for g_name, g_rules in matrix_data.items():
         pac_path = os.path.join(output_dir, f"{g_name}.pac")
-        
-        if isinstance(raw_domains, dict):
-            combined_domains = set(raw_domains.get('suffix', []))
-        else:
-            combined_domains = set(raw_domains) if raw_domains else set()
-            
+        combined_domains = set(g_rules.get('suffix', [])) | set(g_rules.get('full', []))
         direct_domains = sorted(combined_domains)
         
         lines = []
