@@ -181,6 +181,12 @@ def sync_to_disk(sync_config, fetched_data):
     """
     第二步：本地串行合并并落盘。
     """
+    if not sync_config:
+        return
+
+    # 🎯 直接在这里获取单一真理源，避免在双重内层循环中重复读取或硬编码
+    source_keys = rules_processor.source_keys
+
     for url, targets in sync_config.items():
         if isinstance(targets, str):
             target_list = [targets]
@@ -205,11 +211,10 @@ def sync_to_disk(sync_config, fetched_data):
             # 读取本地源文件
             local_raw = load_local_raw_lines(file_path)
             
-            # 规则合并清洗
+            # 规则合并清洗（内部已自带域名敛并优化）
             cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, remote_lines)
             
-            # 覆写至磁盘
-            source_keys = getattr(rules_processor, 'source_keys', ['suffix', 'full', 'keyword', 'regex', 'ipcidr', 'ipcidr6'])
+            # 🎯 覆写至磁盘：直接使用上方提取的 source_keys
             save_local_rules(file_path, pure_name, cleaned_rules, source_keys)
             print(f"💾 [合并写入] 网络源 {url} 已合并写入本地: {filename}")
 
@@ -245,7 +250,7 @@ def format_local_sources():
         return
 
     print("🧹 [格式化] 正在整理本地 source/ 目录下的规则源文件...")
-    source_keys = getattr(rules_processor, 'source_keys', ['suffix', 'full', 'keyword', 'regex', 'ipcidr', 'ipcidr6'])
+    source_keys = rules_processor.source_keys
     formatted_count = 0
 
     for filename in os.listdir(SOURCE_DIR):
@@ -328,7 +333,6 @@ def build_group_rules(group_config):
                     
     # 调用 rules_processor 执行去重与优化合并
     final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
-    rules_processor.optimize_domains(final_rules)
     return final_rules
 
 def dispatch_to_matrix(group_name, group_config, rules, global_matrix):
