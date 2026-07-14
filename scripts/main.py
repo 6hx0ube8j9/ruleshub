@@ -13,7 +13,7 @@ import rules_processor
 import rules_formatter
 
 # =========================================================================
-# 1. 基础物理路径与工具链定义
+# 1. 基础路径与工具链定义
 # =========================================================================
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__)) 
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)                  
@@ -51,7 +51,7 @@ MIHOMO_MRS_TUNNEL_MATRIX = {
     }
 }
 
-# 确保所有基础依赖和输出目录自动补全
+# 自动补全所需的输出目录
 REQUIRED_DIRS = {
     RULESET_BASE_DIR, 
     SOURCE_DIR, 
@@ -65,12 +65,11 @@ for d in sorted(REQUIRED_DIRS):
     os.makedirs(d, exist_ok=True)
 
 # =========================================================================
-# 3. 🟩 绝对保留并继承的资产 (Core Asset Functions)
+# 3. 核心路由与配置判定逻辑
 # =========================================================================
 def normalize_policy_card(group_config):
     """
-    配置防腐层。
-    清洗并规范化不规范的平台及开关配置（如将拼错的 `ture` 纠正为 `true`）。
+    配置预处理：清洗并规范化平台开关配置，纠正拼写。
     """
     outputs = group_config.get('outputs')
     if outputs is None:
@@ -90,8 +89,7 @@ def normalize_policy_card(group_config):
 
 def evaluate_routing_decision(policy, config, base_name):
     """
-    决策真相源。
-    负责处理 MRS 正则保底、PAC 白名单分流、黑名单拦截等核心判定逻辑。
+    路由决策判定：负责处理 MRS 正则、PAC 白名单及黑名单拦截等判定逻辑。
     """
     field_name = config.get('field')
     val = policy.get(field_name)
@@ -121,7 +119,7 @@ def evaluate_routing_decision(policy, config, base_name):
 
 def build_virtual_policy(group_config):
     """
-    无缝桥接函数。维持纯净布尔矩阵，专门服务 evaluate_routing_decision 开关判定。
+    桥接函数：生成平台启用状态字典，供路由开关判定。
     """
     outputs = group_config.get('outputs')
     policy = {}
@@ -149,12 +147,11 @@ def build_virtual_policy(group_config):
     return policy
 
 # =========================================================================
-# 4. 📂 阶段 2：网络同步总线 (sync_source)
+# 4. 📂 阶段 2：数据源同步 (sync_source)
 # =========================================================================
 async def fetch_single_url_async(session, url):
     """
-    网络总线异步拉取任务，支持 15 秒超时保护。
-    网络数据使用 splitlines()，不含尾部换行符。
+    网络异步拉取任务，支持 15 秒超时保护。
     """
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
@@ -171,7 +168,7 @@ async def fetch_single_url_async(session, url):
 
 async def async_fetch_all(urls_list):
     """
-    第一步：网络并发拉取至内存，严禁在此过程中向磁盘执行物理写入
+    第一步：并发拉取至内存，不在本阶段写入磁盘。
     """
     if not urls_list:
         return {}
@@ -182,7 +179,7 @@ async def async_fetch_all(urls_list):
 
 def sync_to_disk(sync_config, fetched_data):
     """
-    第二步：单线程串行循环落盘。自上而下合并。
+    第二步：本地串行合并并落盘。
     """
     for url, targets in sync_config.items():
         if isinstance(targets, str):
@@ -194,7 +191,7 @@ def sync_to_disk(sync_config, fetched_data):
         
         remote_lines = fetched_data.get(url, [])
         if not remote_lines:
-            print(f"⚠️ [防空保护] URL 下载失败，已跳过网络覆盖更新: {url}")
+            print(f"⚠️ [下载失败] 网络同步源下载失败，跳过本次覆盖更新: {url}")
             continue
             
         for target in target_list:
@@ -205,22 +202,20 @@ def sync_to_disk(sync_config, fetched_data):
             file_path = os.path.join(SOURCE_DIR, filename)
             pure_name = os.path.splitext(filename)[0]
             
-            # 2.1 读取当前最新的本地底稿文件 (时序继承，已整合 splitlines() 消除换行符隐患)
+            # 读取本地源文件
             local_raw = load_local_raw_lines(file_path)
             
-            # 2.2 融汇重组，执行合并清洗流
+            # 规则合并清洗
             cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, remote_lines)
             
-            # 2.3 物理覆盖写入磁盘 (已移除冗余的 source_enable 参数)
+            # 覆写至磁盘
             source_keys = getattr(rules_processor, 'source_keys', ['suffix', 'full', 'keyword', 'regex', 'ipcidr', 'ipcidr6'])
             save_local_rules(file_path, pure_name, cleaned_rules, source_keys)
-            print(f"💾 [时序合并落盘] URL: {url} -> {filename}")
+            print(f"💾 [合并写入] 网络源 {url} 已合并写入本地: {filename}")
 
 def load_local_raw_lines(source_path):
     """
-    【🎯 换行符归一化重构】
-    放弃 readlines()，采用 read().splitlines()，
-    确保本地读取出来的数据与网络 fetch 返回的列表格式完美对齐，没有多余的 '\\n' 或 '\\r\\n'。
+    安全读取本地规则，进行换行符归一化重构。
     """
     if not os.path.exists(source_path):
         return []
@@ -229,9 +224,7 @@ def load_local_raw_lines(source_path):
 
 def save_local_rules(source_path, source_file_name, rules, rule_keys):
     """
-    【🧹 参数冗余优化】
-    移除了此前恒定为 True 的 `source_enable` 形参。
-    如果没有任何有效规则，静默返回防止空文件被误重写。
+    保存清洗后的本地源规则。
     """
     if not any(len(rules.get(k, [])) > 0 for k in rule_keys if k in rules):
         return
@@ -245,11 +238,11 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys):
                 f_source.write("\n")
 
 # =========================================================================
-# 5. 🕋 阶段 3：舱室熔炼分发 (groups)
+# 5. 📦 阶段 3：策略组规则构建与分发 (groups)
 # =========================================================================
 def build_group_rules(group_config):
     """
-    熔炼纯净内存规则集。此函数对物理 source/ 仅有只读权。
+    构建策略组的内存规则集。仅对本地物理 source 目录进行只读访问。
     """
     group_name = group_config['name']
     inputs = group_config.get('inputs')
@@ -257,16 +250,16 @@ def build_group_rules(group_config):
     all_local_raw = []
     all_remote_raw = []
     
-    # 5.1 inputs 缺省：静默读取本地对应 group_name.txt
+    # 5.1 inputs 缺省：默认读取本地同名规则文件
     if inputs is None:
         filename = f"{group_name.lower()}.txt"
         file_path = os.path.join(SOURCE_DIR, filename)
         if not os.path.exists(file_path):
-            print(f"⚠️ [WARN] 舱室 '{group_name}' 缺省 inputs，且本地物理底稿 '{filename}' 不存在！跳过此舱室转换。")
+            print(f"⚠️ [WARN] 策略组 '{group_name}' 未指定 inputs 且本地文件 '{filename}' 不存在，跳过该组。")
             return None
         all_local_raw.extend(load_local_raw_lines(file_path))
     
-    # 5.2 inputs 显式定义：加载全部输入数据源
+    # 5.2 inputs 显式定义：加载全部输入规则源
     else:
         if not isinstance(inputs, list):
             inputs = [inputs]
@@ -276,22 +269,22 @@ def build_group_rules(group_config):
             if not inp_str:
                 continue
             
-            # 5.2a 阅后即焚：即时拉取网络源，仅作内存消费，绝不写入物理磁盘
+            # 5.2a 内存网络源：即时拉取网络规则，仅在内存中处理，不写入磁盘
             if inp_str.startswith('http://') or inp_str.startswith('https://'):
-                print(f"🌐 [阅后即焚] 正在内存中载入网络规则: {inp_str}")
+                print(f"🌐 [网络载入] 正在获取网络规则 (内存暂存): {inp_str}")
                 try:
                     req = urllib.request.Request(inp_str, headers={'User-Agent': 'Mozilla/5.0'})
                     with urllib.request.urlopen(req, timeout=15) as response:
                         lines = response.read().decode('utf-8', errors='ignore').splitlines()
                         all_remote_raw.extend(lines)
                 except urllib.error.HTTPError as e:
-                    print(f"⚠️ [WARN] 阅后即焚拉取失败，HTTP状态码: {e.code} ({inp_str})")
+                    print(f"⚠️ [WARN] 网络源拉取失败，HTTP状态码: {e.code} ({inp_str})")
                 except urllib.error.URLError as e:
-                    print(f"⚠️ [WARN] 阅后即焚连接失败，原因: {e.reason} ({inp_str})")
+                    print(f"⚠️ [WARN] 网络连接失败，原因: {e.reason} ({inp_str})")
                 except Exception as e:
-                    print(f"⚠️ [WARN] 阅后即焚拉取异常: {e} ({inp_str})")
+                    print(f"⚠️ [WARN] 网络拉取异常: {e} ({inp_str})")
             
-            # 5.2b 本地引用：精准定位 source 目录下的声明底稿
+            # 5.2b 本地规则源：读取 source 目录下的本地规则文件
             else:
                 clean_name = inp_str.lower()
                 filename = clean_name if clean_name.endswith('.txt') else f"{clean_name}.txt"
@@ -299,16 +292,16 @@ def build_group_rules(group_config):
                 if os.path.exists(file_path):
                     all_local_raw.extend(load_local_raw_lines(file_path))
                 else:
-                    print(f"⚠️ [WARN] 引用的本地底稿 '{filename}' 不存在，跳过此源。")
+                    print(f"⚠️ [WARN] 引用的本地源文件 '{filename}' 不存在，跳过此源。")
                     
-    # 全权交付外部 rules_processor 进行高能熔炼优化
+    # 调用 rules_processor 执行去重与优化合并
     final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
     rules_processor.optimize_domains(final_rules)
     return final_rules
 
 def dispatch_to_matrix(group_name, group_config, rules, global_matrix):
     """
-    读取 outputs 决策，将熔炼完成的内存规则安全注入全局分发矩阵
+    根据配置的路由决策，将已合并的策略组规则分发注入到全局矩阵中。
     """
     policy = build_virtual_policy(group_config)
     outputs = group_config.get('outputs', {})
@@ -367,7 +360,6 @@ def compile_mihomo_mrs(base_name, group_config, rules):
         if not enabled: 
             continue
 
-        # 同样对 MRS 编译文件名引入极简降级补全机制
         if isinstance(outputs, dict) and tunnel_type in outputs:
             plat_val = outputs[tunnel_type]
             if plat_val is True or str(plat_val).strip().lower() in ['true', '']:
@@ -416,53 +408,53 @@ def compile_singbox_srs(global_matrix, singbox_dir):
 # =========================================================================
 def main():
     # ---------------------------------------------------------------------
-    # 【 阶段 1：载入与规范化 】
+    # 【 阶段 1：载入与配置文件预清洗 】
     # ---------------------------------------------------------------------
-    print("【 阶段 1：载入与规范化 】启动中...")
+    print("【 阶段 1：载入规则配置 】运行中...")
     if not os.path.exists(RULESET_JSON_PATH):
-        print(f"❌ 找不到规则配置文件 ruleset.json: {RULESET_JSON_PATH}")
+        print(f"❌ 找不到配置文件 ruleset.json: {RULESET_JSON_PATH}")
         sys.exit(1)
         
     try:
         with open(RULESET_JSON_PATH, 'r', encoding='utf-8') as f:
             config_data = json.load(f)
     except json.JSONDecodeError as e:
-        print(f"❌ ruleset.json 解析语法错误 [{e.lineno}:{e.colno}] -> {e.msg}")
+        print(f"❌ ruleset.json 解析发生语法错误 [{e.lineno}:{e.colno}] -> {e.msg}")
         sys.exit(1)
 
     sync_source = config_data.get('sync_source', {})
     groups = config_data.get('groups', [])
     
-    # 纯内存配置清洗防腐，不回写磁盘以完整保留原生带排版注释的 json 物理图纸
+    # 纯内存配置清洗（防止回写磁盘，保持配置文件原生态排版）
     for group in groups:
         normalize_policy_card(group)
 
     # ---------------------------------------------------------------------
-    # 【 阶段 2：网络同步总线 】
+    # 【 阶段 2：数据源同步 】
     # ---------------------------------------------------------------------
-    print("\n【 阶段 2：网络同步总线 】启动中...")
+    print("\n【 阶段 2：同步本地规则库 】运行中...")
     urls_to_fetch = list(sync_source.keys())
     if urls_to_fetch:
-        print(f"🌐 正在执行异步高并发拉取（共 {len(urls_to_fetch)} 个网络源）...")
+        print(f"🌐 正在启动异步并发请求（总计 {len(urls_to_fetch)} 个网络规则源）...")
         fetched_data = asyncio.run(async_fetch_all(urls_to_fetch))
-        print("💾 正在执行时序串行合并落盘...")
+        print("💾 正在将同步的数据合并写入本地存储...")
         sync_to_disk(sync_source, fetched_data)
     else:
-        print("ℹ️ 未声明网络同步源，跳过同步总线。")
+        print("ℹ️ 无定义的网络同步源，跳过同步步骤。")
 
     # ---------------------------------------------------------------------
-    # 【 阶段 3：舱室熔炼分发 】
+    # 【 阶段 3：策略组规则构建与分发 】
     # ---------------------------------------------------------------------
-    print("\n【 阶段 3：舱室熔炼分发 】启动中...")
+    print("\n【 阶段 3：策略组规则分发 】运行中...")
     global_matrix = {plat: {} for plat in GLOBAL_PLATFORM_MATRIX.keys()}
-    group_rules_cache = {}  # 缓存内存熔炼完毕的规则，无缝流转下一阶段
+    group_rules_cache = {}  # 缓存内存中合并完成的规则，避免后面重复读取 IO
     
     for group_config in groups:
         group_name = group_config.get('name')
         if not group_name:
             continue
             
-        print(f"🕋 正在熔炼分发舱室: {group_name}")
+        print(f"📦 正在构建与分发策略组规则: {group_name}")
         rules_in_memory = build_group_rules(group_config)
         if rules_in_memory is None:
             continue
@@ -471,25 +463,25 @@ def main():
         dispatch_to_matrix(group_name, group_config, rules_in_memory, global_matrix)
 
     # ---------------------------------------------------------------------
-    # 【 阶段 4：导出与编译 】
+    # 【 阶段 4：导出与二进制编译 】
     # ---------------------------------------------------------------------
-    print("\n【 阶段 4：导出与编译 】启动中...")
+    print("\n【 阶段 4：平台文件导出与编译 】运行中...")
     output_directories = {plat: cfg['dir'] for plat, cfg in GLOBAL_PLATFORM_MATRIX.items()}
     
-    # 4.1. 调用 rules_formatter 批量导出全平台传统文件
+    # 4.1. 调用 rules_formatter 导出文本文件
     rules_formatter.export_all(
         global_matrix = global_matrix,
         dir_map = output_directories
     )
     
-    # 4.2. 编译 Mihomo MRS
+    # 4.2. 编译 Mihomo MRS 格式二进制文件
     for group_name, (group_config, rules) in group_rules_cache.items():
         compile_mihomo_mrs(group_name, group_config, rules)
         
-    # 4.3. 编译 Sing-box SRS
+    # 4.3. 编译 Sing-box SRS 格式二进制文件
     compile_singbox_srs(global_matrix, output_directories['singbox'])
     
-    print("\n🌟 [重构成功] 规则分发编译系统终构蓝图圆满完成，生命周期完全隔离！")
+    print("\n🌟 [重构成功] 规则同步分发编译系统运行完毕！全平台数据流处理圆满结束。")
 
 if __name__ == '__main__':
     main()
