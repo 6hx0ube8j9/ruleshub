@@ -652,7 +652,6 @@ var DIRECT_DOMAINS = {
     "verilystudyhub.com": 1,
     "verilystudywatch.com": 1,
     "verilystudywatch.org": 1,
-    "voice.telephony.goog": 1,
     "wallet.com": 1,
     "waveprotocol.org": 1,
     "waymo.com": 1,
