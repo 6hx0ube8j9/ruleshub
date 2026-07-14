@@ -1,12 +1,16 @@
-  - DOMAIN-SUFFIX,china-railway.com.cn
-  - DOMAIN-SUFFIX,china-ric.com
-  - DOMAIN-SUFFIX,crct.com
-  - DOMAIN-SUFFIX,cre.cn
-  - DOMAIN-SUFFIX,crecc.com.cn
-  - DOMAIN-SUFFIX,creip.cn
-  - DOMAIN-SUFFIX,crscl.com.cn
-  - DOMAIN-SUFFIX,gzrailway.com.cn
-  - DOMAIN-SUFFIX,nntlj.com
-  - DOMAIN-SUFFIX,peoplerail.com
-  - DOMAIN-SUFFIX,rails.cn
-  - DOMAIN-SUFFIX,tdpress.com
+# === 234 Combined Base Rules ===
+
+# --- TYPE: SUFFIX ---
+suffix,china-railway.com.cn
+suffix,china-ric.com
+suffix,crct.com
+suffix,cre.cn
+suffix,crecc.com.cn
+suffix,creip.cn
+suffix,crscl.com.cn
+suffix,gzrailway.com.cn
+suffix,nntlj.com
+suffix,peoplerail.com
+suffix,rails.cn
+suffix,tdpress.com
+
