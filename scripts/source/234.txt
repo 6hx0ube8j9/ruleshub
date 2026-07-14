@@ -1,33 +1,34 @@
 # === 234 Combined Base Rules ===
-# Quantumult X Rule-Set: telegram
 
-host, api.imem.app, Telegram
-host, api.swiftgram.app, Telegram
-host, ip-asn, Telegram
-host-suffix, cdn-telegram.org, Telegram
-host-suffix, comments.app, Telegram
-host-suffix, contest.com, Telegram
-host-suffix, graph.org, Telegram
-host-suffix, legra.ph, Telegram
-host-suffix, mbrx.app, Telegram
-host-suffix, quiz.directory, Telegram
-host-suffix, stel.com, Telegram
-host-suffix, t.me, Telegram
-host-suffix, tdesktop.com, Telegram
-host-suffix, telega.one, Telegram
-host-suffix, telegra.ph, Telegram
-host-suffix, telegram-cdn.org, Telegram
+# --- TYPE: FULL ---
+full,api.imem.app
+full,api.swiftgram.app
+full,ip-asn
+
 # --- TYPE: SUFFIX ---
+suffix,cdn-telegram.org
 suffix,china-railway.com.cn
 suffix,china-ric.com
+suffix,comments.app
+suffix,contest.com
 suffix,crct.com
 suffix,cre.cn
 suffix,crecc.com.cn
 suffix,creip.cn
 suffix,crscl.com.cn
+suffix,graph.org
 suffix,gzrailway.com.cn
+suffix,legra.ph
+suffix,mbrx.app
 suffix,nntlj.com
 suffix,peoplerail.com
+suffix,quiz.directory
 suffix,rails.cn
+suffix,stel.com
+suffix,t.me
+suffix,tdesktop.com
 suffix,tdpress.com
+suffix,telega.one
+suffix,telegra.ph
+suffix,telegram-cdn.org
 
