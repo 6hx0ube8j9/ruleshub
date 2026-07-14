@@ -369,13 +369,7 @@ def dispatch_to_matrix(group_name, group_config, rules, global_matrix):
                 }
             for k in rules:
                 if k in global_matrix[plat][target_name]:
-                    global_matrix[plat][target_name][k].update(rules[k])
-                    
-        elif plat == 'pac':
-            if target_name not in global_matrix[plat]:
-                global_matrix[plat][target_name] = set()
-            global_matrix[plat][target_name].update(rules.get('suffix', set()))
-            global_matrix[plat][target_name].update(rules.get('full', set()))            
+                    global_matrix[plat][target_name][k].update(rules[k])                    
         else:
             if target_name not in global_matrix[plat]:
                 global_matrix[plat][target_name] = {k: set() for k in rules.keys()}
