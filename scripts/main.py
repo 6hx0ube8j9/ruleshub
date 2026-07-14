@@ -236,7 +236,39 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys):
                 for val in sorted(rules[r_type]):
                     f_source.write(f"{r_type},{val}\n")
                 f_source.write("\n")
+                
+def format_local_sources():
+    """
+    本地源文件自动格式化
+    """
+    if not os.path.exists(SOURCE_DIR):
+        return
 
+    print("🧹 [格式化] 正在整理本地 source/ 目录下的规则源文件...")
+    source_keys = getattr(rules_processor, 'source_keys', ['suffix', 'full', 'keyword', 'regex', 'ipcidr', 'ipcidr6'])
+    formatted_count = 0
+
+    for filename in os.listdir(SOURCE_DIR):
+        if not filename.endswith('.txt'):
+            continue
+            
+        file_path = os.path.join(SOURCE_DIR, filename)
+        pure_name = os.path.splitext(filename)[0]
+        
+        # 1. 读取本地原文件
+        local_raw = load_local_raw_lines(file_path)
+        if not local_raw:
+            continue
+            
+        # 2. 将本地原文件送入清洗管道
+        cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, [])
+        
+        # 3. 重新写回本地物理文件
+        save_local_rules(file_path, pure_name, cleaned_rules, source_keys)
+        formatted_count += 1
+
+    print(f"🧹 [格式化] 本地规则源文件整理完毕，共格式化 {formatted_count} 个文件。")
+    
 # =========================================================================
 # 5. 📦 阶段 3：策略组规则构建与分发 (groups)
 # =========================================================================
@@ -428,6 +460,8 @@ def main():
     # 纯内存配置清洗（防止回写磁盘，保持配置文件原生态排版）
     for group in groups:
         normalize_policy_card(group)
+
+    format_local_sources()
 
     # ---------------------------------------------------------------------
     # 【 阶段 2：数据源同步 】
