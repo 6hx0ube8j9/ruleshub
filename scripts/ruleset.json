@@ -10,8 +10,7 @@
       "name": "all_proxy",
       "inputs": [
         "proxy",
-        "youtube",
-        "123"
+        "youtube"
       ]
     },
     {
