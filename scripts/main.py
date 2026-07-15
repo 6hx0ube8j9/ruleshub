@@ -8,9 +8,9 @@ import sys
 import urllib.request
 import urllib.error
 
-import rules_processor
-import rules_formatter
 import rules_loader
+import rules_formatter
+import rules_processor
 
 # =========================================================================
 # 1. 基础路径与工具链定义
@@ -127,7 +127,7 @@ def format_local_sources():
     formatted_count = 0
 
     for filename in os.listdir(rules_loader.SOURCE_DIR):
-        if not filename.endswith('.txt'):
+        if not filename.lower().endswith('.txt'):
             continue
             
         file_path = os.path.join(rules_loader.SOURCE_DIR, filename)
