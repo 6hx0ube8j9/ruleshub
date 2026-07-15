@@ -10,12 +10,12 @@
       "name": "all_proxy",
       "inputs": [
         "proxy",
-        "true",   
+        "true",
         "youtube"
       ],
       "outputs": {
-        "loon": "true",
-        "singbox": ""
+        "loon": "all_proxy",
+        "singbox": "all_proxy"
       }
     },
     {
