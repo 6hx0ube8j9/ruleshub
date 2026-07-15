@@ -153,6 +153,9 @@ def resolve_routing(group_config, group_name):
         if user_val is True:
             routing_map[tool_key] = group_name_lower
             continue
+
+        if is_passed:
+            routing_map[tool_key] = group_name_lower
             
         # 4. 自定义名称 -> 雷打不动按自定义小写输出
         if isinstance(user_val, str) and user_val != '':
