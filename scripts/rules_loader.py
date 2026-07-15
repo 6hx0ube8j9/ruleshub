@@ -63,6 +63,7 @@ class RuleFilter:
     def _filter_whitelist(config, name_lower):
         """过滤器 1：白名单判定"""
         if 'whitelist' not in config: return True
+        # 确保只要有一个白名单词是 name_lower 的子串就通过
         return any(w.lower() in name_lower for w in config['whitelist'])
 
     @staticmethod
@@ -70,6 +71,8 @@ class RuleFilter:
         """过滤器 2：黑名单判定 (严格遵循黑白排斥铁律)"""
         if 'whitelist' in config: return True  # 有白名单时，黑名单完全失效并被静默忽略
         if 'blacklist' not in config: return True
+        
+        # 健壮性优化：只要组名 name_lower 包含黑名单里的任意一个词，或者“部分匹配”就直接拉黑
         return not any(b.lower() in name_lower for b in config['blacklist'])
 
     @staticmethod
@@ -77,8 +80,10 @@ class RuleFilter:
         """过滤器 3：正则协同判定"""
         if 'regex' not in config: return True
         try:
-            return bool(re.search(config['regex'], name_lower))
+            # 使用 re.IGNORECASE 忽略大小写，并使用 bool() 明确转换
+            return bool(re.search(config['regex'], name_lower, re.IGNORECASE))
         except re.error:
+            # 如果正则解析失败，为了安全，默认不通过（返回 False）
             return False
 
     # 判定管道作为类的内部私有属性收拢，排版极度整洁
