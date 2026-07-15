@@ -365,11 +365,11 @@ def main():
     # ---------------------------------------------------------------------
     print("\n【 阶段 4：平台文件导出与编译 】运行中...")
     
-    # 【修复】：过滤并动态提取带有有效 dir 配置的平台（屏蔽掉仅处理逻辑的 MRS 隧道）
+    # 【修复】：过滤并动态提取带有有效 dir 配置的平台，同时显式剔除需要单独编译的 MRS 隧道
     output_directories = {
         plat: cfg['dir'] 
         for plat, cfg in rules_loader.ROUTING_MATRIX.items() 
-        if 'dir' in cfg
+        if 'dir' in cfg and plat not in ('mihomo_ipcidr', 'mihomo_domain')
     }
     
     # 4.1. 调用 rules_formatter 导出文本文件
