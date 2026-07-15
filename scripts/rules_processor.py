@@ -65,7 +65,7 @@ def execute_rules_pipeline(local_raw_lines: list, remote_raw_lines: list) -> dic
     optimize_domains(merged_rules)
     
     return merged_rules
-    
+
 def filter_raw_line(line: str) -> Optional[str]:
     """
     基础清洗：剥离注释（#, //, ;）以及前缀标识符（- ）
@@ -282,41 +282,50 @@ def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_key
     return merged
 
 
-def optimize_domains(rules: dict, protected_parents: set = None) -> None:
+def optimize_domains(rules: dict) -> None:
     
     if not isinstance(rules, dict) or 'suffix' not in rules or 'full' not in rules: 
         return
         
-    is_list_output = isinstance(rules['suffix'], list)
-    suffixes = set(rules['suffix'])
+    raw_suffixes = set(rules['suffix'])
+    optimized_suffixes = set()
     raw_fulls = set(rules['full'])
     optimized_fulls = set()
-    
-    protected = set(protected_parents) if protected_parents else set()
 
+    # 1. Suffix 内部互相折叠 (按长度排序，从短到长，保留顶级域名)
+    sorted_suffixes = sorted(list(raw_suffixes), key=len)
+    for suf in sorted_suffixes:
+        parts = suf.split('.')
+        is_folded = False
+        for i in range(1, len(parts)):
+            parent = '.'.join(parts[i:])
+            if parent in optimized_suffixes:
+                is_folded = True
+                break
+        if not is_folded:
+            optimized_suffixes.add(suf)
+
+    # 2. Full 向优化后的 Suffix 折叠
     for f_dom in raw_fulls:
-        if f_dom in suffixes:
+        if f_dom in optimized_suffixes:
             continue
             
         parts = f_dom.split('.')
         is_folded = False
-       
         for i in range(1, len(parts)):
             parent = '.'.join(parts[i:])
-            
-            if parent in protected:
-                break
-                
-            if parent in suffixes:
+            if parent in optimized_suffixes:
                 is_folded = True
                 break
                 
         if not is_folded:
             optimized_fulls.add(f_dom)
 
+    # 3. 结果回写
+    is_list_output = isinstance(rules['suffix'], list)
     if is_list_output:
-        rules['suffix'] = sorted(list(suffixes))
+        rules['suffix'] = sorted(list(optimized_suffixes))
         rules['full'] = sorted(list(optimized_fulls))
     else:
-        rules['suffix'] = suffixes
+        rules['suffix'] = optimized_suffixes
         rules['full'] = optimized_fulls
