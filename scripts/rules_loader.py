@@ -132,7 +132,8 @@ def load_and_prepare_config(json_path):
 
 def resolve_routing(group_config, group_name):
     """
-    接口 2：路由解析决策引擎。即时读取、即时清洗、即时判定、直接落袋。
+    接口 2：路由解析决策引擎。
+    基于单一真理源矩阵，严密执行：强启覆盖 > 隐式默认 + 骨架过滤 > 强熔断。
     """
     group_name_lower = group_name.lower()
     raw_outputs = group_config.get('outputs') or {}
@@ -140,24 +141,25 @@ def resolve_routing(group_config, group_name):
     routing_map = {}
     
     for tool_key, config in ROUTING_MATRIX.items():
-        # 1. 动态清洗用户的输入（不污染原数据）
+        # 1. 提取并清洗用户针对该平台的输入值
         user_val = _get_normalized_user_value(raw_outputs.get(tool_key))
         
-        # 2. 调用模块化过滤引擎进行骨架判定
-        skeleton_pass = RuleFilter.evaluate(config, group_name_lower)
-        
-        # 3. 状态判定行为 (无中间状态，直接落袋 / 熔断)
+        # 2. 状态分支 1：强熔断（用户显式关闭）
         if user_val is False:
-            continue  # 强行关闭，直接跳过当前目标
+            continue
             
-        elif user_val is True or user_val is None or user_val == '':
-            # 默认或强启：显式指定 True，或通过骨架判定，则采用原组名
-            if user_val is True or skeleton_pass:
-                routing_map[tool_key] = group_name_lower
-                
-        elif isinstance(user_val, str) and user_val:  
-            # 显式自定义覆盖名
+        # 3. 状态分支 2：强开启（用户显式指定 True，或自定义了字符串覆盖名）
+        if user_val is True:
+            routing_map[tool_key] = group_name_lower
+            continue
+        elif isinstance(user_val, str) and user_val:
             routing_map[tool_key] = user_val.lower()
+            continue
+            
+        # 4. 状态分支 3：默认状态（用户未写或为空 ''） -> 严格受控于黑白名单与正则过滤引擎
+        # 此时 user_val 必定为 None 或 ''
+        if RuleFilter.evaluate(config, group_name_lower):
+            routing_map[tool_key] = group_name_lower
             
     return routing_map
 
