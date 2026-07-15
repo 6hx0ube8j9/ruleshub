@@ -15,7 +15,7 @@
       ],
       "outputs": {
         "loon": "all_proxy",
-        "pac": false,
+        "pac": " ture",
         "singbox": "all_proxy"
       }
     },
