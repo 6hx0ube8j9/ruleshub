@@ -26,6 +26,7 @@ SINGBOX_BIN       = os.path.join(SCRIPT_DIR, 'sing-box')
 async def fetch_single_url_async(session, url):
     """
     网络异步拉取任务，支持 15 秒超时保护。
+    网络异常时返回 None，成功但内容为空时返回空列表 []，以此作为精准区分。
     """
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
@@ -35,10 +36,10 @@ async def fetch_single_url_async(session, url):
                 return url, text.splitlines()
             else:
                 print(f"⚠️ Warning: Fetch failed for {url} with status {response.status}")
-                return url, []
+                return url, None
     except Exception as e:
         print(f"⚠️ Warning: Fetch failed for {url} - {e}")
-        return url, []
+        return url, None
 
 async def async_fetch_all(urls_list):
     """
@@ -70,8 +71,9 @@ def sync_to_disk(sync_config, fetched_data):
         else:
             continue
         
-        remote_lines = fetched_data.get(url, [])
-        if not remote_lines:
+        remote_lines = fetched_data.get(url)
+        # 👑 区分：只有当拉取结果物理上为 None 时，才被判定为“网络层拉取失败”以保护本地数据
+        if remote_lines is None:
             print(f"⚠️ [下载失败] 网络同步源下载失败，跳过本次覆盖更新: {url}")
             continue
             
@@ -82,6 +84,16 @@ def sync_to_disk(sync_config, fetched_data):
             filename = target if target.endswith('.txt') else f"{target}.txt"
             file_path = os.path.join(rules_loader.SOURCE_DIR, filename)
             pure_name = os.path.splitext(filename)[0]
+            
+            # 🛡️ 物理大小写自愈防线：
+            # 如果磁盘上存在旧的、带有大写字母的文件（如 MyRules.TXT），写入纯小写新文件前将其彻底删除，防止残留
+            for raw_f in os.listdir(rules_loader.SOURCE_DIR):
+                if raw_f.lower() == filename and raw_f != filename:
+                    try:
+                        os.remove(os.path.join(rules_loader.SOURCE_DIR, raw_f))
+                    except Exception:
+                        pass
+            
             local_raw = load_local_raw_lines(file_path)
             
             cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, remote_lines)
