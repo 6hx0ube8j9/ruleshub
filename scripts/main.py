@@ -173,7 +173,10 @@ def build_group_rules(group_config):
             if inp_str.startswith('http://') or inp_str.startswith('https://'):
                 print(f"[INFO] Fetching network rule: {inp_str}")
                 try:
-                    req = urllib.request.Request(inp_str, headers={'User-Agent': 'Mozilla/5.0'})
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                    }
+                    req = urllib.request.Request(inp_str, headers=headers)
                     with urllib.request.urlopen(req, timeout=15) as response:
                         lines = response.read().decode('utf-8', errors='ignore').splitlines()
                         all_remote_raw.extend(lines)
