@@ -39,6 +39,7 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za', 'org.za', 'gov.za'
 }
 
+# 规则内部归一化类型映射表
 _GROUPS = {
     'remove': {'REMOVE'},
     'process': {'PROCESS-NAME', 'PROCESS_NAME', 'PROCESS'},
@@ -57,6 +58,7 @@ source_keys = list(_GROUPS.keys())
 RULE_MAP = {rule: category for category, rules in _GROUPS.items() for rule in rules}
 
 
+# 执行规则处理流水线主入口
 def execute_rules_pipeline(local_raw_lines: list, remote_raw_lines: list) -> dict:
     local_rules = process_raw_lines_batch(local_raw_lines, source_keys)
     remote_rules = process_raw_lines_batch(remote_raw_lines, source_keys)
@@ -67,6 +69,7 @@ def execute_rules_pipeline(local_raw_lines: list, remote_raw_lines: list) -> dic
     return merged_rules
 
 
+# 过滤原始文本行中的注释与多余前缀
 def filter_raw_line(line: str) -> Optional[str]:
     line = line.split('#')[0].split('//')[0].split(';')[0].strip()
     if not line or line.lower() == 'payload:':
@@ -76,15 +79,13 @@ def filter_raw_line(line: str) -> Optional[str]:
     return line if line else None
 
 
+# 核心规则清洗与格式归一化转换
 def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optional[str]:
-    """
-    核心清洗与标准化：处理域名后缀符号、端口剥离、IDNA(Punycode)转码、IP掩码补全
-    """
     payload = raw_payload.strip().strip("'").strip('"').strip()
     if not payload:
         return None
 
-    # 👑 修复隐患 2：对 REMOVE 规则执行精准自愈分流（自动适配 IP 或域名的处理逻辑）
+    # 对 REMOVE 规则执行自愈分流（自动适配 IP 或域名清洗流程）
     if internal_type == 'remove':
         temp_payload = payload.strip('[]')
         val_for_ip_check = temp_payload.split('/')[0].split(':')[0]
@@ -94,7 +95,6 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
         elif IPV6_REGEX.match(val_for_ip_check) or IPV6_REGEX.match(temp_payload.split('/')[0].strip('[]')):
             payload = temp_payload.lower() if '/' in temp_payload else f"{temp_payload.lower()}/128"
         else:
-            # 走域名清洗逻辑（去头尾点并强制小写，确保能和 remote 完美做 Set 差集）
             payload = payload.rstrip('.')
             payload = payload.lstrip('+*.') 
             if not payload.isascii():
@@ -104,6 +104,7 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
                     return None
             payload = payload.lower()
 
+    # 域名类规则标准化（移除前缀符号、端口剥离并转换为 Punycode）
     elif internal_type in ['full', 'suffix', 'keyword']:
         payload = payload.rstrip('.')
         payload = payload.lstrip('+*.') 
@@ -121,6 +122,7 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
                 return None
         payload = payload.lower()
 
+    # 端口规则规范化
     elif internal_type == 'port':
         payload = payload.replace('(', '').replace(')', '').replace(':', '-')
         clean_parts = [p.strip() for p in payload.split('-') if p.strip()]
@@ -128,6 +130,7 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
             return None
         payload = '-'.join(clean_parts)
 
+    # IP 规则标准化（剥离括号、自动补全 CIDR 掩码并对 IPv6 执行小写转换）
     elif internal_type in ['ip', 'ip6']:
         if internal_type == 'ip6' and ']' in payload:
             if ']:' in payload:
@@ -146,13 +149,14 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
         if '/' not in payload:
             payload = f"{payload}/128" if internal_type == 'ip6' else f"{payload}/32"
 
-        # 👑 修复隐患 3：强制将所有 IPv6 地址归一化为纯小写，避免 A-F 产生去重漏洞
+        # 强制将所有 IPv6 地址归一化为纯小写，避免 A-F 产生去重漏洞
         if internal_type == 'ip6':
             payload = payload.lower()
 
     return payload
 
 
+# 解析单行规则并识别、分发至对应的格式解析器
 def parse_line(line: str) -> Tuple[Optional[str], str]:
     clean_line = filter_raw_line(line)
     if not clean_line:
@@ -170,6 +174,7 @@ def parse_line(line: str) -> Tuple[Optional[str], str]:
     return parse_pure_text_rule(head)
 
 
+# 解析标准声明前缀的逗号分隔规则
 def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
     parts = [x.strip() for x in line.split(',')]
     if not parts:
@@ -200,6 +205,7 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
     return internal_type, final_payload
 
 
+# 解析无声明前缀的纯文本格式规则
 def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     if any(c in line for c in ['?', '(', ')', '|', '^', '$', '\\']):
         return None, ""
@@ -230,7 +236,7 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
         if any(c in clean_val for c in [' ', '/', '@', '=', '%', '&', ';']):
             return None, ""
 
-        # 👑 修复隐患 1：将提取的 TLD 后缀（.split('.')[-1]）强制小写后再与黑名单匹配
+        # 将 TLD 后缀强制小写后再与后缀黑名单匹配
         if is_explicit_suffix or ('.' in clean_val and clean_val.split('.')[-1].lower() in PUBLIC_SUFFIX_BLACKLIST):
             internal_type = 'suffix'
         else:
@@ -243,6 +249,7 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     return internal_type, final_payload
 
 
+# 解析简易 AdGuard / uBlock Filter 格式的规则
 def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
     core_content = line.split('^')[0].strip()
     for prefix, internal_type in [('||', 'suffix'), ('|', 'full')]:
@@ -259,6 +266,7 @@ def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
     return (internal_type, final_payload) if final_payload else (None, "")
 
 
+# 批量处理并解析原始文本规则集
 def process_raw_lines_batch(lines: list, rule_keys: list) -> dict:
     parsed_rules = {k: set() for k in rule_keys}
     for line in lines:
@@ -268,6 +276,7 @@ def process_raw_lines_batch(lines: list, rule_keys: list) -> dict:
     return parsed_rules
 
 
+# 合并本地/远程规则集，执行高优先级本地排除和去重过滤
 def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_keys: list) -> dict:
     merged = {}
     local_all_assets = set()
@@ -293,6 +302,7 @@ def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_key
     return merged
 
 
+# 执行域名向父级后缀的嵌套包含折叠优化（树状去重）
 def optimize_domains(rules: dict) -> None:
     if not isinstance(rules, dict) or 'suffix' not in rules or 'full' not in rules: 
         return
@@ -302,7 +312,7 @@ def optimize_domains(rules: dict) -> None:
     raw_fulls = set(rules['full'])
     optimized_fulls = set()
 
-    # 1. Suffix 内部互相折叠 (按长度排序，从短到长，保留顶级域名)
+    # Suffix 内部互相折叠（从小到大排序，保留顶级规则）
     sorted_suffixes = sorted(list(raw_suffixes), key=len)
     for suf in sorted_suffixes:
         parts = suf.split('.')
@@ -315,7 +325,7 @@ def optimize_domains(rules: dict) -> None:
         if not is_folded:
             optimized_suffixes.add(suf)
 
-    # 2. Full 向优化后的 Suffix 折叠
+    # 精确域名 Full 向已优化的 Suffix 后缀折叠
     for f_dom in raw_fulls:
         if f_dom in optimized_suffixes:
             continue
@@ -331,7 +341,7 @@ def optimize_domains(rules: dict) -> None:
         if not is_folded:
             optimized_fulls.add(f_dom)
 
-    # 3. 结果回写
+    # 结果原样回写至内存规则字典
     is_list_output = isinstance(rules['suffix'], list)
     if is_list_output:
         rules['suffix'] = sorted(list(optimized_suffixes))
