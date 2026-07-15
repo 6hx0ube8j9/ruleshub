@@ -100,75 +100,98 @@ class RuleFilter:
         """
         return all(filter_func(config, group_name_lower) for filter_func in cls._PIPELINE)
 
-# =========================================================================
-# 5. 🛠️ 纯函数与数据流管理 (保持数据不可变性)
-# =========================================================================
 def _get_normalized_user_value(raw_val):
     """
-    即时配置清洗：不修改原数据，仅返回清洗后的期望值。
+    清洗用户输入的临时占位符，返回标准统一的类型。
     """
     if isinstance(raw_val, str):
         val_lower = raw_val.strip().lower()
         if val_lower in ['true', 'ture']: return True
         if val_lower == 'false':          return False
         if val_lower == '':               return ''
-        return val_lower 
+        return val_lower
     return raw_val
 
-# =========================================================================
-# 6. 🔌 终极对外接口定义 (Public APIs)
-# =========================================================================
+
 def load_and_prepare_config(json_path):
     """
-    接口 1：读取并解析 ruleset.json。
-    【生命周期守卫】：确保只要外部尝试触碰配置，工作目录就必定百分百就绪。
+    接口 1：加载配置并执行【就地自愈规整】。
+    - 发现 "true" 占位符：直接强写为 策略组默认名称（小写）
+    - 发现 "" 空白占位符：过过滤器写为 默认名称，未过过滤器则写为 false
+    - 字段缺失：不触发自愈，继续保持缺省（走内存托管逻辑）
     """
-    if not os.path.exists(json_path):
-        raise FileNotFoundError(f"找不到配置文件 ruleset.json: {json_path}")
+    with open(json_path, 'r', encoding='utf-8') as f:
+        config_data = json.load(f)
         
-    # 完美的防御式内建触发器
-    setup_environment()
+    _init_workspace()  # 确保工作目录存在
+    modified = False
+    
+    for group in config_data.get('groups', []):
+        group_name = group.get('name')
+        outputs = group.get('outputs')
         
-    try:
-        with open(json_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except json.JSONDecodeError as e:
-        raise ValueError(f"ruleset.json 解析发生语法错误 [{e.lineno}:{e.colno}] -> {e.msg}")
+        # 严格防御性校验：无组名或 outputs 缺省/非字典时直接跳过
+        if not group_name or not isinstance(outputs, dict):
+            continue
+            
+        group_name_lower = group_name.lower()
+        
+        for tool_key, config in ROUTING_MATRIX.items():
+            if tool_key not in outputs:
+                continue  # 💡 缺失字段：不作处理，保留原样以维持干净
+                
+            raw_val = outputs[tool_key]
+            user_val = _get_normalized_user_value(raw_val)
+            
+            # --- 【面条代码收拢核心】通过 target_val 状态机统一收拢判定 ---
+            target_val = None
+            
+            if user_val is True:
+                # 强启信号：直接锁定默认名称
+                target_val = group_name_lower
+                
+            elif user_val == '':
+                # 留空信号：根据过滤器终审，通过给名称，失败直接物理改写为 false 关闭
+                is_passed = RuleFilter.evaluate(config, group_name_lower)
+                target_val = group_name_lower if is_passed else False
+                
+            # 只有在值确实发生改变，且不为 None 时，才触发物理写入，避免无意义的 IO 开销
+            if target_val is not None and raw_val != target_val:
+                outputs[tool_key] = target_val
+                modified = True
+
+    # 💾 只有发生过自愈修改时，才重写 JSON 文件
+    if modified:
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(config_data, f, indent=2, ensure_ascii=False)
+        print("📝 [配置自愈] 已将 \"true\" 或 \"\" 占位符转换为白纸黑字的确切配置并写回 JSON！")
+        
+    return config_data
+
 
 def resolve_routing(group_config, group_name):
+    """
+    接口 2：内存路由解析决策引擎。
+    由于 load_and_prepare_config 已经完成了物理自愈，此处的内存逻辑可以变得极度纯粹。
+    """
     group_name_lower = group_name.lower()
     raw_outputs = group_config.get('outputs') or {}
-    
     routing_map = {}
     
     for tool_key, config in ROUTING_MATRIX.items():
-        # 1. 提取并清洗用户输入值
-        user_val = _get_normalized_user_value(raw_outputs.get(tool_key))
+        # 1. 字段缺失 -> 启动【自动托管模式】，交由过滤器裁决
+        if tool_key not in raw_outputs:
+            if RuleFilter.evaluate(config, group_name_lower):
+                routing_map[tool_key] = group_name_lower
+            continue
+            
+        # 2. 字段存在 -> 此时配置已被 load_and_prepare_config 自愈规整完毕
+        # 此时的内存值只可能是：具体策略组名称(str) 或 已关闭(False)
+        user_val = raw_outputs[tool_key]
         
-        # 2. 强闭状态 -> 内部无声丢弃
-        if user_val is False:
-            continue
-            
-        # 3. 强启状态 -> 直接采用默认组名
-        if user_val is True:
-            routing_map[tool_key] = group_name_lower
-            continue
-
-        if is_passed:
-            routing_map[tool_key] = group_name_lower
-            
-        # 4. 自定义名称 -> 雷打不动按自定义小写输出
+        # 如果是合法的非空字符串，直接输出（确保万无一失转为小写）
         if isinstance(user_val, str) and user_val != '':
-            routing_map[tool_key] = user_val
-            continue
-            
-        # ---------- 过滤器仲裁阶段 (此时 user_val 仅可能为 '' 或 None) ----------
-        is_passed = RuleFilter.evaluate(config, group_name_lower)
-        
-        # 5. 终审判决
-        # 无论是显式留空还是隐式未配：通关了就交差；未通关则直接拦截丢弃，不发生任何事情
-        if is_passed:
-            routing_map[tool_key] = group_name_lower
+            routing_map[tool_key] = user_val.lower()
             
     return routing_map
 
