@@ -1,0 +1,38 @@
+# Quantumult X Rule-Set: china
+
+host, api.imem.app, China
+host, api.swiftgram.app, China
+host, ip-asn, China
+host-suffix, cdn-telegram.org, China
+host-suffix, comments.app, China
+host-suffix, contest.com, China
+host-suffix, graph.org, China
+host-suffix, legra.ph, China
+host-suffix, mbrx.app, China
+host-suffix, quiz.directory, China
+host-suffix, stel.com, China
+host-suffix, t.me, China
+host-suffix, tdesktop.com, China
+host-suffix, telega.one, China
+host-suffix, telegra.ph, China
+host-suffix, telegram-cdn.org, China
+host-suffix, telegram.dog, China
+host-suffix, telegram.me, China
+host-suffix, telegram.org, China
+host-suffix, telegram.space, China
+host-suffix, telegramdownload.com, China
+host-suffix, telesco.pe, China
+host-suffix, tg.dev, China
+host-suffix, tx.me, China
+host-suffix, usercontent.dev, China
+host-keyword, nicegram, China
+ip-cidr, 109.239.140.0/24, China, no-resolve
+ip-cidr, 139.59.210.98/32, China, no-resolve
+ip-cidr, 149.154.160.0/20, China, no-resolve
+ip-cidr, 196.55.216.167/32, China, no-resolve
+ip-cidr, 2001:67c:4e8::/48, China, no-resolve
+ip-cidr, 2001:b28:f23c::/47, China, no-resolve
+ip-cidr, 2001:b28:f23f::/48, China, no-resolve
+ip-cidr, 2a0a:f280::/29, China, no-resolve
+ip-cidr, 5.28.192.0/18, China, no-resolve
+ip-cidr, 91.108.0.0/16, China, no-resolve
