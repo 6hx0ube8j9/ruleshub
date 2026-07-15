@@ -4,31 +4,17 @@ import json
 
 def export_all(global_matrix, dir_map):
     """
-    统一调度并导出所有平台的规则集文件（纯写盘落盘）
+    统一调度并导出所有平台的规则集文件（动态映射驱动）
     """
-    # 1. QuantumultX
-    if 'quantumultx' in global_matrix and 'quantumultx' in dir_map:
-        generate_quantumultx(global_matrix['quantumultx'], dir_map['quantumultx'])
-        
-    # 2. Shadowrocket
-    if 'shadowrocket' in global_matrix and 'shadowrocket' in dir_map:
-        generate_shadowrocket(global_matrix['shadowrocket'], dir_map['shadowrocket'])
-        
-    # 3. Loon
-    if 'loon' in global_matrix and 'loon' in dir_map:
-        generate_loon(global_matrix['loon'], dir_map['loon'])
-        
-    # 4. Mihomo Classical
-    if 'mihomo_classical' in global_matrix and 'mihomo_classical' in dir_map:
-        generate_mihomo_classical(global_matrix['mihomo_classical'], dir_map['mihomo_classical'])
-        
-    # 5. PAC
-    if 'pac' in global_matrix and 'pac' in dir_map:
-        generate_pac(global_matrix['pac'], dir_map['pac'])
-        
-    # 6. Singbox JSON 生成
-    if 'singbox' in global_matrix and 'singbox' in dir_map:
-        generate_singbox(global_matrix['singbox'], dir_map['singbox'])
+    for plat, output_dir in dir_map.items():
+        if plat in global_matrix:
+            # 动态拼接函数名，例如 'generate_quantumultx'
+            generator_func = globals().get(f"generate_{plat}")
+            
+            if generator_func:
+                generator_func(global_matrix[plat], output_dir)
+            else:
+                print(f"⚠️ [WARN] 格式化器中未找到支持 {plat} 平台的生成函数: generate_{plat}")
         
 
 def generate_mihomo_classical(matrix_data, output_dir):
