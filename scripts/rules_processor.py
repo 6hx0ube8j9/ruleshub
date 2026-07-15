@@ -39,7 +39,6 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za', 'org.za', 'gov.za'
 }
 
-# 外部规则关键字到内部统一类型的映射组
 _GROUPS = {
     'remove': {'REMOVE'},
     'process': {'PROCESS-NAME', 'PROCESS_NAME', 'PROCESS'},
@@ -57,6 +56,7 @@ _GROUPS = {
 source_keys = list(_GROUPS.keys())
 RULE_MAP = {rule: category for category, rules in _GROUPS.items() for rule in rules}
 
+
 def execute_rules_pipeline(local_raw_lines: list, remote_raw_lines: list) -> dict:
     local_rules = process_raw_lines_batch(local_raw_lines, source_keys)
     remote_rules = process_raw_lines_batch(remote_raw_lines, source_keys)
@@ -66,10 +66,8 @@ def execute_rules_pipeline(local_raw_lines: list, remote_raw_lines: list) -> dic
     
     return merged_rules
 
+
 def filter_raw_line(line: str) -> Optional[str]:
-    """
-    基础清洗：剥离注释（#, //, ;）以及前缀标识符（- ）
-    """
     line = line.split('#')[0].split('//')[0].split(';')[0].strip()
     if not line or line.lower() == 'payload:':
         return None
@@ -86,7 +84,27 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
     if not payload:
         return None
 
-    if internal_type in ['full', 'suffix', 'keyword']:
+    # 👑 修复隐患 2：对 REMOVE 规则执行精准自愈分流（自动适配 IP 或域名的处理逻辑）
+    if internal_type == 'remove':
+        temp_payload = payload.strip('[]')
+        val_for_ip_check = temp_payload.split('/')[0].split(':')[0]
+        
+        if IPV4_REGEX.match(val_for_ip_check) or IPV4_REGEX.match(temp_payload.split('/')[0]):
+            payload = temp_payload if '/' in temp_payload else f"{temp_payload}/32"
+        elif IPV6_REGEX.match(val_for_ip_check) or IPV6_REGEX.match(temp_payload.split('/')[0].strip('[]')):
+            payload = temp_payload.lower() if '/' in temp_payload else f"{temp_payload.lower()}/128"
+        else:
+            # 走域名清洗逻辑（去头尾点并强制小写，确保能和 remote 完美做 Set 差集）
+            payload = payload.rstrip('.')
+            payload = payload.lstrip('+*.') 
+            if not payload.isascii():
+                try:
+                    payload = payload.encode('idna').decode('ascii')
+                except Exception:
+                    return None
+            payload = payload.lower()
+
+    elif internal_type in ['full', 'suffix', 'keyword']:
         payload = payload.rstrip('.')
         payload = payload.lstrip('+*.') 
         
@@ -128,12 +146,14 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
         if '/' not in payload:
             payload = f"{payload}/128" if internal_type == 'ip6' else f"{payload}/32"
 
+        # 👑 修复隐患 3：强制将所有 IPv6 地址归一化为纯小写，避免 A-F 产生去重漏洞
+        if internal_type == 'ip6':
+            payload = payload.lower()
+
     return payload
-    
+
+
 def parse_line(line: str) -> Tuple[Optional[str], str]:
-    """
-    规则解析主入口：利用特征分流机制，优雅实现多格式自适应解析
-    """
     clean_line = filter_raw_line(line)
     if not clean_line:
         return None, ""
@@ -151,9 +171,6 @@ def parse_line(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
-    """
-    解析带标签的标准逗号规则：精准提取 Payload，完美剥离尾部策略组，并兼容防错切机制
-    """
     parts = [x.strip() for x in line.split(',')]
     if not parts:
         return None, ""
@@ -182,10 +199,8 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
 
     return internal_type, final_payload
 
+
 def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
-    """
-    解析不带标签的纯文本规则：通过特征识别自动归类为 IP、IPv6、Suffix 或 Full
-    """
     if any(c in line for c in ['?', '(', ')', '|', '^', '$', '\\']):
         return None, ""
 
@@ -215,7 +230,8 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
         if any(c in clean_val for c in [' ', '/', '@', '=', '%', '&', ';']):
             return None, ""
 
-        if is_explicit_suffix or ('.' in clean_val and clean_val.split('.')[-1] in PUBLIC_SUFFIX_BLACKLIST):
+        # 👑 修复隐患 1：将提取的 TLD 后缀（.split('.')[-1]）强制小写后再与黑名单匹配
+        if is_explicit_suffix or ('.' in clean_val and clean_val.split('.')[-1].lower() in PUBLIC_SUFFIX_BLACKLIST):
             internal_type = 'suffix'
         else:
             internal_type = 'full'
@@ -226,10 +242,8 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
 
     return internal_type, final_payload
 
+
 def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
-    """
-    解析 AdGuard 语法：将 || 映射为 suffix，| 映射为 full，剥离 ^ 断言符
-    """
     core_content = line.split('^')[0].strip()
     for prefix, internal_type in [('||', 'suffix'), ('|', 'full')]:
         if core_content.startswith(prefix):
@@ -244,10 +258,8 @@ def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
     final_payload = normalize_rule_line(raw_payload, internal_type)
     return (internal_type, final_payload) if final_payload else (None, "")
 
+
 def process_raw_lines_batch(lines: list, rule_keys: list) -> dict:
-    """
-    批量处理入口：将原始文本列表解析并按类别归入集合（Set）中自动去重
-    """
     parsed_rules = {k: set() for k in rule_keys}
     for line in lines:
         r_type, payload = parse_line(line)  
@@ -257,7 +269,6 @@ def process_raw_lines_batch(lines: list, rule_keys: list) -> dict:
 
 
 def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_keys: list) -> dict:
-
     merged = {}
     local_all_assets = set()
     local_remove = set(local_rules.get('remove', [])) if local_rules else set()
@@ -283,7 +294,6 @@ def merge_and_sovereignty_filter(local_rules: dict, remote_rules: dict, rule_key
 
 
 def optimize_domains(rules: dict) -> None:
-    
     if not isinstance(rules, dict) or 'suffix' not in rules or 'full' not in rules: 
         return
         
