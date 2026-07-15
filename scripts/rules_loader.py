@@ -112,7 +112,7 @@ def _get_normalized_user_value(raw_val):
         if val_lower in ['true', 'ture']: return True
         if val_lower == 'false':          return False
         if val_lower == '':               return ''
-        return raw_val.strip()
+        return val_lower 
     return raw_val
 
 # =========================================================================
@@ -136,34 +136,35 @@ def load_and_prepare_config(json_path):
         raise ValueError(f"ruleset.json 解析发生语法错误 [{e.lineno}:{e.colno}] -> {e.msg}")
 
 def resolve_routing(group_config, group_name):
-    """
-    接口 2：路由解析决策引擎。
-    基于单一真理源矩阵，严密执行：强启覆盖 > 隐式默认 + 骨架过滤 > 强熔断。
-    """
     group_name_lower = group_name.lower()
     raw_outputs = group_config.get('outputs') or {}
     
     routing_map = {}
     
     for tool_key, config in ROUTING_MATRIX.items():
-        # 1. 提取并清洗用户针对该平台的输入值
+        # 1. 提取并清洗用户输入值
         user_val = _get_normalized_user_value(raw_outputs.get(tool_key))
         
-        # 2. 状态分支 1：强熔断（用户显式关闭）
+        # 2. 强闭状态 -> 内部无声丢弃
         if user_val is False:
             continue
             
-        # 3. 状态分支 2：强开启（用户显式指定 True，或自定义了字符串覆盖名）
+        # 3. 强启状态 -> 直接采用默认组名
         if user_val is True:
             routing_map[tool_key] = group_name_lower
             continue
-        elif isinstance(user_val, str) and user_val:
-            routing_map[tool_key] = user_val.lower()
+            
+        # 4. 自定义名称 -> 雷打不动按自定义小写输出
+        if isinstance(user_val, str) and user_val != '':
+            routing_map[tool_key] = user_val
             continue
             
-        # 4. 状态分支 3：默认状态（用户未写或为空 ''） -> 严格受控于黑白名单与正则过滤引擎
-        # 此时 user_val 必定为 None 或 ''
-        if RuleFilter.evaluate(config, group_name_lower):
+        # ---------- 过滤器仲裁阶段 (此时 user_val 仅可能为 '' 或 None) ----------
+        is_passed = RuleFilter.evaluate(config, group_name_lower)
+        
+        # 5. 终审判决
+        # 无论是显式留空还是隐式未配：通关了就交差；未通关则直接拦截丢弃，不发生任何事情
+        if is_passed:
             routing_map[tool_key] = group_name_lower
             
     return routing_map
