@@ -341,11 +341,5 @@ def optimize_domains(rules: dict) -> None:
         if not is_folded:
             optimized_fulls.add(f_dom)
 
-    # 结果原样回写至内存规则字典
-    is_list_output = isinstance(rules['suffix'], list)
-    if is_list_output:
-        rules['suffix'] = sorted(list(optimized_suffixes))
-        rules['full'] = sorted(list(optimized_fulls))
-    else:
-        rules['suffix'] = optimized_suffixes
-        rules['full'] = optimized_fulls
+    rules['suffix'] = optimized_suffixes
+    rules['full'] = optimized_fulls
