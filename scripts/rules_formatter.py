@@ -2,27 +2,23 @@
 import os
 import json
 
+# 统一调度并导出所有平台的规则集文件（动态映射驱动）
 def export_all(global_matrix, dir_map):
-    """
-    统一调度并导出所有平台的规则集文件（动态映射驱动）
-    """
     for plat, output_dir in dir_map.items():
         if plat in global_matrix:
-            # 动态拼接函数名，例如 'generate_quantumultx'
             generator_func = globals().get(f"generate_{plat}")
-            
             if generator_func:
                 generator_func(global_matrix[plat], output_dir)
             else:
-                print(f"⚠️ [WARN] 格式化器中未找到支持 {plat} 平台的生成函数: generate_{plat}")
+                print(f"[WARN] No generator function found for platform: {plat}")
         
 
+# 生成 Mihomo Classical 格式的 YAML 规则集
 def generate_mihomo_classical(matrix_data, output_dir):
-    """生成 Mihomo Classical 格式的 YAML 规则集"""
     for g_name, g_rules in matrix_data.items():
         mihomo_path = os.path.join(output_dir, f"{g_name}.yaml")
-        
         lines = [f"# Mihomo Payload Rule-Set: {g_name}\npayload:\n"]
+        
         # 定义 Mihomo 规则类型的写入顺序与映射关系
         ordered_types = [
             ('PROCESS-NAME', 'process'), ('DST-PORT', 'port'), ('DOMAIN', 'full'),
@@ -40,8 +36,8 @@ def generate_mihomo_classical(matrix_data, output_dir):
             f.write("".join(lines))
 
 
+# 生成供内核转换二进制的纯 IP 格式 YAML 文本
 def generate_mihomo_ipcidr(rules):
-    """生成供内核转换二进制的纯 IP 格式 YAML 文本（内部自动拦截空数据、合并并排序）"""
     # 门禁前置：如果没有有效 IP 数据，直接返回空字符串
     if not rules.get('ip') and not rules.get('ip6'):
         return ""
@@ -57,8 +53,8 @@ def generate_mihomo_ipcidr(rules):
     return "".join(lines)
 
 
+# 生成供内核转换二进制的纯域名格式 YAML 文本
 def generate_mihomo_domain(rules):
-    """生成供内核转换二进制的纯域名格式 YAML 文本（内部自动拦截空数据、处理 full 和 suffix）"""
     # 门禁前置：如果没有任意域名数据，直接返回空字符串
     if not rules.get('suffix') and not rules.get('full'):
         return ""
@@ -66,18 +62,18 @@ def generate_mihomo_domain(rules):
     indent = " " * 4
     lines = ["payload:\n"]
     
-    # 内部自动处理 full
+    # 内部自动处理 full 域名
     for item in sorted(rules.get('full', [])): 
         lines.append(f"{indent}- {item}\n")
-    # 内部自动处理 suffix 并补全 +. 前缀
+    # 内部自动处理 suffix 并补全前缀
     for item in sorted(rules.get('suffix', [])): 
         lines.append(f"{indent}- +.{item}\n")
         
     return "".join(lines)
 
 
+# 生成 Quantumult X 格式的规则集文件 (.list)
 def generate_quantumultx(matrix_data, output_dir):
-    """生成 Quantumult X 格式的规则集文件 (.list)"""
     for g_name, g_rules in matrix_data.items():
         qx_path = os.path.join(output_dir, f"{g_name}.list")
         qx_policy = g_rules.get('policy_label', 'DIRECT')
@@ -111,8 +107,8 @@ def generate_quantumultx(matrix_data, output_dir):
             f.write("".join(lines))
 
 
+# 生成 Shadowrocket 格式的规则集文件 (.list)
 def generate_shadowrocket(matrix_data, output_dir):
-    """生成 Shadowrocket 格式的规则集文件 (.list)"""
     for g_name, g_rules in matrix_data.items():
         sr_path = os.path.join(output_dir, f"{g_name}.list")
         
@@ -139,13 +135,12 @@ def generate_shadowrocket(matrix_data, output_dir):
             f.write("".join(lines))
 
 
+# 生成 Loon 格式的规则集文件 (.lsr)
 def generate_loon(matrix_data, output_dir):
-    """生成 Loon 格式的规则集文件 (.lsr)"""
     for g_name, g_rules in matrix_data.items():
         loon_path = os.path.join(output_dir, f"{g_name}.lsr")
         
         lines = [f"# Loon Rule-Set: {g_name}\n\n"]
-        
         # 合并 IPv4 和 IPv6 规则集合
         combined_loon_ips = set(g_rules.get('ip', set()) | g_rules.get('ip6', set()))
 
@@ -167,11 +162,11 @@ def generate_loon(matrix_data, output_dir):
 
         with open(loon_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
-        print(f"Successfully generated Master LSR Ruleset: {g_name}.lsr")
+        print(f"[SUCCESS] LSR Ruleset generated: {g_name}.lsr")
 
 
+# 生成 Sing-box 格式的 JSON 规则集文件
 def generate_singbox(matrix_data, output_dir):
-    """生成 Sing-box 格式的 JSON 规则集文件"""
     for g_name, raw_rules in matrix_data.items():
         sb_path = os.path.join(output_dir, f"{g_name}.json")
         g_rules = {k: list(v) if isinstance(v, (list, set, tuple)) else v for k, v in raw_rules.items()}
@@ -204,13 +199,13 @@ def generate_singbox(matrix_data, output_dir):
             for and_rule in g_rules['logical_and']:
                 sb_data["rules"].append(and_rule)
 
-        # 无论是否有规则，100% 保证写盘，绝不漏掉任何文件
+        # 100% 保证写盘，不漏掉任何文件
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
 
 
+# 生成标准 Proxy Auto-Config (PAC) 脚本文件 (.pac)
 def generate_pac(matrix_data, output_dir):
-    """生成标准 Proxy Auto-Config (PAC) 脚本文件 (.pac)"""
     for g_name, g_rules in matrix_data.items():
         pac_path = os.path.join(output_dir, f"{g_name}.pac")
         combined_domains = set(g_rules.get('suffix', [])) | set(g_rules.get('full', []))
