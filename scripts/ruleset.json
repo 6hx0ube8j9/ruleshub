@@ -11,9 +11,12 @@
       "inputs": [
         "proxy",
         "true",   
-        "",
         "youtube"
-      ]
+      ],
+      "outputs": {
+        "loon": "true",
+        "singbox": ""
+      }
     },
     {
       "name": "telegram",
