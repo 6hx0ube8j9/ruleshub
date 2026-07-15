@@ -204,7 +204,6 @@ def build_group_rules(group_config):
                 else:
                     print(f"⚠️ [WARN] 引用的本地源文件 '{filename}' 不存在，跳过此源。")
                     
-    # 调用 rules_processor 执行去重与优化合并
     final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
     return final_rules
 
@@ -212,16 +211,17 @@ def dispatch_to_matrix(group_name, group_config, rules, global_matrix):
     """
     根据配置的路由决策，将已合并的策略组规则分发注入到全局矩阵中。
     """
-    # 🔌 调用 rules_loader 路由引擎
     routing_map = rules_loader.resolve_routing(group_config, group_name)
     outputs = group_config.get('outputs', {})
     
-    # 【修复】：统一从 rules_loader.ROUTING_MATRIX 中提取所有的键
     for plat in rules_loader.ROUTING_MATRIX.keys():
         if plat not in routing_map:
             continue
             
         target_name = routing_map[plat]
+        
+        if not isinstance(target_name, str) or not target_name:
+            continue
                 
         if plat == 'quantumultx':
             fallback_label = group_name.capitalize() if group_name.lower() not in ['direct', 'reject'] else group_name.lower()
@@ -245,9 +245,7 @@ def dispatch_to_matrix(group_name, group_config, rules, global_matrix):
             for k, v in rules.items():
                 global_matrix[plat][target_name][k].update(v)
 
-# =========================================================================
-# 4. ⚙️ 阶段 4：导出与编译 (Export and Compile)
-# =========================================================================
+
 def compile_mihomo_mrs(base_name, group_config, rules):
     """
     调用 rules_loader 处理 Mihomo 隧道的分流路由，并使用工具链执行编译。
@@ -255,10 +253,7 @@ def compile_mihomo_mrs(base_name, group_config, rules):
     if not os.path.exists(MIHOMO_BIN):
         return
     
-    # 🔌 调用 rules_loader 路由引擎
     routing_map = rules_loader.resolve_routing(group_config, base_name)
-    
-    # 【修复】：提取 Mihomo MRS 专用的两个隧道键名
     mrs_tunnels = ['mihomo_ipcidr', 'mihomo_domain']
     
     for tunnel_type in mrs_tunnels:
@@ -266,8 +261,9 @@ def compile_mihomo_mrs(base_name, group_config, rules):
             continue
 
         target_name = routing_map[tunnel_type]
-        
-        # 【修复】：不再通过字符串切割，直接使用固定子目录名称，稳定健壮
+        if not isinstance(target_name, str) or not target_name:
+            continue
+            
         sub_dir = 'ipcidr' if tunnel_type == 'mihomo_ipcidr' else 'domain'
         
         formatter = getattr(rules_formatter, f"generate_{tunnel_type}", None)
@@ -275,17 +271,16 @@ def compile_mihomo_mrs(base_name, group_config, rules):
         if not content: 
             continue
 
-        yaml_path = os.path.join(rules_loader.MIHOMO_DIR, sub_dir, f"{target_name.lower()}.yaml")
-        mrs_out_path = os.path.join(rules_loader.MIHOMO_DIR, sub_dir, f"{target_name.lower()}.mrs")
+        yaml_path = os.path.join(rules_loader.MIHOMO_DIR, sub_dir, f"{target_name}.yaml")
+        mrs_out_path = os.path.join(rules_loader.MIHOMO_DIR, sub_dir, f"{target_name}.mrs")
         
         try:
             with open(yaml_path, 'w', encoding='utf-8') as f:
                 f.write(content)
-            # 通过工具链编译成 Mihomo 二进制 ruleset
             subprocess.run([MIHOMO_BIN, 'convert-ruleset', sub_dir, 'yaml', yaml_path, mrs_out_path], check=True, capture_output=True)
-            print(f"✅ Compiled MRS: {target_name.lower()}.mrs ({sub_dir})")
+            print(f"✅ Compiled MRS: {target_name}.mrs ({sub_dir})")
         except subprocess.CalledProcessError:
-            print(f"❌ Failed to compile {target_name.lower()} ({sub_dir})")
+            print(f"❌ Failed to compile {target_name} ({sub_dir})")
 
 def compile_singbox_srs(global_matrix, singbox_dir):
     if not os.path.exists(SINGBOX_BIN) or not global_matrix.get('singbox'): 
