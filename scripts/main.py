@@ -54,6 +54,8 @@ async def async_fetch_all(urls_list):
 def sync_to_disk(sync_config, fetched_data):
     """
     第二步：本地串行合并并落盘。
+    🎯 修复点：确保合并本地和网络数据时，文件名、后缀等文件系统属性小写归一化。
+    🚨 下游克制：不在下游直接调用 .lower() 处理行文本数据，全部交给 rules_processor 进行清洗。
     """
     if not sync_config:
         return
@@ -80,14 +82,10 @@ def sync_to_disk(sync_config, fetched_data):
             filename = target if target.endswith('.txt') else f"{target}.txt"
             file_path = os.path.join(rules_loader.SOURCE_DIR, filename)
             pure_name = os.path.splitext(filename)[0]
-            
-            # 读取本地源文件
             local_raw = load_local_raw_lines(file_path)
             
-            # 规则合并清洗
             cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, remote_lines)
-            
-            # 覆写至磁盘
+
             save_local_rules(file_path, pure_name, cleaned_rules, source_keys)
             print(f"💾 [合并写入] 网络源 {url} 已合并写入本地: {filename}")
 
@@ -118,6 +116,8 @@ def save_local_rules(source_path, source_file_name, rules, rule_keys):
 def format_local_sources():
     """
     本地源文件自动格式化
+    🎯 修复点：物理文件名强制转换为纯小写，解决 Linux/Docker 下因大小写敏感导致的文件找不到隐患。
+    🚨 下游克制：不对读取的行内容进行任何小写转换，数据层清洗全权交给 rules_processor。
     """
     if not os.path.exists(rules_loader.SOURCE_DIR):
         return
@@ -127,22 +127,35 @@ def format_local_sources():
     formatted_count = 0
 
     for filename in os.listdir(rules_loader.SOURCE_DIR):
+        # 兼容大写后缀 .TXT 或 .Txt
         if not filename.lower().endswith('.txt'):
             continue
             
-        file_path = os.path.join(rules_loader.SOURCE_DIR, filename)
-        pure_name = os.path.splitext(filename)[0]
+        old_file_path = os.path.join(rules_loader.SOURCE_DIR, filename)
         
-        # 1. 读取本地原文件
-        local_raw = load_local_raw_lines(file_path)
+        # 物理文件名强制小写化，规避 Linux 大小写敏感陷阱
+        lower_filename = filename.lower()
+        new_file_path = os.path.join(rules_loader.SOURCE_DIR, lower_filename)
+        pure_name = os.path.splitext(lower_filename)[0]
+        
+        # 读取本地原文件（保持原汁原味，不作下游小写修改）
+        local_raw = load_local_raw_lines(old_file_path)
         if not local_raw:
             continue
             
-        # 2. 将本地原文件送入清洗管道
+        # 提交给上游清洗管道
         cleaned_rules = rules_processor.execute_rules_pipeline(local_raw, [])
         
-        # 3. 重新写回本地物理文件
-        save_local_rules(file_path, pure_name, cleaned_rules, source_keys)
+        # 重新写回本地物理文件（确保路径是纯小写）
+        save_local_rules(new_file_path, pure_name, cleaned_rules, source_keys)
+        
+        # 若原文件名存在大写字母，在 Linux 下需要删掉旧的大写文件，防止残留
+        if old_file_path != new_file_path:
+            try:
+                os.remove(old_file_path)
+            except Exception:
+                pass
+                
         formatted_count += 1
 
     print(f"🧹 [格式化] 本地规则源文件整理完毕，共格式化 {formatted_count} 个文件。")
@@ -153,6 +166,7 @@ def format_local_sources():
 def build_group_rules(group_config):
     """
     构建策略组的内存规则集。仅对本地物理 source 目录进行只读访问。
+    🎯 修复点：确保本地组件引用脱敏，同时坚决不污染网络 URL 和规则内容数据。
     """
     group_name = group_config['name']
     inputs = group_config.get('inputs')
@@ -160,7 +174,7 @@ def build_group_rules(group_config):
     all_local_raw = []
     all_remote_raw = []
     
-    # 3.1 inputs 缺省：默认读取本地同名规则文件
+    # 2.1 inputs 缺省：默认读取本地同名纯小写规则文件
     if inputs is None:
         filename = f"{group_name.lower()}.txt"
         file_path = os.path.join(rules_loader.SOURCE_DIR, filename)
@@ -169,7 +183,7 @@ def build_group_rules(group_config):
             return None
         all_local_raw.extend(load_local_raw_lines(file_path))
     
-    # 3.2 inputs 显式定义：加载全部输入规则源
+    # 2.2 inputs 显式定义：加载全部输入规则源
     else:
         if not isinstance(inputs, list):
             inputs = [inputs]
@@ -179,14 +193,14 @@ def build_group_rules(group_config):
             if not inp_str:
                 continue
             
-            # 3.2a 内存网络源：即时拉取网络规则
+            # 🔒 护城河：如果是远程网络源，保持原始 URL 大小写，绝对不可调用 .lower()
             if inp_str.startswith('http://') or inp_str.startswith('https://'):
                 print(f"🌐 [网络载入] 正在获取网络规则 (内存暂存): {inp_str}")
                 try:
                     req = urllib.request.Request(inp_str, headers={'User-Agent': 'Mozilla/5.0'})
                     with urllib.request.urlopen(req, timeout=15) as response:
                         lines = response.read().decode('utf-8', errors='ignore').splitlines()
-                        all_remote_raw.extend(lines)
+                        all_remote_raw.extend(lines) # 保持原汁原味投递给上游
                 except urllib.error.HTTPError as e:
                     print(f"⚠️ [WARN] 网络源拉取失败，HTTP状态码: {e.code} ({inp_str})")
                 except urllib.error.URLError as e:
@@ -194,7 +208,7 @@ def build_group_rules(group_config):
                 except Exception as e:
                     print(f"⚠️ [WARN] 网络拉取异常: {e} ({inp_str})")
             
-            # 3.2b 本地规则源：读取 source 目录下的本地规则文件
+            # 📁 本地文件引用：将引用名进行小写归一化，精准定位物理磁盘文件
             else:
                 clean_name = inp_str.lower()
                 filename = clean_name if clean_name.endswith('.txt') else f"{clean_name}.txt"
@@ -204,6 +218,7 @@ def build_group_rules(group_config):
                 else:
                     print(f"⚠️ [WARN] 引用的本地源文件 '{filename}' 不存在，跳过此源。")
                     
+    # 🚚 统一交付：下游全过程未对行数据进行任何 .lower()，在此处一次性提交给上游管道清洗去重
     final_rules = rules_processor.execute_rules_pipeline(all_local_raw, all_remote_raw)
     return final_rules
 
@@ -309,7 +324,6 @@ def main():
     # ---------------------------------------------------------------------
     print("【 阶段 1：载入规则配置 】运行中...")
     try:
-        # 🔌 使用 loader 清洗过的极简统一接口加载配置 (同时会自动静默触发工作区初始化)
         config_data = rules_loader.load_and_prepare_config(RULESET_JSON_PATH)
     except (FileNotFoundError, ValueError) as e:
         print(f"❌ {e}")
@@ -318,7 +332,7 @@ def main():
     sync_source = config_data.get('sync_source', {})
     groups = config_data.get('groups', [])
     
-    # 格式化本地 source 文件
+    # 🛡️ 核心前置防御：在干任何事之前，先重命名并洗平本地 source/ 目录下的所有大小写文件名隐患
     format_local_sources()
 
     # ---------------------------------------------------------------------
@@ -330,6 +344,7 @@ def main():
         print(f"🌐 正在启动异步并发请求（总计 {len(urls_to_fetch)} 个网络规则源）...")
         fetched_data = asyncio.run(async_fetch_all(urls_to_fetch))
         print("💾 正在将同步的数据合并写入本地存储...")
+        # sync_to_disk 内部已对 target 执行小写化，会精准覆写或创建纯小写本地文件
         sync_to_disk(sync_source, fetched_data)
     else:
         print("ℹ️ 无定义的网络同步源，跳过同步步骤。")
@@ -338,9 +353,8 @@ def main():
     # 【 阶段 3：策略组规则构建与分发 】
     # ---------------------------------------------------------------------
     print("\n【 阶段 3：策略组规则分发 】运行中...")
-    # 【修复】：直接根据唯一的数据源矩阵 ROUTING_MATRIX 初始化全局大矩阵
     global_matrix = {plat: {} for plat in rules_loader.ROUTING_MATRIX.keys()}
-    group_rules_cache = {}  # 缓存内存中合并完成的规则
+    group_rules_cache = {}  
     
     for group_config in groups:
         group_name = group_config.get('name')
@@ -360,14 +374,13 @@ def main():
     # ---------------------------------------------------------------------
     print("\n【 阶段 4：平台文件导出与编译 】运行中...")
     
-    # 【修复】：过滤并动态提取带有有效 dir 配置的平台，同时显式剔除需要单独编译的 MRS 隧道
     output_directories = {
         plat: cfg['dir'] 
         for plat, cfg in rules_loader.ROUTING_MATRIX.items() 
         if 'dir' in cfg and plat not in ('mihomo_ipcidr', 'mihomo_domain')
     }
     
-    # 4.1. 调用 rules_formatter 导出文本文件
+    # 4.1. 导出文本文件
     rules_formatter.export_all(
         global_matrix = global_matrix,
         dir_map = output_directories
