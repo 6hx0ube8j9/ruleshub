@@ -94,15 +94,23 @@ def _normalize_rule_item(item):
         return f"{item_lower}.txt"
     return item_lower
 
+
 def _normalize_config_value(val):
     """
-    轻量容器适配器
+    轻量容器适配器（新增：保持顺序的自动去重）
     消除面条代码：统一处理单个字符串或列表，供 sync_source 和 inputs 共同调用
     """
     if isinstance(val, str):
         return _normalize_rule_item(val)
+        
     if isinstance(val, list):
-        return [_normalize_rule_item(i) for i in val]
+        # 1. 过滤掉无效的空值，并对所有元素执行清洗与规范化
+        cleaned_list = [_normalize_rule_item(i) for i in val if str(i).strip()]
+        
+        # 2. 保持原有顺序去重（利用 Python 3.7+ dict 保持插入顺序的特性）
+        deduplicated_list = list(dict.fromkeys(cleaned_list))
+        return deduplicated_list
+        
     return val
     
 # 加载 JSON 配置文件并执行自动纠错与补全
