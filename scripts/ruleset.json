@@ -10,7 +10,7 @@
       "name": "all_proxy",
       "inputs": [
         "proxy.txt",
-        "ture.txt",
+        "proxy.txt",
         "youtube.txt"
       ],
       "outputs": {
