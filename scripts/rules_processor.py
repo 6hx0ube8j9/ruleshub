@@ -259,7 +259,7 @@ def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
     else:
         return None, "" 
 
-    if not raw_payload or any(c in raw_payload for c in ' @=%&;/'):
+    if not raw_payload or any(c in raw_payload for c in [' ', '@', '=', '%', '&', ';', '/']):
         return None, ""
 
     final_payload = normalize_rule_line(raw_payload, internal_type)
