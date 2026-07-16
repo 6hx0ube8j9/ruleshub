@@ -10,8 +10,6 @@
       "name": "all_proxy",
       "inputs": [
         "proxy.txt",
-        "proxy.txt",
-        "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Google/Google.list",
         "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Google/Google.list",
         "youtube.txt"
       ],
