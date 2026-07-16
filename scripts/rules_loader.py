@@ -75,6 +75,36 @@ def _get_normalized_user_value(raw_val):
         return raw_val.strip()            
     return raw_val
 
+def _normalize_rule_item(item):
+    """
+    单字符串补全与规范化核心逻辑
+    职责单一：精准过滤网络链接，仅对本地文件名进行小写化与 .txt 后缀补全
+    """
+    if not isinstance(item, str):
+        return item
+    
+    item_str = item.strip()
+    # 精准过滤：如果是网络链接，则不修改（保持原始大小写，不补全后缀）
+    if item_str.startswith(('http://', 'https://')):
+        return item_str
+        
+    # 本地文件：转换小写并自动补全 .txt 后缀
+    item_lower = item_str.lower()
+    if not item_lower.endswith('.txt'):
+        return f"{item_lower}.txt"
+    return item_lower
+
+def _normalize_config_value(val):
+    """
+    轻量容器适配器
+    消除面条代码：统一处理单个字符串或列表，供 sync_source 和 inputs 共同调用
+    """
+    if isinstance(val, str):
+        return _normalize_rule_item(val)
+    if isinstance(val, list):
+        return [_normalize_rule_item(i) for i in val]
+    return val
+    
 # 加载 JSON 配置文件并执行自动纠错与补全
 def load_and_prepare_config(json_path):
     with open(json_path, 'r', encoding='utf-8') as f:
@@ -83,7 +113,24 @@ def load_and_prepare_config(json_path):
     setup_environment()  
     modified = False
     
+    # ------------------ [新增] sync_source 配置自愈 ------------------
+    sync_source = config_data.get('sync_source', {})
+    for url, targets in sync_source.items():
+        norm_targets = _normalize_config_value(targets)
+        if norm_targets != targets:
+            sync_source[url] = norm_targets
+            modified = True
+
+    # ------------------ [新增] groups.inputs 配置自愈 ------------------
     for group in config_data.get('groups', []):
+        if 'inputs' in group and group['inputs'] is not None:
+            inputs = group['inputs']
+            norm_inputs = _normalize_config_value(inputs)
+            if norm_inputs != inputs:
+                group['inputs'] = norm_inputs
+                modified = True
+
+        # ------------------ 原有 outputs 校验与对齐逻辑 ------------------
         group_name = group.get('name')
         outputs = group.get('outputs')
         
@@ -111,6 +158,7 @@ def load_and_prepare_config(json_path):
                 outputs[tool_key] = target_val
                 modified = True
 
+    # 物理落盘自愈：如果有任何标准补全或路由对齐发生，直接覆盖 JSON 文件
     if modified:
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(config_data, f, indent=2, ensure_ascii=False)
