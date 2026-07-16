@@ -1,17 +1,17 @@
 {
   "sync_source": {
-    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/YouTube/YouTube.list": "google",
-    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Google/Google.list": "youtube",
-    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Telegram/Telegram.list": "telegram",
-    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/QuantumultX/AppleDaily/AppleDaily.list": "appleDail"
+    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/YouTube/YouTube.list": "google.txt",
+    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Google/Google.list": "youtube.txt",
+    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Telegram/Telegram.list": "telegram.txt",
+    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/QuantumultX/AppleDaily/AppleDaily.list": "appledail.txt"
   },
   "groups": [
     {
       "name": "all_proxy",
       "inputs": [
-        "proxy",
-        "true",
-        "youtube"
+        "proxy.txt",
+        "true.txt",
+        "youtube.txt"
       ],
       "outputs": {
         "loon": "all_proxy",
@@ -22,13 +22,13 @@
     {
       "name": "china",
       "inputs": [
-        "telegram"
+        "telegram.txt"
       ]
     },
     {
       "name": "appledail",
       "inputs": [
-        "appleDail"
+        "appledail.txt"
       ]
     }
   ]
