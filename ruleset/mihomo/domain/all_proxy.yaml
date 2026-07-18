@@ -1,223 +1,16 @@
 payload:
-    - appspot
-    - bazel.build
-    - blog.google
-    - blogspot
-    - blogspot.al
-    - blogspot.ba
-    - blogspot.bg
-    - blogspot.bj
-    - blogspot.cf
-    - blogspot.co.ke
-    - blogspot.com.by
-    - blogspot.com.cy
-    - blogspot.com.ee
-    - blogspot.com.eg
-    - blogspot.com.mt
-    - blogspot.com.ng
-    - blogspot.com.uy
-    - blogspot.cv
-    - blogspot.cz
-    - blogspot.gr
-    - blogspot.hr
-    - blogspot.hu
-    - blogspot.is
-    - blogspot.li
-    - blogspot.lt
-    - blogspot.lu
-    - blogspot.md
-    - blogspot.mk
-    - blogspot.pe
-    - blogspot.pt
-    - blogspot.qa
-    - blogspot.re
-    - blogspot.ro
-    - blogspot.rs
-    - blogspot.si
-    - blogspot.sk
-    - blogspot.sn
-    - blogspot.td
-    - blogspot.ug
-    - c.gle
-    - chat.gle
-    - chronicle.security
-    - devsitetest.how
-    - fastlane.ci
-    - fastlane.tools
-    - g.page
-    - get.how
-    - get.page
-    - gmail
-    - goo.gl
-    - google
-    - google.ad
-    - google.al
-    - google.as
-    - google.az
-    - google.ba
-    - google.berlin
-    - google.bf
-    - google.bg
-    - google.bi
-    - google.bj
-    - google.bs
-    - google.bt
-    - google.by
-    - google.cat
-    - google.cd
-    - google.cf
-    - google.cg
-    - google.ci
-    - google.cm
-    - google.co.ao
-    - google.co.bw
-    - google.co.ck
-    - google.co.cr
-    - google.co.ke
-    - google.co.ls
-    - google.co.ma
-    - google.co.mz
-    - google.co.tz
-    - google.co.ug
-    - google.co.uz
-    - google.co.ve
-    - google.co.vi
-    - google.co.zm
-    - google.co.zw
-    - google.com.af
-    - google.com.ag
-    - google.com.bd
-    - google.com.bh
-    - google.com.bn
-    - google.com.bo
-    - google.com.bz
-    - google.com.cu
-    - google.com.cy
-    - google.com.ec
-    - google.com.eg
-    - google.com.et
-    - google.com.fj
-    - google.com.gh
-    - google.com.gi
-    - google.com.gt
-    - google.com.jm
-    - google.com.kw
-    - google.com.lb
-    - google.com.ly
-    - google.com.mt
-    - google.com.na
-    - google.com.ng
-    - google.com.ni
-    - google.com.np
-    - google.com.om
-    - google.com.pa
-    - google.com.pe
-    - google.com.pg
-    - google.com.pr
-    - google.com.py
-    - google.com.qa
-    - google.com.sb
-    - google.com.sl
-    - google.com.sv
-    - google.com.tj
-    - google.com.uy
-    - google.com.vc
-    - google.cv
-    - google.cz
-    - google.dj
-    - google.dm
-    - google.dz
-    - google.ee
-    - google.ga
-    - google.ge
-    - google.gl
-    - google.gm
-    - google.gr
-    - google.gy
-    - google.hn
-    - google.hr
-    - google.ht
-    - google.hu
-    - google.iq
-    - google.is
-    - google.je
-    - google.jo
-    - google.kg
-    - google.ki
-    - google.kz
-    - google.li
-    - google.lk
-    - google.lt
-    - google.lu
-    - google.lv
-    - google.md
-    - google.mg
-    - google.mk
-    - google.ml
-    - google.mn
-    - google.ms
-    - google.mu
-    - google.mv
-    - google.mw
-    - google.ne
-    - google.nr
-    - google.nu
-    - google.pn
-    - google.ps
-    - google.pt
-    - google.ro
-    - google.rs
-    - google.rw
-    - google.sc
-    - google.sh
-    - google.si
-    - google.sk
-    - google.sm
-    - google.sn
-    - google.sr
-    - google.st
-    - google.td
-    - google.tg
-    - google.tl
-    - google.tm
-    - google.tn
-    - google.tt
-    - google.ventures
-    - google.vg
-    - google.vu
-    - google.ws
-    - hey.gle
-    - iam.soy
-    - keytransparency.foo
-    - meet.new
-    - mobileview.page
-    - near.by
-    - nomulus.foo
-    - ok.gle
-    - on.here
-    - pageview.mobi
-    - pki.goog
-    - plus.codes
-    - prod-controlbe.floonet.goog
-    - prod-databe.floonet.goog
-    - prod.databe.floonet.goog
-    - recaptcha
-    - registry.google
-    - savethedate.foo
-    - staging-controlbe.floonet.goog
-    - staging-databe.floonet.goog
-    - staging.databe.floonet.goog
-    - voice.telephony.goog
-    - x.company
-    - x.team
-    - xn--p8j9a0d9c9a.xn--q9jyb4c
     - +.0emm.com
+    - +.172.110.32.0/21
+    - +.173.194.0.0/16
     - +.1e100.net
     - +.1ucrs.com
+    - +.216.73.80.0/20
+    - +.2620:120:e000::/40
     - +.265.com
     - +.2mdn-cn.net
     - +.2mdn.net
     - +.466453.com
+    - +.74.125.0.0/16
     - +.abc.xyz
     - +.adgoogle.net
     - +.admeld.com
@@ -249,6 +42,7 @@ payload:
     - +.appbridge.io
     - +.appbridge.it
     - +.apps5.oingo.com
+    - +.appspot
     - +.appspot.com
     - +.apture.com
     - +.area120.com
@@ -258,6 +52,7 @@ payload:
     - +.bandpage.com
     - +.baselinestudy.com
     - +.baselinestudy.org
+    - +.bazel.build
     - +.bdn.dev
     - +.beacons.gvt2.com
     - +.beacons2.gvt2.com
@@ -266,15 +61,22 @@ payload:
     - +.blink.org
     - +.blogblog.com
     - +.blogger.com
+    - +.blogspot
     - +.blogspot.ae
+    - +.blogspot.al
     - +.blogspot.am
+    - +.blogspot.ba
     - +.blogspot.be
+    - +.blogspot.bg
+    - +.blogspot.bj
     - +.blogspot.ca
+    - +.blogspot.cf
     - +.blogspot.ch
     - +.blogspot.cl
     - +.blogspot.co.at
     - +.blogspot.co.id
     - +.blogspot.co.il
+    - +.blogspot.co.ke
     - +.blogspot.co.nz
     - +.blogspot.co.uk
     - +.blogspot.co.za
@@ -282,27 +84,56 @@ payload:
     - +.blogspot.com.ar
     - +.blogspot.com.au
     - +.blogspot.com.br
+    - +.blogspot.com.by
     - +.blogspot.com.co
+    - +.blogspot.com.cy
+    - +.blogspot.com.ee
+    - +.blogspot.com.eg
     - +.blogspot.com.es
+    - +.blogspot.com.mt
+    - +.blogspot.com.ng
     - +.blogspot.com.tr
+    - +.blogspot.com.uy
+    - +.blogspot.cv
+    - +.blogspot.cz
     - +.blogspot.de
     - +.blogspot.dk
     - +.blogspot.fi
     - +.blogspot.fr
+    - +.blogspot.gr
     - +.blogspot.hk
+    - +.blogspot.hr
+    - +.blogspot.hu
     - +.blogspot.ie
     - +.blogspot.in
+    - +.blogspot.is
     - +.blogspot.it
     - +.blogspot.jp
     - +.blogspot.kr
+    - +.blogspot.li
+    - +.blogspot.lt
+    - +.blogspot.lu
+    - +.blogspot.md
+    - +.blogspot.mk
     - +.blogspot.mx
     - +.blogspot.my
     - +.blogspot.nl
     - +.blogspot.no
+    - +.blogspot.pe
+    - +.blogspot.pt
+    - +.blogspot.qa
+    - +.blogspot.re
+    - +.blogspot.ro
+    - +.blogspot.rs
     - +.blogspot.ru
     - +.blogspot.se
     - +.blogspot.sg
+    - +.blogspot.si
+    - +.blogspot.sk
+    - +.blogspot.sn
+    - +.blogspot.td
     - +.blogspot.tw
+    - +.blogspot.ug
     - +.blogspot.vn
     - +.brocaproject.com
     - +.brotli.org
@@ -312,11 +143,13 @@ payload:
     - +.bumptop.net
     - +.bumptop.org
     - +.bumptunes.com
+    - +.c.gle
     - +.campuslondon.com
     - +.capitalg.com
     - +.certificate-transparency.dev
     - +.certificate-transparency.org
     - +.charlestonroadregistry.com
+    - +.chat.gle
     - +.chrome.com
     - +.chromebook.com
     - +.chromecast.com
@@ -325,6 +158,7 @@ payload:
     - +.chromercise.com
     - +.chromestatus.com
     - +.chromium.org
+    - +.chronicle.security
     - +.chroniclesec.com
     - +.clickserve.cc-dt.com
     - +.clickserver.googleads.com
@@ -360,6 +194,7 @@ payload:
     - +.deja.com
     - +.deps.dev
     - +.deps.info
+    - +.devsitetest.how
     - +.dialogflow.com
     - +.digisfera.com
     - +.digitalassetlinks.org
@@ -368,6 +203,8 @@ payload:
     - +.doubleclick.com
     - +.doubleclick.net
     - +.episodic.com
+    - +.fastlane.ci
+    - +.fastlane.tools
     - +.feedburner.com
     - +.fflick.com
     - +.financeleadsonline.com
@@ -382,12 +219,15 @@ payload:
     - +.g.cn
     - +.g.co
     - +.g.dev
+    - +.g.page
     - +.gateway.dev
     - +.gcp.gvt2.com
     - +.gcr.io
     - +.gerritcodereview.com
     - +.get.app
     - +.get.dev
+    - +.get.how
+    - +.get.page
     - +.getbumptop.com
     - +.getmdl.io
     - +.getoutline.org
@@ -395,6 +235,7 @@ payload:
     - +.gipscorp.com
     - +.gkecnapps.cn
     - +.globaledu.org
+    - +.gmail
     - +.gmail.com
     - +.gmodules.com
     - +.go-lang.com
@@ -409,71 +250,209 @@ payload:
     - +.golang.org
     - +.gonglchuangl.net
     - +.gongyichuangyi.net
+    - +.goo.gl
     - +.googel.com
     - +.googil.com
     - +.googl.com
+    - +.google
     - +.google-analytics-cn.com
     - +.google-analytics.com
     - +.google-syndication.com
+    - +.google.ad
     - +.google.ae
+    - +.google.al
     - +.google.am
+    - +.google.as
     - +.google.at
+    - +.google.az
+    - +.google.ba
     - +.google.be
+    - +.google.berlin
+    - +.google.bf
+    - +.google.bg
+    - +.google.bi
+    - +.google.bj
+    - +.google.bs
+    - +.google.bt
+    - +.google.by
     - +.google.ca
+    - +.google.cat
+    - +.google.cd
+    - +.google.cf
+    - +.google.cg
     - +.google.ch
+    - +.google.ci
     - +.google.cl
+    - +.google.cm
     - +.google.cn
+    - +.google.co.ao
+    - +.google.co.bw
+    - +.google.co.ck
+    - +.google.co.cr
     - +.google.co.id
     - +.google.co.il
     - +.google.co.in
     - +.google.co.jp
+    - +.google.co.ke
     - +.google.co.kr
+    - +.google.co.ls
+    - +.google.co.ma
+    - +.google.co.mz
     - +.google.co.nz
     - +.google.co.th
+    - +.google.co.tz
+    - +.google.co.ug
     - +.google.co.uk
+    - +.google.co.uz
+    - +.google.co.ve
+    - +.google.co.vi
     - +.google.co.za
+    - +.google.co.zm
+    - +.google.co.zw
     - +.google.com
+    - +.google.com.af
+    - +.google.com.ag
     - +.google.com.ai
     - +.google.com.ar
     - +.google.com.au
+    - +.google.com.bd
+    - +.google.com.bh
+    - +.google.com.bn
+    - +.google.com.bo
     - +.google.com.br
+    - +.google.com.bz
     - +.google.com.co
+    - +.google.com.cu
+    - +.google.com.cy
     - +.google.com.do
+    - +.google.com.ec
+    - +.google.com.eg
+    - +.google.com.et
+    - +.google.com.fj
+    - +.google.com.gh
+    - +.google.com.gi
+    - +.google.com.gt
     - +.google.com.hk
+    - +.google.com.jm
     - +.google.com.kh
+    - +.google.com.kw
+    - +.google.com.lb
+    - +.google.com.ly
     - +.google.com.mm
+    - +.google.com.mt
     - +.google.com.mx
     - +.google.com.my
+    - +.google.com.na
+    - +.google.com.ng
+    - +.google.com.ni
+    - +.google.com.np
+    - +.google.com.om
+    - +.google.com.pa
+    - +.google.com.pe
+    - +.google.com.pg
     - +.google.com.ph
     - +.google.com.pk
+    - +.google.com.pr
+    - +.google.com.py
+    - +.google.com.qa
     - +.google.com.sa
+    - +.google.com.sb
     - +.google.com.sg
+    - +.google.com.sl
+    - +.google.com.sv
+    - +.google.com.tj
     - +.google.com.tr
     - +.google.com.tw
     - +.google.com.ua
+    - +.google.com.uy
+    - +.google.com.vc
     - +.google.com.vn
+    - +.google.cv
+    - +.google.cz
     - +.google.de
     - +.google.dev
+    - +.google.dj
     - +.google.dk
+    - +.google.dm
+    - +.google.dz
+    - +.google.ee
     - +.google.es
     - +.google.fi
     - +.google.fm
     - +.google.fr
+    - +.google.ga
+    - +.google.ge
     - +.google.gg
+    - +.google.gl
+    - +.google.gm
+    - +.google.gr
+    - +.google.gy
+    - +.google.hn
+    - +.google.hr
+    - +.google.ht
+    - +.google.hu
     - +.google.ie
     - +.google.im
+    - +.google.iq
+    - +.google.is
     - +.google.it
+    - +.google.je
+    - +.google.jo
+    - +.google.kg
+    - +.google.ki
+    - +.google.kz
     - +.google.la
+    - +.google.li
+    - +.google.lk
+    - +.google.lt
+    - +.google.lu
+    - +.google.lv
+    - +.google.md
     - +.google.me
+    - +.google.mg
+    - +.google.mk
+    - +.google.ml
+    - +.google.mn
+    - +.google.ms
+    - +.google.mu
+    - +.google.mv
+    - +.google.mw
+    - +.google.ne
     - +.google.net
     - +.google.nl
     - +.google.no
+    - +.google.nr
+    - +.google.nu
     - +.google.org
     - +.google.pl
+    - +.google.pn
+    - +.google.ps
+    - +.google.pt
+    - +.google.ro
+    - +.google.rs
     - +.google.ru
+    - +.google.rw
+    - +.google.sc
     - +.google.se
+    - +.google.sh
+    - +.google.si
+    - +.google.sk
+    - +.google.sm
+    - +.google.sn
     - +.google.so
+    - +.google.sr
+    - +.google.st
+    - +.google.td
+    - +.google.tg
+    - +.google.tl
+    - +.google.tm
+    - +.google.tn
     - +.google.to
+    - +.google.tt
+    - +.google.ventures
+    - +.google.vg
+    - +.google.vu
+    - +.google.ws
     - +.googleacquisitionmigration.com
     - +.googleadapis.com
     - +.googleadservices-cn.com
@@ -547,10 +526,12 @@ payload:
     - +.gvt9.com
     - +.gwtproject.org
     - +.hdrplusdata.org
+    - +.hey.gle
     - +.hindiweb.com
     - +.howtogetmo.co.uk
     - +.html5rocks.com
     - +.hwgo.com
+    - +.iam.soy
     - +.iamremarkable.org
     - +.igoogle.com
     - +.impermium.com
@@ -561,18 +542,25 @@ payload:
     - +.kaggle.io
     - +.keyhole.com
     - +.keytransparency.com
+    - +.keytransparency.foo
     - +.keytransparency.org
     - +.lanternal.com
     - +.like.com
     - +.madewithcode.com
     - +.material.io
     - +.mdialog.com
+    - +.meet.new
     - +.mfg-inspector.com
+    - +.mobileview.page
     - +.moodstocks.com
+    - +.near.by
     - +.nest.com
     - +.neverware.com
+    - +.nomulus.foo
     - +.oasisfeng.com
     - +.oauthz.com
+    - +.ok.gle
+    - +.on.here
     - +.on2.com
     - +.onefifteen.net
     - +.onefifteen.org
@@ -584,6 +572,7 @@ payload:
     - +.orbitera.com
     - +.page.link
     - +.pagespeedmobilizer.com
+    - +.pageview.mobi
     - +.panoramio.com
     - +.partylikeits1986.org
     - +.paxlicense.org
@@ -594,10 +583,15 @@ payload:
     - +.picnik.com
     - +.pittpatt.com
     - +.pixate.com
+    - +.pki.goog
+    - +.plus.codes
     - +.polymer-project.org
     - +.polymerproject.org
     - +.postini.com
     - +.privacysandbox.com
+    - +.prod-controlbe.floonet.goog
+    - +.prod-databe.floonet.goog
+    - +.prod.databe.floonet.goog
     - +.projectara.com
     - +.projectbaseline.com
     - +.publishproxy.com
@@ -606,6 +600,7 @@ payload:
     - +.questvisual.com
     - +.quickoffice.com
     - +.quiksee.com
+    - +.recaptcha
     - +.recaptcha-cn.net
     - +.recaptcha.net
     - +.redhotlabs.com
@@ -616,6 +611,7 @@ payload:
     - +.revolv.com
     - +.ridepenguin.com
     - +.run.app
+    - +.savethedate.foo
     - +.saynow.com
     - +.schema.org
     - +.schemer.com
@@ -625,6 +621,9 @@ payload:
     - +.snapseed.com
     - +.solveforx.com
     - +.stadia.dev
+    - +.staging-controlbe.floonet.goog
+    - +.staging-databe.floonet.goog
+    - +.staging.databe.floonet.goog
     - +.stcroixmosquito.com
     - +.stcroixmosquitoproject.com
     - +.studywatchbyverily.com
@@ -658,6 +657,7 @@ payload:
     - +.verilystudyhub.com
     - +.verilystudywatch.com
     - +.verilystudywatch.org
+    - +.voice.telephony.goog
     - +.wallet.com
     - +.waveprotocol.org
     - +.waymo.com
@@ -679,6 +679,8 @@ payload:
     - +.womenwill.mx
     - +.www.destinationurl.com
     - +.www.pxcc.com
+    - +.x.company
+    - +.x.team
     - +.xn--9kr7l.com
     - +.xn--9trs65b.com
     - +.xn--flw351e.com
@@ -686,6 +688,7 @@ payload:
     - +.xn--gogl-0nd52e.com
     - +.xn--gogl-1nd42e.com
     - +.xn--ngstr-lra8j.com
+    - +.xn--p8j9a0d9c9a.xn--q9jyb4c
     - +.xplr.co
     - +.zukunftswerkstatt.de
     - +.zynamics.com

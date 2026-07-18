@@ -1,3 +1,6 @@
+# === appledail.txt Combined Base Rules ===
+
+# --- TYPE: SUFFIX ---
 suffix,appledaily.com
 suffix,appledaily.com.hk
 suffix,appledaily.com.tw
@@ -30,3 +33,4 @@ suffix,privilege.tw
 suffix,sharpdaily.tw
 suffix,tomonews.net
 suffix,twnextdigital.com
+
