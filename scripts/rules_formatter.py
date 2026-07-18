@@ -36,7 +36,6 @@ def export_all(global_matrix, dir_map):
             else:
                 print(f"[WARN] No generator function found for platform: {plat}")
         
-
 # 生成 Mihomo Classical 格式的 YAML 规则集
 def generate_mihomo_classical(matrix_data, output_dir):
     for g_name, g_rules in matrix_data.items():
