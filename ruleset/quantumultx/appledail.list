@@ -1,5 +1,8 @@
 # Quantumult X Rule-Set: appledail
 
+host-suffix, 4cdn.org, Appledail
+host-suffix, 4chan.org, Appledail
+host-suffix, 4channel.org, Appledail
 host-suffix, appledaily.com, Appledail
 host-suffix, appledaily.com.hk, Appledail
 host-suffix, appledaily.com.tw, Appledail

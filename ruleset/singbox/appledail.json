@@ -3,6 +3,9 @@
   "rules": [
     {
       "domain_suffix": [
+        "4cdn.org",
+        "4chan.org",
+        "4channel.org",
         "appledaily.com",
         "appledaily.com.hk",
         "appledaily.com.tw",

@@ -1,5 +1,8 @@
 # Loon Rule-Set: appledail
 
+DOMAIN-SUFFIX,4cdn.org
+DOMAIN-SUFFIX,4chan.org
+DOMAIN-SUFFIX,4channel.org
 DOMAIN-SUFFIX,appledaily.com
 DOMAIN-SUFFIX,appledaily.com.hk
 DOMAIN-SUFFIX,appledaily.com.tw
