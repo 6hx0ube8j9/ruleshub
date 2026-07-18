@@ -72,7 +72,7 @@ def check_binary_dependencies(config_data):
     
     if missing_bins:
         raise FileNotFoundError(
-            "[FATAL] Required binary toolchains for configured outputs are missing:\n - " + "\n - ".join(missing_bins)
+            "[FATAL] 当前配置的输出缺少所需的外部二进制工具链:\n - " + "\n - ".join(missing_bins)
         )
         
 # 定义路由平台的规则过滤匹配逻辑
@@ -197,7 +197,7 @@ def load_and_prepare_config(json_path):
     if modified:
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(config_data, f, indent=2, ensure_ascii=False)
-        print("[INFO] Configuration self-healed and saved to JSON")
+        print("[INFO] 配置文件自动修复并成功保存至 JSON")
         
     check_binary_dependencies(config_data)
         
@@ -225,4 +225,4 @@ def resolve_routing(group_config, group_name):
 
 if __name__ == '__main__':
     setup_environment()
-    print("[SUCCESS] Environment setup completed")
+    print("[SUCCESS] 运行环境初始化目录构建完成")
