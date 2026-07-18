@@ -34,7 +34,7 @@ def export_all(global_matrix, dir_map):
             if generator_func:
                 generator_func(global_matrix[plat], output_dir)
             else:
-                print(f"[WARN] No generator function found for platform: {plat}")
+                print(f"[WARN] 找不到该平台的生成函数: {plat}")
         
 # 生成 Mihomo Classical 格式的 YAML 规则集
 def generate_mihomo_classical(matrix_data, output_dir):
@@ -92,7 +92,6 @@ def generate_quantumultx(matrix_data, output_dir):
         with open(qx_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
 
-
 # 生成 Shadowrocket 格式的规则集文件 (.list)
 def generate_shadowrocket(matrix_data, output_dir):
     for g_name, g_rules in matrix_data.items():
@@ -119,7 +118,6 @@ def generate_shadowrocket(matrix_data, output_dir):
 
         with open(sr_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
-
 
 # 生成 Loon 格式的规则集文件 (.lsr)
 def generate_loon(matrix_data, output_dir):
@@ -148,8 +146,7 @@ def generate_loon(matrix_data, output_dir):
 
         with open(loon_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
-        print(f"[SUCCESS] LSR Ruleset generated: {g_name}.lsr")
-
+        print(f"[SUCCESS] LSR 规则集生成成功: {g_name}.lsr")
 
 # 生成 Sing-box 格式的 JSON 规则集文件
 def generate_singbox(matrix_data, output_dir):
@@ -188,7 +185,6 @@ def generate_singbox(matrix_data, output_dir):
         # 100% 保证写盘，不漏掉任何文件
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
-
 
 # 生成标准 Proxy Auto-Config (PAC) 脚本文件 (.pac)
 def generate_pac(matrix_data, output_dir):
