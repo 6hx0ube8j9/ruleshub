@@ -298,14 +298,16 @@ def commit_write_buffer(write_buffer: dict):
         temp_path = f"{file_path}.tmp"
 
         try:
-            # 极其干净的单行 Payload 物理展开写入
             with open(temp_path, 'w', encoding='utf-8') as f:
-                for category_set in category_dict.values():
+                f.write(f"# === {base_name} Combined Base Rules ===\n\n")
+                for r_type in RULE_SOURCE_KEYS:
+                    category_set = category_dict.get(r_type)
+                    
                     if category_set:
-                        formatted_lines = [f"suffix,{line}" if ',' not in line else line for line in sorted(category_set)]
-                        f.write("\n".join(formatted_lines) + "\n")
-            
-            # 原子事务级物理替换，100% 免疫进程意外中断引发的空文件与损坏故障
+                        f.write(f"# --- TYPE: {r_type.upper()} ---\n")
+                        formatted_lines = [f"{r_type},{val}" for val in sorted(category_set)]
+                        f.write("\n".join(formatted_lines) + "\n\n")
+                        
             os.replace(temp_path, file_path)
         except Exception as e:
             print(f"[ERROR] Transactional save failed for {base_name}: {e}")
