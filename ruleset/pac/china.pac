@@ -11,6 +11,7 @@ var DIRECT_DOMAINS = {
     "ip-asn": 1,
     "legra.ph": 1,
     "mbrx.app": 1,
+    "nicegram": 1,
     "quiz.directory": 1,
     "stel.com": 1,
     "t.me": 1,
