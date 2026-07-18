@@ -38,26 +38,27 @@ def generate_mihomo_classical(matrix_data, output_dir):
 
 # 生成供内核转换二进制的纯 IP 格式 YAML 文本
 def generate_mihomo_ipcidr(rules):
-    if not rules.get('ip') and not rules.get('ip6'):
+    combined_ips = sorted(rules.get('ip', set()) | rules.get('ip6', set()))
+    if not combined_ips:
         return ""
 
     indent = " " * 4
-    combined_ips = sorted(rules.get('ip', set()) | rules.get('ip6', set()))    
     payload = ["payload:"]
     payload.extend(f"{indent}- {item}" for item in combined_ips)
     
     return "\n".join(payload) + "\n"
 
-
 # 生成供内核转换二进制的纯域名格式 YAML 文本
 def generate_mihomo_domain(rules):
-    if not rules.get('suffix') and not rules.get('full'):
+    full_set = rules.get('full', set())
+    suffix_set = rules.get('suffix', set())
+    if not full_set and not suffix_set:
         return ""
 
     indent = " " * 4
     payload = ["payload:"]
-    payload.extend(f"{indent}- {item}" for item in sorted(rules.get('full', set())))
-    payload.extend(f"{indent}- +.{item}" for item in sorted(rules.get('suffix', set())))
+    payload.extend(f"{indent}- {item}" for item in sorted(full_set))
+    payload.extend(f"{indent}- +.{item}" for item in sorted(suffix_set))
         
     return "\n".join(payload) + "\n"
 
