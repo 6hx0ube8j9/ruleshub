@@ -61,11 +61,19 @@ async def fetch_single_url_async(session, url):
         return url, None
 
 # 高并发批量拉取驱动轴
-async def async_fetch_all(urls_list):
+async def fetch_single_with_sem(sem, session, url):
+    async with sem:
+        return await fetch_single_url_async(session, url)
+
+async def async_fetch_all(urls_list, max_concurrent=10):
+    
     if not urls_list:
         return {}
-    async with aiohttp.ClientSession() as session:
-        tasks   = [fetch_single_url_async(session, url) for url in urls_list]
+    
+    sem = asyncio.Semaphore(max_concurrent)
+    connector = aiohttp.TCPConnector(limit=max_concurrent)
+    async with aiohttp.ClientSession(connector=connector) as session:
+        tasks = [fetch_single_with_sem(sem, session, url) for url in urls_list]
         results = await asyncio.gather(*tasks)
         return dict(results)
 
@@ -301,12 +309,11 @@ def commit_write_buffer(write_buffer: dict):
             with open(temp_path, 'w', encoding='utf-8') as f:
                 f.write(f"# === {base_name} Combined Base Rules ===\n\n")
                 for r_type in RULE_SOURCE_KEYS:
-                    category_set = category_dict.get(r_type)
-                    
+                    category_set = category_dict.get(r_type)                    
                     if category_set:
                         f.write(f"# --- TYPE: {r_type.upper()} ---\n")
-                        formatted_lines = [f"{r_type},{val}" for val in sorted(category_set)]
-                        f.write("\n".join(formatted_lines) + "\n\n")
+                        f.writelines(f"{r_type},{val}\n" for val in sorted(category_set))
+                        f.write("\n")
                         
             os.replace(temp_path, file_path)
         except Exception as e:
