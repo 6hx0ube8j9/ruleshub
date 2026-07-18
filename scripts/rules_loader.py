@@ -4,18 +4,18 @@ import json
 import re
 
 # ==================== 基础路径定义 ====================
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) 
-PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)                  
+SCRIPT_DIR       = os.path.dirname(os.path.abspath(__file__)) 
+PROJECT_ROOT     = os.path.dirname(SCRIPT_DIR)                  
 
 RULESET_BASE_DIR = os.path.join(PROJECT_ROOT, 'ruleset')
-SOURCE_DIR = os.path.join(SCRIPT_DIR, 'source')
-MIHOMO_DIR = os.path.join(RULESET_BASE_DIR, 'mihomo')
+SOURCE_DIR       = os.path.join(SCRIPT_DIR, 'source')
+MIHOMO_DIR       = os.path.join(RULESET_BASE_DIR, 'mihomo')
 
 RULESET_JSON_PATH = os.path.join(SCRIPT_DIR, 'ruleset.json')
-MIHOMO_BIN = os.path.join(SCRIPT_DIR, 'mihomo-bin')
-SINGBOX_BIN = os.path.join(SCRIPT_DIR, 'sing-box')
+MIHOMO_BIN        = os.path.join(SCRIPT_DIR, 'mihomo-bin')
+SINGBOX_BIN       = os.path.join(SCRIPT_DIR, 'sing-box')
 
-# ==================== 配置文件核心键名映射（新增：高内聚收拢） ====================
+# ==================== 配置文件核心键名映射（高内聚收拢） ====================
 CONFIG_KEYS = {
     'SOURCES':   'sync_source',   
     'GROUPS':    'groups', 
@@ -36,11 +36,8 @@ ROUTING_MATRIX = {
     'mihomo_domain':    {'regex': r'^(?!.*(^|[_0-9-])ip([_0-9-]|$)).*$', 'blacklist': ['classic', 'nodomain'], 'dir': os.path.join(MIHOMO_DIR, 'domain')}
 }
 
-# 初始化创建所有必需输出目录
+# 初始化项目运行所需的所有目录环境
 def setup_environment():
-    """
-    环境自愈（仅负责必需目录的建立）
-    """
     required_dirs = {RULESET_BASE_DIR, SOURCE_DIR, MIHOMO_DIR}
     required_dirs.update(
         cfg['dir'] for cfg in ROUTING_MATRIX.values() if 'dir' in cfg
@@ -48,11 +45,9 @@ def setup_environment():
     for d in sorted(required_dirs):
         os.makedirs(d, exist_ok=True)
 
+# 校验并确认是否存在运行规则生成所需的外部二进制工具
 def check_binary_dependencies(config_data):
-    """
-    按需前置拦截：仅当配置中实际生成了需使用外部程序的路由时，才检查二进制文件
-    """
-    need_mihomo = False
+    need_mihomo  = False
     need_singbox = False
 
     groups = config_data.get(CONFIG_KEYS['GROUPS'], [])
@@ -61,18 +56,14 @@ def check_binary_dependencies(config_data):
         if not group_name:
             continue
             
-        # 借助现成的 resolve_routing 推算该组最终的输出平台
         routing_map = resolve_routing(group, group_name)
         
-        # 检查是否命中了 singbox
         if 'singbox' in routing_map:
             need_singbox = True
             
-        # 检查是否命中了 mihomo 相关的平台 (classical, ipcidr, domain)
         if any(tool_key.startswith('mihomo') for tool_key in routing_map.keys()):
             need_mihomo = True
 
-    # 汇总缺失的依赖
     missing_bins = []
     if need_mihomo and not os.path.exists(MIHOMO_BIN):
         missing_bins.append(f"Mihomo: {MIHOMO_BIN}")
@@ -84,7 +75,7 @@ def check_binary_dependencies(config_data):
             "[FATAL] Required binary toolchains for configured outputs are missing:\n - " + "\n - ".join(missing_bins)
         )
         
-# 路由过滤器规则匹配引擎
+# 定义路由平台的规则过滤匹配逻辑
 class RuleFilter:
 
     @staticmethod
@@ -112,7 +103,7 @@ class RuleFilter:
     def evaluate(cls, config, group_name_lower):
         return all(filter_func(config, group_name_lower) for filter_func in cls._PIPELINE)
 
-# 清洗并规整配置中的用户输入值
+# 将用户输入的配置值转化为标准类型（布尔值或路径字符串）
 def _get_normalized_user_value(raw_val):
     if isinstance(raw_val, str):
         val_lower = raw_val.strip().lower()
@@ -122,10 +113,8 @@ def _get_normalized_user_value(raw_val):
         return raw_val.strip()            
     return raw_val
 
+# 确保单项规则文件名后缀合法并补全 .txt 扩展名
 def _normalize_rule_item(item):
-    """
-    单字符串补全与规范化核心逻辑
-    """
     if not isinstance(item, str):
         return item
     
@@ -138,18 +127,19 @@ def _normalize_rule_item(item):
         return f"{item_lower}.txt"
     return item_lower
 
+# 规范化配置中的规则路径列表并执行去重
 def _normalize_config_value(val):
     if isinstance(val, str):
         return _normalize_rule_item(val)
         
     if isinstance(val, list):
-        cleaned_list = [_normalize_rule_item(i) for i in val if str(i).strip()]
+        cleaned_list      = [_normalize_rule_item(i) for i in val if str(i).strip()]
         deduplicated_list = list(dict.fromkeys(cleaned_list))
         return deduplicated_list
         
     return val
     
-# 加载 JSON 配置文件并执行自动纠错与补全
+# 加载配置文件，执行自动纠错、路径补全并同步保存
 def load_and_prepare_config(json_path):
     with open(json_path, 'r', encoding='utf-8') as f:
         config_data = json.load(f)
@@ -157,31 +147,28 @@ def load_and_prepare_config(json_path):
     setup_environment()
     modified = False
     
-    # ------------------ sync_source 配置自愈 ------------------
     sync_source = config_data.get(CONFIG_KEYS['SOURCES'], {})
     for url, targets in sync_source.items():
         norm_targets = _normalize_config_value(targets)
         if norm_targets != targets:
             sync_source[url] = norm_targets
-            modified = True
+            modified         = True
 
-    # ------------------ groups.inputs 配置自愈 ------------------
     for group in config_data.get(CONFIG_KEYS['GROUPS'], []):
         if CONFIG_KEYS['INPUTS'] not in group or not group[CONFIG_KEYS['INPUTS']]:
             group_name = group.get('name', '')
             if group_name:
                 group[CONFIG_KEYS['INPUTS']] = [f"{group_name.lower()}.txt"]
-                modified = True
+                modified                     = True
         else:
-            inputs = group[CONFIG_KEYS['INPUTS']]
-            norm_inputs = _normalize_config_value(inputs)
+            inputs       = group[CONFIG_KEYS['INPUTS']]
+            norm_inputs  = _normalize_config_value(inputs)
             if norm_inputs != inputs:
                 group[CONFIG_KEYS['INPUTS']] = norm_inputs
-                modified = True
+                modified                     = True
 
-        # ------------------ outputs 校验与对齐逻辑 ------------------
         group_name = group.get('name')
-        outputs = group.get(CONFIG_KEYS['OUTPUTS'])
+        outputs    = group.get(CONFIG_KEYS['OUTPUTS'])
         
         if not group_name or not isinstance(outputs, dict):
             continue
@@ -192,7 +179,7 @@ def load_and_prepare_config(json_path):
             if tool_key not in outputs:
                 continue  
                 
-            raw_val = outputs[tool_key]
+            raw_val  = outputs[tool_key]
             user_val = _get_normalized_user_value(raw_val)
             
             target_val = None
@@ -200,12 +187,12 @@ def load_and_prepare_config(json_path):
             if user_val is True:
                 target_val = group_name_lower
             elif user_val == '':
-                is_passed = RuleFilter.evaluate(config, group_name_lower)
+                is_passed  = RuleFilter.evaluate(config, group_name_lower)
                 target_val = group_name_lower if is_passed else False
                 
             if target_val is not None and raw_val != target_val:
                 outputs[tool_key] = target_val
-                modified = True
+                modified          = True
 
     if modified:
         with open(json_path, 'w', encoding='utf-8') as f:
@@ -216,11 +203,11 @@ def load_and_prepare_config(json_path):
         
     return config_data
 
-# 根据清洗后的配置生成内存路由映射表
+# 根据当前规则组的输出配置生成路由映射矩阵
 def resolve_routing(group_config, group_name):
     group_name_lower = group_name.lower()
-    raw_outputs = group_config.get(CONFIG_KEYS['OUTPUTS']) or {}
-    routing_map = {}
+    raw_outputs      = group_config.get(CONFIG_KEYS['OUTPUTS']) or {}
+    routing_map      = {}
     
     for tool_key, config in ROUTING_MATRIX.items():
         if tool_key not in raw_outputs:
