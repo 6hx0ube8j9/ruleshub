@@ -1,14 +1,17 @@
 payload:
+    - ip-asn,211157,no-resolve
+    - ip-asn,44907,no-resolve
+    - ip-asn,59930,no-resolve
+    - ip-asn,62014,no-resolve
+    - ip-asn,62041,no-resolve
     - +.api.imem.app
     - +.api.swiftgram.app
     - +.cdn-telegram.org
     - +.comments.app
     - +.contest.com
     - +.graph.org
-    - +.ip-asn
     - +.legra.ph
     - +.mbrx.app
-    - +.nicegram
     - +.quiz.directory
     - +.stel.com
     - +.t.me

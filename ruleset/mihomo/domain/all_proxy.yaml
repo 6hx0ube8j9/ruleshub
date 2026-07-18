@@ -37,7 +37,6 @@ payload:
     - +.appbridge.io
     - +.appbridge.it
     - +.apps5.oingo.com
-    - +.appspot
     - +.appspot.com
     - +.apture.com
     - +.area120.com
@@ -56,7 +55,6 @@ payload:
     - +.blink.org
     - +.blogblog.com
     - +.blogger.com
-    - +.blogspot
     - +.blogspot.ae
     - +.blogspot.al
     - +.blogspot.am
@@ -232,7 +230,6 @@ payload:
     - +.gipscorp.com
     - +.gkecnapps.cn
     - +.globaledu.org
-    - +.gmail
     - +.gmail.com
     - +.gmodules.com
     - +.go-lang.com
@@ -251,7 +248,6 @@ payload:
     - +.googel.com
     - +.googil.com
     - +.googl.com
-    - +.google
     - +.google-analytics-cn.com
     - +.google-analytics.com
     - +.google-syndication.com
@@ -600,7 +596,6 @@ payload:
     - +.questvisual.com
     - +.quickoffice.com
     - +.quiksee.com
-    - +.recaptcha
     - +.recaptcha-cn.net
     - +.recaptcha.net
     - +.redhotlabs.com
@@ -694,8 +689,6 @@ payload:
     - +.xn--p8j9a0d9c9a.xn--q9jyb4c
     - +.xplr.co
     - +.youtu.be
-    - +.youtube
-    - +.youtube*
     - +.youtube-nocookie.com
     - +.youtube-ui.l.google.com
     - +.youtube.ae
@@ -863,7 +856,6 @@ payload:
     - +.youtubei.googleapis.com
     - +.youtubekids.com
     - +.youtubemobilesupport.com
-    - +.youtubemusic*
     - +.yt.be
     - +.ytimg.com
     - +.zukunftswerkstatt.de

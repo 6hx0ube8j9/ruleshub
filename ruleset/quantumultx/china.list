@@ -1,15 +1,18 @@
 # Quantumult X Rule-Set: china
 
+host, ip-asn,211157,no-resolve, China
+host, ip-asn,44907,no-resolve, China
+host, ip-asn,59930,no-resolve, China
+host, ip-asn,62014,no-resolve, China
+host, ip-asn,62041,no-resolve, China
 host-suffix, api.imem.app, China
 host-suffix, api.swiftgram.app, China
 host-suffix, cdn-telegram.org, China
 host-suffix, comments.app, China
 host-suffix, contest.com, China
 host-suffix, graph.org, China
-host-suffix, ip-asn, China
 host-suffix, legra.ph, China
 host-suffix, mbrx.app, China
-host-suffix, nicegram, China
 host-suffix, quiz.directory, China
 host-suffix, stel.com, China
 host-suffix, t.me, China

@@ -1,5 +1,12 @@
 # === telegram.txt Combined Base Rules ===
 
+# --- TYPE: FULL ---
+full,ip-asn,211157,no-resolve
+full,ip-asn,44907,no-resolve
+full,ip-asn,59930,no-resolve
+full,ip-asn,62014,no-resolve
+full,ip-asn,62041,no-resolve
+
 # --- TYPE: SUFFIX ---
 suffix,api.imem.app
 suffix,api.swiftgram.app
@@ -7,10 +14,8 @@ suffix,cdn-telegram.org
 suffix,comments.app
 suffix,contest.com
 suffix,graph.org
-suffix,ip-asn
 suffix,legra.ph
 suffix,mbrx.app
-suffix,nicegram
 suffix,quiz.directory
 suffix,stel.com
 suffix,t.me

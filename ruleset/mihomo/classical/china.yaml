@@ -1,15 +1,18 @@
 # Mihomo Payload Rule-Set: china
 payload:
+  - DOMAIN,ip-asn,211157,no-resolve
+  - DOMAIN,ip-asn,44907,no-resolve
+  - DOMAIN,ip-asn,59930,no-resolve
+  - DOMAIN,ip-asn,62014,no-resolve
+  - DOMAIN,ip-asn,62041,no-resolve
   - DOMAIN-SUFFIX,api.imem.app
   - DOMAIN-SUFFIX,api.swiftgram.app
   - DOMAIN-SUFFIX,cdn-telegram.org
   - DOMAIN-SUFFIX,comments.app
   - DOMAIN-SUFFIX,contest.com
   - DOMAIN-SUFFIX,graph.org
-  - DOMAIN-SUFFIX,ip-asn
   - DOMAIN-SUFFIX,legra.ph
   - DOMAIN-SUFFIX,mbrx.app
-  - DOMAIN-SUFFIX,nicegram
   - DOMAIN-SUFFIX,quiz.directory
   - DOMAIN-SUFFIX,stel.com
   - DOMAIN-SUFFIX,t.me

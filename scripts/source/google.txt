@@ -10,8 +10,6 @@ suffix,video.google.com
 suffix,wide-youtube.l.google.com
 suffix,withyoutube.com
 suffix,youtu.be
-suffix,youtube
-suffix,youtube*
 suffix,youtube-nocookie.com
 suffix,youtube-ui.l.google.com
 suffix,youtube.ae
@@ -179,7 +177,6 @@ suffix,youtubego.in
 suffix,youtubei.googleapis.com
 suffix,youtubekids.com
 suffix,youtubemobilesupport.com
-suffix,youtubemusic*
 suffix,yt.be
 suffix,ytimg.com
 

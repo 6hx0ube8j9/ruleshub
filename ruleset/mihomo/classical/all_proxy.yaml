@@ -38,7 +38,6 @@ payload:
   - DOMAIN-SUFFIX,appbridge.io
   - DOMAIN-SUFFIX,appbridge.it
   - DOMAIN-SUFFIX,apps5.oingo.com
-  - DOMAIN-SUFFIX,appspot
   - DOMAIN-SUFFIX,appspot.com
   - DOMAIN-SUFFIX,apture.com
   - DOMAIN-SUFFIX,area120.com
@@ -57,7 +56,6 @@ payload:
   - DOMAIN-SUFFIX,blink.org
   - DOMAIN-SUFFIX,blogblog.com
   - DOMAIN-SUFFIX,blogger.com
-  - DOMAIN-SUFFIX,blogspot
   - DOMAIN-SUFFIX,blogspot.ae
   - DOMAIN-SUFFIX,blogspot.al
   - DOMAIN-SUFFIX,blogspot.am
@@ -233,7 +231,6 @@ payload:
   - DOMAIN-SUFFIX,gipscorp.com
   - DOMAIN-SUFFIX,gkecnapps.cn
   - DOMAIN-SUFFIX,globaledu.org
-  - DOMAIN-SUFFIX,gmail
   - DOMAIN-SUFFIX,gmail.com
   - DOMAIN-SUFFIX,gmodules.com
   - DOMAIN-SUFFIX,go-lang.com
@@ -252,7 +249,6 @@ payload:
   - DOMAIN-SUFFIX,googel.com
   - DOMAIN-SUFFIX,googil.com
   - DOMAIN-SUFFIX,googl.com
-  - DOMAIN-SUFFIX,google
   - DOMAIN-SUFFIX,google-analytics-cn.com
   - DOMAIN-SUFFIX,google-analytics.com
   - DOMAIN-SUFFIX,google-syndication.com
@@ -601,7 +597,6 @@ payload:
   - DOMAIN-SUFFIX,questvisual.com
   - DOMAIN-SUFFIX,quickoffice.com
   - DOMAIN-SUFFIX,quiksee.com
-  - DOMAIN-SUFFIX,recaptcha
   - DOMAIN-SUFFIX,recaptcha-cn.net
   - DOMAIN-SUFFIX,recaptcha.net
   - DOMAIN-SUFFIX,redhotlabs.com
@@ -695,8 +690,6 @@ payload:
   - DOMAIN-SUFFIX,xn--p8j9a0d9c9a.xn--q9jyb4c
   - DOMAIN-SUFFIX,xplr.co
   - DOMAIN-SUFFIX,youtu.be
-  - DOMAIN-SUFFIX,youtube
-  - DOMAIN-SUFFIX,youtube*
   - DOMAIN-SUFFIX,youtube-nocookie.com
   - DOMAIN-SUFFIX,youtube-ui.l.google.com
   - DOMAIN-SUFFIX,youtube.ae
@@ -864,7 +857,6 @@ payload:
   - DOMAIN-SUFFIX,youtubei.googleapis.com
   - DOMAIN-SUFFIX,youtubekids.com
   - DOMAIN-SUFFIX,youtubemobilesupport.com
-  - DOMAIN-SUFFIX,youtubemusic*
   - DOMAIN-SUFFIX,yt.be
   - DOMAIN-SUFFIX,ytimg.com
   - DOMAIN-SUFFIX,zukunftswerkstatt.de

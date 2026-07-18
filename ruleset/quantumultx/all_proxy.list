@@ -38,7 +38,6 @@ host-suffix, appbridge.ca, All_proxy
 host-suffix, appbridge.io, All_proxy
 host-suffix, appbridge.it, All_proxy
 host-suffix, apps5.oingo.com, All_proxy
-host-suffix, appspot, All_proxy
 host-suffix, appspot.com, All_proxy
 host-suffix, apture.com, All_proxy
 host-suffix, area120.com, All_proxy
@@ -57,7 +56,6 @@ host-suffix, beatthatquote.com, All_proxy
 host-suffix, blink.org, All_proxy
 host-suffix, blogblog.com, All_proxy
 host-suffix, blogger.com, All_proxy
-host-suffix, blogspot, All_proxy
 host-suffix, blogspot.ae, All_proxy
 host-suffix, blogspot.al, All_proxy
 host-suffix, blogspot.am, All_proxy
@@ -233,7 +231,6 @@ host-suffix, ggpht.com, All_proxy
 host-suffix, gipscorp.com, All_proxy
 host-suffix, gkecnapps.cn, All_proxy
 host-suffix, globaledu.org, All_proxy
-host-suffix, gmail, All_proxy
 host-suffix, gmail.com, All_proxy
 host-suffix, gmodules.com, All_proxy
 host-suffix, go-lang.com, All_proxy
@@ -252,7 +249,6 @@ host-suffix, goo.gl, All_proxy
 host-suffix, googel.com, All_proxy
 host-suffix, googil.com, All_proxy
 host-suffix, googl.com, All_proxy
-host-suffix, google, All_proxy
 host-suffix, google-analytics-cn.com, All_proxy
 host-suffix, google-analytics.com, All_proxy
 host-suffix, google-syndication.com, All_proxy
@@ -601,7 +597,6 @@ host-suffix, qpx.googleflights.net, All_proxy
 host-suffix, questvisual.com, All_proxy
 host-suffix, quickoffice.com, All_proxy
 host-suffix, quiksee.com, All_proxy
-host-suffix, recaptcha, All_proxy
 host-suffix, recaptcha-cn.net, All_proxy
 host-suffix, recaptcha.net, All_proxy
 host-suffix, redhotlabs.com, All_proxy
@@ -695,8 +690,6 @@ host-suffix, xn--ngstr-lra8j.com, All_proxy
 host-suffix, xn--p8j9a0d9c9a.xn--q9jyb4c, All_proxy
 host-suffix, xplr.co, All_proxy
 host-suffix, youtu.be, All_proxy
-host-suffix, youtube, All_proxy
-host-suffix, youtube*, All_proxy
 host-suffix, youtube-nocookie.com, All_proxy
 host-suffix, youtube-ui.l.google.com, All_proxy
 host-suffix, youtube.ae, All_proxy
@@ -864,7 +857,6 @@ host-suffix, youtubego.in, All_proxy
 host-suffix, youtubei.googleapis.com, All_proxy
 host-suffix, youtubekids.com, All_proxy
 host-suffix, youtubemobilesupport.com, All_proxy
-host-suffix, youtubemusic*, All_proxy
 host-suffix, yt.be, All_proxy
 host-suffix, ytimg.com, All_proxy
 host-suffix, zukunftswerkstatt.de, All_proxy

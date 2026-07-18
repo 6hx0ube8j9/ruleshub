@@ -39,7 +39,6 @@ suffix,appbridge.ca
 suffix,appbridge.io
 suffix,appbridge.it
 suffix,apps5.oingo.com
-suffix,appspot
 suffix,appspot.com
 suffix,apture.com
 suffix,area120.com
@@ -58,7 +57,6 @@ suffix,beatthatquote.com
 suffix,blink.org
 suffix,blogblog.com
 suffix,blogger.com
-suffix,blogspot
 suffix,blogspot.ae
 suffix,blogspot.al
 suffix,blogspot.am
@@ -232,7 +230,6 @@ suffix,ggoogle.com
 suffix,gipscorp.com
 suffix,gkecnapps.cn
 suffix,globaledu.org
-suffix,gmail
 suffix,gmail.com
 suffix,gmodules.com
 suffix,go-lang.com
@@ -251,7 +248,6 @@ suffix,goo.gl
 suffix,googel.com
 suffix,googil.com
 suffix,googl.com
-suffix,google
 suffix,google-analytics-cn.com
 suffix,google-analytics.com
 suffix,google-syndication.com
@@ -597,7 +593,6 @@ suffix,qpx.googleflights.net
 suffix,questvisual.com
 suffix,quickoffice.com
 suffix,quiksee.com
-suffix,recaptcha
 suffix,recaptcha-cn.net
 suffix,recaptcha.net
 suffix,redhotlabs.com
