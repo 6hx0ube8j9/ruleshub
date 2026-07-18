@@ -194,6 +194,12 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
     if not raw_payload:
         return None, ""
 
+    if internal_type in ['full', 'suffix', 'keyword'] and (
+        IPV4_REGEX.match(raw_payload.split('/')[0]) or 
+        IPV6_REGEX.match(raw_payload.split('/')[0].strip('[]'))
+    ):
+        return None, ""
+        
     if internal_type in ['full', 'suffix', 'keyword', 'remove', 'process']:
         if any(c in raw_payload for c in [' ', '@', '=', '%', '&', ';']):
             return None, ""
