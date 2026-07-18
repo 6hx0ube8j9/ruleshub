@@ -36,9 +36,9 @@ RULE_SOURCE_KEYS        = rules_processor.source_keys          # 清洗管道生
 # 外部业务组件核心方法指针绑定
 PROCESSOR_PIPELINE      = rules_processor.execute_rules_pipeline # 规则解包清洗主管道函数
 FORMATTER_EXPORT_ALL    = rules_formatter.export_all            # 全局各客户端平台文本导出器
-MIHOMO_ROUTING          = {
-    'mihomo_ipcidr': ('ipcidr', rules_formatter.generate_mihomo_ipcidr),
-    'mihomo_domain': ('domain', rules_formatter.generate_mihomo_domain)
+MIHOMO_ROUTING = {
+    'mihomo_ipcidr': ('ipcidr', rules_formatter.mihomo_ipcidr_text),
+    'mihomo_domain': ('domain', rules_formatter.mihomo_domain_text)
 }
 
 
