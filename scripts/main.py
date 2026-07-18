@@ -11,32 +11,32 @@ import rules_formatter
 import rules_processor
 
 # ==============================================================================
-# Stage 0: 外部调用参数、组件方法与环境常量统一配置区（顶层绝对收拢）
+# Stage 0: 外部调用参数、组件方法与环境常量统一配置区
 # ==============================================================================
 
-# 1. 基础网络请求配置
+# 基础网络请求配置
 DEFAULT_HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 }
 FETCH_TIMEOUT   = 15
 
-# 2. 外部物理路径与核心控制矩阵映射
+# 外部物理路径与核心控制矩阵映射
 RULESET_CONFIG_PATH     = rules_loader.RULESET_JSON_PATH        # 统一读取 loader 定义的 ruleset.json 路径
 MIHOMO_COMPILER_BIN     = rules_loader.MIHOMO_BIN              # 统一读取 loader 校验的 Mihomo 二进制路径
-SINGBOX_COMPILER_BIN    = rules_loader.SINGBOX_BIN              # 统一读取 loader 校验的 Sing-box 二进制路径
+SINGBOX_COMPILER_BIN    = rules_loader.SINGBOX_BIN             # 统一读取 loader 校验的 Sing-box 二进制路径
 
 SOURCE_DIRECTORY        = rules_loader.SOURCE_DIR              # 规则文本落盘/冷备源目录
 MIHOMO_OUTPUT_DIR       = rules_loader.MIHOMO_DIR              # Mihomo 专用编译输出父目录
 PLATFORM_ROUTING_MATRIX = rules_loader.ROUTING_MATRIX           # 平台路由矩阵控制轴
 
-# 3. 跨模块继承的核心元数据与清洗红线
+# 跨模块继承的核心元数据与清洗红线
 CONFIG_KEYS             = rules_loader.CONFIG_KEYS             # 动态继承自 loader 的 JSON 配置键名全集
 RULE_SOURCE_KEYS        = rules_processor.source_keys          # 清洗管道生成的核心流类型红线
 
-# 4. 外部业务组件核心方法指针绑定
+# 外部业务组件核心方法指针绑定
 PROCESSOR_PIPELINE      = rules_processor.execute_rules_pipeline # 规则解包清洗主管道函数
 FORMATTER_EXPORT_ALL    = rules_formatter.export_all            # 全局各客户端平台文本导出器
-MIHOMO_ROUTING = {
+MIHOMO_ROUTING          = {
     'mihomo_ipcidr': ('ipcidr', rules_formatter.generate_mihomo_ipcidr),
     'mihomo_domain': ('domain', rules_formatter.generate_mihomo_domain)
 }
@@ -46,8 +46,8 @@ MIHOMO_ROUTING = {
 # Stage 2: 异步高并发网络拉取引擎
 # ==============================================================================
 
+# 异步单链接拉取核心引擎
 async def fetch_single_url_async(session, url):
-    """异步单链接拉取核心引擎"""
     try:
         async with session.get(url, headers=DEFAULT_HEADERS, timeout=FETCH_TIMEOUT) as response:
             if response.status == 200:
@@ -60,30 +60,28 @@ async def fetch_single_url_async(session, url):
         print(f"[WARN] Fetch failed for {url} (Error: {e})")
         return url, None
 
+# 高并发批量拉取驱动轴
 async def async_fetch_all(urls_list):
-    """高并发批量拉取驱动轴"""
     if not urls_list:
         return {}
     async with aiohttp.ClientSession() as session:
-        tasks = [fetch_single_url_async(session, url) for url in urls_list]
+        tasks   = [fetch_single_url_async(session, url) for url in urls_list]
         results = await asyncio.gather(*tasks)
         return dict(results)
 
+# 解析配置中所有的网络同步源及 inputs 直连源并激活高并发异步流
 async def fetch_all_remote_sources(config_data):
-    """解析配置中所有的网络同步源及 inputs 直连源并激活高并发异步流"""
     urls_to_fetch = []
     
-    # 1. 收集需落盘的 sync_source 链接
     sync_source = config_data.get(CONFIG_KEYS['SOURCES'], {})
     for url in sync_source.keys():
         if url.startswith(('http://', 'https://')):
             urls_to_fetch.append(url)
             
-    # 2. 【新增】收集 groups 的 inputs 里的直连链接（纯内存直通，阅后即焚）
+    # 收集 groups 的 inputs 里的直连链接（纯内存直通，阅后即焚）
     groups = config_data.get(CONFIG_KEYS['GROUPS'], [])
     for group in groups:
         inputs = group.get('inputs', [])
-        # 兼容 inputs 可能是字符串或列表的情况
         if isinstance(inputs, str):
             inputs = [inputs]
         for inp in inputs:
@@ -99,13 +97,10 @@ async def fetch_all_remote_sources(config_data):
 # Stage 2.5: 内存沙盒化融合与清洗缓冲
 # ==============================================================================
 
+# 内存沙盒化处理器，支持网络拉取与磁盘冷备在内存中完成无缝对齐清洗
 def process_sources_in_memory(config_data, fetched_data):
-    """
-    【内存沙盒化处理器 - 纯内存无污染版】
-    网络拉取与磁盘冷备在内存中完成无缝对齐清洗。
-    """
     write_buffer = {}
-    sync_source = config_data.get(CONFIG_KEYS['SOURCES'], {})
+    sync_source  = config_data.get(CONFIG_KEYS['SOURCES'], {})
     
     for url, targets in sync_source.items():
         if isinstance(targets, str):
@@ -124,13 +119,13 @@ def process_sources_in_memory(config_data, fetched_data):
             # 统一由顶层全局配置提供的 SOURCE_DIRECTORY 锚定路径
             file_path = os.path.join(SOURCE_DIRECTORY, filename)
             
-            # 1. 物理只读式预加载本地快照（作为冷备降级基准）
+            # 物理只读式预加载本地快照（作为冷备降级基准）
             local_raw = []
             if os.path.exists(file_path):
                 with open(file_path, 'r', encoding='utf-8') as f:
                     local_raw = f.read().splitlines()
             
-            # 2. 内存清洗沙盒化判定
+            # 内存清洗沙盒化判定
             remote_lines = fetched_data.get(url)
             if remote_lines is not None:
                 print(f"[INFO] Merging remote updates for: {filename}")
@@ -148,21 +143,18 @@ def process_sources_in_memory(config_data, fetched_data):
 # Stage 3: 内存路由矩阵构建与分配
 # ==============================================================================
 
+# 纯内存策略组合并，利用顶层全局红线 RULE_SOURCE_KEYS 驱动计算
 def build_group_rules_pure_memory(group_config: dict, write_buffer: dict, fetched_data: dict = None) -> dict:
-    """
-    纯内存策略组合并：利用顶层全局红线 RULE_SOURCE_KEYS 驱动计算。
-    支持读取本地沙盒/磁盘冷备，新增完美兼容 URL 网络内存直通。
-    """
     if fetched_data is None:
         fetched_data = {}
         
     final_rules = {k: set() for k in RULE_SOURCE_KEYS}
-    group_name = group_config.get('name', '')
-    inputs = group_config.get('inputs', [])
+    group_name  = group_config.get('name', '')
+    inputs      = group_config.get('inputs', [])
 
-    # 1. 宽容度补全：若未指定 inputs，默认隐式绑定同名本地规则源
+    # 宽容度补全：若未指定 inputs，默认隐式绑定同名本地规则源
     if not inputs:
-        default_key = f"{group_name.lower()}.txt"
+        default_key  = f"{group_name.lower()}.txt"
         default_path = os.path.join(SOURCE_DIRECTORY, default_key)
         if default_path in write_buffer:
             inputs = [default_path]
@@ -174,13 +166,13 @@ def build_group_rules_pure_memory(group_config: dict, write_buffer: dict, fetche
                         final_rules[k].update(parsed.get(k, set()))
             return final_rules
 
-    # 2. 纯内存或磁盘跨域合并 + 即时网络直连
+    # 纯内存或磁盘跨域合并 + 即时网络直连
     for inp in inputs:
         inp_str = str(inp).strip()
         if not inp_str:
             continue
             
-        # 【新增】：命中网络直连 URL，执行纯内存直通解析，绝不落盘
+        # 命中网络直连 URL，执行纯内存直通解析，绝不落盘
         if inp_str.startswith(('http://', 'https://')):
             remote_lines = fetched_data.get(inp_str)
             if remote_lines:
@@ -192,11 +184,11 @@ def build_group_rules_pure_memory(group_config: dict, write_buffer: dict, fetche
                 print(f"[WARN] In-memory fetch failed or empty for URL: {inp_str}")
             continue
             
-        # 正常逻辑：处理本地文件依赖（沙盒缓冲池或磁盘冷备）
+        # 处理本地文件依赖（沙盒缓冲池或磁盘冷备）
         if os.path.isabs(inp_str):
             buffer_key = inp_str
         else:
-            filename = inp_str if inp_str.lower().endswith('.txt') else f"{inp_str.lower()}.txt"
+            filename   = inp_str if inp_str.lower().endswith('.txt') else f"{inp_str.lower()}.txt"
             buffer_key = os.path.join(SOURCE_DIRECTORY, filename)
         
         if buffer_key in write_buffer:
@@ -217,7 +209,6 @@ def build_group_rules_pure_memory(group_config: dict, write_buffer: dict, fetche
     return final_rules
 
 def _extract_qx_policy_label(group_name, outputs):
-    
     if group_name.lower() in ['direct', 'reject']:
         fallback = group_name.lower()
     else:
@@ -230,7 +221,6 @@ def _extract_qx_policy_label(group_name, outputs):
                 return custom_label.strip()
                 
     return fallback
-
 
 def dispatch_to_matrix(group_name, group_config, rules, global_matrix):
     routing_map = rules_loader.resolve_routing(group_config, group_name)
@@ -258,10 +248,10 @@ def dispatch_to_matrix(group_name, group_config, rules, global_matrix):
             if k in target_bucket:
                 target_bucket[k].update(v)
 
+# 基于纯内存写缓冲区全面构建下流全局路由矩阵，支持内存级直连注入
 def build_routing_matrix_from_buffer(write_buffer, config_data, group_rules_cache, fetched_data):
-    """基于纯内存写缓冲区全面构建下流全局路由矩阵，支持内存级直连注入"""
     global_matrix = {plat: {} for plat in PLATFORM_ROUTING_MATRIX.keys()}
-    groups = config_data.get(CONFIG_KEYS['GROUPS'], [])
+    groups        = config_data.get(CONFIG_KEYS['GROUPS'], [])
     
     for group_config in groups:
         group_name = group_config.get('name')
@@ -283,11 +273,8 @@ def build_routing_matrix_from_buffer(write_buffer, config_data, group_rules_cach
 # Stage 4: 事务提交（原子落盘）与 二进制工具链编译
 # ==============================================================================
 
+# 稳健原子级落盘：直接将写缓冲集合展开回写，自适应 Linux 大小写冲突
 def commit_write_buffer(write_buffer: dict):
-    """
-    稳健原子级落盘：废除本地文本重复打标签与多余逻辑。
-    直接将写缓冲集合展开回写，自适应 Linux 大小写冲突。
-    """
     if not os.path.exists(SOURCE_DIRECTORY):
         os.makedirs(SOURCE_DIRECTORY, exist_ok=True)
 
@@ -296,7 +283,7 @@ def commit_write_buffer(write_buffer: dict):
     lower_existing = {f.lower(): f for f in existing_files if os.path.isfile(os.path.join(SOURCE_DIRECTORY, f))}
 
     for file_path, category_dict in write_buffer.items():
-        base_name = os.path.basename(file_path)
+        base_name         = os.path.basename(file_path)
         target_lower_name = base_name.lower()
 
         # 清除大小写残留，为高鲁棒性原子替换清空盲区
@@ -311,7 +298,7 @@ def commit_write_buffer(write_buffer: dict):
         temp_path = f"{file_path}.tmp"
 
         try:
-            # 极其干脆、纯净的单行 Payload 物理展开写入
+            # 极其干净的单行 Payload 物理展开写入
             with open(temp_path, 'w', encoding='utf-8') as f:
                 for category_set in category_dict.values():
                     if category_set:
@@ -324,10 +311,8 @@ def commit_write_buffer(write_buffer: dict):
             if os.path.exists(temp_path):
                 os.remove(temp_path)
 
+# 通用工具：原子级写入文件（先写.tmp再替换），防止写入中断导致文件损坏
 def safe_write_text(filepath, content):
-    """
-    通用工具：原子级写入文件（先写.tmp再替换），防止写入中断导致文件损坏。
-    """
     temp_path = f"{filepath}.tmp"
     try:
         with open(temp_path, 'w', encoding='utf-8') as f:
@@ -341,8 +326,8 @@ def safe_write_text(filepath, content):
             except OSError: pass
         return False
         
+# 调用外部置顶的 Mihomo 核心二进制工具链执行规则编译
 def compile_mihomo_mrs(base_name, group_config, rules):
-    """调用外部置顶的 Mihomo 核心二进制工具链执行规则编译"""
     if not os.path.exists(MIHOMO_COMPILER_BIN):
         return
         
@@ -351,24 +336,20 @@ def compile_mihomo_mrs(base_name, group_config, rules):
     # 直接遍历顶层配置好的策略矩阵
     for tunnel_type, (sub_dir, formatter) in MIHOMO_ROUTING.items():
         
-        # 1. 检查路由是否开启
         target_name = routing_map.get(tunnel_type)
         if not target_name or not isinstance(target_name, str):
             continue
             
-        # 2. 生成文本内容 (依赖 rules_formatter)
         content = formatter(rules)
         if not content:
             continue
             
-        # 3. 准备路径并安全落盘 (依赖安全写入工具)
-        yaml_path = os.path.join(MIHOMO_OUTPUT_DIR, sub_dir, f"{target_name}.yaml")
+        yaml_path    = os.path.join(MIHOMO_OUTPUT_DIR, sub_dir, f"{target_name}.yaml")
         mrs_out_path = os.path.join(MIHOMO_OUTPUT_DIR, sub_dir, f"{target_name}.mrs")
         
         if not safe_write_text(yaml_path, content):
             continue
             
-        # 4. 执行二进制编译
         try:
             subprocess.run(
                 [MIHOMO_COMPILER_BIN, 'convert-ruleset', sub_dir, 'yaml', yaml_path, mrs_out_path], 
@@ -378,13 +359,13 @@ def compile_mihomo_mrs(base_name, group_config, rules):
         except subprocess.CalledProcessError as e:
             print(f"[WARN] Mihomo compilation failed for {target_name}. Exit code: {e.returncode}. Stderr: {e.stderr.strip()}")
 
+# 调用外部置顶的 Sing-box 核心二进制工具链执行规则二进制固化
 def compile_singbox_srs(global_matrix, singbox_dir):
-    """调用外部置顶的 Sing-box 核心二进制工具链执行规则二进制固化"""
     if not os.path.exists(SINGBOX_COMPILER_BIN) or not global_matrix.get('singbox'): 
         return
 
     for g_name, raw_rules in global_matrix['singbox'].items():
-        sb_path = os.path.join(singbox_dir, f"{g_name}.json")
+        sb_path     = os.path.join(singbox_dir, f"{g_name}.json")
         sb_srs_path = os.path.join(singbox_dir, f"{g_name}.srs")
 
         if not os.path.exists(sb_path): 
@@ -448,11 +429,9 @@ async def async_main():
         FORMATTER_EXPORT_ALL(global_matrix=global_matrix, dir_map=output_directories)
         
         # 4. 驱动外部二进制链条执行最终编译固化
-        # 4.1 激活 Mihomo 编译 MRS 进程
         for group_name, (group_config, rules) in group_rules_cache.items():
             compile_mihomo_mrs(group_name, group_config, rules)
             
-        # 4.2 激活 Sing-box 编译 SRS 进程
         if 'singbox' in output_directories:
             compile_singbox_srs(global_matrix, output_directories['singbox'])
             
