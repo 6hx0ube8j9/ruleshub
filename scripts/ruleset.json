@@ -27,6 +27,7 @@
     {
       "name": "appledail",
       "inputs": [
+        "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/4chan.list",
         "appledail.txt"
       ]
     }
