@@ -2,6 +2,30 @@
 import os
 import json
 
+# 构建供 Mihomo 编译 MRS 二进制文件的纯 IP 类格式 YAML 文本
+def mihomo_ipcidr_text(rules):
+    combined_ips = sorted(rules.get('ip', set()) | rules.get('ip6', set()))
+    if not combined_ips:
+        return ""
+        
+    indent = " " * 4
+    payload = ["payload:"]
+    payload.extend(f"{indent}- {item}" for item in combined_ips)  
+    return "\n".join(payload) + "\n"
+
+# 构建供 Mihomo 编译 MRS 二进制文件的纯域名类格式 YAML 文本
+def mihomo_domain_text(rules):
+    full_set = rules.get('full', set())
+    suffix_set = rules.get('suffix', set())
+    if not full_set and not suffix_set:
+        return ""
+        
+    indent = " " * 4
+    payload = ["payload:"]
+    payload.extend(f"{indent}- {item}" for item in sorted(full_set))
+    payload.extend(f"{indent}- +.{item}" for item in sorted(suffix_set))        
+    return "\n".join(payload) + "\n"
+    
 # 统一调度并导出所有平台的规则集文件（动态映射驱动）
 def export_all(global_matrix, dir_map):
     for plat, output_dir in dir_map.items():
@@ -34,34 +58,6 @@ def generate_mihomo_classical(matrix_data, output_dir):
 
         with open(mihomo_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
-
-
-# 生成供内核转换二进制的纯 IP 格式 YAML 文本
-def generate_mihomo_ipcidr(rules):
-    combined_ips = sorted(rules.get('ip', set()) | rules.get('ip6', set()))
-    if not combined_ips:
-        return ""
-
-    indent = " " * 4
-    payload = ["payload:"]
-    payload.extend(f"{indent}- {item}" for item in combined_ips)
-    
-    return "\n".join(payload) + "\n"
-
-# 生成供内核转换二进制的纯域名格式 YAML 文本
-def generate_mihomo_domain(rules):
-    full_set = rules.get('full', set())
-    suffix_set = rules.get('suffix', set())
-    if not full_set and not suffix_set:
-        return ""
-
-    indent = " " * 4
-    payload = ["payload:"]
-    payload.extend(f"{indent}- {item}" for item in sorted(full_set))
-    payload.extend(f"{indent}- +.{item}" for item in sorted(suffix_set))
-        
-    return "\n".join(payload) + "\n"
-
 
 # 生成 Quantumult X 格式的规则集文件 (.list)
 def generate_quantumultx(matrix_data, output_dir):
