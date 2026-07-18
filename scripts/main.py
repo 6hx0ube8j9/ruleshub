@@ -36,7 +36,10 @@ RULE_SOURCE_KEYS        = rules_processor.source_keys          # 清洗管道生
 # 4. 外部业务组件核心方法指针绑定
 PROCESSOR_PIPELINE      = rules_processor.execute_rules_pipeline # 规则解包清洗主管道函数
 FORMATTER_EXPORT_ALL    = rules_formatter.export_all            # 全局各客户端平台文本导出器
-MIHOMO_TUNNELS          = ['mihomo_ipcidr', 'mihomo_domain']    # Mihomo 分流隧道内核编译类型
+MIHOMO_ROUTING = {
+    'mihomo_ipcidr': ('ipcidr', rules_formatter.generate_mihomo_ipcidr),
+    'mihomo_domain': ('domain', rules_formatter.generate_mihomo_domain)
+}
 
 
 # ==============================================================================
@@ -312,7 +315,7 @@ def commit_write_buffer(write_buffer: dict):
             with open(temp_path, 'w', encoding='utf-8') as f:
                 for category_set in category_dict.values():
                     if category_set:
-                        f.write("\n".join(category_set) + "\n")
+                        f.write("\n".join(sorted(category_set)) + "\n")
             
             # 原子事务级物理替换，100% 免疫进程意外中断引发的空文件与损坏故障
             os.replace(temp_path, file_path)
@@ -321,6 +324,23 @@ def commit_write_buffer(write_buffer: dict):
             if os.path.exists(temp_path):
                 os.remove(temp_path)
 
+def safe_write_text(filepath, content):
+    """
+    通用工具：原子级写入文件（先写.tmp再替换），防止写入中断导致文件损坏。
+    """
+    temp_path = f"{filepath}.tmp"
+    try:
+        with open(temp_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        os.replace(temp_path, filepath)
+        return True
+    except Exception as e:
+        print(f"[ERROR] Failed to safely write {filepath}: {e}")
+        if os.path.exists(temp_path):
+            try: os.remove(temp_path)
+            except OSError: pass
+        return False
+        
 def compile_mihomo_mrs(base_name, group_config, rules):
     """调用外部置顶的 Mihomo 核心二进制工具链执行规则编译"""
     if not os.path.exists(MIHOMO_COMPILER_BIN):
@@ -328,37 +348,32 @@ def compile_mihomo_mrs(base_name, group_config, rules):
         
     routing_map = rules_loader.resolve_routing(group_config, base_name)
     
-    for tunnel_type in MIHOMO_TUNNELS:
-        if tunnel_type not in routing_map: 
-            continue
-
-        target_name = routing_map[tunnel_type]
-        if not isinstance(target_name, str) or not target_name:
+    # 直接遍历顶层配置好的策略矩阵
+    for tunnel_type, (sub_dir, formatter) in MIHOMO_ROUTING.items():
+        
+        # 1. 检查路由是否开启
+        target_name = routing_map.get(tunnel_type)
+        if not target_name or not isinstance(target_name, str):
             continue
             
-        sub_dir = 'ipcidr' if tunnel_type == 'mihomo_ipcidr' else 'domain'
-        formatter = getattr(rules_formatter, f"generate_{tunnel_type}", None)
-        content = formatter(rules) if formatter else ""
-        if not content: 
+        # 2. 生成文本内容 (依赖 rules_formatter)
+        content = formatter(rules)
+        if not content:
             continue
-
+            
+        # 3. 准备路径并安全落盘 (依赖安全写入工具)
         yaml_path = os.path.join(MIHOMO_OUTPUT_DIR, sub_dir, f"{target_name}.yaml")
         mrs_out_path = os.path.join(MIHOMO_OUTPUT_DIR, sub_dir, f"{target_name}.mrs")
         
-        temp_yaml_path = f"{yaml_path}.tmp"
-        try:
-            with open(temp_yaml_path, 'w', encoding='utf-8') as f:
-                f.write(content)
-            os.replace(temp_yaml_path, yaml_path)
-        except Exception as e:
-            print(f"[ERROR] Stage 4: Failed to write YAML file safely for {target_name}: {e}")
-            if os.path.exists(temp_yaml_path):
-                try: os.remove(temp_yaml_path)
-                except OSError: pass
+        if not safe_write_text(yaml_path, content):
             continue
             
+        # 4. 执行二进制编译
         try:
-            subprocess.run([MIHOMO_COMPILER_BIN, 'convert-ruleset', sub_dir, 'yaml', yaml_path, mrs_out_path], check=True, capture_output=True, text=True)
+            subprocess.run(
+                [MIHOMO_COMPILER_BIN, 'convert-ruleset', sub_dir, 'yaml', yaml_path, mrs_out_path], 
+                check=True, capture_output=True, text=True
+            )
             print(f"[SUCCESS] Compiled MRS: {target_name}.mrs ({sub_dir})")
         except subprocess.CalledProcessError as e:
             print(f"[WARN] Mihomo compilation failed for {target_name}. Exit code: {e.returncode}. Stderr: {e.stderr.strip()}")
