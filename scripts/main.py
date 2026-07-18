@@ -302,7 +302,8 @@ def commit_write_buffer(write_buffer: dict):
             with open(temp_path, 'w', encoding='utf-8') as f:
                 for category_set in category_dict.values():
                     if category_set:
-                        f.write("\n".join(sorted(category_set)) + "\n")
+                        formatted_lines = [f"suffix,{line}" if ',' not in line else line for line in sorted(category_set)]
+                        f.write("\n".join(formatted_lines) + "\n")
             
             # 原子事务级物理替换，100% 免疫进程意外中断引发的空文件与损坏故障
             os.replace(temp_path, file_path)
