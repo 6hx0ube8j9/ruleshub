@@ -195,14 +195,14 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
         return None, ""
 
     if internal_type in ['full', 'suffix', 'keyword'] and (
-        IPV4_REGEX.match(raw_payload.split('/')[0]) or 
-        IPV6_REGEX.match(raw_payload.split('/')[0].strip('[]'))
+        IPV4_REGEX.match(raw_payload) or 
+        IPV6_REGEX.match(raw_payload)
     ):
         return None, ""
-
-    if internal_type == 'ip' and IPV6_REGEX.match(raw_payload.split('/')[0].strip('[]')):
-        internal_type = 'ip6'
         
+    if internal_type == 'ip' and IPV6_REGEX.match(raw_payload):
+        internal_type = 'ip6'
+
     if internal_type in ['full', 'suffix', 'keyword', 'remove', 'process']:
         if any(c in raw_payload for c in [' ', '@', '=', '%', '&', ';']):
             return None, ""
@@ -212,7 +212,6 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
         return None, ""
 
     return internal_type, final_payload
-
 
 # 解析无声明前缀的纯文本格式规则
 def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
