@@ -3,17 +3,12 @@ var PROXY_METHOD = 'SOCKS5 ' + IP_ADDRESS + '; SOCKS ' + IP_ADDRESS + '; DIRECT'
 
 var DIRECT_DOMAINS = {
     "0emm.com": 1,
-    "172.110.32.0/21": 1,
-    "173.194.0.0/16": 1,
     "1e100.net": 1,
     "1ucrs.com": 1,
-    "216.73.80.0/20": 1,
-    "2620:120:e000::/40": 1,
     "265.com": 1,
     "2mdn-cn.net": 1,
     "2mdn.net": 1,
     "466453.com": 1,
-    "74.125.0.0/16": 1,
     "abc.xyz": 1,
     "adgoogle.net": 1,
     "admeld.com": 1,
