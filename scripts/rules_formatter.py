@@ -38,38 +38,28 @@ def generate_mihomo_classical(matrix_data, output_dir):
 
 # 生成供内核转换二进制的纯 IP 格式 YAML 文本
 def generate_mihomo_ipcidr(rules):
-    # 门禁前置：如果没有有效 IP 数据，直接返回空字符串
     if not rules.get('ip') and not rules.get('ip6'):
         return ""
 
     indent = " " * 4
-    lines = ["payload:\n"]
+    combined_ips = sorted(rules.get('ip', set()) | rules.get('ip6', set()))    
+    payload = ["payload:"]
+    payload.extend(f"{indent}- {item}" for item in combined_ips)
     
-    # 内部自动提取、合并 IPv4/IPv6 并统一排序
-    combined_ips = sorted(list(rules.get('ip', set()) | rules.get('ip6', set())))
-    for item in combined_ips:
-        lines.append(f"{indent}- {item}\n")
-        
-    return "".join(lines)
+    return "\n".join(payload) + "\n"
 
 
 # 生成供内核转换二进制的纯域名格式 YAML 文本
 def generate_mihomo_domain(rules):
-    # 门禁前置：如果没有任意域名数据，直接返回空字符串
     if not rules.get('suffix') and not rules.get('full'):
         return ""
 
     indent = " " * 4
-    lines = ["payload:\n"]
-    
-    # 内部自动处理 full 域名
-    for item in sorted(rules.get('full', [])): 
-        lines.append(f"{indent}- {item}\n")
-    # 内部自动处理 suffix 并补全前缀
-    for item in sorted(rules.get('suffix', [])): 
-        lines.append(f"{indent}- +.{item}\n")
+    payload = ["payload:"]
+    payload.extend(f"{indent}- {item}" for item in sorted(rules.get('full', set())))
+    payload.extend(f"{indent}- +.{item}" for item in sorted(rules.get('suffix', set())))
         
-    return "".join(lines)
+    return "\n".join(payload) + "\n"
 
 
 # 生成 Quantumult X 格式的规则集文件 (.list)
