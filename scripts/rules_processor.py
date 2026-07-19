@@ -60,10 +60,10 @@ RULE_MAP = {rule: category for category, rules in _GROUPS.items() for rule in ru
 
 # 执行规则处理流水线主入口
 def execute_rules_pipeline(local_raw_lines: list, remote_raw_lines: list) -> dict:
-    local_rules = process_raw_lines_batch(local_raw_lines, source_keys)
-    remote_rules = process_raw_lines_batch(remote_raw_lines, source_keys)
+    local_rules = process_raw_lines_batch(local_raw_lines, SOURCE_KEYS)
+    remote_rules = process_raw_lines_batch(remote_raw_lines, SOURCE_KEYS)
     
-    merged_rules = merge_and_sovereignty_filter(local_rules, remote_rules, source_keys)
+    merged_rules = merge_and_sovereignty_filter(local_rules, remote_rules, SOURCE_KEYS)
     optimize_domains(merged_rules)
     
     return merged_rules
