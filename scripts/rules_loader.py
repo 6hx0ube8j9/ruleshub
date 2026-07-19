@@ -77,10 +77,8 @@ def check_binary_dependencies(config_data):
         missing_bins.append(f"Sing-box: {SINGBOX_CORE}")
         
     if missing_bins:
-        print("[错误] 检测到核心二进制工具链依赖残缺")
-        raise FileNotFoundError(
-            "[FATAL] 当前配置的输出缺少所需的外部二进制工具链:\n - " + "\n - ".join(missing_bins)
-        )
+        print("[错误] 检测到当前输出缺少依赖的外部二进制工具链:\n - " + "\n - ".join(missing_bins))
+        raise SystemExit(1)
         
     print("[成功] 外部二进制依赖校验全部通过")
 
@@ -187,12 +185,11 @@ def load_and_prepare_config(json_path):
         with open(json_path, 'r', encoding='utf-8') as f:
             config_data = json.load(f)
     except json.JSONDecodeError as e:
-        print(f"\n[配置错误] 解析失败 ({os.path.basename(json_path)})")
-        print(f"[具体位置] 发生于第 {e.lineno} 行第 {e.colno} 列 -> {e.msg}")
+        print(f"\n[JSON格式错误] 位置 {e.lineno} 行第 {e.colno} 列 -> {e.msg}")
         raise SystemExit(1)
         
     setup_environment()
-    modified = False   
+    modified = False   		  
         
     sync_source = config_data.get(CONFIG_KEYS['SOURCES'], {})
     for url, targets in sync_source.items():
