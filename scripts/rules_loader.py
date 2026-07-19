@@ -12,8 +12,8 @@ SOURCE_DIR       = os.path.join(SCRIPT_DIR, 'source')
 MIHOMO_DIR       = os.path.join(RULESET_BASE_DIR, 'mihomo')
 
 RULESET_JSON_PATH = os.path.join(SCRIPT_DIR, 'ruleset.json')
-MIHOMO_BIN        = os.path.join(SCRIPT_DIR, 'mihomo-bin')
-SINGBOX_BIN       = os.path.join(SCRIPT_DIR, 'sing-box')
+MIHOMO_CORE       = os.path.join(SCRIPT_DIR, 'mihomo-core')
+SINGBOX_CORE      = os.path.join(SCRIPT_DIR, 'singbox-core')
 
 # ==================== 配置文件核心键名映射（高内聚收拢） ====================
 CONFIG_KEYS = {
