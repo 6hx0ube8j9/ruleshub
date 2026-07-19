@@ -107,10 +107,11 @@ async def fetch_all_remote_sources(config_data):
 # ---------------- 阶段 2.5: 内存沙盒融合与清洗缓冲 ----------------
 
 def process_sources_in_memory(config_data, fetched_data):
-    """内存沙盒化处理器，支持网络拉取与磁盘冷备在内存中完成无缝对齐清洗。"""
+    """内存沙盒化处理器，支持网络拉取与全量物理磁盘冷备在内存中完成无缝对齐清洗。"""
     write_buffer = {}
     sync_source  = config_data.get(CONFIG_KEYS['SOURCES'], {})
     
+    # === 通道 A: 网络同步源处理（维持原有核心逻辑） ===
     for url, targets in sync_source.items():
         if isinstance(targets, str):
             target_list = [targets]
@@ -149,15 +150,40 @@ def process_sources_in_memory(config_data, fetched_data):
                 cleaned_rules = PROCESSOR_PIPELINE(local_raw, [])
                 
             write_buffer[file_path] = cleaned_rules
+
+    # === 通道 B: 全量物理目录扫漏与独立清洗（解决纯本地编辑 .txt 无法清洗问题） ===
+    if os.path.exists(SOURCE_DIRECTORY):
+        for raw_filename in os.listdir(SOURCE_DIRECTORY):
+            if raw_filename.lower().endswith('.txt'):
+                filename = raw_filename.lower()
+                file_path = os.path.join(SOURCE_DIRECTORY, filename)
+                
+                # 核心防重门禁：已被通道 A 挂载过的文件直接跳过
+                if file_path in write_buffer:
+                    continue
+                    
+                print(f"[信息] 扫描到纯本地独立的规则源，正在执行独立清洗与格式化: {raw_filename}")
+                
+                # 物理读取依然使用磁盘实际的原始大小写路径，确保 Linux 系统兼容性
+                actual_path = os.path.join(SOURCE_DIRECTORY, raw_filename)
+                try:
+                    with open(actual_path, 'r', encoding='utf-8') as f:
+                        local_raw = f.read().splitlines()
+                    
+                    # 执行无远程参与的独立本地清洗管道
+                    cleaned_rules = PROCESSOR_PIPELINE(local_raw, [])
+                    write_buffer[file_path] = cleaned_rules
+                except Exception as e:
+                    print(f"[错误] 读取本地独立规则失败 {raw_filename}: {e}")
             
-    print(f"[成功] 内存沙盒化融合与清洗完成，缓冲区构建项数: {len(write_buffer)}")
+    print(f"[成功] 内存沙盒化融合与清洗完成，缓冲区构建总项数: {len(write_buffer)}")
     return write_buffer
 
 
 # ---------------- 阶段 3: 内存路由矩阵构建与分配 ----------------
 
 def build_group_rules_pure_memory(group_config: dict, write_buffer: dict, fetched_data: dict = None) -> dict:
-    """纯内存策略组合并，利用顶层全局红线驱动计算。"""
+    """纯内存策略组合并，完全基于写缓冲与网络内存池，彻底隔离并取消磁盘下沉逻辑。"""
     if fetched_data is None:
         fetched_data = {}
         
@@ -170,27 +196,24 @@ def build_group_rules_pure_memory(group_config: dict, write_buffer: dict, fetche
         default_key  = f"{group_name.lower()}.txt"
         default_path = os.path.join(SOURCE_DIRECTORY, default_key)
         print(f"[信息] 策略组 {group_name} 未指定输入，默认绑定本地源: {default_key}")
+        
         if default_path in write_buffer:
-            inputs = [default_path]
+            target_dict = write_buffer[default_path]
+            for k in RULE_SOURCE_KEYS:
+                if k in target_dict:
+                    final_rules[k].update(target_dict[k])
         else:
-            if os.path.exists(default_path):
-                print(f"[信息] 从磁盘加载默认本地规则源: {default_path}")
-                with open(default_path, 'r', encoding='utf-8') as f:
-                    parsed = rules_processor.process_raw_lines_batch(f.readlines(), RULE_SOURCE_KEYS)
-                    for k in RULE_SOURCE_KEYS:
-                        final_rules[k].update(parsed.get(k, set()))
-            else:
-                print(f"[警告] 找不到默认的本地规则源依赖，策略组初始化为空: {default_path}")
-            return final_rules
+            print(f"[警告] 内存缓冲池中未找到隐式依赖规则，策略组初始化为空: {default_path}")
+        return final_rules
 
-    # 纯内存或磁盘跨域合并 + 即时网络直连
+    # 纯内存跨域合并 + 即时网络直连
     for inp in inputs:
         inp_str = str(inp).strip()
         if not inp_str:
             print(f"[警告] 策略组 {group_name} 包含空输入项，自动忽略")
             continue
             
-        # 命中网络直连 URL，执行纯内存直通解析，绝不落盘
+        # 命中网络直连 URL，执行纯内存直通解析，阅后即焚，绝不落盘
         if inp_str.startswith(('http://', 'https://')):
             remote_lines = fetched_data.get(inp_str)
             if remote_lines:
@@ -202,28 +225,23 @@ def build_group_rules_pure_memory(group_config: dict, write_buffer: dict, fetche
                 print(f"[警告] 内存网络拉取失败或数据为空: {inp_str}")
             continue
             
-        # 处理本地 file 依赖（沙盒缓冲池或磁盘冷备）
+        # 处理本地 file 依赖（强制全小写化，与阶段 2.5 的缓冲池键值绝对对齐）
         if os.path.isabs(inp_str):
-            buffer_key = inp_str
+            buffer_key = inp_str.lower() # 绝对路径也统一转小写进行匹配
         else:
-            filename   = inp_str if inp_str.lower().endswith('.txt') else f"{inp_str.lower()}.txt"
+            # 无论是否自带后缀，都必须对本体执行 .lower()
+            inp_lower = inp_str.lower()
+            filename  = inp_lower if inp_lower.endswith('.txt') else f"{inp_lower}.txt"
             buffer_key = os.path.join(SOURCE_DIRECTORY, filename)
         
+        # O(1) 极速字典寻址查表：全面接管所有本地文件依赖，彻底隔离磁盘 IO
         if buffer_key in write_buffer:
             target_dict = write_buffer[buffer_key]
             for k in RULE_SOURCE_KEYS:
                 if k in target_dict:
                     final_rules[k].update(target_dict[k])
         else:
-            # 内存未击中，下沉磁盘捞冷备文件并利用管道二次解析
-            if os.path.exists(buffer_key):
-                print(f"[信息] 内存缓冲区未击中，正在从磁盘捞取冷备文件: {buffer_key}")
-                with open(buffer_key, 'r', encoding='utf-8') as f:
-                    parsed = rules_processor.process_raw_lines_batch(f.readlines(), RULE_SOURCE_KEYS)
-                    for k in RULE_SOURCE_KEYS:
-                        final_rules[k].update(parsed.get(k, set()))
-            else:
-                print(f"[警告] 缓冲区或磁盘中未找到本地文件: {buffer_key}")
+            print(f"[警告] 内存写缓冲池中未找到对应的规则依赖源: {buffer_key}")
 
     return final_rules
 
