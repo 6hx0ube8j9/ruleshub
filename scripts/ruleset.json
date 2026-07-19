@@ -11,8 +11,10 @@
         "google.txt",
         "youtube.txt"
       },
+    {
       "name": "appledail",
     },
+    {
       "name": "telegram",
       "inputs": [
         "telegram.txt"
