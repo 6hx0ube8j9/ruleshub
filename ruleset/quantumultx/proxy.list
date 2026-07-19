@@ -855,11 +855,8 @@ host-suffix, zukunftswerkstatt.de, Proxy
 host-suffix, zynamics.com, Proxy
 host-keyword, youtube, Proxy
 ip-cidr, 172.110.32.0/21, Proxy, no-resolve
-ip-cidr, 172.110.32.0/21,no-resolve, Proxy, no-resolve
 ip-cidr, 216.73.80.0/20, Proxy, no-resolve
-ip-cidr, 216.73.80.0/20,no-resolve, Proxy, no-resolve
 ip6-cidr, 2620:120:e000::/40, Proxy, no-resolve
-ip6-cidr, 2620:120:e000::/40,no-resolve, Proxy, no-resolve
 user-agent, *YouTubeMusic*, Proxy
 user-agent, *com.google.ios.youtubemusic*, Proxy
 user-agent, *youtube*, Proxy
