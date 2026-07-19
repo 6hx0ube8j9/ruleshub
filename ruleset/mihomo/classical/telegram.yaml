@@ -1,11 +1,6 @@
 # Mihomo Payload Rule-Set: telegram
 payload:
   - DOMAIN,ip-asn
-  - DOMAIN,ip-asn,211157,no-resolve
-  - DOMAIN,ip-asn,44907,no-resolve
-  - DOMAIN,ip-asn,59930,no-resolve
-  - DOMAIN,ip-asn,62014,no-resolve
-  - DOMAIN,ip-asn,62041,no-resolve
   - DOMAIN-SUFFIX,api.imem.app
   - DOMAIN-SUFFIX,api.swiftgram.app
   - DOMAIN-SUFFIX,cdn-telegram.org

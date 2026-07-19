@@ -2,11 +2,6 @@
 
 # --- TYPE: FULL ---
 full,ip-asn
-full,ip-asn,211157,no-resolve
-full,ip-asn,44907,no-resolve
-full,ip-asn,59930,no-resolve
-full,ip-asn,62014,no-resolve
-full,ip-asn,62041,no-resolve
 
 # --- TYPE: SUFFIX ---
 suffix,api.imem.app

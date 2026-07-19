@@ -1,11 +1,6 @@
 # Quantumult X Rule-Set: telegram
 
 host, ip-asn, Telegram
-host, ip-asn,211157,no-resolve, Telegram
-host, ip-asn,44907,no-resolve, Telegram
-host, ip-asn,59930,no-resolve, Telegram
-host, ip-asn,62014,no-resolve, Telegram
-host, ip-asn,62041,no-resolve, Telegram
 host-suffix, api.imem.app, Telegram
 host-suffix, api.swiftgram.app, Telegram
 host-suffix, cdn-telegram.org, Telegram
