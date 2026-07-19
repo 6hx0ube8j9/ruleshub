@@ -193,7 +193,7 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
 
 
 def parse_line(line: str) -> Tuple[Optional[str], str]:
-    """智能路由单行文本至对应解析器。"""
+    """智能路由单行文本至对应解析器（针对纯文本高频场景的快道拦截优化）"""
     clean_line = filter_raw_line(line)
     if not clean_line:
         return None, ""
@@ -201,12 +201,17 @@ def parse_line(line: str) -> Tuple[Optional[str], str]:
     if clean_line.startswith('|'):
         return parse_adguard_rule(clean_line)
         
+    if ',' not in clean_line:
+        return parse_pure_text_rule(clean_line)
+        
+    # 只有带逗号的行，才去尝试解析标准前缀
     head, _, _ = clean_line.partition(',')
     head = head.strip().upper()
 
     if head in RULE_MAP:
         return parse_standard_rule(clean_line)
         
+    # 兜底：处理带逗号但不是标准前缀的特殊文本
     return parse_pure_text_rule(clean_line)
 
 
