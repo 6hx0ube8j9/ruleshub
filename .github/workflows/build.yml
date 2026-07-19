@@ -37,30 +37,51 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "==== Fetching latest Mihomo ===="
-          MIHOMO_VERSION=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f 4)
-          if [ -z "$MIHOMO_VERSION" ] || [ "$MIHOMO_VERSION" = "null" ]; then
-            echo "❌ Error: Mihomo version fetch failed."
-            exit 1
-          fi
-          echo "Mihomo version: ${MIHOMO_VERSION}"
-          
-          curl -L -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
-          gunzip -c mihomo.gz > scripts/mihomo-bin
-          chmod +x scripts/mihomo-bin
+          set -Eeuo pipefail
 
-          echo "==== Fetching latest Sing-box ===="
-          SB_VERSION=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
-          if [ -z "$SB_VERSION" ] || [ "$SB_VERSION" = "null" ]; then
-            echo "❌ Error: Sing-box version fetch failed."
+          mkdir -p scripts
+          ARCH="amd64"
+
+          echo "==== 1. Fetching latest Mihomo ===="
+          MIHOMO_DOWNLOAD_URL=$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" --retry 3 --retry-delay 2 https://api.github.com/repos/MetaCubeX/mihomo/releases | jq -r --arg arch "$ARCH" 'map(select(.prerelease==false)) | first | .assets[] | select(.name | contains("linux-" + $arch) and endswith(".gz") and (contains("compatible") | not)) | .browser_download_url' | head -n 1)
+          
+          if [ -z "$MIHOMO_DOWNLOAD_URL" ] || [ "$MIHOMO_DOWNLOAD_URL" = "null" ]; then
+            echo "❌ Error: Failed to fetch Mihomo download URL."
             exit 1
           fi
-          echo "Sing-box version: ${SB_VERSION}"
+          echo "Mihomo URL: ${MIHOMO_DOWNLOAD_URL}"
           
-          curl -L -o sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/v${SB_VERSION}/sing-box-${SB_VERSION}-linux-amd64.tar.gz"
-          tar -xzvf sing-box.tar.gz
-          cp sing-box-*/sing-box ./scripts/sing-box
-          chmod +x scripts/sing-box
+          curl -L --retry 3 --retry-delay 2 -o mihomo.gz "$MIHOMO_DOWNLOAD_URL"
+          gunzip -f mihomo.gz
+          
+          BIN_MIHOMO=$(find . -maxdepth 2 -type f -name "*mihomo*" ! -name "*.gz" | head -n 1)
+          mv -f "$BIN_MIHOMO" scripts/mihomo-core
+          chmod +x scripts/mihomo-core
+
+          echo "✓ 验证 Mihomo 运行状态:"
+          ./scripts/mihomo-core -v
+
+
+          echo "==== 2. Fetching latest Sing-box ===="
+          SB_DOWNLOAD_URL=$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" --retry 3 --retry-delay 2 https://api.github.com/repos/SagerNet/sing-box/releases | jq -r --arg arch "$ARCH" 'map(select(.prerelease==false)) | first | .assets[] | select(.name | contains("linux-" + $arch) and endswith(".tar.gz")) | .browser_download_url' | head -n 1)
+          
+          if [ -z "$SB_DOWNLOAD_URL" ] || [ "$SB_DOWNLOAD_URL" = "null" ]; then
+            echo "❌ Error: Failed to fetch Sing-box download URL."
+            exit 1
+          fi
+          echo "Sing-box URL: ${SB_DOWNLOAD_URL}"
+          
+          curl -L --retry 3 --retry-delay 2 -o sing-box.tar.gz "$SB_DOWNLOAD_URL"
+          tar -xzf sing-box.tar.gz
+          
+          BIN_SB=$(find . -maxdepth 3 -type f -name "sing-box" | head -n 1)
+          cp -f "$BIN_SB" ./scripts/singbox-core
+          chmod +x scripts/singbox-core
+          
+          rm -rf sing-box.tar.gz sing-box-*
+
+          echo "✓ 验证 Sing-box 运行状态:"
+          ./scripts/singbox-core version
 
       - name: Run Parser
         run: python scripts/main.py
