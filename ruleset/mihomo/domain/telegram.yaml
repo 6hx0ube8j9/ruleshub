@@ -1,5 +1,4 @@
 payload:
-    - ip-asn
     - +.api.imem.app
     - +.api.swiftgram.app
     - +.cdn-telegram.org

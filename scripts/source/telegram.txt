@@ -1,7 +1,5 @@
 # === telegram.txt Combined Base Rules ===
 
- 
-
 # --- TYPE: SUFFIX ---
 suffix,api.imem.app
 suffix,api.swiftgram.app
