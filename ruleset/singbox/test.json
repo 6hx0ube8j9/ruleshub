@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain": [
+        "1.1.1.1",
+        "8.8.8.8",
+        "custom.rule",
+        "google.com.123"
+      ],
+      "domain_suffix": [
+        "baidu.com",
+        "google.com"
+      ]
+    }
+  ]
+}
