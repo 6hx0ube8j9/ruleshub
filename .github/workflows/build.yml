@@ -43,7 +43,11 @@ jobs:
           ARCH="amd64"
 
           echo "==== 1. Fetching latest Mihomo ===="
-          MIHOMO_DOWNLOAD_URL=$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" --retry 3 --retry-delay 2 https://api.github.com/repos/MetaCubeX/mihomo/releases | jq -r --arg arch "$ARCH" 'map(select(.prerelease==false)) | first | .assets[] | select(.name | contains("linux-" + $arch) and endswith(".gz") and (contains("compatible") | not)) | .browser_download_url' | head -n 1)
+          MIHOMO_DOWNLOAD_URL=$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" --retry 3 --retry-delay 2 \
+            https://api.github.com/repos/MetaCubeX/mihomo/releases | \
+            jq -r --arg arch "$ARCH" \
+            'map(select(.prerelease==false)) | first | .assets[] | select(.name | contains("linux-" + $arch) and endswith(".gz") and (contains("compatible") | not)) | .browser_download_url' | \
+            head -n 1)
           
           if [ -z "$MIHOMO_DOWNLOAD_URL" ] || [ "$MIHOMO_DOWNLOAD_URL" = "null" ]; then
             echo "❌ Error: Failed to fetch Mihomo download URL."
@@ -63,7 +67,11 @@ jobs:
 
 
           echo "==== 2. Fetching latest Sing-box ===="
-          SB_DOWNLOAD_URL=$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" --retry 3 --retry-delay 2 https://api.github.com/repos/SagerNet/sing-box/releases | jq -r --arg arch "$ARCH" 'map(select(.prerelease==false)) | first | .assets[] | select(.name | contains("linux-" + $arch) and endswith(".tar.gz")) | .browser_download_url' | head -n 1)
+          SB_DOWNLOAD_URL=$(curl -sS -H "Authorization: Bearer $GITHUB_TOKEN" --retry 3 --retry-delay 2 \
+            https://api.github.com/repos/SagerNet/sing-box/releases | \
+            jq -r --arg arch "$ARCH" \
+            'map(select(.prerelease==false)) | first | .assets[] | select(.name | contains("linux-" + $arch) and endswith(".tar.gz")) | .browser_download_url' | \
+            head -n 1)
           
           if [ -z "$SB_DOWNLOAD_URL" ] || [ "$SB_DOWNLOAD_URL" = "null" ]; then
             echo "❌ Error: Failed to fetch Sing-box download URL."
