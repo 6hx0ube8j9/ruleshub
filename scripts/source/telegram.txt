@@ -1,5 +1,5 @@
 # === telegram.txt Combined Base Rules ===
-
+cdn-telegram.test.org
 # --- TYPE: SUFFIX ---
 suffix,api.imem.app
 suffix,api.swiftgram.app
