@@ -1,3 +1,8 @@
 # Quantumult X Rule-Set: test
 
-host-suffix, badsite.club, Test
+host, 1.1.1.1, Test
+host, 8.8.8.8, Test
+host, custom.rule, Test
+host, google.com.123, Test
+host-suffix, baidu.com, Test
+host-suffix, google.com, Test
