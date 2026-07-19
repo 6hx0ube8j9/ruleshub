@@ -1,5 +1,6 @@
 # Loon Rule-Set: telegram
 
+DOMAIN,ip-asn
 DOMAIN-SUFFIX,api.imem.app
 DOMAIN-SUFFIX,api.swiftgram.app
 DOMAIN-SUFFIX,cdn-telegram.org

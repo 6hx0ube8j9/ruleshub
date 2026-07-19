@@ -2,6 +2,9 @@
   "version": 2,
   "rules": [
     {
+      "domain": [
+        "ip-asn"
+      ],
       "domain_suffix": [
         "api.imem.app",
         "api.swiftgram.app",

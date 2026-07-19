@@ -1,8 +1,6 @@
 # === test.txt Combined Base Rules ===
 
 # --- TYPE: FULL ---
-full,1.1.1.1
-full,8.8.8.8
 full,custom.rule
 full,google.com.123
 
