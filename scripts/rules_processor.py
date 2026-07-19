@@ -54,7 +54,7 @@ _GROUPS = {
     'regex': {'DOMAIN-REGEX', 'DOMAIN_REGEX', 'REGEX'}
 }
 
-source_keys = list(_GROUPS.keys())
+SOURCE_KEYS = list(_GROUPS.keys())
 RULE_MAP = {rule: category for category, rules in _GROUPS.items() for rule in rules}
 
 
