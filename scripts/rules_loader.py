@@ -3,7 +3,9 @@ import os
 import json
 import re
 
-# ==================== 基础路径定义 ====================
+
+# ---------------- 阶段 1: 全局配置与矩阵定义 ----------------
+
 SCRIPT_DIR       = os.path.dirname(os.path.abspath(__file__)) 
 PROJECT_ROOT     = os.path.dirname(SCRIPT_DIR)                  
 
@@ -15,7 +17,6 @@ RULESET_JSON_PATH = os.path.join(SCRIPT_DIR, 'ruleset.json')
 MIHOMO_CORE       = os.path.join(SCRIPT_DIR, 'mihomo-core')
 SINGBOX_CORE      = os.path.join(SCRIPT_DIR, 'singbox-core')
 
-# ==================== 配置文件核心键名映射（高内聚收拢） ====================
 CONFIG_KEYS = {
     'SOURCES':   'sync_source',   
     'GROUPS':    'groups', 
@@ -24,9 +25,8 @@ CONFIG_KEYS = {
     'QX_POLICY': 'qx_policy'
 }
 
-# 平台分流路由控制矩阵
 ROUTING_MATRIX = {
-    'loon':             {'dir': os.path.join(RULESET_BASE_DIR, 'loon')},
+    'loon':              {'dir': os.path.join(RULESET_BASE_DIR, 'loon')},
     'mihomo_classical': {'dir': os.path.join(MIHOMO_DIR, 'classical')},    
     'quantumultx':      {'dir': os.path.join(RULESET_BASE_DIR, 'quantumultx')},    
     'singbox':          {'dir': os.path.join(RULESET_BASE_DIR, 'singbox')},
@@ -36,17 +36,23 @@ ROUTING_MATRIX = {
     'mihomo_domain':    {'regex': r'^(?!.*(^|[_0-9-])ip([_0-9-]|$)).*$', 'blacklist': ['classic', 'nodomain'], 'dir': os.path.join(MIHOMO_DIR, 'domain')}
 }
 
-# 初始化项目运行所需的所有目录环境
+
+# ---------------- 阶段 2: 环境初始化与依赖校验 ----------------
+
 def setup_environment():
+    """初始化项目运行所需的所有目录环境。"""
+    print("[信息] 开始初始化运行目录结构...")
     required_dirs = {RULESET_BASE_DIR, SOURCE_DIR, MIHOMO_DIR}
     required_dirs.update(
         cfg['dir'] for cfg in ROUTING_MATRIX.values() if 'dir' in cfg
     )
     for d in sorted(required_dirs):
+        print(f"[信息] 正在确保目录存在: {d}")
         os.makedirs(d, exist_ok=True)
 
-# 校验并确认是否存在运行规则生成所需的外部二进制工具
 def check_binary_dependencies(config_data):
+    """校验并确认是否存在运行规则生成所需的外部二进制工具。"""
+    print("[信息] 开始校验外部工具链二进制依赖...")
     need_mihomo  = False
     need_singbox = False
 
@@ -69,42 +75,56 @@ def check_binary_dependencies(config_data):
         missing_bins.append(f"Mihomo: {MIHOMO_CORE}")
     if need_singbox and not os.path.exists(SINGBOX_CORE):
         missing_bins.append(f"Sing-box: {SINGBOX_CORE}")
-    
+        
     if missing_bins:
+        print("[错误] 检测到核心二进制工具链依赖残缺")
         raise FileNotFoundError(
             "[FATAL] 当前配置的输出缺少所需的外部二进制工具链:\n - " + "\n - ".join(missing_bins)
         )
         
-# 定义路由平台的规则过滤匹配逻辑
+    print("[成功] 外部二进制依赖校验全部通过")
+
+
+# ---------------- 阶段 3: 核心规则过滤引擎 ----------------
+
 class RuleFilter:
+    """定义路由平台的规则过滤匹配逻辑。"""
 
     @staticmethod
     def _filter_whitelist(config, name_lower):
+        """执行白名单规则过滤匹配。"""
         if 'whitelist' not in config: return True
         return any(w in name_lower for w in config['whitelist'])
 
     @staticmethod
     def _filter_blacklist(config, name_lower):
+        """执行黑名单规则过滤匹配。"""
         if 'whitelist' in config: return True
         if 'blacklist' not in config: return True
         return not any(b in name_lower for b in config['blacklist'])
 
     @staticmethod
     def _filter_regex(config, name_lower):
+        """执行正则表达式命中匹配。"""
         if 'regex' not in config: return True
         try:
             return bool(re.search(config['regex'], name_lower, re.IGNORECASE))
         except re.error:
+            print(f"[错误] 正则表达式解析失败: {config['regex']}")
             return False
 
     _PIPELINE = [_filter_whitelist, _filter_blacklist, _filter_regex]
 
     @classmethod
     def evaluate(cls, config, group_name_lower):
+        """综合评估当前规则组名称是否通过完整过滤管线。"""
         return all(filter_func(config, group_name_lower) for filter_func in cls._PIPELINE)
 
-# 将用户输入的配置值转化为标准类型（布尔值或路径字符串）
+
+# ---------------- 阶段 4: 配置规范化工具函数 ----------------
+
 def _get_normalized_user_value(raw_val):
+    """将用户输入的配置值转化为标准类型（布尔值或路径字符串）。"""
     if isinstance(raw_val, str):
         val_lower = raw_val.strip().lower()
         if val_lower in ['true', 'ture']: return True
@@ -113,8 +133,8 @@ def _get_normalized_user_value(raw_val):
         return raw_val.strip()            
     return raw_val
 
-# 确保单项规则文件名后缀合法并补全 .txt 扩展名
 def _normalize_rule_item(item):
+    """确保单项规则文件名后缀合法并补全 .txt 扩展名。"""
     if not isinstance(item, str):
         return item
     
@@ -127,8 +147,8 @@ def _normalize_rule_item(item):
         return f"{item_lower}.txt"
     return item_lower
 
-# 规范化配置中的规则路径列表并执行去重
 def _normalize_config_value(val):
+    """规范化配置中的规则路径列表并执行去重。"""
     if isinstance(val, str):
         return _normalize_rule_item(val)
         
@@ -138,9 +158,13 @@ def _normalize_config_value(val):
         return deduplicated_list
         
     return val
-    
-# 加载配置文件，执行自动纠错、路径补全并同步保存
+
+
+# ---------------- 阶段 5: 配置解析与路由加载器 ----------------
+
 def load_and_prepare_config(json_path):
+    """加载配置文件，执行自动纠错、路径补全并同步保存。"""
+    print(f"[信息] 正在载入配置文件: {json_path}")
     with open(json_path, 'r', encoding='utf-8') as f:
         config_data = json.load(f)
         
@@ -195,16 +219,18 @@ def load_and_prepare_config(json_path):
                 modified          = True
 
     if modified:
+        print(f"[信息] 监测到配置结构差异，正在回写同步数据: {json_path}")
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(config_data, f, indent=2, ensure_ascii=False)
-        print("[INFO] 配置文件自动修复并成功保存至 JSON")
+        print("[成功] 配置文件自动修复并成功保存至 JSON")
         
     check_binary_dependencies(config_data)
         
     return config_data
 
-# 根据当前规则组的输出配置生成路由映射矩阵
 def resolve_routing(group_config, group_name):
+    """根据当前规则组的输出配置生成路由映射矩阵。"""
+    print(f"[信息] 正在解析规则组的分流路由映射: {group_name}")
     group_name_lower = group_name.lower()
     raw_outputs      = group_config.get(CONFIG_KEYS['OUTPUTS']) or {}
     routing_map      = {}
@@ -223,6 +249,9 @@ def resolve_routing(group_config, group_name):
             
     return routing_map
 
+
+# ---------------- 阶段 6: 脚本主执行入口 ----------------
+
 if __name__ == '__main__':
     setup_environment()
-    print("[SUCCESS] 运行环境初始化目录构建完成")
+    print("[成功] 运行环境初始化目录构建完成")
