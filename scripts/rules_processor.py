@@ -226,15 +226,32 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
         return None, ""
     internal_type = RULE_MAP[tag]
     
-    # 规避多段逗号污染（如正则表达式、USERAGENT等），精准排除策略
+    # ⚡️ 实战降维流：域名、IP、进程、端口等普通规则，Payload 必定在第二段，直接提取，无视一切后缀
     if internal_type not in ['regex', 'wildcard', 'useragent']:
         raw_payload = parts[1]
     else:
-        # 针对需要多段逗号的特殊规则，融合高容错兜底与标准白名单（补充 MATCH 策略）
-        if len(parts) > 2 and (parts[-1].upper() in ['DIRECT', 'PROXY', 'REJECT', 'REJECT-DROP', 'MATCH'] or len(parts[-1]) < 10):
-            raw_payload = ','.join(parts[1:-1]).strip()
+        # 针对极少数确实需要多段逗号的特殊规则，启动完全闭环的形态学解析
+        if len(parts) > 2:
+            last_part = parts[-1].strip()
+            last_upper = last_part.upper()
+            
+            # 1. 命中标准内置策略，必然是策略后缀，予以剥离
+            if last_upper in ['DIRECT', 'PROXY', 'REJECT', 'REJECT-DROP', 'MATCH']:
+                raw_payload = ','.join(parts[1:-1]).strip()
+                
+            # 2. 如果最后一段包含任何正则/URL特征字符，它绝对是负载内容的一部分，予以保留
+            elif any(c in last_part for c in ['.', '\\', '*', '^', '$', '/', '(', ')', '[', ']', '?', '+', '=', '{', '}']):
+                raw_payload = ','.join(parts[1:]).strip()
+                
+            # 3. 否则，若最后一段表现为干净的标识符格式（长度合理且无特殊标点），判定为自定义策略，予以剥离
+            elif len(last_part) < 24 and re.match(r'^[a-zA-Z0-9_\-\s\u4e00-\u9fa5]+$', last_part):
+                raw_payload = ','.join(parts[1:-1]).strip()
+                
+            # 4. 补齐内层兜底分支，确保无论如何 raw_payload 都有安全初值
+            else:
+                raw_payload = ','.join(parts[1:]).strip()
         else:
-            raw_payload = ','.join(parts[1:]).strip()
+            raw_payload = parts[1]
 
     # 1. 跨界污染阻断：阻止域名、进程等规则中误混入 IP
     if internal_type in ['suffix', 'full', 'keyword', 'process']:
@@ -255,13 +272,13 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
         # 就地补全掩码
         raw_payload = checked_ip if '/' in checked_ip else f"{checked_ip}/{'128' if internal_type == 'ip6' else '32'}"
 
-    # 🌟 核心修正 2：当用户输入 REMOVE 指令时，如果载荷是 IP 则就地对齐掩码，如果是域名则完全不碰
+    # 3. 当用户输入 REMOVE 指令时，如果载荷是 IP 则就地对齐掩码，如果是域名则完全不碰
     elif internal_type == 'remove':
         ip_type, checked_ip = _is_exact_ip(raw_payload)
         if ip_type is not None:
             raw_payload = checked_ip if '/' in checked_ip else f"{checked_ip}/{'128' if ip_type == 'ip6' else '32'}"
 
-    # 3. 最终清洗与直通
+    # 4. 最终清洗与直通
     final_payload = normalize_rule_line(raw_payload, internal_type)
     return (internal_type, final_payload) if final_payload else (None, "")
 
