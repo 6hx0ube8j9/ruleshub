@@ -65,10 +65,10 @@ def check_binary_dependencies(config_data):
             need_mihomo = True
 
     missing_bins = []
-    if need_mihomo and not os.path.exists(MIHOMO_BIN):
-        missing_bins.append(f"Mihomo: {MIHOMO_BIN}")
-    if need_singbox and not os.path.exists(SINGBOX_BIN):
-        missing_bins.append(f"Sing-box: {SINGBOX_BIN}")
+    if need_mihomo and not os.path.exists(MIHOMO_CORE):
+        missing_bins.append(f"Mihomo: {MIHOMO_CORE}")
+    if need_singbox and not os.path.exists(SINGBOX_CORE):
+        missing_bins.append(f"Sing-box: {SINGBOX_CORE}")
     
     if missing_bins:
         raise FileNotFoundError(
