@@ -7,7 +7,7 @@ from typing import Tuple, Optional, Dict, Set, List
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 
-# ==================== 核心数据矩阵与配置 ====================
+# ---------------- 阶段 1: 核心数据矩阵与配置 ----------------
 
 # IP 正则：精准匹配 IPv4 及可选掩码
 IPV4_REGEX = re.compile(
@@ -66,10 +66,10 @@ SOURCE_KEYS = list(_GROUPS.keys())
 RULE_MAP = {rule_name: target_cat for target_cat, rule_sets in _GROUPS.items() for rule_name in rule_sets}
 
 
-# ==================== 内部私有辅助工具集 ====================
+# ---------------- 阶段 2: 内部私有辅助工具集 ----------------
 
 def _parse_ip_string(raw_str: str) -> Tuple[Optional[str], str]:
-    """剥离IP括号和端口，识别IPv4/IPv6类型"""
+    """剥离IP括号和端口，识别IPv4/IPv6类型。"""
     if ']:' in raw_str:
         cleaned = raw_str.split(']:')[0].lstrip('[')
     else:
@@ -92,7 +92,7 @@ def _parse_ip_string(raw_str: str) -> Tuple[Optional[str], str]:
 
 
 def _clean_domain_syntax(domain: str) -> Optional[str]:
-    """剥离域名端口并转化为Punycode"""
+    """剥离域名端口并转化为Punycode。"""
     domain = domain.rstrip('.').lstrip('+*.')
     if ':' in domain and ']' not in domain:
         parts = domain.split(':')
@@ -103,14 +103,17 @@ def _clean_domain_syntax(domain: str) -> Optional[str]:
         try:
             domain = domain.encode('idna').decode('ascii')
         except Exception:
+            print("[错误] 非ASCII域名转换为Punycode失败。")
             return None
             
     return domain.lower()
 
-# ==================== 主流水线总入口 ====================
+
+# ---------------- 阶段 3: 主流水线总入口 ----------------
 
 def execute_rules_pipeline(local_raw_lines: List[str], remote_raw_lines: List[str]) -> Dict[str, Set[str]]:
-    """主执行流水线：解析、去重、合并与优化"""
+    """主执行流水线：解析、去重、合并与优化。"""
+    print(f"[信息] 启动规则处理流水线，本地输入: {len(local_raw_lines)} 行，远程输入: {len(remote_raw_lines)} 行")
     logging.info(f"开始处理规则，本地: {len(local_raw_lines)} 行，远程: {len(remote_raw_lines)} 行")
     
     local_rules = process_raw_lines_batch(local_raw_lines, SOURCE_KEYS)
@@ -123,12 +126,14 @@ def execute_rules_pipeline(local_raw_lines: List[str], remote_raw_lines: List[st
     optimize_domains(merged_rules)
     logging.info("树状折叠去重优化完成")
     
+    print("[成功] 规则处理流水线全部执行完毕。")
     return merged_rules
 
-#  ==================== 核心解析与格式收拢断言 ====================
+
+# ---------------- 阶段 4: 核心解析与格式收拢断言 ----------------
 
 def filter_raw_line(line: str) -> Optional[str]:
-    """剔除注释符号和多余前缀"""
+    """剔除注释符号和多余前缀。"""
     line = line.split('#')[0].split('//')[0].split(';')[0].strip()
     if not line or line.lower() == 'payload:':
         return None
@@ -138,7 +143,7 @@ def filter_raw_line(line: str) -> Optional[str]:
 
 
 def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optional[str]:
-    """根据类型执行载荷的强校验与格式收拢"""
+    """根据类型执行载荷的强校验与格式收拢。"""
     payload = raw_payload.strip().strip("'").strip('"').strip()
     if not payload:
         return None
@@ -169,7 +174,7 @@ def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optio
 
 
 def parse_line(line: str) -> Tuple[Optional[str], str]:
-    """智能路由单行文本至对应解析器"""
+    """智能路由单行文本至对应解析器。"""
     clean_line = filter_raw_line(line)
     if not clean_line:
         return None, ""
@@ -187,7 +192,7 @@ def parse_line(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
-    """解析标准前缀声明的规则（如 DOMAIN-SUFFIX）"""
+    """解析标准前缀声明的规则（如 DOMAIN-SUFFIX）。"""
     parts = [x.strip() for x in line.split(',')]
     if not parts:
         return None, ""
@@ -221,7 +226,7 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
-    """无前缀纯文本规则嗅探"""
+    """无前缀纯文本规则嗅探。"""
     if any(c in line for c in ['?', '(', ')', '|', '^', '$', '\\']):
         return None, ""
 
@@ -253,7 +258,7 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
-    """解析简易 AdGuard / uBlock Filter 格式规则"""
+    """解析简易 AdGuard / uBlock Filter 格式规则。"""
     core_content = line.split('^')[0].strip()
     for prefix, internal_type in [('||', 'suffix'), ('|', 'full')]:
         if core_content.startswith(prefix):
@@ -268,20 +273,24 @@ def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
     final_payload = normalize_rule_line(raw_payload, internal_type)
     return (internal_type, final_payload) if final_payload else (None, "")
 
-#  ==================== 批量控制、主权合并与树状剪枝优化 ====================
+
+# ---------------- 阶段 5: 批量控制、主权合并与树状剪枝优化 ----------------
 
 def process_raw_lines_batch(lines: List[str], rule_keys: List[str]) -> Dict[str, Set[str]]:
-    """批量分发解析，Set结构天然去重"""
+    """批量分发解析，Set结构天然去重。"""
+    print(f"[信息] 开始批量分发解析原始规则，目标矩阵分类共 {len(rule_keys)} 种。")
     parsed_rules = {k: set() for k in rule_keys}
     for line in lines:
         r_type, payload = parse_line(line)  
         if payload and r_type in parsed_rules:
             parsed_rules[r_type].add(payload)
+    print(f"[成功] 批量解析完成，有效分类去重矩阵已建立。")
     return parsed_rules
 
 
 def merge_and_sovereignty_filter(local_rules: Dict[str, Set[str]], remote_rules: Dict[str, Set[str]], rule_keys: List[str]) -> Dict[str, Set[str]]:
-    """合并规则，本地资产和remove排除项拥有最高主权"""
+    """合并规则，本地资产和remove排除项拥有最高主权。"""
+    print("[信息] 开始合并本地与远程规则矩阵，正在注入高优先级本地资产主权过滤机制。")
     merged = {}
     local_all_assets = set()
     local_remove = set(local_rules.get('remove', [])) if local_rules else set()
@@ -303,12 +312,15 @@ def merge_and_sovereignty_filter(local_rules: Dict[str, Set[str]], remote_rules:
         else:
             merged['remove'] = local_set | remote_set
             
+    print("[成功] 规则主权矩阵合并完成，已成功剔除本地资产冲突项与高优先排除项。")
     return merged
 
 
 def optimize_domains(rules: Dict[str, Set[str]]) -> None:
-    """高阶树状子域名折叠去重，剪枝冗余子节点"""
+    """高阶树状子域名折叠去重，剪枝冗余子节点。"""
+    print("[信息] 启动高阶树状域名优化算法，执行子节点冗余剪枝。")
     if not isinstance(rules, dict) or 'suffix' not in rules or 'full' not in rules: 
+        print("[警告] 输入数据结构异常，未能触发域名剪枝优化。")
         return
         
     raw_suffixes = {s for s in rules['suffix'] if s and '.' in s}
@@ -332,3 +344,4 @@ def optimize_domains(rules: Dict[str, Set[str]]) -> None:
 
     rules['suffix'] = optimized_suffixes
     rules['full'] = optimized_fulls
+    print("[成功] 域名树状折叠及冗余子节点剪枝优化全部处理完成。")
