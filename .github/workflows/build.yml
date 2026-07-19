@@ -48,10 +48,6 @@ jobs:
           curl -L -o mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
           gunzip -c mihomo.gz > scripts/mihomo-bin
           chmod +x scripts/mihomo-bin
-          
-          mkdir -p ~/.config/mihomo
-          curl -L -o ~/.config/mihomo/Country.mmdb "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
-          cp ~/.config/mihomo/Country.mmdb ./scripts/Country.mmdb
 
           echo "==== Fetching latest Sing-box ===="
           SB_VERSION=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4 | sed 's/v//')
