@@ -1,20 +1,20 @@
 # === test.txt Combined Base Rules ===
-payload:
-    - +.1337x.to
-    - +.1337x.gd
-    - +.1337x.is
-    - +.1337x.st
-    - +.1337x.tw
-    - +.1337xto.to
-    - +.1337xx.to
-    - +.x1337x.eu
-    - +.x1337x.se
-    - +.x1337x.ws
+
 # --- TYPE: FULL ---
 full,custom.rule
 full,google.com.123
 
 # --- TYPE: SUFFIX ---
+suffix,1337x.gd
+suffix,1337x.is
+suffix,1337x.st
+suffix,1337x.to
+suffix,1337x.tw
+suffix,1337xto.to
+suffix,1337xx.to
 suffix,baidu.com
 suffix,google.com
+suffix,x1337x.eu
+suffix,x1337x.se
+suffix,x1337x.ws
 
