@@ -3,6 +3,7 @@
   "rules": [
     {
       "domain": [
+        "ip-asn",
         "ip-asn,211157,no-resolve",
         "ip-asn,44907,no-resolve",
         "ip-asn,59930,no-resolve",
@@ -34,6 +35,9 @@
         "tg.dev",
         "tx.me",
         "usercontent.dev"
+      ],
+      "domain_keyword": [
+        "nicegram"
       ],
       "ip_cidr": [
         "109.239.140.0/24",

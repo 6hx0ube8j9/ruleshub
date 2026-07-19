@@ -1,5 +1,6 @@
 # Quantumult X Rule-Set: china
 
+host, ip-asn, China
 host, ip-asn,211157,no-resolve, China
 host, ip-asn,44907,no-resolve, China
 host, ip-asn,59930,no-resolve, China
@@ -29,6 +30,7 @@ host-suffix, telesco.pe, China
 host-suffix, tg.dev, China
 host-suffix, tx.me, China
 host-suffix, usercontent.dev, China
+host-keyword, nicegram, China
 ip-cidr, 109.239.140.0/24, China, no-resolve
 ip-cidr, 139.59.210.98/32, China, no-resolve
 ip-cidr, 149.154.160.0/20, China, no-resolve

@@ -180,6 +180,9 @@ suffix,youtubemobilesupport.com
 suffix,yt.be
 suffix,ytimg.com
 
+# --- TYPE: KEYWORD ---
+keyword,youtube
+
 # --- TYPE: IP ---
 ip,172.110.32.0/21
 ip,216.73.80.0/20

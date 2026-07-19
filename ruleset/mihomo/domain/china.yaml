@@ -1,4 +1,5 @@
 payload:
+    - ip-asn
     - ip-asn,211157,no-resolve
     - ip-asn,44907,no-resolve
     - ip-asn,59930,no-resolve

@@ -1,6 +1,7 @@
 # === telegram.txt Combined Base Rules ===
 
 # --- TYPE: FULL ---
+full,ip-asn
 full,ip-asn,211157,no-resolve
 full,ip-asn,44907,no-resolve
 full,ip-asn,59930,no-resolve
@@ -32,6 +33,9 @@ suffix,telesco.pe
 suffix,tg.dev
 suffix,tx.me
 suffix,usercontent.dev
+
+# --- TYPE: KEYWORD ---
+keyword,nicegram
 
 # --- TYPE: IP ---
 ip,109.239.140.0/24

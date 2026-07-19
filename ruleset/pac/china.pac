@@ -8,6 +8,7 @@ var DIRECT_DOMAINS = {
     "comments.app": 1,
     "contest.com": 1,
     "graph.org": 1,
+    "ip-asn": 1,
     "ip-asn,211157,no-resolve": 1,
     "ip-asn,44907,no-resolve": 1,
     "ip-asn,59930,no-resolve": 1,
