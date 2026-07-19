@@ -23,6 +23,12 @@
       "inputs": [
         "telegram.txt"
       ]
+    },
+    {
+      "name": "test",
+      "inputs": [
+        "test.txt"
+      ]
     }
   ]
 }
