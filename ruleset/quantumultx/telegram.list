@@ -3,6 +3,7 @@
 host-suffix, api.imem.app, Telegram
 host-suffix, api.swiftgram.app, Telegram
 host-suffix, cdn-telegram.org, Telegram
+host-suffix, cdn-telegram.test.org, Telegram
 host-suffix, comments.app, Telegram
 host-suffix, contest.com, Telegram
 host-suffix, graph.org, Telegram
