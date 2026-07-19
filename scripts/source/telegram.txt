@@ -1,7 +1,7 @@
 # === telegram.txt Combined Base Rules ===
 
 # --- TYPE: FULL ---
-full,ip-asn
+cdn-telegram.test.org
 
 # --- TYPE: SUFFIX ---
 suffix,api.imem.app
