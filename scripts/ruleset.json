@@ -1,4 +1,25 @@
 {
-  "sync_source": {},
-  "groups": []
+  "sync_source": {
+    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/YouTube/YouTube.list": "youtube.txt",
+    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Telegram/Telegram.list": "telegram.txt",
+    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/QuantumultX/AppleDaily/AppleDaily.list": "appledail.txt"
+  },
+  "groups": [
+    {
+      "name": "proxy",
+      "inputs": [
+        "google.txt",
+        "youtube.txt"
+      }
+    },
+    {
+      "name": "appledail",
+    },
+    {
+      "name": "telegram",
+      "inputs": [
+        "telegram.txt"
+      ]
+    }
+  ]
 }
