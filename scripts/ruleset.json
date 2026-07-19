@@ -13,7 +13,10 @@
       ]
     },
     {
-      "name": "appledail"
+      "name": "appledail",
+      "inputs": [
+        "appledail.txt"
+      ]
     },
     {
       "name": "telegram",
