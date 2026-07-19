@@ -227,6 +227,8 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
 
 def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     """无前缀纯文本规则嗅探。"""
+    line = line.split(',', 1)[0].strip()
+
     if any(c in line for c in ['?', '(', ')', '|', '^', '$', '\\']):
         return None, ""
 
@@ -237,23 +239,24 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     clean_val = line.lstrip('+*.')
     if not clean_val or clean_val.isdigit():
         return None, ""
-
+        
     ip_type, _ = _parse_ip_string(clean_val)
     if ip_type:
-        internal_type = ip_type
-    else:
-        if any(c in clean_val for c in [' ', '/', '@', '=', '%', '&', ';']):
-            return None, ""
-            
-        clean_val_lower = clean_val.lower()
-        is_public_suffix = (
-            clean_val_lower in PUBLIC_SUFFIX_BLACKLIST or 
-            any(clean_val_lower.endswith(f'.{suf}') for suf in PUBLIC_SUFFIX_BLACKLIST)
-        )
+        final_payload = normalize_rule_line(clean_val, ip_type)
+        return (ip_type, final_payload) if final_payload else (None, "")
 
-        internal_type = 'suffix' if (is_explicit_suffix or is_public_suffix) else 'full'
+    if '.' not in clean_val or any(c in clean_val for c in [' ', '/', '@', '=', '%', '&', ';']):
+        return None, ""
+        
+    clean_val_lower = clean_val.lower()
+    is_public_suffix = (
+        clean_val_lower in PUBLIC_SUFFIX_BLACKLIST or 
+        any(clean_val_lower.endswith(f'.{suf}') for suf in PUBLIC_SUFFIX_BLACKLIST)
+    )
 
+    internal_type = 'suffix' if (is_explicit_suffix or is_public_suffix) else 'full'
     final_payload = normalize_rule_line(clean_val, internal_type)
+    
     return (internal_type, final_payload) if final_payload else (None, "")
 
 
