@@ -2,10 +2,14 @@
 import os
 import json
 
-# 构建供 Mihomo 编译 MRS 二进制文件的纯 IP 类格式 YAML 文本
+
+# ---------------- 阶段 1: 辅助文本构建工具 ----------------
+
 def mihomo_ipcidr_text(rules):
+    """构建供 Mihomo 编译 MRS 二进制文件的纯 IP 类格式 YAML 文本。"""
     combined_ips = sorted(rules.get('ip', set()) | rules.get('ip6', set()))
     if not combined_ips:
+        print("[信息] 未检测到有效的 IP 规则条目，跳过文本构建")
         return ""
         
     indent = " " * 4
@@ -13,11 +17,12 @@ def mihomo_ipcidr_text(rules):
     payload.extend(f"{indent}- {item}" for item in combined_ips)  
     return "\n".join(payload) + "\n"
 
-# 构建供 Mihomo 编译 MRS 二进制文件的纯域名类格式 YAML 文本
 def mihomo_domain_text(rules):
+    """构建供 Mihomo 编译 MRS 二进制文件的纯域名类格式 YAML 文本。"""
     full_set = rules.get('full', set())
     suffix_set = rules.get('suffix', set())
     if not full_set and not suffix_set:
+        print("[信息] 未检测到有效的域名规则条目，跳过文本构建")
         return ""
         
     indent = " " * 4
@@ -25,19 +30,28 @@ def mihomo_domain_text(rules):
     payload.extend(f"{indent}- {item}" for item in sorted(full_set))
     payload.extend(f"{indent}- +.{item}" for item in sorted(suffix_set))        
     return "\n".join(payload) + "\n"
-    
-# 统一调度并导出所有平台的规则集文件（动态映射驱动）
+
+
+# ---------------- 阶段 2: 核心调度与路由 ----------------
+
 def export_all(global_matrix, dir_map):
+    """统一调度并导出所有平台的规则集文件（动态映射驱动）。"""
+    print("[信息] 开始启动多平台规则集统一导出流程")
     for plat, output_dir in dir_map.items():
+        print(f"[信息] 正在检索平台配置分支: {plat}")
         if plat in global_matrix:
             generator_func = globals().get(f"generate_{plat}")
             if generator_func:
+                print(f"[信息] 成功映射平台生成函数，准备调用: generate_{plat}")
                 generator_func(global_matrix[plat], output_dir)
             else:
-                print(f"[WARN] 找不到该平台的生成函数: {plat}")
-        
-# 生成 Mihomo Classical 格式的 YAML 规则集
+                print(f"[警告] 找不到该平台的生成函数: {plat}")
+
+
+# ---------------- 阶段 3: 平台规则集生成器 ----------------
+
 def generate_mihomo_classical(matrix_data, output_dir):
+    """生成 Mihomo Classical 格式的 YAML 规则集。"""
     for g_name, g_rules in matrix_data.items():
         mihomo_path = os.path.join(output_dir, f"{g_name}.yaml")
         lines = [f"# Mihomo Payload Rule-Set: {g_name}\npayload:\n"]
@@ -55,11 +69,13 @@ def generate_mihomo_classical(matrix_data, output_dir):
                 else: 
                     lines.append(f"  - {raw_type},{val}\n")
 
+        print(f"[信息] 开始写入 Mihomo Classical 规则集文件: {mihomo_path}")
         with open(mihomo_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
+        print(f"[成功] Mihomo Classical 规则集文件写入完成: {mihomo_path}")
 
-# 生成 Quantumult X 格式的规则集文件 (.list)
 def generate_quantumultx(matrix_data, output_dir):
+    """生成 Quantumult X 格式的规则集文件 (.list)。"""
     for g_name, g_rules in matrix_data.items():
         qx_path = os.path.join(output_dir, f"{g_name}.list")
         qx_policy = g_rules.get('policy_label', 'DIRECT')
@@ -89,11 +105,13 @@ def generate_quantumultx(matrix_data, output_dir):
         for val in sorted(g_rules.get('regex', [])): 
             lines.append(f"host-regex, {val.strip()}, {qx_policy}\n")
 
+        print(f"[信息] 开始写入 Quantumult X 规则集文件: {qx_path}")
         with open(qx_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
+        print(f"[成功] Quantumult X 规则集文件写入完成: {qx_path}")
 
-# 生成 Shadowrocket 格式的规则集文件 (.list)
 def generate_shadowrocket(matrix_data, output_dir):
+    """生成 Shadowrocket 格式的规则集文件 (.list)。"""
     for g_name, g_rules in matrix_data.items():
         sr_path = os.path.join(output_dir, f"{g_name}.list")
         
@@ -116,11 +134,13 @@ def generate_shadowrocket(matrix_data, output_dir):
                 else: 
                     lines.append(f"{raw_type},{val}\n")
 
+        print(f"[信息] 开始写入 Shadowrocket 规则集文件: {sr_path}")
         with open(sr_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
+        print(f"[成功] Shadowrocket 规则集文件写入完成: {sr_path}")
 
-# 生成 Loon 格式的规则集文件 (.lsr)
 def generate_loon(matrix_data, output_dir):
+    """生成 Loon 格式的规则集文件 (.lsr)。"""
     for g_name, g_rules in matrix_data.items():
         loon_path = os.path.join(output_dir, f"{g_name}.lsr")
         
@@ -144,12 +164,13 @@ def generate_loon(matrix_data, output_dir):
                     else:
                         lines.append(f"{loon_tag},{val}\n")
 
+        print(f"[信息] 开始写入 Loon 规则集文件: {loon_path}")
         with open(loon_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
-        print(f"[SUCCESS] LSR 规则集生成成功: {g_name}.lsr")
+        print(f"[成功] LSR 规则集生成成功: {g_name}.lsr")
 
-# 生成 Sing-box 格式的 JSON 规则集文件
 def generate_singbox(matrix_data, output_dir):
+    """生成 Sing-box 格式的 JSON 规则集文件。"""
     for g_name, raw_rules in matrix_data.items():
         sb_path = os.path.join(output_dir, f"{g_name}.json")
         g_rules = {k: list(v) if isinstance(v, (list, set, tuple)) else v for k, v in raw_rules.items()}
@@ -183,11 +204,13 @@ def generate_singbox(matrix_data, output_dir):
                 sb_data["rules"].append(and_rule)
 
         # 100% 保证写盘，不漏掉任何文件
+        print(f"[信息] 开始写入 Sing-box 规则集文件: {sb_path}")
         with open(sb_path, 'w', encoding='utf-8') as f:
             json.dump(sb_data, f, indent=2, ensure_ascii=False)
+        print(f"[成功] Sing-box 规则集文件写入完成: {sb_path}")
 
-# 生成标准 Proxy Auto-Config (PAC) 脚本文件 (.pac)
 def generate_pac(matrix_data, output_dir):
+    """生成标准 Proxy Auto-Config (PAC) 脚本文件 (.pac)。"""
     for g_name, g_rules in matrix_data.items():
         pac_path = os.path.join(output_dir, f"{g_name}.pac")
         combined_domains = set(g_rules.get('suffix', [])) | set(g_rules.get('full', []))
@@ -232,5 +255,7 @@ function FindProxyForURL(url, host) {
 }
 """
         lines.append(js_function)
+        print(f"[信息] 开始写入 PAC 脚本文件: {pac_path}")
         with open(pac_path, 'w', encoding='utf-8') as f:
             f.write("".join(lines))
+        print(f"[成功] PAC 脚本文件写入完成: {pac_path}")
