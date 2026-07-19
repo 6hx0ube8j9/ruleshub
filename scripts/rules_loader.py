@@ -162,15 +162,38 @@ def _normalize_config_value(val):
 
 # ---------------- 阶段 5: 配置解析与路由加载器 ----------------
 
+def _ensure_config_exists(json_path):
+    """确保配置文件存在，若不存在则自动生成基础空模板。"""
+    if not os.path.exists(json_path):
+        print(f"[提示] 未检测到配置文件，正在自动创建默认模板: {json_path}")
+        default_config = {
+            CONFIG_KEYS['SOURCES']: {},
+            CONFIG_KEYS['GROUPS']: []
+        }
+        dir_name = os.path.dirname(json_path)
+        if dir_name:
+            os.makedirs(dir_name, exist_ok=True)
+            
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(default_config, f, indent=2, ensure_ascii=False)
+			
 def load_and_prepare_config(json_path):
     """加载配置文件，执行自动纠错、路径补全并同步保存。"""
+    _ensure_config_exists(json_path) 
+    
     print(f"[信息] 正在载入配置文件: {json_path}")
-    with open(json_path, 'r', encoding='utf-8') as f:
-        config_data = json.load(f)
+    
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            config_data = json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"\n[配置错误] 解析失败 ({os.path.basename(json_path)})")
+        print(f"[具体位置] 发生于第 {e.lineno} 行第 {e.colno} 列 -> {e.msg}")
+        raise SystemExit(1)
         
     setup_environment()
-    modified = False
-    
+    modified = False   
+        
     sync_source = config_data.get(CONFIG_KEYS['SOURCES'], {})
     for url, targets in sync_source.items():
         norm_targets = _normalize_config_value(targets)
@@ -255,3 +278,7 @@ def resolve_routing(group_config, group_name):
 if __name__ == '__main__':
     setup_environment()
     print("[成功] 运行环境初始化目录构建完成")
+    
+    # 直接调用加载配置，自动完成新建和校验
+    config = load_and_prepare_config(RULESET_JSON_PATH)
+    print("[成功] 核心配置引擎加载完毕")
