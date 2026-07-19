@@ -1,0 +1,28 @@
+test_rules = [
+    # --- 🟢 正常 case：带策略的纯文本（必须完美通过并保留） ---
+    "google.com, google",                  # 期望结果: ('full', 'google.com')
+    "+.google.com, google",                # 期望结果: ('suffix', 'google.com')
+    "google.com, proxy",                   # 期望结果: ('full', 'google.com')
+    "1.1.1.1, google",                     # 期望结果: ('ip', '1.1.1.1')
+    "5.62.60.5/32, proxy",                 # 期望结果: ('ip', '5.62.60.5/32')
+    "2a04:4e41:4020::/52, proxy",          # 期望结果: ('ip6', '2a04:4e41:4020::/52')
+    "2a04:4e41:4020::1",                   # 期望结果: ('ip6', '2a04:4e41:4020::1')
+    
+    # --- 🟡 长尾 case：屁股带多余逗号的（必须救活并提取核心资产） ---
+    "baidu.com,,,,,",                      # 期望结果: ('full', 'baidu.com')
+    "8.8.8.8,",                            # 期望结果: ('ip', '8.8.8.8')
+    
+    # --- 🔴 重点内鬼 case 1：未注册的前缀（必须精准过滤，返回 None, ""） ---
+    "IP-ASN,211157,no-resolve",            # 期望结果: (None, "") -> 死于无句号
+    "GEOIP,CN,DIRECT",                     # 期望结果: (None, "") -> 死于无句号
+    
+    # --- 🔴 重点内鬼 case 2：带全匹配前缀的内鬼（必须精准过滤，返回 None, ""） ---
+    "full,ip-asn",                         # 期望结果: (None, "") -> 死于无句号
+    "full,ip-asn,211157,no-resolve",       # 期望结果: (None, "") -> 死于无句号
+    
+    # --- ❌ 绝对内鬼 case 3：彻底损坏的垃圾数据（必须精准过滤，返回 None, ""） ---
+    "href=\"http://badsite.club\"",        # 期望结果: (None, "") -> 死于非法字符网
+    "CUSTOM.RULE,12345,proxy",             # 期望结果: (None, "") -> 触发白名单/底层域名清洗死掉
+    "google.com.123",                      # 期望结果: (None, "") -> 死于TLD非纯字母白名单
+    "just_a_broken_line"                   # 期望结果: (None, "") -> 死于无句号
+]
