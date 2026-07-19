@@ -425,12 +425,8 @@ async def async_main():
     """顶层全局异步调度主轴核心驱动程序。"""
     # 阶段 1: 加载配置与 environment 初始化（严格依赖置顶变量）
     print("[信息] 阶段 1: 正在加载规则配置...")
-    try:
-        config_data = rules_loader.load_and_prepare_config(RULESET_CONFIG_PATH)
-        print("[成功] 规则配置文件加载并初始化完成")
-    except (FileNotFoundError, ValueError) as e:
-        print(f"[错误] 配置加载失败: {e}")
-        sys.exit(1)
+    config_data = rules_loader.load_and_prepare_config(RULESET_CONFIG_PATH)
+    print("[成功] 规则配置文件加载并初始化完成")
 
     # 阶段 2: 内存级并行拉取网络源
     print("\n[信息] 阶段 2: 正在内存中并行拉取远程网络源...")
