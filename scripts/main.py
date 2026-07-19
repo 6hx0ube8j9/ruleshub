@@ -20,8 +20,8 @@ FETCH_TIMEOUT   = 15
 
 # 外部物理路径与核心控制矩阵映射
 RULESET_CONFIG_PATH     = rules_loader.RULESET_JSON_PATH        # 统一读取 loader 定义的 ruleset.json 路径
-MIHOMO_COMPILER_BIN     = rules_loader.MIHOMO_BIN              # 统一读取 loader 校验的 Mihomo 二进制路径
-SINGBOX_COMPILER_BIN    = rules_loader.SINGBOX_BIN             # 统一读取 loader 校验的 Sing-box 二进制路径
+MIHOMO_COMPILER_CORE    = rules_loader.MIHOMO_CORE              # 统一读取 loader 校验的 Mihomo 二进制路径
+SINGBOX_COMPILER_CORE   = rules_loader.SINGBOX_CORE             # 统一读取 loader 校验的 Sing-box 二进制路径
 
 SOURCE_DIRECTORY        = rules_loader.SOURCE_DIR              # 规则文本落盘/冷备源目录
 MIHOMO_OUTPUT_DIR       = rules_loader.MIHOMO_DIR              # Mihomo 专用编译输出父目录
@@ -347,8 +347,8 @@ def safe_write_text(filepath, content):
         
 # 调用外部置顶的 Mihomo 核心二进制工具链执行规则编译
 def compile_mihomo_mrs(base_name, group_config, rules):
-    if not os.path.exists(MIHOMO_COMPILER_BIN):
-        print(f"[WARN] 未找到 Mihomo 二进制编译工具，跳过编译: {MIHOMO_COMPILER_BIN}")
+    if not os.path.exists(MIHOMO_COMPILER_CORE):
+        print(f"[WARN] 未找到 Mihomo 二进制编译工具，跳过编译: {MIHOMO_COMPILER_CORE}")
         return
         
     routing_map = rules_loader.resolve_routing(group_config, base_name)
@@ -373,7 +373,7 @@ def compile_mihomo_mrs(base_name, group_config, rules):
         try:
             print(f"[INFO] 正在调用 Mihomo 二进制工具链编译 MRS 规则集: {target_name}")
             subprocess.run(
-                [MIHOMO_COMPILER_BIN, 'convert-ruleset', sub_dir, 'yaml', yaml_path, mrs_out_path], 
+                [MIHOMO_COMPILER_CORE, 'convert-ruleset', sub_dir, 'yaml', yaml_path, mrs_out_path], 
                 check=True, capture_output=True, text=True
             )
             print(f"[SUCCESS] 编译 MRS 完成: {target_name}.mrs ({sub_dir})")
@@ -382,7 +382,7 @@ def compile_mihomo_mrs(base_name, group_config, rules):
 
 # 调用外部置顶的 Sing-box 核心二进制工具链执行规则二进制固化
 def compile_singbox_srs(global_matrix, singbox_dir):
-    if not os.path.exists(SINGBOX_COMPILER_BIN) or not global_matrix.get('singbox'): 
+    if not os.path.exists(SINGBOX_COMPILER_CORE) or not global_matrix.get('singbox'): 
         print("[WARN] 未找到 Sing-box 编译工具或目标矩阵为空，跳过 SRS 编译")
         return
 
@@ -396,7 +396,7 @@ def compile_singbox_srs(global_matrix, singbox_dir):
 
         try:
             print(f"[INFO] 正在调用 Sing-box 二进制工具链编译 SRS 规则集: {g_name}")
-            subprocess.run([SINGBOX_COMPILER_BIN, 'rule-set', 'compile', sb_path, '-o', sb_srs_path], check=True, capture_output=True, text=True)
+            subprocess.run([SINGBOX_COMPILER_CORE, 'rule-set', 'compile', sb_path, '-o', sb_srs_path], check=True, capture_output=True, text=True)
             print(f"[SUCCESS] 编译 SRS 完成: {g_name}.srs")
         except subprocess.CalledProcessError as e:
             print(f"[WARN] Sing-box 编译失败 {g_name}.json，退出码: {e.returncode}，错误信息: {e.stderr.strip()}")
