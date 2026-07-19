@@ -7,7 +7,7 @@ from typing import Tuple, Optional, Dict, Set, List
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 
-# ==================== 一、 核心数据矩阵与配置 ====================
+# ==================== 核心数据矩阵与配置 ====================
 
 # IP 正则：精准匹配 IPv4 及可选掩码
 IPV4_REGEX = re.compile(
@@ -66,7 +66,7 @@ SOURCE_KEYS = list(_GROUPS.keys())
 RULE_MAP = {rule_name: target_cat for target_cat, rule_sets in _GROUPS.items() for rule_name in rule_sets}
 
 
-# ==================== 二、 内部私有辅助工具集 ====================
+# ==================== 内部私有辅助工具集 ====================
 
 def _parse_ip_string(raw_str: str) -> Tuple[Optional[str], str]:
     """剥离IP括号和端口，识别IPv4/IPv6类型"""
@@ -107,7 +107,7 @@ def _clean_domain_syntax(domain: str) -> Optional[str]:
             
     return domain.lower()
 
-# ==================== 三、 主流水线总入口 ====================
+# ==================== 主流水线总入口 ====================
 
 def execute_rules_pipeline(local_raw_lines: List[str], remote_raw_lines: List[str]) -> Dict[str, Set[str]]:
     """主执行流水线：解析、去重、合并与优化"""
@@ -125,7 +125,7 @@ def execute_rules_pipeline(local_raw_lines: List[str], remote_raw_lines: List[st
     
     return merged_rules
 
-#  ==================== 四、 核心解析与格式收拢断言 ====================
+#  ==================== 核心解析与格式收拢断言 ====================
 
 def filter_raw_line(line: str) -> Optional[str]:
     """剔除注释符号和多余前缀"""
@@ -268,7 +268,7 @@ def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
     final_payload = normalize_rule_line(raw_payload, internal_type)
     return (internal_type, final_payload) if final_payload else (None, "")
 
-#  ==================== 五、 批量控制、主权合并与树状剪枝优化 ====================
+#  ==================== 批量控制、主权合并与树状剪枝优化 ====================
 
 def process_raw_lines_batch(lines: List[str], rule_keys: List[str]) -> Dict[str, Set[str]]:
     """批量分发解析，Set结构天然去重"""
