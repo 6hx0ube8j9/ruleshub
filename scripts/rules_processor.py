@@ -227,19 +227,20 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
     internal_type = RULE_MAP[tag]
     
     # 规避多段逗号污染（如正则表达式、USERAGENT等），精准排除策略
-    if internal_type in ['regex', 'wildcard', 'useragent'] and len(parts) > 2:
-        if parts[-1].upper() in ['DIRECT', 'PROXY', 'REJECT', 'REJECT-DROP'] or len(parts[-1]) < 10:
+    if internal_type not in ['regex', 'wildcard', 'useragent']:
+        raw_payload = parts[1]
+    else:
+        # 针对需要多段逗号的特殊规则，融合高容错兜底与标准白名单（补充 MATCH 策略）
+        if len(parts) > 2 and (parts[-1].upper() in ['DIRECT', 'PROXY', 'REJECT', 'REJECT-DROP', 'MATCH'] or len(parts[-1]) < 10):
             raw_payload = ','.join(parts[1:-1]).strip()
         else:
             raw_payload = ','.join(parts[1:]).strip()
-    else:
-        raw_payload = parts[1]
 
     # 1. 跨界污染阻断：阻止域名、进程等规则中误混入 IP
     if internal_type in ['suffix', 'full', 'keyword', 'process']:
         ip_type, _ = _is_exact_ip(raw_payload)
         if ip_type is not None:
-            return None, "" 
+            return None, ""
 
     # 2. 正规 IP 规则校验与掩码就地补全
     if internal_type in ['ip', 'ip6']:
