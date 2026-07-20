@@ -1,27 +1,36 @@
-# === test.txt Combined Base Rules ===
-
-# --- TYPE: SUFFIX ---
-suffix,12diasderegalosdeitunes.gt
-suffix,12diasderegalosdeitunes.hn
-suffix,12diasderegalosdeitunes.pe
-suffix,12joursdecadeauxdeitunes.com
-suffix,1monsterbeatsbydreus.com
-suffix,1to1computing.com.au
-suffix,1to1conference.com.au
-suffix,2013beatsbydrdreonline.com
-suffix,2013beatsbydrdreshop.com
-suffix,2013beatsbydreshop.com
-suffix,2013beatshdcybermonday.com
-suffix,2013cheapestbeats.com
-suffix,2013newbeatsworld.com
-suffix,2013pascherbeatsbydre.com
-suffix,2014cheapbeatsbydre.com
-suffix,2beatsdre.com
-suffix,2buybeatsbydre.com
-suffix,2drdrebeats.com
-suffix,40shopping.com
-suffix,4beatsbydre.com
-suffix,5beatsbydre.com
-suffix,5lml.com
-suffix,a0pple.net
-
+DOMAIN-SUFFIX,bbc
+DOMAIN-SUFFIX,bbc.co
+DOMAIN-SUFFIX,bbc.co.uk
+DOMAIN-SUFFIX,bbc.com
+DOMAIN-SUFFIX,bbc.in
+DOMAIN,aod-dash-uk-live.akamaized.net
+DOMAIN,aod-hls-uk-live.akamaized.net
+DOMAIN,as-dash-uk-live.akamaized.net
+DOMAIN,as-hls-uk-live.akamaized.net
+139.178.128.0/18 
+2a01:b740::/32,no-resolve
+USER-AGENT,fmflocatord*
+USER-AGENT,geod*
+USER-AGENT,locationd*
+USER-AGENT,passd*
+USER-AGENT,Music*
+DOMAIN,appleid.apple.com  #222
+DOMAIN,appleid.cdn-apple.com ///333
+DOMAIN,gsa.apple.com
+DOMAIN,idmsa.apple.com
+PROCESS-NAME,apsd
+PROCESS-NAME,com.apple.Maps
+PROCESS-NAME,findmydevice-user-agent
+PROCESS-NAME,fmfd
+PROCESS-NAME,mapspushd
+payload:
+  - DOMAIN-SUFFIX,apple-cloudkit.com
+  - DOMAIN-SUFFIX,apple-mapkit.com
+  - DOMAIN-SUFFIX,apple.com.akadns.net
+  - DOMAIN-SUFFIX,appleswift.com
+  - DOMAIN-SUFFIX,appleworldwidedeveloper.hb-api.omtrdc.net
+  - DOMAIN-SUFFIX,appleworldwidedeveloper.sc.omtrdc.net
+  - DOMAIN-SUFFIX,calendarserver.org
+  - DOMAIN-SUFFIX,carekit.org
+#  - DOMAIN-SUFFIX,courier-push-apple.com.akadns.net
+#  - DOMAIN-SUFFIX,cups.org
