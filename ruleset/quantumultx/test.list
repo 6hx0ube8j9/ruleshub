@@ -1,3 +1,10 @@
 # Quantumult X Rule-Set: test
 
+host, a-b-c.v2ex.co.uk, Test
+host, api.cloudflare.com, Test
+host, www.baidu.com, Test
 host-suffix, a.org, Test
+host-suffix, google.com, Test
+host-suffix, xn--p8j9a0d9c9a.xn--q9jyb4c, Test
+host-suffix, xn--qcka1pmc.xn--q9jyb4c, Test
+ip-cidr, 192.168.1.1/32, Test, no-resolve
