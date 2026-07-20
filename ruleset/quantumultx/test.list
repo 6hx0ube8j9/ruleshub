@@ -1,5 +1,5 @@
 # Quantumult X Rule-Set: test
 
-ip6-cidr, 2001:4860:4860::8888, Test, no-resolve
+ip6-cidr, 2001:4860:4860::8888/128, Test, no-resolve
 ip6-cidr, 2001:da8::1/128, Test, no-resolve
-ip6-cidr, 2606:4700:4700::1111, Test, no-resolve
+ip6-cidr, 2606:4700:4700::1111/128, Test, no-resolve
