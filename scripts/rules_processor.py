@@ -228,7 +228,7 @@ def parse_line(line: str) -> Tuple[Optional[str], str]:
 def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
     """解析标准前缀声明的规则"""
     parts = [x.strip() for x in line.split(',')]
-    if not parts or len(parts) < 2:
+    if len(parts) < 2:
         return None, ""
 
     tag = parts[0].upper()
@@ -236,19 +236,19 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
         return None, ""
     internal_type = RULE_MAP[tag]
     
+    # --- 1. 提取 Payload ---
     if internal_type not in ['regex', 'wildcard', 'useragent']:
         raw_payload = parts[1]
     else:
-        if len(parts) > 2 and (parts[-1].upper() in ['DIRECT', 'PROXY', 'REJECT', 'REJECT-DROP', 'MATCH'] or len(parts[-1]) < 10):
-            raw_payload = ','.join(parts[1:-1]).strip()
-        else:
-            raw_payload = ','.join(parts[1:]).strip()
+        raw_payload = ','.join(parts[1:]).strip()
 
+    # --- 2. 安全防护：防止域名/进程类型混入 IP 地址 ---
     if internal_type in ['suffix', 'full', 'keyword', 'process']:
         ip_type, _ = _is_exact_ip(raw_payload)
         if ip_type is not None:
             return None, ""
 
+    # --- 3. IP 类型自动纠错与掩码自动补全 (/32 与 /128) ---
     if internal_type in ['ip', 'ip6']:
         ip_type, checked_ip = _is_exact_ip(raw_payload)
         if ip_type is None:
@@ -260,6 +260,7 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
             
         raw_payload = checked_ip if '/' in checked_ip else f"{checked_ip}/{'128' if internal_type == 'ip6' else '32'}"
 
+    # --- 4. REMOVE 规则的 IP 规范化处理 ---
     elif internal_type == 'remove':
         ip_type, checked_ip = _is_exact_ip(raw_payload)
         if ip_type is not None:
