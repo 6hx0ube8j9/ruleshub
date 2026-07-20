@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 RELAXED_DOMAIN_REGEX = re.compile(
     r'^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+'
-    r'(?![0-9]+$)[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$'
+    r'[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$'
 )
 
 PUBLIC_SUFFIX_BLACKLIST = {
@@ -128,11 +128,16 @@ def _is_exact_domain(text: str) -> Optional[str]:
     if len(domain) > 253:
         return None
     
-    # 5. 依靠单分支终极正则断言
-    if RELAXED_DOMAIN_REGEX.match(domain):
-        return domain
+    # 5. 格式断言
+    if not RELAXED_DOMAIN_REGEX.match(domain):
+        return None
+
+    # 6. 防 IP 混淆
+    parts = domain.split('.')
+    if all(part.isdigit() for part in parts):
+        return None
         
-    return None
+    return domain
 
 
 def _clean_policy_suffix(line: str) -> str:
