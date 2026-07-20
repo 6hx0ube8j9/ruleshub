@@ -678,7 +678,6 @@ suffix,xn--ggle-55da.com
 suffix,xn--gogl-0nd52e.com
 suffix,xn--gogl-1nd42e.com
 suffix,xn--ngstr-lra8j.com
-suffix,xn--p8j9a0d9c9a.xn--q9jyb4c
 suffix,xplr.co
 suffix,youtu.be
 suffix,youtube-nocookie.com
