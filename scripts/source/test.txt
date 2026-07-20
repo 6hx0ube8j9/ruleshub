@@ -1,20 +1,71 @@
-# === test.txt Combined Base Rules ===
 
-# --- TYPE: FULL ---
-full,custom.rule
-full,google.com.123
-
-# --- TYPE: SUFFIX ---
-suffix,1337x.gd
-suffix,1337x.is
-suffix,1337x.st
-suffix,1337x.to
-suffix,1337x.tw
-suffix,1337xto.to
-suffix,1337xx.to
-suffix,baidu.com
-suffix,google.com
-suffix,x1337x.eu
-suffix,x1337x.se
-suffix,x1337x.ws
-
+HOST-SUFFIX,aol.ca,AOL
+HOST-SUFFIX,aol.co.uk,AOL
+HOST-SUFFIX,aol.com,AOL
+HOST-SUFFIX,aolnews.com,AOLHOST-SUFFIX,aol.ca,AOL
+HOST-SUFFIX,aol.co.uk,AOL
+HOST-SUFFIX,aol.com,AOL
+HOST-SUFFIX,aolnews.com,AOL
+payload:
+  - DOMAIN-SUFFIX,95599.cn
+  - DOMAIN-SUFFIX,abchina.com
+  - DOMAIN-SUFFIX,bscabank.com
+  - DOMAIN-SUFFIX,openaboc.cn
+  - DOMAIN-SUFFIX,openaboc.com
+  - DOMAIN-SUFFIX,openaboc.com.cn
+  
+  
+payload:
+    - +.bestincapi.com
+    - +.qianyierp.com
+    - +.800best.com
+    - +.youyiwms.com
+    - +.800best.net
+    - +.800bestapi.cn
+    - +.800bestapi.com
+    - +.800bestapp.cn
+    - +.800bestapp.com
+    - +.baishinetwork.com
+    - +.best-inc.com
+    - +.bestcrossborder.com
+    - +.bestdataclub.com
+    - +.bestincapi.cn
+    - +.800best.cn
+    - +.bestincapp.com
+    - +.56laile.com
+    - +.linliyz.com
+    - +.qiancangwms.com
+	
+payload:
+    - apple.com.akadns.net
+    - configuration-lb.ls-apple.com.akadns.net
+    - push-apple.com.akadns.net
+    - apple-tv-plus-press.apple.com
+    - hls-amt.itunes.apple.com
+    - hls.itunes.apple.com
+    - np-edge.itunes.apple.com
+    - play-edge.itunes.apple.com
+    - tv.applemusic.com
+    - uts-api.itunes.apple.com
+    - beatselectronicsllc.tt.omtrdc.net
+    - www-cdn.icloud.com.akadns.net
+    - notary-submissions-prod.s3-accelerate.amazonaws.com
+    - notary-submissions-prod.s3.us-west-2.amazonaws.com
+    - appleworldwidedeveloper.hb-api.omtrdc.net
+    - appleworldwidedeveloper.sc.omtrdc.net
+    - p-events-delivery.akamaized.net
+		
+wwwapplemusic.com
+musickit.net
+musickit.com.cn
+com.cn
+217.21.144.0/20
+217.24.240.0/20
+217.73.128.0/20
+217.216.60.0/24
+2001:470:8:18c::/64
+2001:470:8:280::/64
+2001:470:8:4af::/64
+2001:470:d:8::/64
+2001:470:d:85b::/64
+2001:470:d:885::/64
