@@ -3,8 +3,11 @@ payload:
   - DOMAIN,a-b-c.v2ex.co.uk
   - DOMAIN,api.cloudflare.com
   - DOMAIN,www.baidu.com
+  - DOMAIN-SUFFIX,a.b
   - DOMAIN-SUFFIX,a.org
+  - DOMAIN-SUFFIX,github.com
   - DOMAIN-SUFFIX,google.com
+  - DOMAIN-SUFFIX,test.123a
   - DOMAIN-SUFFIX,xn--p8j9a0d9c9a.xn--q9jyb4c
   - DOMAIN-SUFFIX,xn--qcka1pmc.xn--q9jyb4c
   - IP-CIDR,192.168.1.1/32,no-resolve
