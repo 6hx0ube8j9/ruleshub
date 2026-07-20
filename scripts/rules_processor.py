@@ -295,9 +295,9 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     N = len(parts)
 
     if N == 2:
-        return 'suffix', exact_domain
+        return 'full', exact_domain
     elif N == 3:
-        if f"{parts[1]}.{parts[2]}" in PUBLIC_SUFFIX_BLACKLIST or parts[2] in PUBLIC_SUFFIX_BLACKLIST:
+        if f"{parts[1]}.{parts[2]}" in PUBLIC_SUFFIX_BLACKLIST:
             return 'suffix', exact_domain
         return 'full', exact_domain
     else:
