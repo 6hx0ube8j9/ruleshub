@@ -1,16 +1,19 @@
-# === test.txt Combined Base Rules ===
+ google.com
+  www.baidu.com  
++*.github.com
+xn--p8j9a0d9c9a.xn--q9jyb4c
+グーグル.みんな
+api.cloudflare.com:443
+a-b-c.v2ex.co.uk
+a.org
 
-# --- TYPE: FULL ---
-full,a-b-c.v2ex.co.uk
-full,api.cloudflare.com
-full,www.baidu.com
-
-# --- TYPE: SUFFIX ---
-suffix,a.org
-suffix,google.com
-suffix,xn--p8j9a0d9c9a.xn--q9jyb4c
-suffix,xn--qcka1pmc.xn--q9jyb4c
-
-# --- TYPE: IP ---
-ip,192.168.1.1/32
-
+test.123a
+192.168.1.1
+full,ip-asn
+google.com/search?q=test
+bad_domain.com
+abc.-def.com
+server.123
+a.b
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com
+sub.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa---.com
