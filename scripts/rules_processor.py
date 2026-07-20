@@ -294,6 +294,8 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     parts = exact_domain.split('.')
     N = len(parts)
 
+    if len(parts[0]) > 7 or "-" in parts[0]:
+        return 'full', exact_domain    
     if N == 2:
         return 'full', exact_domain
     elif N == 3:
