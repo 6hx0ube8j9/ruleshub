@@ -1,5 +1,6 @@
 # Shadowrocket Rule-Set: test
 
+DOMAIN,apple-tv-plus-press.apple.com
 DOMAIN,apple.com.akadns.net
 DOMAIN,appleworldwidedeveloper.hb-api.omtrdc.net
 DOMAIN,appleworldwidedeveloper.sc.omtrdc.net
@@ -7,13 +8,18 @@ DOMAIN,beatselectronicsllc.tt.omtrdc.net
 DOMAIN,configuration-lb.ls-apple.com.akadns.net
 DOMAIN,hls-amt.itunes.apple.com
 DOMAIN,hls.itunes.apple.com
+DOMAIN,musickit.com.cn
+DOMAIN,musickit.net
 DOMAIN,notary-submissions-prod.s3-accelerate.amazonaws.com
 DOMAIN,notary-submissions-prod.s3.us-west-2.amazonaws.com
 DOMAIN,np-edge.itunes.apple.com
+DOMAIN,p-events-delivery.akamaized.net
 DOMAIN,play-edge.itunes.apple.com
 DOMAIN,push-apple.com.akadns.net
+DOMAIN,tv.applemusic.com
 DOMAIN,uts-api.itunes.apple.com
 DOMAIN,www-cdn.icloud.com.akadns.net
+DOMAIN,wwwapplemusic.com
 DOMAIN-SUFFIX,56laile.com
 DOMAIN-SUFFIX,800best.cn
 DOMAIN-SUFFIX,800best.com
@@ -28,7 +34,6 @@ DOMAIN-SUFFIX,aol.ca
 DOMAIN-SUFFIX,aol.co.uk
 DOMAIN-SUFFIX,aol.com
 DOMAIN-SUFFIX,aolnews.com
-DOMAIN-SUFFIX,apple-tv-plus-press.apple.com
 DOMAIN-SUFFIX,baishinetwork.com
 DOMAIN-SUFFIX,best-inc.com
 DOMAIN-SUFFIX,bestcrossborder.com
@@ -38,16 +43,11 @@ DOMAIN-SUFFIX,bestincapi.com
 DOMAIN-SUFFIX,bestincapp.com
 DOMAIN-SUFFIX,bscabank.com
 DOMAIN-SUFFIX,linliyz.com
-DOMAIN-SUFFIX,musickit.com.cn
-DOMAIN-SUFFIX,musickit.net
 DOMAIN-SUFFIX,openaboc.cn
 DOMAIN-SUFFIX,openaboc.com
 DOMAIN-SUFFIX,openaboc.com.cn
-DOMAIN-SUFFIX,p-events-delivery.akamaized.net
 DOMAIN-SUFFIX,qiancangwms.com
 DOMAIN-SUFFIX,qianyierp.com
-DOMAIN-SUFFIX,tv.applemusic.com
-DOMAIN-SUFFIX,wwwapplemusic.com
 DOMAIN-SUFFIX,youyiwms.com
 IP-CIDR,217.21.144.0/20,no-resolve
 IP-CIDR,217.216.60.0/24,no-resolve

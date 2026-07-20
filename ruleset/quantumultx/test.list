@@ -1,5 +1,6 @@
 # Quantumult X Rule-Set: test
 
+host, apple-tv-plus-press.apple.com, Test
 host, apple.com.akadns.net, Test
 host, appleworldwidedeveloper.hb-api.omtrdc.net, Test
 host, appleworldwidedeveloper.sc.omtrdc.net, Test
@@ -7,13 +8,18 @@ host, beatselectronicsllc.tt.omtrdc.net, Test
 host, configuration-lb.ls-apple.com.akadns.net, Test
 host, hls-amt.itunes.apple.com, Test
 host, hls.itunes.apple.com, Test
+host, musickit.com.cn, Test
+host, musickit.net, Test
 host, notary-submissions-prod.s3-accelerate.amazonaws.com, Test
 host, notary-submissions-prod.s3.us-west-2.amazonaws.com, Test
 host, np-edge.itunes.apple.com, Test
+host, p-events-delivery.akamaized.net, Test
 host, play-edge.itunes.apple.com, Test
 host, push-apple.com.akadns.net, Test
+host, tv.applemusic.com, Test
 host, uts-api.itunes.apple.com, Test
 host, www-cdn.icloud.com.akadns.net, Test
+host, wwwapplemusic.com, Test
 host-suffix, 56laile.com, Test
 host-suffix, 800best.cn, Test
 host-suffix, 800best.com, Test
@@ -28,7 +34,6 @@ host-suffix, aol.ca, Test
 host-suffix, aol.co.uk, Test
 host-suffix, aol.com, Test
 host-suffix, aolnews.com, Test
-host-suffix, apple-tv-plus-press.apple.com, Test
 host-suffix, baishinetwork.com, Test
 host-suffix, best-inc.com, Test
 host-suffix, bestcrossborder.com, Test
@@ -38,16 +43,11 @@ host-suffix, bestincapi.com, Test
 host-suffix, bestincapp.com, Test
 host-suffix, bscabank.com, Test
 host-suffix, linliyz.com, Test
-host-suffix, musickit.com.cn, Test
-host-suffix, musickit.net, Test
 host-suffix, openaboc.cn, Test
 host-suffix, openaboc.com, Test
 host-suffix, openaboc.com.cn, Test
-host-suffix, p-events-delivery.akamaized.net, Test
 host-suffix, qiancangwms.com, Test
 host-suffix, qianyierp.com, Test
-host-suffix, tv.applemusic.com, Test
-host-suffix, wwwapplemusic.com, Test
 host-suffix, youyiwms.com, Test
 ip-cidr, 217.21.144.0/20, Test, no-resolve
 ip-cidr, 217.216.60.0/24, Test, no-resolve
