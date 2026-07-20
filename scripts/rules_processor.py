@@ -9,6 +9,11 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 # ---------------- 阶段 1: 核心数据矩阵与配置 ----------------
 
+STRICT_DOMAIN_REGEX = re.compile(
+    r'^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+'
+    r'(?:[a-zA-Z]{2,63}|xn--[a-zA-Z0-9\-]{1,59})$'
+)
+
 PUBLIC_SUFFIX_BLACKLIST = {
     'com', 'net', 'org', 'gov', 'edu', 'mil', 'int', 'arpa', 'biz', 'info', 'name', 'pro',
     'app', 'dev', 'shop', 'club', 'top', 'xyz', 'vip', 'fun', 'site', 'online', 'tech', 'store',
@@ -53,8 +58,6 @@ _GROUPS = {
 
 SOURCE_KEYS = list(_GROUPS.keys())
 RULE_MAP = {rule_name: target_cat for target_cat, rule_sets in _GROUPS.items() for rule_name in rule_sets}
-STRICT_DOMAIN_REGEX = re.compile(r'^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,63}$')
-
 
 # ---------------- 阶段 2: 内部私有高精度卡尺工具集 ----------------
 
@@ -91,11 +94,12 @@ def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
 
 
 def _is_exact_domain(text: str) -> Optional[str]:
-    """严格校验域名格式并统一转为 Punycode。"""
-    if not text or any(c in text for c in ['/', '?', '@', '=', '%', '&', ';', ' ']):
+    """去除冗余查找，依靠正则秒杀非法字符"""
+    if not text or len(text) > 253:
         return None
+        
     domain = text.strip().rstrip('.').lstrip('+*.')
-    if not domain:
+    if not domain or len(domain) > 253:
         return None
         
     if ':' in domain:
@@ -110,8 +114,10 @@ def _is_exact_domain(text: str) -> Optional[str]:
             return None
             
     domain = domain.lower()
+    
     if STRICT_DOMAIN_REGEX.match(domain):
         return domain
+        
     return None
 
 
