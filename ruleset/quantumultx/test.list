@@ -1,61 +1,25 @@
 # Quantumult X Rule-Set: test
 
-host, apple-tv-plus-press.apple.com, Test
-host, apple.com.akadns.net, Test
-host, appleworldwidedeveloper.hb-api.omtrdc.net, Test
-host, appleworldwidedeveloper.sc.omtrdc.net, Test
-host, beatselectronicsllc.tt.omtrdc.net, Test
-host, configuration-lb.ls-apple.com.akadns.net, Test
-host, hls-amt.itunes.apple.com, Test
-host, hls.itunes.apple.com, Test
-host, musickit.com.cn, Test
-host, musickit.net, Test
-host, notary-submissions-prod.s3-accelerate.amazonaws.com, Test
-host, notary-submissions-prod.s3.us-west-2.amazonaws.com, Test
-host, np-edge.itunes.apple.com, Test
-host, p-events-delivery.akamaized.net, Test
-host, play-edge.itunes.apple.com, Test
-host, push-apple.com.akadns.net, Test
-host, tv.applemusic.com, Test
-host, uts-api.itunes.apple.com, Test
-host, www-cdn.icloud.com.akadns.net, Test
-host, wwwapplemusic.com, Test
-host-suffix, 56laile.com, Test
-host-suffix, 800best.cn, Test
-host-suffix, 800best.com, Test
-host-suffix, 800best.net, Test
-host-suffix, 800bestapi.cn, Test
-host-suffix, 800bestapi.com, Test
-host-suffix, 800bestapp.cn, Test
-host-suffix, 800bestapp.com, Test
-host-suffix, 95599.cn, Test
-host-suffix, abchina.com, Test
-host-suffix, aol.ca, Test
-host-suffix, aol.co.uk, Test
-host-suffix, aol.com, Test
-host-suffix, aolnews.com, Test
-host-suffix, baishinetwork.com, Test
-host-suffix, best-inc.com, Test
-host-suffix, bestcrossborder.com, Test
-host-suffix, bestdataclub.com, Test
-host-suffix, bestincapi.cn, Test
-host-suffix, bestincapi.com, Test
-host-suffix, bestincapp.com, Test
-host-suffix, bscabank.com, Test
-host-suffix, linliyz.com, Test
-host-suffix, openaboc.cn, Test
-host-suffix, openaboc.com, Test
-host-suffix, openaboc.com.cn, Test
-host-suffix, qiancangwms.com, Test
-host-suffix, qianyierp.com, Test
-host-suffix, youyiwms.com, Test
-ip-cidr, 217.21.144.0/20, Test, no-resolve
-ip-cidr, 217.216.60.0/24, Test, no-resolve
-ip-cidr, 217.24.240.0/20, Test, no-resolve
-ip-cidr, 217.73.128.0/20, Test, no-resolve
-ip6-cidr, 2001:470:8:18c::/64, Test, no-resolve
-ip6-cidr, 2001:470:8:280::/64, Test, no-resolve
-ip6-cidr, 2001:470:8:4af::/64, Test, no-resolve
-ip6-cidr, 2001:470:d:85b::/64, Test, no-resolve
-ip6-cidr, 2001:470:d:885::/64, Test, no-resolve
-ip6-cidr, 2001:470:d:8::/64, Test, no-resolve
+host-suffix, 12diasderegalosdeitunes.gt, Test
+host-suffix, 12diasderegalosdeitunes.hn, Test
+host-suffix, 12diasderegalosdeitunes.pe, Test
+host-suffix, 12joursdecadeauxdeitunes.com, Test
+host-suffix, 1monsterbeatsbydreus.com, Test
+host-suffix, 1to1computing.com.au, Test
+host-suffix, 1to1conference.com.au, Test
+host-suffix, 2013beatsbydrdreonline.com, Test
+host-suffix, 2013beatsbydrdreshop.com, Test
+host-suffix, 2013beatsbydreshop.com, Test
+host-suffix, 2013beatshdcybermonday.com, Test
+host-suffix, 2013cheapestbeats.com, Test
+host-suffix, 2013newbeatsworld.com, Test
+host-suffix, 2013pascherbeatsbydre.com, Test
+host-suffix, 2014cheapbeatsbydre.com, Test
+host-suffix, 2beatsdre.com, Test
+host-suffix, 2buybeatsbydre.com, Test
+host-suffix, 2drdrebeats.com, Test
+host-suffix, 40shopping.com, Test
+host-suffix, 4beatsbydre.com, Test
+host-suffix, 5beatsbydre.com, Test
+host-suffix, 5lml.com, Test
+host-suffix, a0pple.net, Test
