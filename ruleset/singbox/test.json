@@ -2,43 +2,10 @@
   "version": 2,
   "rules": [
     {
-      "domain": [
-        "aod-dash-uk-live.akamaized.net",
-        "aod-hls-uk-live.akamaized.net",
-        "appleid.apple.com",
-        "appleid.cdn-apple.com",
-        "as-dash-uk-live.akamaized.net",
-        "as-hls-uk-live.akamaized.net",
-        "gsa.apple.com",
-        "idmsa.apple.com"
-      ],
-      "domain_suffix": [
-        "apple-cloudkit.com",
-        "apple-mapkit.com",
-        "apple.com.akadns.net",
-        "appleswift.com",
-        "appleworldwidedeveloper.hb-api.omtrdc.net",
-        "appleworldwidedeveloper.sc.omtrdc.net",
-        "bbc",
-        "bbc.co",
-        "bbc.co.uk",
-        "bbc.com",
-        "bbc.in",
-        "calendarserver.org",
-        "carekit.org"
-      ],
       "ip_cidr": [
-        "139.178.128.0/18",
-        "2a01:b740::/32"
-      ]
-    },
-    {
-      "process_name": [
-        "apsd",
-        "com.apple.Maps",
-        "findmydevice-user-agent",
-        "fmfd",
-        "mapspushd"
+        "2001:4860:4860::8888",
+        "2001:da8::1/128",
+        "2606:4700:4700::1111"
       ]
     }
   ]

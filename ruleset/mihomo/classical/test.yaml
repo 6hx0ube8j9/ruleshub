@@ -1,30 +1,9 @@
 # Mihomo Payload Rule-Set: test
 payload:
-  - PROCESS-NAME,apsd
-  - PROCESS-NAME,com.apple.Maps
-  - PROCESS-NAME,findmydevice-user-agent
-  - PROCESS-NAME,fmfd
-  - PROCESS-NAME,mapspushd
-  - DOMAIN,aod-dash-uk-live.akamaized.net
-  - DOMAIN,aod-hls-uk-live.akamaized.net
-  - DOMAIN,appleid.apple.com
-  - DOMAIN,appleid.cdn-apple.com
-  - DOMAIN,as-dash-uk-live.akamaized.net
-  - DOMAIN,as-hls-uk-live.akamaized.net
-  - DOMAIN,gsa.apple.com
-  - DOMAIN,idmsa.apple.com
-  - DOMAIN-SUFFIX,apple-cloudkit.com
-  - DOMAIN-SUFFIX,apple-mapkit.com
-  - DOMAIN-SUFFIX,apple.com.akadns.net
-  - DOMAIN-SUFFIX,appleswift.com
-  - DOMAIN-SUFFIX,appleworldwidedeveloper.hb-api.omtrdc.net
-  - DOMAIN-SUFFIX,appleworldwidedeveloper.sc.omtrdc.net
-  - DOMAIN-SUFFIX,bbc
-  - DOMAIN-SUFFIX,bbc.co
-  - DOMAIN-SUFFIX,bbc.co.uk
-  - DOMAIN-SUFFIX,bbc.com
-  - DOMAIN-SUFFIX,bbc.in
-  - DOMAIN-SUFFIX,calendarserver.org
-  - DOMAIN-SUFFIX,carekit.org
-  - IP-CIDR,139.178.128.0/18,no-resolve
-  - IP-CIDR6,2a01:b740::/32,no-resolve
+  - DST-PORT,10000-20000
+  - DST-PORT,443
+  - DST-PORT,80
+  - DST-PORT,8000-8080
+  - IP-CIDR6,2001:4860:4860::8888,no-resolve
+  - IP-CIDR6,2001:da8::1/128,no-resolve
+  - IP-CIDR6,2606:4700:4700::1111,no-resolve
