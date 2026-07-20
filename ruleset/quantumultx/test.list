@@ -1,25 +1,30 @@
 # Quantumult X Rule-Set: test
 
-host-suffix, 12diasderegalosdeitunes.gt, Test
-host-suffix, 12diasderegalosdeitunes.hn, Test
-host-suffix, 12diasderegalosdeitunes.pe, Test
-host-suffix, 12joursdecadeauxdeitunes.com, Test
-host-suffix, 1monsterbeatsbydreus.com, Test
-host-suffix, 1to1computing.com.au, Test
-host-suffix, 1to1conference.com.au, Test
-host-suffix, 2013beatsbydrdreonline.com, Test
-host-suffix, 2013beatsbydrdreshop.com, Test
-host-suffix, 2013beatsbydreshop.com, Test
-host-suffix, 2013beatshdcybermonday.com, Test
-host-suffix, 2013cheapestbeats.com, Test
-host-suffix, 2013newbeatsworld.com, Test
-host-suffix, 2013pascherbeatsbydre.com, Test
-host-suffix, 2014cheapbeatsbydre.com, Test
-host-suffix, 2beatsdre.com, Test
-host-suffix, 2buybeatsbydre.com, Test
-host-suffix, 2drdrebeats.com, Test
-host-suffix, 40shopping.com, Test
-host-suffix, 4beatsbydre.com, Test
-host-suffix, 5beatsbydre.com, Test
-host-suffix, 5lml.com, Test
-host-suffix, a0pple.net, Test
+host, aod-dash-uk-live.akamaized.net, Test
+host, aod-hls-uk-live.akamaized.net, Test
+host, appleid.apple.com, Test
+host, appleid.cdn-apple.com, Test
+host, as-dash-uk-live.akamaized.net, Test
+host, as-hls-uk-live.akamaized.net, Test
+host, gsa.apple.com, Test
+host, idmsa.apple.com, Test
+host-suffix, apple-cloudkit.com, Test
+host-suffix, apple-mapkit.com, Test
+host-suffix, apple.com.akadns.net, Test
+host-suffix, appleswift.com, Test
+host-suffix, appleworldwidedeveloper.hb-api.omtrdc.net, Test
+host-suffix, appleworldwidedeveloper.sc.omtrdc.net, Test
+host-suffix, bbc, Test
+host-suffix, bbc.co, Test
+host-suffix, bbc.co.uk, Test
+host-suffix, bbc.com, Test
+host-suffix, bbc.in, Test
+host-suffix, calendarserver.org, Test
+host-suffix, carekit.org, Test
+ip-cidr, 139.178.128.0/18, Test, no-resolve
+ip6-cidr, 2a01:b740::/32, Test, no-resolve
+user-agent, Music*, Test
+user-agent, fmflocatord*, Test
+user-agent, geod*, Test
+user-agent, locationd*, Test
+user-agent, passd*, Test

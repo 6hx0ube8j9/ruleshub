@@ -2,30 +2,43 @@
   "version": 2,
   "rules": [
     {
+      "domain": [
+        "aod-dash-uk-live.akamaized.net",
+        "aod-hls-uk-live.akamaized.net",
+        "appleid.apple.com",
+        "appleid.cdn-apple.com",
+        "as-dash-uk-live.akamaized.net",
+        "as-hls-uk-live.akamaized.net",
+        "gsa.apple.com",
+        "idmsa.apple.com"
+      ],
       "domain_suffix": [
-        "12diasderegalosdeitunes.gt",
-        "12diasderegalosdeitunes.hn",
-        "12diasderegalosdeitunes.pe",
-        "12joursdecadeauxdeitunes.com",
-        "1monsterbeatsbydreus.com",
-        "1to1computing.com.au",
-        "1to1conference.com.au",
-        "2013beatsbydrdreonline.com",
-        "2013beatsbydrdreshop.com",
-        "2013beatsbydreshop.com",
-        "2013beatshdcybermonday.com",
-        "2013cheapestbeats.com",
-        "2013newbeatsworld.com",
-        "2013pascherbeatsbydre.com",
-        "2014cheapbeatsbydre.com",
-        "2beatsdre.com",
-        "2buybeatsbydre.com",
-        "2drdrebeats.com",
-        "40shopping.com",
-        "4beatsbydre.com",
-        "5beatsbydre.com",
-        "5lml.com",
-        "a0pple.net"
+        "apple-cloudkit.com",
+        "apple-mapkit.com",
+        "apple.com.akadns.net",
+        "appleswift.com",
+        "appleworldwidedeveloper.hb-api.omtrdc.net",
+        "appleworldwidedeveloper.sc.omtrdc.net",
+        "bbc",
+        "bbc.co",
+        "bbc.co.uk",
+        "bbc.com",
+        "bbc.in",
+        "calendarserver.org",
+        "carekit.org"
+      ],
+      "ip_cidr": [
+        "139.178.128.0/18",
+        "2a01:b740::/32"
+      ]
+    },
+    {
+      "process_name": [
+        "apsd",
+        "com.apple.Maps",
+        "findmydevice-user-agent",
+        "fmfd",
+        "mapspushd"
       ]
     }
   ]
