@@ -1,47 +1,17 @@
-# === test.txt Combined Base Rules ===
+# 单个目标端口
+DST-PORT,80
+DST-PORT,443
 
-# --- TYPE: PROCESS ---
-process,apsd
-process,com.apple.Maps
-process,findmydevice-user-agent
-process,fmfd
-process,mapspushd
+# 目标端口范围 / 端口段
+DST-PORT,8000-8080
+DEST-PORT,10000-20000
 
-# --- TYPE: FULL ---
-full,aod-dash-uk-live.akamaized.net
-full,aod-hls-uk-live.akamaized.net
-full,appleid.apple.com
-full,appleid.cdn-apple.com
-full,as-dash-uk-live.akamaized.net
-full,as-hls-uk-live.akamaized.net
-full,gsa.apple.com
-full,idmsa.apple.com
-
-# --- TYPE: SUFFIX ---
-suffix,apple-cloudkit.com
-suffix,apple-mapkit.com
-suffix,apple.com.akadns.net
-suffix,appleswift.com
-suffix,appleworldwidedeveloper.hb-api.omtrdc.net
-suffix,appleworldwidedeveloper.sc.omtrdc.net
-suffix,bbc
-suffix,bbc.co
-suffix,bbc.co.uk
-suffix,bbc.com
-suffix,bbc.in
-suffix,calendarserver.org
-suffix,carekit.org
-
-# --- TYPE: IP ---
-ip,139.178.128.0/18
-
-# --- TYPE: IP6 ---
-ip6,2a01:b740::/32
-
-# --- TYPE: USERAGENT ---
-useragent,Music*
-useragent,fmflocatord*
-useragent,geod*
-useragent,locationd*
-useragent,passd*
-
+# 源端口 (较少用到，但部分客户端支持)
+SRC-PORT,1234
+# 常见的单个 IPv6 地址
+2606:4700:4700::1111
+2001:4860:4860::8888
+IP-CIDR6,2001:da8::1
+# IP 与端口组合
+IP-PORT,1.1.1.1:443
+IP-PORT,192.168.1.1:80
