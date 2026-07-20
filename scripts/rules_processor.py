@@ -283,40 +283,63 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
 
 def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     """无前缀纯文本分层路由算法"""
-    if '*' in line and not (line.startswith('*.') or line.startswith('+.')):
-        return None, ""    
-    is_explicit_suffix = line.startswith('+.') or line.startswith('*.') or line.startswith('.')
-    clean_val = line.lstrip('+*.')
+    if not line:
+        return None, ""
 
-    # 1. 优先尝试 IP 匹配
+    # 1. 优先剥离显式后缀前缀
+    is_explicit_suffix = False
+    clean_val = line
+
+    for prefix in ('+*.', '+.', '*.', '.'):
+        if line.startswith(prefix):
+            is_explicit_suffix = True
+            clean_val = line[len(prefix):]
+            break
+
+    # 2. 拦截非法通配符
+    if '*' in clean_val:
+        return None, ""
+
+    # 3. IP 地址优先校验与路由
     ip_type, checked_ip = _is_exact_ip(clean_val)
     if ip_type is not None:
         if is_explicit_suffix:
-            return None, "" 
+            return None, ""
         return ip_type, _format_ip_cidr(checked_ip, ip_type)
 
-    # 2. 域名断言逻辑
+    # 4. 严格域名格式校验
     exact_domain = _is_exact_domain(clean_val)
     if not exact_domain:
-        return None, "" 
+        return None, ""
 
+    # 5. 显式前缀匹配直接判定为 suffix
     if is_explicit_suffix:
         return 'suffix', exact_domain
 
+    # 6. 拦截裸公共顶级后缀
     if exact_domain in PUBLIC_SUFFIX_BLACKLIST:
-        return None, "" 
+        return None, ""
 
+    # 7. 动态分层逻辑：根据 PUBLIC_SUFFIX_BLACKLIST 探测主域名层级
     parts = exact_domain.split('.')
-    N = len(parts)
+    num_parts = len(parts)
 
-    if N == 2:
+    public_suffix_len = 1
+
+    for depth in range(num_parts - 1, 1, -1):
+        candidate_suffix = '.'.join(parts[-depth:])
+        if candidate_suffix in PUBLIC_SUFFIX_BLACKLIST:
+            public_suffix_len = depth
+            break
+
+    root_domain_parts = public_suffix_len + 1
+
+    if num_parts == root_domain_parts:
         return 'suffix', exact_domain
-    elif N == 3:
-        if f"{parts[1]}.{parts[2]}" in PUBLIC_SUFFIX_BLACKLIST:
-            return 'suffix', exact_domain
+    elif num_parts > root_domain_parts:
         return 'full', exact_domain
-    else:
-        return 'full', exact_domain
+
+    return None, ""
 
 
 def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
