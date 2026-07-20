@@ -1,22 +1,2 @@
 payload:
-    - aod-dash-uk-live.akamaized.net
-    - aod-hls-uk-live.akamaized.net
-    - appleid.apple.com
-    - appleid.cdn-apple.com
-    - as-dash-uk-live.akamaized.net
-    - as-hls-uk-live.akamaized.net
-    - gsa.apple.com
-    - idmsa.apple.com
-    - +.apple-cloudkit.com
-    - +.apple-mapkit.com
-    - +.apple.com.akadns.net
-    - +.appleswift.com
-    - +.appleworldwidedeveloper.hb-api.omtrdc.net
-    - +.appleworldwidedeveloper.sc.omtrdc.net
-    - +.bbc
-    - +.bbc.co
-    - +.bbc.co.uk
-    - +.bbc.com
-    - +.bbc.in
-    - +.calendarserver.org
-    - +.carekit.org
+    - +.a.org

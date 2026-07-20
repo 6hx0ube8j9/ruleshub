@@ -1,23 +1,5 @@
-pass_test_cases = [
-    "google.com",                              # 1. 标准常用域名
-    "  www.baidu.com  ",                       # 2. 前后带空格（测试边缘剥离）
-    "+*.github.com",                           # 3. 常见分流规则前缀（测试剥离）
-    "xn--p8j9a0d9c9a.xn--q9jyb4c",             # 4. Punycode 国际化域名
-    "グーグル.みんな",                           # 5. 纯非ASCII中文/日文域名（测试 idna 自动转换）
-    "api.cloudflare.com:443",                  # 6. 带标准端口号（测试端口剥离）
-    "a-b-c.v2ex.co.uk",                        # 7. 带多级多横杠和双重顶级域
-    "a.org"                                    # 8. 前置节点只有1位的合法短域名
-]
+# === test.txt Combined Base Rules ===
 
-block_test_cases = [
-    "test.123a",                               # 1. 你之前揪出来的畸形数字字母后缀（完美秒杀）
-    "192.168.1.1",                             # 2. 纯 IP 地址（不应作为域名放行）
-    "full,ip-asn",                             # 3. 拼错的路由规则/关键字（最开头的误杀漏洞，现在能精准拦截）
-    "google.com/search?q=test",                # 4. 带有 URL 路径和参数的垃圾数据
-    "bad_domain.com",                          # 5. 域名中间包含下划线（下划线在域名标签内部是不合法的）
-    "abc.-def.com",                            # 6. 子标签以横杠开头（畸形格式）
-    "server.123",                              # 7. 纯数字顶级域（公网不存在）
-    "a.b",                                     # 8. 顶级域长度只有 1 位（不符合 {2,63} 限制）
-    "a" * 70 + ".com",                         # 9. 单标签长度超过 63 字节（违反 RFC 规范）
-    "sub." + "a" * 60 + "---.com"              # 10. 标签以横杠结尾（畸形格式）
-]
+# --- TYPE: SUFFIX ---
+suffix,a.org
+
