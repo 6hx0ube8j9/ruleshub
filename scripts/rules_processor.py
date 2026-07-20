@@ -191,12 +191,17 @@ def filter_raw_line(line: str) -> Optional[str]:
 
 
 def normalize_rule_line(raw_payload: str, internal_type: Optional[str]) -> Optional[str]:
-    """根据类型执行特定格式规范化"""
+    """根据类型执行载荷的最高位掩码自动补全及特定格式规范化。"""
     payload = raw_payload.strip().strip("'").strip('"').strip()
     if not payload:
         return None
 
-    if internal_type == 'port':
+    if internal_type in ['ip', 'ip6']:
+        ip_type, parsed_ip = _is_exact_ip(payload)
+        if ip_type:
+            return parsed_ip if '/' in parsed_ip else f"{parsed_ip}/{'128' if ip_type == 'ip6' else '32'}"
+
+    elif internal_type == 'port':
         payload = payload.replace('(', '').replace(')', '').replace(':', '-')
         parts = [p.strip() for p in payload.split('-') if p.strip()]
         return '-'.join(parts) if parts else None
@@ -258,7 +263,7 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
         if internal_type == 'ip' and ip_type == 'ip6':
             internal_type = 'ip6'
             
-        raw_payload = checked_ip if '/' in checked_ip else f"{checked_ip}/{'128' if internal_type == 'ip6' else '32'}"
+        raw_payload = checked_ip
 
     final_payload = normalize_rule_line(raw_payload, internal_type)
     return (internal_type, final_payload) if final_payload else (None, "")
