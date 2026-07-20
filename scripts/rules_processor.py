@@ -260,12 +260,6 @@ def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
             
         raw_payload = checked_ip if '/' in checked_ip else f"{checked_ip}/{'128' if internal_type == 'ip6' else '32'}"
 
-    # --- 4. REMOVE 规则的 IP 规范化处理 ---
-    elif internal_type == 'remove':
-        ip_type, checked_ip = _is_exact_ip(raw_payload)
-        if ip_type is not None:
-            raw_payload = checked_ip if '/' in checked_ip else f"{checked_ip}/{'128' if ip_type == 'ip6' else '32'}"
-
     final_payload = normalize_rule_line(raw_payload, internal_type)
     return (internal_type, final_payload) if final_payload else (None, "")
 
