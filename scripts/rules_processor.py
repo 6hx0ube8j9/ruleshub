@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 STRICT_DOMAIN_REGEX = re.compile(
     r'^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+'
-    r'(?:[a-zA-Z]{2,63}|xn--[a-zA-Z0-9\-]{1,59})$'
+    r'(?:[a-zA-Z]{2,63}|xn--[a-zA-Z0-9\-]{0,58}[a-zA-Z0-9])$'
 )
 
 PUBLIC_SUFFIX_BLACKLIST = {
