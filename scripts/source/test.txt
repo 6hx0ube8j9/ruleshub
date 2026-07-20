@@ -1,69 +1,71 @@
-# === test.txt Combined Base Rules ===
-
-# --- TYPE: FULL ---
-full,apple.com.akadns.net
-full,appleworldwidedeveloper.hb-api.omtrdc.net
-full,appleworldwidedeveloper.sc.omtrdc.net
-full,beatselectronicsllc.tt.omtrdc.net
-full,configuration-lb.ls-apple.com.akadns.net
-full,hls-amt.itunes.apple.com
-full,hls.itunes.apple.com
-full,notary-submissions-prod.s3-accelerate.amazonaws.com
-full,notary-submissions-prod.s3.us-west-2.amazonaws.com
-full,np-edge.itunes.apple.com
-full,play-edge.itunes.apple.com
-full,push-apple.com.akadns.net
-full,uts-api.itunes.apple.com
-full,www-cdn.icloud.com.akadns.net
-
-# --- TYPE: SUFFIX ---
-suffix,56laile.com
-suffix,800best.cn
-suffix,800best.com
-suffix,800best.net
-suffix,800bestapi.cn
-suffix,800bestapi.com
-suffix,800bestapp.cn
-suffix,800bestapp.com
-suffix,95599.cn
-suffix,abchina.com
-suffix,aol.ca
-suffix,aol.co.uk
-suffix,aol.com
-suffix,aolnews.com
-suffix,apple-tv-plus-press.apple.com
-suffix,baishinetwork.com
-suffix,best-inc.com
-suffix,bestcrossborder.com
-suffix,bestdataclub.com
-suffix,bestincapi.cn
-suffix,bestincapi.com
-suffix,bestincapp.com
-suffix,bscabank.com
-suffix,linliyz.com
-suffix,musickit.com.cn
-suffix,musickit.net
-suffix,openaboc.cn
-suffix,openaboc.com
-suffix,openaboc.com.cn
-suffix,p-events-delivery.akamaized.net
-suffix,qiancangwms.com
-suffix,qianyierp.com
-suffix,tv.applemusic.com
-suffix,wwwapplemusic.com
-suffix,youyiwms.com
-
-# --- TYPE: IP ---
-ip,217.21.144.0/20
-ip,217.216.60.0/24
-ip,217.24.240.0/20
-ip,217.73.128.0/20
-
-# --- TYPE: IP6 ---
-ip6,2001:470:8:18c::/64
-ip6,2001:470:8:280::/64
-ip6,2001:470:8:4af::/64
-ip6,2001:470:d:85b::/64
-ip6,2001:470:d:885::/64
-ip6,2001:470:d:8::/64
-
+####测试规则###
+HOST-SUFFIX,aol.ca,AOL
+HOST-SUFFIX,aol.co.uk,AOL
+HOST-SUFFIX,aol.com,AOL
+HOST-SUFFIX,aolnews.com,AOLHOST-SUFFIX,aol.ca,AOL
+HOST-SUFFIX,aol.co.uk,AOL
+HOST-SUFFIX,aol.com,AOL
+HOST-SUFFIX,aolnews.com,AOL
+payload:
+  - DOMAIN-SUFFIX,95599.cn
+  - DOMAIN-SUFFIX,abchina.com
+  - DOMAIN-SUFFIX,bscabank.com
+  - DOMAIN-SUFFIX,openaboc.cn
+  - DOMAIN-SUFFIX,openaboc.com
+  - DOMAIN-SUFFIX,openaboc.com.cn
+  
+  
+payload:
+    - +.bestincapi.com
+    - +.qianyierp.com
+    - +.800best.com
+    - +.youyiwms.com
+    - +.800best.net
+    - +.800bestapi.cn
+    - +.800bestapi.com
+    - +.800bestapp.cn
+    - +.800bestapp.com
+    - +.baishinetwork.com
+    - +.best-inc.com
+    - +.bestcrossborder.com
+    - +.bestdataclub.com
+    - +.bestincapi.cn
+    - +.800best.cn
+    - +.bestincapp.com
+    - +.56laile.com
+    - +.linliyz.com
+    - +.qiancangwms.com
+	
+payload:
+    - apple.com.akadns.net
+    - configuration-lb.ls-apple.com.akadns.net
+    - push-apple.com.akadns.net
+    - apple-tv-plus-press.apple.com
+    - hls-amt.itunes.apple.com
+    - hls.itunes.apple.com
+    - np-edge.itunes.apple.com
+    - play-edge.itunes.apple.com
+    - tv.applemusic.com
+    - uts-api.itunes.apple.com
+    - beatselectronicsllc.tt.omtrdc.net
+    - www-cdn.icloud.com.akadns.net
+    - notary-submissions-prod.s3-accelerate.amazonaws.com
+    - notary-submissions-prod.s3.us-west-2.amazonaws.com
+    - appleworldwidedeveloper.hb-api.omtrdc.net
+    - appleworldwidedeveloper.sc.omtrdc.net
+    - p-events-delivery.akamaized.net
+		
+wwwapplemusic.com
+musickit.net
+musickit.com.cn
+com.cn
+217.21.144.0/20
+217.24.240.0/20
+217.73.128.0/20
+217.216.60.0/24
+2001:470:8:18c::/64
+2001:470:8:280::/64
+2001:470:8:4af::/64
+2001:470:d:8::/64
+2001:470:d:85b::/64
+2001:470:d:885::/64
