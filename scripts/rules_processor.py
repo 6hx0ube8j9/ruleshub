@@ -9,9 +9,9 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 # ---------------- 阶段 1: 核心数据矩阵与配置 ----------------
 
-STRICT_DOMAIN_REGEX = re.compile(
+RELAXED_DOMAIN_REGEX = re.compile(
     r'^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+'
-    r'(?:[a-zA-Z]{2,63}|xn--[a-zA-Z0-9\-]{0,58}[a-zA-Z0-9])$'
+    r'(?![0-9]+$)[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$'
 )
 
 PUBLIC_SUFFIX_BLACKLIST = {
@@ -94,19 +94,28 @@ def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
 
 
 def _is_exact_domain(text: str) -> Optional[str]:
-    """去除冗余查找，依靠正则秒杀非法字符"""
+    """严格校验并清洗域名格式"""
     if not text or len(text) > 253:
         return None
         
-    domain = text.strip().rstrip('.').lstrip('+*.')
-    if not domain or len(domain) > 253:
+    domain = text.strip().rstrip('.')
+    
+    # 1. 剥离规则前缀
+    for prefix in ('+*.', '+.', '*.', '.'):
+        if domain.startswith(prefix):
+            domain = domain[len(prefix):]
+            break
+
+    if not domain:
         return None
         
+    # 2. 剥离端口号
     if ':' in domain:
         parts = domain.split(':')
         if len(parts) == 2 and parts[1].isdigit():
             domain = parts[0]
             
+    # 3. IDNA 转码
     if not domain.isascii():
         try:
             domain = domain.encode('idna').decode('ascii')
@@ -115,7 +124,12 @@ def _is_exact_domain(text: str) -> Optional[str]:
             
     domain = domain.lower()
     
-    if STRICT_DOMAIN_REGEX.match(domain):
+    # 4. 二次长度校验
+    if len(domain) > 253:
+        return None
+    
+    # 5. 依靠单分支终极正则断言
+    if RELAXED_DOMAIN_REGEX.match(domain):
         return domain
         
     return None
