@@ -7,6 +7,7 @@ host-suffix, a.b, Test
 host-suffix, a.org, Test
 host-suffix, github.com, Test
 host-suffix, google.com, Test
+host-suffix, server.123, Test
 host-suffix, test.123a, Test
 host-suffix, xn--p8j9a0d9c9a.xn--q9jyb4c, Test
 host-suffix, xn--qcka1pmc.xn--q9jyb4c, Test

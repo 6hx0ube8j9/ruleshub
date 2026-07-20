@@ -7,6 +7,7 @@ payload:
   - DOMAIN-SUFFIX,a.org
   - DOMAIN-SUFFIX,github.com
   - DOMAIN-SUFFIX,google.com
+  - DOMAIN-SUFFIX,server.123
   - DOMAIN-SUFFIX,test.123a
   - DOMAIN-SUFFIX,xn--p8j9a0d9c9a.xn--q9jyb4c
   - DOMAIN-SUFFIX,xn--qcka1pmc.xn--q9jyb4c
