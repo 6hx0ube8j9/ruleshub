@@ -4,11 +4,15 @@ import logging
 import ipaddress
 from typing import Tuple, Optional, Dict, Set, List
 
-# 配置基础日志输出
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
-# ---------------- 阶段 1: 核心数据矩阵与配置 ----------------
+# ---------------- 1. 预编译正则与基础配置 ----------------
 
+_ALLOW_IP_CHARS_RE = re.compile(r'^[0-9a-fA-F.:]+$')
+_IPV4_EXACT_RE = re.compile(
+    r'^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}'
+    r'(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$'
+)
 RELAXED_DOMAIN_REGEX = re.compile(
     r'^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+'
     r'[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$'
@@ -59,48 +63,135 @@ _GROUPS = {
 SOURCE_KEYS = list(_GROUPS.keys())
 RULE_MAP = {rule_name: target_cat for target_cat, rule_sets in _GROUPS.items() for rule_name in rule_sets}
 
-# ---------------- 阶段 2: 内部私有高精度卡尺工具集 ----------------
+# ---------------- 2. Trie 树剪枝引擎 ----------------
+
+class DomainTrie:
+    """用于域名层级去重的后缀字典树。"""
+
+    __slots__ = ('root',)
+
+    def __init__(self):
+        self.root = {}
+
+    def insert_if_not_covered(self, domain: str) -> bool:
+        """尝试插入后缀，若已被父域名覆盖返回 False，否则插入并返回 True。"""
+        curr = self.root
+        for part in reversed(domain.split('.')):
+            if 0 in curr:
+                return False
+            curr = curr.setdefault(part, {})
+
+        if 0 in curr:
+            return False
+
+        curr[0] = True
+        return True
+
+    def is_covered(self, domain: str) -> bool:
+        """判断 FULL 域名是否被 Trie 中的 SUFFIX 覆盖。"""
+        curr = self.root
+        for part in reversed(domain.split('.')):
+            if 0 in curr:
+                return True
+            if part not in curr:
+                return False
+            curr = curr[part]
+        return 0 in curr
+
+# ---------------- 3. 私有校验与统一清洗工具 ----------------
+
+def filter_raw_line(line: str) -> Optional[str]:
+    """统一清洗注释、多余符号、边缘空白及策略后缀。"""
+    line = line.split('#')[0].split('//')[0].split(';')[0].strip()
+    if not line or line.lower() == 'payload:':
+        return None
+    if line.startswith('- '):
+        line = line[2:].strip()
+        
+    line = line.strip().strip("'\"").strip()
+    if not line:
+        return None
+
+    if ',' in line:
+        head, _, tail = line.partition(',')
+        head_clean = head.strip()
+        head_upper = head_clean.upper()
+
+        if head_upper in RULE_MAP:
+            internal_type = RULE_MAP[head_upper]
+            tail_clean = tail.strip()
+            if internal_type in ('regex', 'wildcard', 'useragent'):
+                parts = [p.strip() for p in tail_clean.split(',')]
+                payload = ','.join(parts[:-1]) if len(parts) > 1 else parts[0]
+            else:
+                payload = tail_clean.split(',', 1)[0].strip()
+            return f"{head_upper},{payload}" if payload else None
+        else:
+            return head_clean
+
+    return line
+
 
 def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
-    """严格校验IP格式并返回其类型。"""
+    """严格校验 IP 格式并返回其类型与带掩码的标准 CIDR 字符串（含 IPv6 规范化与端口剥离）。"""
     if not text:
         return None, ""
-    cleaned = text.strip().strip('[]')
-    parts = cleaned.split('/')
-    ip_body = parts[0]
     
+    cleaned = text.strip()
+
+    if cleaned.startswith('['):
+        rb_idx = cleaned.find(']')
+        if rb_idx != -1:
+            ip_inside = cleaned[1:rb_idx]
+            remainder = cleaned[rb_idx + 1:]
+            slash_idx = remainder.find('/')
+            cleaned = ip_inside + (remainder[slash_idx:] if slash_idx != -1 else "")
+
+    parts = cleaned.split('/')
+    if len(parts) > 2:
+        return None, text
+
+    ip_body = parts[0]
+    if not _ALLOW_IP_CHARS_RE.match(ip_body):
+        return None, text
+
     mask_suffix = ""
     mask_val = None
-    if len(parts) > 1:
+    if len(parts) == 2:
         mask_str = parts[1]
         if not mask_str.isdigit():
             return None, text
         mask_val = int(mask_str)
         mask_suffix = f"/{mask_val}"
 
-    try:
-        ip_obj = ipaddress.ip_address(ip_body)
-        if ip_obj.version == 4:
+    if ':' not in ip_body:
+        if _IPV4_EXACT_RE.match(ip_body):
             if mask_val is not None and not (0 <= mask_val <= 32):
                 return None, text
-            return 'ip', f"{ip_body}{mask_suffix}"
-        elif ip_obj.version == 6:
+            return 'ip', f"{ip_body}{mask_suffix if mask_suffix else '/32'}"
+        return None, text
+
+    try:
+        ip_obj = ipaddress.ip_address(ip_body)
+        if ip_obj.version == 6:
             if mask_val is not None and not (0 <= mask_val <= 128):
                 return None, text
-            return 'ip6', f"{ip_body.lower()}{mask_suffix}"
+            return 'ip6', f"{ip_obj.compressed}{mask_suffix if mask_suffix else '/128'}"
     except ValueError:
         pass
+
     return None, text
 
 
 def _is_exact_domain(text: str) -> Optional[str]:
-    """严格校验并清洗域名格式"""
+    """严格校验并清洗域名格式（含 IDNA 转码与 IP 混淆防御）。"""
     if not text or len(text) > 253:
         return None
-        
-    domain = text.strip().rstrip('.')
-    
-    # 1. 剥离规则前缀
+
+    domain = text.strip().strip('[]').rstrip('.')
+    if not domain:
+        return None
+
     for prefix in ('+*.', '+.', '*.', '.'):
         if domain.startswith(prefix):
             domain = domain[len(prefix):]
@@ -108,246 +199,138 @@ def _is_exact_domain(text: str) -> Optional[str]:
 
     if not domain:
         return None
-        
-    # 2. 剥离端口号
+
     if ':' in domain:
         parts = domain.split(':')
         if len(parts) == 2 and parts[1].isdigit():
             domain = parts[0]
-            
-    # 3. IDNA 转码
+        else:
+            return None
+
+    sub_parts = domain.split('.')
+    if all(p.isdigit() for p in sub_parts):
+        return None
+
     if not domain.isascii():
         try:
             domain = domain.encode('idna').decode('ascii')
         except Exception:
             return None
-            
+
     domain = domain.lower()
-    
-    # 4. 二次长度校验
-    if len(domain) > 253:
-        return None
-    
-    # 5. 格式断言
-    if not RELAXED_DOMAIN_REGEX.match(domain):
+    if len(domain) > 253 or not RELAXED_DOMAIN_REGEX.match(domain):
         return None
 
-    # 6. 防 IP 混淆
-    parts = domain.split('.')
-    if all(part.isdigit() for part in parts):
-        return None
-        
     return domain
 
-
-def _clean_policy_suffix(line: str) -> str:
-    """快速切除策略后缀并清洗空格。"""
-    first_comma_idx = line.find(',')
-    if first_comma_idx != -1:
-        head = line[:first_comma_idx].strip().upper()
-        if head in RULE_MAP:
-            return line
-        return line.split(',', 1)[0].strip()
-    return line
-
-
-# ---------------- ⚡ 高性能轻量字典树 ----------------
-
-class DomainTrie:
-    """用于百万级域名层级去重的后缀字典树。"""
-    def __init__(self):
-        self.root = {}
-
-    def insert_suffix(self, domain: str):
-        parts = domain.split('.')
-        current = self.root
-        for part in reversed(parts):
-            if '__end__' in current:
-                return
-            current = current.setdefault(part, {})
-        current['__end__'] = True
-
-    def is_covered(self, domain: str) -> bool:
-        parts = domain.split('.')
-        current = self.root
-        for part in reversed(parts):
-            if '__end__' in current:
-                return True
-            if part not in current:
-                return False
-            current = current[part]
-        return '__end__' in current
-
-
-# ---------------- 阶段 3: 主流水线总入口 ----------------
-
-def execute_rules_pipeline(local_raw_lines: List[str], remote_raw_lines: List[str]) -> Dict[str, Set[str]]:
-    """主执行流水线。"""
-    logging.info(f"开始处理规则，本地: {len(local_raw_lines)} 行，远程: {len(remote_raw_lines)} 行")
-    
-    local_rules = process_raw_lines_batch(local_raw_lines, SOURCE_KEYS)
-    remote_rules = process_raw_lines_batch(remote_raw_lines, SOURCE_KEYS)
-    
-    merged_rules = merge_and_sovereignty_filter(local_rules, remote_rules, SOURCE_KEYS)
-    optimize_domains(merged_rules)
-    
-    logging.info("[成功] 规则流水线处理完成。")
-    return merged_rules
-
-
-# ---------------- 阶段 4: 核心解析与格式收拢断言 ----------------
-
-def filter_raw_line(line: str) -> Optional[str]:
-    """清洗行开头的注释与多重引号（极速 O(1) 处理）。"""
-    line = line.split('#')[0].split('//')[0].split(';')[0].strip()
-    if not line or line.lower() == 'payload:':
-        return None
-    if line.startswith('- '):
-        line = line[2:].strip()
-        
-    # 一次性剥离所有边缘空白和单双引号
-    line = line.strip().strip("'\"").strip()
-    return _clean_policy_suffix(line) if line else None
-
-
-def _format_ip_cidr(checked_ip: str, ip_type: str) -> str:
-    """自动补全 IP 的掩码位数。"""
-    if '/' in checked_ip:
-        return checked_ip
-    return f"{checked_ip}/{'128' if ip_type == 'ip6' else '32'}"
-
+# ---------------- 4. 规则核心解析器 ----------------
 
 def parse_line(line: str) -> Tuple[Optional[str], str]:
-    """根据规则前缀自动分发解析。"""
+    """解析单行规则并分发至对应处理逻辑。"""
     clean_line = filter_raw_line(line)
     if not clean_line:
         return None, ""
 
     if clean_line.startswith('|'):
         return parse_adguard_rule(clean_line)
-        
-    if ',' not in clean_line:
-        return parse_pure_text_rule(clean_line)
-        
-    head, _, _ = clean_line.partition(',')
-    head = head.strip().upper()
 
-    if head in RULE_MAP:
+    if ',' in clean_line:
         return parse_standard_rule(clean_line)
-        
+
     return parse_pure_text_rule(clean_line)
 
 
-def parse_standard_rule(line: str) -> Tuple[Optional[str], str]:
-    """解析标准前缀规则并严格校验域名/IP。"""
-    parts = [x.strip() for x in line.split(',')]
-    if len(parts) < 2:
+def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
+    """解析标准前缀规则（前置已完成格式清洗与策略剥离）。"""
+    tag, _, payload = clean_line.partition(',')
+    tag = tag.upper()
+    payload = payload.strip()
+
+    if tag not in RULE_MAP or not payload:
         return None, ""
 
-    tag = parts[0].upper()
-    if tag not in RULE_MAP:
-        return None, ""
     internal_type = RULE_MAP[tag]
-    
-    # 1. 提取并清洗 Payload
-    raw_payload = parts[1] if internal_type not in ['regex', 'wildcard', 'useragent'] else ','.join(parts[1:])
-    payload = raw_payload.strip().strip("'\"").strip()
-    if not payload:
-        return None, ""
 
-    # 2. 域名/后缀类型：安全校验 + RFC 严格校验
-    if internal_type in ['suffix', 'full']:
-        ip_type, _ = _is_exact_ip(payload)
-        if ip_type is not None:
-            return None, ""
+    if internal_type in ('suffix', 'full'):
         exact_domain = _is_exact_domain(payload)
-        if not exact_domain:
-            return None, ""
-        return internal_type, exact_domain
+        return (internal_type, exact_domain) if exact_domain else (None, "")
 
-    if internal_type in ['keyword', 'process']:
-        ip_type, _ = _is_exact_ip(payload)
-        if ip_type is not None:
+    if internal_type in ('keyword', 'process'):
+        if _IPV4_EXACT_RE.match(payload) or (':' in payload and not payload.isalnum()):
             return None, ""
         return internal_type, payload
 
-    # 3. IP 类型校验与自动修正
-    if internal_type in ['ip', 'ip6']:
+    if internal_type in ('ip', 'ip6'):
         ip_type, checked_ip = _is_exact_ip(payload)
         if ip_type is None:
-            return None, "" 
+            return None, ""
         if internal_type == 'ip6' and ip_type == 'ip':
-            return None, "" 
+            return None, ""
         if internal_type == 'ip' and ip_type == 'ip6':
             internal_type = 'ip6'
-            
-        return internal_type, _format_ip_cidr(checked_ip, internal_type)
-        
-    # 4. PORT 端口格式化
+        return internal_type, checked_ip
+
     if internal_type == 'port':
         payload = payload.replace('(', '').replace(')', '').replace(':', '-')
-        parts = [p.strip() for p in payload.split('-') if p.strip()]
-        payload = '-'.join(parts) if parts else None
+        p_parts = [p.strip() for p in payload.split('-') if p.strip()]
+        payload = '-'.join(p_parts) if p_parts else None
         return (internal_type, payload) if payload else (None, "")
 
-    # 5. ASN 校验
     if internal_type == 'asn':
         if not re.match(r'^(?:[a-zA-Z]{2})?\d{1,10}$', payload):
             return None, ""
-        return internal_type, payload
-        
-    # 6. 其他类型（useragent, regex, wildcard）
+        return internal_type, payload.upper()
+
     return internal_type, payload
 
 
 def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
-    """无前缀纯文本分层路由算法"""
+    """无前缀纯文本分流算法（含短路 IP 校验与动态 TLD 深度探测）。"""
     if not line:
         return None, ""
 
-    # 1. 优先剥离显式后缀前缀
     is_explicit_suffix = False
     clean_val = line
 
-    for prefix in ('+*.', '+.', '*.', '.'):
-        if line.startswith(prefix):
-            is_explicit_suffix = True
-            clean_val = line[len(prefix):]
-            break
+    if line[0] in ('+', '*', '.'):
+        for prefix in ('+*.', '+.', '*.', '.'):
+            if line.startswith(prefix):
+                is_explicit_suffix = True
+                clean_val = line[len(prefix):]
+                break
 
-    # 2. 拦截非法通配符
     if '*' in clean_val:
         return None, ""
 
-    # 3. IP 地址优先校验与路由
-    ip_type, checked_ip = _is_exact_ip(clean_val)
-    if ip_type is not None:
-        if is_explicit_suffix:
-            return None, ""
-        return ip_type, _format_ip_cidr(checked_ip, ip_type)
+    # 短路判断：仅当包含 IP 特征字符时优先触发 IP 校验
+    first_char = clean_val[0]
+    if first_char.isdigit() or first_char == '[' or ':' in clean_val or '/' in clean_val:
+        ip_type, checked_ip = _is_exact_ip(clean_val)
+        if ip_type is not None:
+            if is_explicit_suffix:
+                return None, ""
+            return ip_type, checked_ip
 
-    # 4. 严格域名格式校验
     exact_domain = _is_exact_domain(clean_val)
     if not exact_domain:
         return None, ""
 
-    # 5. 显式前缀匹配直接判定为 suffix
     if is_explicit_suffix:
         return 'suffix', exact_domain
 
-    # 6. 拦截裸公共顶级后缀
     if exact_domain in PUBLIC_SUFFIX_BLACKLIST:
         return None, ""
 
-    # 7. 动态分层逻辑：根据 PUBLIC_SUFFIX_BLACKLIST 探测主域名层级
     parts = exact_domain.split('.')
     num_parts = len(parts)
+    if num_parts < 2:
+        return None, ""
 
     public_suffix_len = 1
+    max_check_depth = min(num_parts - 1, 3)
 
-    for depth in range(num_parts - 1, 1, -1):
-        candidate_suffix = '.'.join(parts[-depth:])
-        if candidate_suffix in PUBLIC_SUFFIX_BLACKLIST:
+    for depth in range(max_check_depth, 1, -1):
+        if '.'.join(parts[-depth:]) in PUBLIC_SUFFIX_BLACKLIST:
             public_suffix_len = depth
             break
 
@@ -362,7 +345,7 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
-    """解析 AdGuard / uBlock 格式规则"""
+    """解析 AdGuard / uBlock 格式规则。"""
     core_content = line.split('$')[0].split('^')[0].strip()
     for prefix, internal_type in [('||', 'suffix'), ('|', 'full')]:
         if core_content.startswith(prefix):
@@ -377,11 +360,10 @@ def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
 
     return internal_type, exact_domain
 
-
-# ---------------- 阶段 5: 优化合并与极致树状剪枝 ----------------
+# ---------------- 5. 批处理、合并与剪枝流水线 ----------------
 
 def process_raw_lines_batch(lines: List[str], rule_keys: List[str]) -> Dict[str, Set[str]]:
-    """批量分发解析。"""
+    """批量分发解析原始规则行。"""
     parsed_rules = {k: set() for k in rule_keys}
     for line in lines:
         r_type, payload = parse_line(line)  
@@ -395,13 +377,9 @@ def merge_and_sovereignty_filter(
     remote_rules: Dict[str, Set[str]], 
     rule_keys: List[str]
 ) -> Dict[str, Set[str]]:
-    """纯函数合并：本地REMOVE全局剔除，同类规则本地优先，域名去重交由Trie树。"""
+    """合并规则并执行全局 REMOVE 剔除。"""
     merged = {}
-    local_remove = local_rules.get('remove', set())
-    remote_remove = remote_rules.get('remove', set())
-    
-    # 汇总所有黑名单，用于全局剔除
-    all_removes = local_remove | remote_remove
+    all_removes = local_rules.get('remove', set()) | remote_rules.get('remove', set())
 
     for r_type in rule_keys:
         if r_type == 'remove':
@@ -410,45 +388,45 @@ def merge_and_sovereignty_filter(
 
         local_set = local_rules.get(r_type, set())
         remote_set = remote_rules.get(r_type, set())
-        
-        # 建立副本，不修改传入的字典对象（完全解耦）
-        final_set = (local_set | remote_set) - all_removes
-        merged[r_type] = final_set
-        
+        merged[r_type] = (local_set | remote_set) - all_removes
+
     return merged
 
 
 def optimize_domains(rules: Dict[str, Set[str]]) -> None:
-    """利用 Trie 树对域名规则进行降维打击式剪枝去重"""
+    """利用 Trie 树对域名规则进行降维剪枝去重。"""
     suffixes = rules.get('suffix', set())
     fulls = rules.get('full', set())
-    
+
     if not suffixes and not fulls:
         return
-        
+
     trie = DomainTrie()
-    
-    # 1. 处理 SUFFIX 内部去重（短域名优先构筑 Trie 树）
-    sorted_suffixes = sorted(list(suffixes), key=len)
-    optimized_suffixes = set()
-    
-    for suf in sorted_suffixes:
-        if trie.is_covered(suf):
-            continue
-        trie.insert_suffix(suf)
-        optimized_suffixes.add(suf)
+    sorted_suffixes = sorted(suffixes, key=lambda s: (s.count('.'), len(s)))
 
-    # 2. 处理 FULL 域名去重（如果已被 SUFFIX 涵盖，直接剔除）
-    optimized_fulls = set()
-    for f_dom in fulls:
-        if trie.is_covered(f_dom):
-            continue
-        optimized_fulls.add(f_dom)
+    insert_op = trie.insert_if_not_covered
+    optimized_suffixes = {suf for suf in sorted_suffixes if insert_op(suf)}
 
-    # 写回字典
+    is_cov_op = trie.is_covered
+    optimized_fulls = {f_dom for f_dom in fulls if not is_cov_op(f_dom)}
+
     if 'suffix' in rules:
         rules['suffix'] = optimized_suffixes
     if 'full' in rules:
         rules['full'] = optimized_fulls
-        
-    logging.info(f"域名规则合并完成。SUFFIX: {len(optimized_suffixes)}，FULL: {len(optimized_fulls)}")
+
+    logging.info(f"域名规则剪枝完成。SUFFIX: {len(optimized_suffixes)}，FULL: {len(optimized_fulls)}")
+
+
+def execute_rules_pipeline(local_raw_lines: List[str], remote_raw_lines: List[str]) -> Dict[str, Set[str]]:
+    """规则流水线总入口。"""
+    logging.info(f"开始处理规则，本地: {len(local_raw_lines)} 行，远程: {len(remote_raw_lines)} 行")
+    
+    local_rules = process_raw_lines_batch(local_raw_lines, SOURCE_KEYS)
+    remote_rules = process_raw_lines_batch(remote_raw_lines, SOURCE_KEYS)
+    
+    merged_rules = merge_and_sovereignty_filter(local_rules, remote_rules, SOURCE_KEYS)
+    optimize_domains(merged_rules)
+    
+    logging.info("[成功] 规则流水线处理完成。")
+    return merged_rules
