@@ -13,6 +13,8 @@ _IPV4_EXACT_RE = re.compile(
     r'^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}'
     r'(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$'
 )
+
+# 基础结构正则：放行字母、数字、单/连续短横线及点，拒收 * + 或其他非法符号
 RELAXED_DOMAIN_REGEX = re.compile(
     r'^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+'
     r'[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$'
@@ -98,10 +100,10 @@ class DomainTrie:
             curr = curr[part]
         return 0 in curr
 
-# ---------------- 3. 私有校验与统一清洗工具 ----------------
+# ---------------- 3. 私有校验卡尺（纯函数，零侧效应） ----------------
 
 def filter_raw_line(line: str) -> Optional[str]:
-    """统一清洗注释、多余符号、边缘空白及策略后缀。"""
+    """第一道关卡：剥离注释、边缘空白/引号及策略后缀。"""
     line = line.split('#')[0].split('//')[0].split(';')[0].strip()
     if not line or line.lower() == 'payload:':
         return None
@@ -133,12 +135,13 @@ def filter_raw_line(line: str) -> Optional[str]:
 
 
 def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
-    """严格校验 IP 格式并返回其类型与带掩码的标准 CIDR 字符串（含 IPv6 规范化与端口剥离）。"""
+    """纯粹的 IP 校验卡尺：支持 [IPv6]:port 剥离、CIDR 自动补全及 RFC 5952 规范化。"""
     if not text:
         return None, ""
     
     cleaned = text.strip()
 
+    # 1. 剥离 [IPv6]:port 组合格式并完整还原 CIDR 掩码
     if cleaned.startswith('['):
         rb_idx = cleaned.find(']')
         if rb_idx != -1:
@@ -164,6 +167,7 @@ def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
         mask_val = int(mask_str)
         mask_suffix = f"/{mask_val}"
 
+    # IPv4 快筛与断言
     if ':' not in ip_body:
         if _IPV4_EXACT_RE.match(ip_body):
             if mask_val is not None and not (0 <= mask_val <= 32):
@@ -171,6 +175,7 @@ def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
             return 'ip', f"{ip_body}{mask_suffix if mask_suffix else '/32'}"
         return None, text
 
+    # IPv6 断言与 RFC 5952 压缩规范化
     try:
         ip_obj = ipaddress.ip_address(ip_body)
         if ip_obj.version == 6:
@@ -184,7 +189,7 @@ def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
 
 
 def _is_exact_domain(text: str) -> Optional[str]:
-    """严格校验并清洗域名格式（含 IDNA 转码与 IP 混淆防御）。"""
+    """纯粹的 FQDN 校验卡尺：绝不隐式截断任何前缀，依靠 IDNA 与正则强行断言。"""
     if not text or len(text) > 253:
         return None
 
@@ -192,14 +197,7 @@ def _is_exact_domain(text: str) -> Optional[str]:
     if not domain:
         return None
 
-    for prefix in ('+*.', '+.', '*.', '.'):
-        if domain.startswith(prefix):
-            domain = domain[len(prefix):]
-            break
-
-    if not domain:
-        return None
-
+    # 包含端口号阻断 (非域名语法)
     if ':' in domain:
         parts = domain.split(':')
         if len(parts) == 2 and parts[1].isdigit():
@@ -207,10 +205,12 @@ def _is_exact_domain(text: str) -> Optional[str]:
         else:
             return None
 
+    # 纯数字 IP 段直接阻断
     sub_parts = domain.split('.')
     if all(p.isdigit() for p in sub_parts):
         return None
 
+    # IDNA 自动转码校验 (处理中文域名，自动做小写转换)
     if not domain.isascii():
         try:
             domain = domain.encode('idna').decode('ascii')
@@ -218,15 +218,17 @@ def _is_exact_domain(text: str) -> Optional[str]:
             return None
 
     domain = domain.lower()
+
+    # 标准 RFC FQDN 正则断言：任何含 * 或 + 等非法字符的输入在此被直接杀掉
     if len(domain) > 253 or not RELAXED_DOMAIN_REGEX.match(domain):
         return None
 
     return domain
 
-# ---------------- 4. 规则核心解析器 ----------------
+# ---------------- 4. 规则解析层（负责语义识别与显示前缀剥离） ----------------
 
 def parse_line(line: str) -> Tuple[Optional[str], str]:
-    """解析单行规则并分发至对应处理逻辑。"""
+    """规则入口分发。"""
     clean_line = filter_raw_line(line)
     if not clean_line:
         return None, ""
@@ -241,7 +243,7 @@ def parse_line(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
-    """解析标准前缀规则（前置已完成格式清洗与策略剥离）。"""
+    """标准规则解析：FULL 规则拒绝篡改；SUFFIX 规则按语义剥离前缀。"""
     tag, _, payload = clean_line.partition(',')
     tag = tag.upper()
     payload = payload.strip()
@@ -251,9 +253,19 @@ def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
 
     internal_type = RULE_MAP[tag]
 
-    if internal_type in ('suffix', 'full'):
+    # 1. FULL 类型：绝对原封不动校验，含 * 的非法输入会被 _is_exact_domain 拦截返回 None
+    if internal_type == 'full':
         exact_domain = _is_exact_domain(payload)
-        return (internal_type, exact_domain) if exact_domain else (None, "")
+        return ('full', exact_domain) if exact_domain else (None, "")
+
+    # 2. SUFFIX 类型：显式剥离通配前缀后送检
+    if internal_type == 'suffix':
+        for prefix in ('+*.', '+.', '*.', '.'):
+            if payload.startswith(prefix):
+                payload = payload[len(prefix):]
+                break
+        exact_domain = _is_exact_domain(payload)
+        return ('suffix', exact_domain) if exact_domain else (None, "")
 
     if internal_type in ('keyword', 'process'):
         if _IPV4_EXACT_RE.match(payload) or (':' in payload and not payload.isalnum()):
@@ -285,13 +297,14 @@ def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
-    """无前缀纯文本分流算法（含短路 IP 校验与动态 TLD 深度探测）。"""
+    """纯文本分流：识别前缀，卡尺校验，动态 TLD 划分 suffix 与 full。"""
     if not line:
         return None, ""
 
     is_explicit_suffix = False
     clean_val = line
 
+    # 显式前缀剥离
     if line[0] in ('+', '*', '.'):
         for prefix in ('+*.', '+.', '*.', '.'):
             if line.startswith(prefix):
@@ -302,15 +315,16 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     if '*' in clean_val:
         return None, ""
 
-    # 短路判断：仅当包含 IP 特征字符时优先触发 IP 校验
+    # 短路 IP 校验：仅在首字符或特征符符合 IP 时触发
     first_char = clean_val[0]
     if first_char.isdigit() or first_char == '[' or ':' in clean_val or '/' in clean_val:
         ip_type, checked_ip = _is_exact_ip(clean_val)
         if ip_type is not None:
-            if is_explicit_suffix:
+            if is_explicit_suffix: # 带有 +. 等前缀的 IP 属于语法错误，拒绝
                 return None, ""
             return ip_type, checked_ip
 
+    # FQDN 校验卡尺
     exact_domain = _is_exact_domain(clean_val)
     if not exact_domain:
         return None, ""
@@ -321,6 +335,7 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     if exact_domain in PUBLIC_SUFFIX_BLACKLIST:
         return None, ""
 
+    # 动态 TLD 深度计算分流 (suffix / full)
     parts = exact_domain.split('.')
     num_parts = len(parts)
     if num_parts < 2:
@@ -345,7 +360,7 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
-    """解析 AdGuard / uBlock 格式规则。"""
+    """解析 AdGuard 格式规则。"""
     core_content = line.split('$')[0].split('^')[0].strip()
     for prefix, internal_type in [('||', 'suffix'), ('|', 'full')]:
         if core_content.startswith(prefix):
@@ -360,10 +375,10 @@ def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
 
     return internal_type, exact_domain
 
-# ---------------- 5. 批处理、合并与剪枝流水线 ----------------
+# ---------------- 5. 流水线执行 ----------------
 
 def process_raw_lines_batch(lines: List[str], rule_keys: List[str]) -> Dict[str, Set[str]]:
-    """批量分发解析原始规则行。"""
+    """批量解析。"""
     parsed_rules = {k: set() for k in rule_keys}
     for line in lines:
         r_type, payload = parse_line(line)  
@@ -377,7 +392,7 @@ def merge_and_sovereignty_filter(
     remote_rules: Dict[str, Set[str]], 
     rule_keys: List[str]
 ) -> Dict[str, Set[str]]:
-    """合并规则并执行全局 REMOVE 剔除。"""
+    """合并规则并全局剔除 REMOVE。"""
     merged = {}
     all_removes = local_rules.get('remove', set()) | remote_rules.get('remove', set())
 
@@ -394,7 +409,7 @@ def merge_and_sovereignty_filter(
 
 
 def optimize_domains(rules: Dict[str, Set[str]]) -> None:
-    """利用 Trie 树对域名规则进行降维剪枝去重。"""
+    """Trie 树对域名的父子覆盖剔除。"""
     suffixes = rules.get('suffix', set())
     fulls = rules.get('full', set())
 
@@ -419,7 +434,7 @@ def optimize_domains(rules: Dict[str, Set[str]]) -> None:
 
 
 def execute_rules_pipeline(local_raw_lines: List[str], remote_raw_lines: List[str]) -> Dict[str, Set[str]]:
-    """规则流水线总入口。"""
+    """主流水线。"""
     logging.info(f"开始处理规则，本地: {len(local_raw_lines)} 行，远程: {len(remote_raw_lines)} 行")
     
     local_rules = process_raw_lines_batch(local_raw_lines, SOURCE_KEYS)
