@@ -103,33 +103,19 @@ class DomainTrie:
 # ---------------- 3. 私有校验卡尺（纯函数，零侧效应） ----------------
 
 def filter_raw_line(line: str) -> Optional[str]:
-    """第一道关卡：剥离注释、边缘空白/引号及策略后缀。"""
+    """纯物理清洗。"""
+    if not line:
+        return None
+
     line = line.split('#')[0].split('//')[0].split(';')[0].strip()
     if not line or line.lower() == 'payload:':
         return None
     if line.startswith('- '):
         line = line[2:].strip()
-        
-    line = line.strip().strip("'\"").strip()
+
+    line = line.strip("'\"").strip()
     if not line:
         return None
-
-    if ',' in line:
-        head, _, tail = line.partition(',')
-        head_clean = head.strip()
-        head_upper = head_clean.upper()
-
-        if head_upper in RULE_MAP:
-            internal_type = RULE_MAP[head_upper]
-            tail_clean = tail.strip()
-            if internal_type in ('regex', 'wildcard', 'useragent'):
-                parts = [p.strip() for p in tail_clean.split(',')]
-                payload = ','.join(parts[:-1]) if len(parts) > 1 else parts[0]
-            else:
-                payload = tail_clean.split(',', 1)[0].strip()
-            return f"{head_upper},{payload}" if payload else None
-        else:
-            return head_clean
 
     return line
 
@@ -243,22 +229,35 @@ def parse_line(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
-    """标准规则解析：FULL 规则拒绝篡改；SUFFIX 规则按语义剥离前缀。"""
-    tag, _, payload = clean_line.partition(',')
-    tag = tag.upper()
-    payload = payload.strip()
+    """语义解析与策略切除。"""
+    
+    if ',' not in clean_line:
+        return None, ""
 
-    if tag not in RULE_MAP or not payload:
+    tag, _, tail = clean_line.partition(',')
+    tag = tag.strip().upper()
+    tail = tail.strip()
+
+    if tag not in RULE_MAP or not tail:
         return None, ""
 
     internal_type = RULE_MAP[tag]
 
-    # 1. FULL 类型：绝对原封不动校验，含 * 的非法输入会被 _is_exact_domain 拦截返回 None
+    # 1. 特殊类型 (regex, wildcard, useragent)：不猜策略、不切逗号，原样透传！
+    if internal_type in ('regex', 'wildcard', 'useragent'):
+        return internal_type, tail
+
+    # 2. 普通类型：取首个逗号前的内容作为 Payload，切除末尾策略及附加参数 (如 ,DIRECT, no-resolve)
+    payload = tail.split(',')[0].strip()
+    if not payload:
+        return None, ""
+
+    # 3. 校验卡尺与语义规范化
     if internal_type == 'full':
+        # 拒绝隐式篡改：若 payload 包含 * 等非法字符，_is_exact_domain 返回 None 直接拒收
         exact_domain = _is_exact_domain(payload)
         return ('full', exact_domain) if exact_domain else (None, "")
 
-    # 2. SUFFIX 类型：显式剥离通配前缀后送检
     if internal_type == 'suffix':
         for prefix in ('+*.', '+.', '*.', '.'):
             if payload.startswith(prefix):
