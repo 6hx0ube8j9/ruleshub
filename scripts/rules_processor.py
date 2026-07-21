@@ -375,14 +375,32 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
-    """解析 AdGuard 格式规则。"""
-    core_content = line.split('$')[0].split('^')[0].strip()
-    for prefix, internal_type in [('||', 'suffix'), ('|', 'full')]:
-        if core_content.startswith(prefix):
-            raw_payload = core_content[len(prefix):].strip()
-            break
+    """解析 AdGuard 格式规则 (|| 代表 suffix，| 代表 full)。"""  
+    if not line:
+        return None, ""
+
+    core_content = line.split('$')[0].split('^')[0].strip().rstrip('|')
+
+    internal_type = None
+    raw_payload = None
+
+    if core_content.startswith('||'):
+        internal_type = 'suffix'
+        raw_payload = core_content[2:].strip()
+    elif core_content.startswith('|'):
+        internal_type = 'full'
+        raw_payload = core_content[1:].strip()
     else:
-        return None, "" 
+        return None, ""
+
+    if '://' in raw_payload:
+        raw_payload = raw_payload.split('://', 1)[1]
+
+    if '/' in raw_payload:
+        parts = raw_payload.split('/', 1)
+        if parts[1].strip():
+            return None, ""
+        raw_payload = parts[0].strip()
 
     exact_domain = _is_exact_domain(raw_payload)
     if not exact_domain:
