@@ -103,21 +103,26 @@ class DomainTrie:
 # ---------------- 3. 私有校验卡尺（纯函数，零侧效应） ----------------
 
 def filter_raw_line(line: str) -> Optional[str]:
-    """纯物理清洗。"""
+    """第 1 层漏斗：纯物理清洗。"""   
     if not line:
         return None
 
+    # 1. 剔除行内/行首注释 (#, //, ;)
     line = line.split('#')[0].split('//')[0].split(';')[0].strip()
     if not line or line.lower() == 'payload:':
         return None
+
+    # 2. 剥离 YAML 列表项前缀 "- "
     if line.startswith('- '):
         line = line[2:].strip()
 
+    # 3. 清洗边缘单双引号与多余空白
     line = line.strip("'\"").strip()
     if not line:
         return None
 
     return line
+
 
 
 def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
@@ -229,8 +234,7 @@ def parse_line(line: str) -> Tuple[Optional[str], str]:
 
 
 def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
-    """语义解析与策略切除。"""
-    
+    """语义解析与策略切除。"""    
     if ',' not in clean_line:
         return None, ""
 
@@ -243,7 +247,7 @@ def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
 
     internal_type = RULE_MAP[tag]
 
-    # 1. 特殊类型 (regex, wildcard, useragent)：不猜策略、不切逗号，原样透传！
+    # 1. 特殊类型 (regex, wildcard, useragent)：不猜策略、不切逗号，100% 原样透传！
     if internal_type in ('regex', 'wildcard', 'useragent'):
         return internal_type, tail
 
@@ -254,7 +258,6 @@ def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
 
     # 3. 校验卡尺与语义规范化
     if internal_type == 'full':
-        # 拒绝隐式篡改：若 payload 包含 * 等非法字符，_is_exact_domain 返回 None 直接拒收
         exact_domain = _is_exact_domain(payload)
         return ('full', exact_domain) if exact_domain else (None, "")
 
@@ -266,11 +269,19 @@ def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
         exact_domain = _is_exact_domain(payload)
         return ('suffix', exact_domain) if exact_domain else (None, "")
 
-    if internal_type in ('keyword', 'process'):
-        if _IPV4_EXACT_RE.match(payload) or (':' in payload and not payload.isalnum()):
+    # 4. 关键字卡尺：拦截纯 IP、冒号或路径斜杠，确保只保留合法域名子串
+    if internal_type == 'keyword':
+        if _IPV4_EXACT_RE.match(payload) or ':' in payload or '/' in payload:
             return None, ""
         return internal_type, payload
 
+    # 5. 进程名卡尺：仅拦截纯 IP 误填，放行 Windows 盘符路径 (如 C:\...) 与 Linux/macOS 绝对路径
+    if internal_type == 'process':
+        if _IPV4_EXACT_RE.match(payload):
+            return None, ""
+        return internal_type, payload
+
+    # 6. IP / IP6 卡尺：格式校验与类型自愈升级
     if internal_type in ('ip', 'ip6'):
         ip_type, checked_ip = _is_exact_ip(payload)
         if ip_type is None:
@@ -281,12 +292,14 @@ def parse_standard_rule(clean_line: str) -> Tuple[Optional[str], str]:
             internal_type = 'ip6'
         return internal_type, checked_ip
 
+    # 7. 端口卡尺：清洗括号并标准化区间分隔符 (如 80-443)
     if internal_type == 'port':
         payload = payload.replace('(', '').replace(')', '').replace(':', '-')
         p_parts = [p.strip() for p in payload.split('-') if p.strip()]
         payload = '-'.join(p_parts) if p_parts else None
         return (internal_type, payload) if payload else (None, "")
 
+    # 8. ASN 卡尺：标准自治系统号校验 (如 AS13335 或 13335)
     if internal_type == 'asn':
         if not re.match(r'^(?:[a-zA-Z]{2})?\d{1,10}$', payload):
             return None, ""
@@ -303,38 +316,41 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     is_explicit_suffix = False
     clean_val = line
 
-    # 显式前缀剥离
-    if line[0] in ('+', '*', '.'):
-        for prefix in ('+*.', '+.', '*.', '.'):
-            if line.startswith(prefix):
-                is_explicit_suffix = True
-                clean_val = line[len(prefix):]
-                break
+    # 1. 安全剥离显式后缀前缀 (如 +.google.com, *.google.com, .google.com)
+    for prefix in ('+*.', '+.', '*.', '.'):
+        if line.startswith(prefix):
+            is_explicit_suffix = True
+            clean_val = line[len(prefix):]
+            break
 
+    # 2. 剥离前缀后，如果内部依然含有 * 号 (如 g*oogle.com)，说明是通配符而非纯域名，拒绝隐式篡改
     if '*' in clean_val:
         return None, ""
 
-    # 短路 IP 校验：仅在首字符或特征符符合 IP 时触发
+    # 3. 短路 IP 校验：仅在首字符或特征符符合 IP 时触发
     first_char = clean_val[0]
     if first_char.isdigit() or first_char == '[' or ':' in clean_val or '/' in clean_val:
         ip_type, checked_ip = _is_exact_ip(clean_val)
         if ip_type is not None:
-            if is_explicit_suffix: # 带有 +. 等前缀的 IP 属于语法错误，拒绝
+            # 带有 +. 等前缀的 IP (如 +.1.1.1.1) 属于语法错误，拒绝
+            if is_explicit_suffix:
                 return None, ""
             return ip_type, checked_ip
 
-    # FQDN 校验卡尺
+    # 4. FQDN 校验卡尺 (校验剥离前缀后的纯主体是否为合法的标准域名)
     exact_domain = _is_exact_domain(clean_val)
     if not exact_domain:
         return None, ""
 
+    # 5. 如果带着显式前缀 (如 +.google.com)，直接认定为 SUFFIX 弹出
     if is_explicit_suffix:
         return 'suffix', exact_domain
 
+    # 6. 公共后缀黑名单 (如直接输入 com, net.cn)，拒绝作为独立规则
     if exact_domain in PUBLIC_SUFFIX_BLACKLIST:
         return None, ""
 
-    # 动态 TLD 深度计算分流 (suffix / full)
+    # 7. 动态 TLD 深度计算分流 (判断是根域名 suffix 还是子域名 full)
     parts = exact_domain.split('.')
     num_parts = len(parts)
     if num_parts < 2:
