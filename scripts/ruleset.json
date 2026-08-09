@@ -1,0 +1,242 @@
+{
+  "sync_source": {
+    "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.list": "apple.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Apple/Apple.list": "apple.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-music.list": "apple-music.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AppleMusic/AppleMusic.list": "apple-music.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/blizzard.list": "blizzard.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Blizzard/Blizzard.list": "blizzard.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geosite/cn.list": "china.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/China/China.list": "china.txt",	
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/discord.list": "discord.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Discord/Discord.list": "discord.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/dropbox.list": "dropbox.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Dropbox/Dropbox.list": "dropbox.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/epicgames.list": "epicgames.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Epic/Epic.list": "epicgames.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/meta.list": "facebook.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Facebook/Facebook.list": "facebook.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.list": "gemini.txt",
+
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.list": "geosite-cn.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.list": "geoip-cn.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.list": "google.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list": "google.txt",	
+	 
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geosite/proxy.list": "global.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list": "global.txt",
+
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Lan/Lan.list": "lan.txt",
+	  
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.list": "microsoft.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list": "microsoft.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.list": "netflix.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Netflix/Netflix.list": "netflix.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.list": "steam.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Steam/Steam.list": "steam.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam%40cn.list": "steam-cn.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.list": "spotify.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Spotify/Spotify.list": "spotify.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.list": "telegram.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Telegram/Telegram.list": "telegram.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.list": "tiktok.txt",	
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/TikTok/TikTok.list": "tiktok.txt",
+
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/x.list": "x.txt",
+	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Twitter/Twitter.list": "x.txt",
+	
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.list": "youtube.txt",	
+    "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/YouTube/YouTube.list": "youtube.txt"
+  },
+  "groups": [
+    {
+      "name": "apple",
+      "inputs": [
+        "apple.txt"
+      ]
+    },
+    {
+      "name": "apple-music",
+      "inputs": [
+        "apple-music.txt"
+      ]
+    },
+    {
+      "name": "block",
+      "inputs": [
+        "block.txt",
+		"reject.txt"
+      ]
+    },
+    {
+      "name": "blizzard",
+      "inputs": [
+        "blizzard.txt"
+      ]
+    },
+    {
+      "name": "discord",
+      "inputs": [
+        "discord.txt"
+      ]
+    },
+    {
+      "name": "drives",
+      "inputs": [
+        "dropbox.txt",
+        "pcloud.txt",
+		"koofr.txt"
+      ]
+    },
+    {
+      "name": "games",
+      "inputs": [
+        "games.txt",
+        "epicgames.txt"
+      ]
+    },
+    {
+      "name": "facebook",
+      "inputs": [
+        "facebook.txt"
+      ]
+    },
+    {
+      "name": "gemini",
+      "inputs": [
+        "gemini.txt"
+      ]
+    },
+    {
+      "name": "direct",
+      "inputs": [
+        "geosite-cn.txt",
+	    "china.txt",	  
+        "lan.txt"			  
+      ],
+      "outputs": {
+		"qx_policy": "Direct", 		  
+        "mihomo_ipcidr": false
+      }	
+    },
+    {
+      "name": "direct-ip",
+      "inputs": [
+        "geoip-cn.txt",
+	    "china.txt",		  
+        "lan.txt"
+      ],
+      "outputs": {
+		"qx_policy": "direct",  
+        "mihomo_domain": false
+      }	
+    },
+    {
+      "name": "direct-lite",
+      "inputs": [	  
+        "china.txt",
+        "lan.txt"		  
+      ],   
+      "outputs": {
+		"qx_policy": "direct",  
+        "mihomo_domain": false,
+        "mihomo_ipcidr": false,		  
+        "pac": true
+      }
+    },
+    {
+      "name": "google",
+      "inputs": [
+        "google.txt"
+      ]
+    },
+    {
+      "name": "global",
+      "inputs": [
+        "global.txt"
+      ]
+    },
+    {
+      "name": "microsoft",
+      "inputs": [
+        "microsoft.txt"
+      ]
+    },
+    {
+      "name": "mihoyo",
+      "inputs": [
+        "mihoyo.txt"
+      ]
+    },
+    {
+      "name": "mihoyo-cn",
+      "inputs": [
+        "mihoyo-cn.txt"
+      ]
+    },
+    {
+      "name": "netflix",
+      "inputs": [
+        "netflix.txt"
+      ]
+    },
+    {
+      "name": "steam",
+      "inputs": [
+        "steam.txt"
+      ]
+    },
+    {
+      "name": "steam-cn",
+      "inputs": [
+        "steam-cn.txt"
+      ]
+    },
+    {
+      "name": "spotify",
+      "inputs": [
+        "spotify.txt"
+      ]
+    },
+    {
+      "name": "telegram",
+      "inputs": [
+        "telegram.txt"
+      ]
+    },
+    {
+      "name": "tiktok",
+      "inputs": [
+        "tiktok.txt"
+      ]
+    },
+    {
+      "name": "x",
+      "inputs": [
+        "x.txt"
+      ]
+    },
+    {
+      "name": "youtube",
+      "inputs": [
+        "youtube.txt"
+      ]
+    }
+  ]
+}
