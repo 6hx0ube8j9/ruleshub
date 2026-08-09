@@ -1,0 +1,28 @@
+# Quantumult X Rule-Set: drives
+
+host, dropbox-api.arkoselabs.com, drives
+host, e.pcloud.link, drives
+host-suffix, db.tt, drives
+host-suffix, dropbox-dns.com, drives
+host-suffix, dropbox.com, drives
+host-suffix, dropbox.tech, drives
+host-suffix, dropbox.zendesk.com, drives
+host-suffix, dropboxapi.com, drives
+host-suffix, dropboxbusiness.com, drives
+host-suffix, dropboxcaptcha.com, drives
+host-suffix, dropboxexperiment.com, drives
+host-suffix, dropboxforum.com, drives
+host-suffix, dropboxforums.com, drives
+host-suffix, dropboxinsiders.com, drives
+host-suffix, dropboxmail.com, drives
+host-suffix, dropboxpartners.com, drives
+host-suffix, dropboxstatic.com, drives
+host-suffix, dropboxusercontent.com, drives
+host-suffix, getdropbox.com, drives
+host-suffix, koofr.eu, drives
+host-suffix, koofr.net, drives
+host-suffix, paper-attachments.s3.amazonaws.com, drives
+host-suffix, pcloud.com, drives
+ip-cidr, 185.62.236.0/22, drives
+ip-cidr, 45.131.244.0/22, drives
+ip-cidr, 74.120.8.0/22, drives

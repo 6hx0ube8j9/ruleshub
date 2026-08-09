@@ -1,0 +1,20 @@
+payload:
+    - aod-ssl.itunes.apple.com
+    - aod.itunes.apple.com
+    - audio-ssl.itunes.apple.com
+    - audio.itunes.apple.com
+    - mvod.itunes.apple.com
+    - play.itunes.apple.com
+    - streamingaudio.itunes.apple.com
+    - +.applemusic.berlin
+    - +.applemusic.co
+    - +.applemusic.com
+    - +.applemusic.com.au
+    - +.applemusic.hamburg
+    - +.applemusic.wang
+    - +.applemusicconnect.com
+    - +.applemusicfestival.com
+    - +.blobstore.apple.com
+    - +.music.apple.com
+    - +.musickit.net
+    - +.wwwapplemusic.com

@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain": [
+        "1681.engine.mobileapptracking.com",
+        "supercell.helpshift.com"
+      ],
+      "domain_suffix": [
+        "3lateral.com",
+        "artstation.com",
+        "artstationmedia.com",
+        "battlebreakers.com",
+        "brawlstars.com",
+        "brawlstarsgame.com",
+        "capturingreality.com",
+        "cubicmotion.com",
+        "eac-cdn.com",
+        "easy.ac",
+        "easyanticheat.net",
+        "egdownload.fastly-edge.com",
+        "epicgames.com",
+        "epicgames.dev",
+        "epicgamescdn.com",
+        "fab.com",
+        "fortnite-vod.akamaized.net",
+        "fortnite.com",
+        "helpshift.com",
+        "hyprsense.com",
+        "king.com",
+        "ninjakiwi.com",
+        "nkstatic.com",
+        "paragon.com",
+        "playparagon.com",
+        "quixel.com",
+        "quixel.se",
+        "radgametools.com",
+        "realityscan.com",
+        "roborecall.com",
+        "shadowcomplex.com",
+        "sketchfab.com",
+        "spyjinx.com",
+        "supercell.com",
+        "twinmotion.com",
+        "unity3d.com",
+        "unrealengine.com",
+        "unrealtournament.com"
+      ],
+      "ip_cidr": [
+        "139.180.0.0/16",
+        "142.132.0.0/16",
+        "149.28.0.0/16",
+        "167.235.0.0/16",
+        "199.247.0.0/16",
+        "216.238.0.0/16",
+        "45.76.0.0/16",
+        "49.12.0.0/16",
+        "5.161.0.0/16",
+        "5.223.0.0/16",
+        "5.75.0.0/16",
+        "5.78.0.0/16",
+        "65.20.0.0/16",
+        "70.34.0.0/16",
+        "78.141.0.0/16",
+        "78.47.0.0/16",
+        "95.179.0.0/16"
+      ]
+    }
+  ]
+}

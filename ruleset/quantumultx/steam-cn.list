@@ -1,0 +1,26 @@
+# Quantumult X Rule-Set: steam-cn
+
+host, dl.steam.bbtv.com.cn, steam-cn
+host, dl.steam.haagenti.com, steam-cn
+host, dl.steam.ksyna.com, steam-cn
+host, lv.queniujq.cn, steam-cn
+host, steampipe.steamcontent.tnkjmec.com, steam-cn
+host, wmsj.cn, steam-cn
+host, xz.pphimalayanrt.com, steam-cn
+host-suffix, client-update.queniuqe.com, steam-cn
+host-suffix, csgo.com.cn, steam-cn
+host-suffix, csgo.wmsj.cn, steam-cn
+host-suffix, dl.steam.clngaa.com, steam-cn
+host-suffix, dota2.com.cn, steam-cn
+host-suffix, dota2.wmsj.cn, steam-cn
+host-suffix, gstore.val.manlaxy.com, steam-cn
+host-suffix, st.dl.bscstorage.net, steam-cn
+host-suffix, st.dl.eccdnx.com, steam-cn
+host-suffix, st.dl.pinyuncloud.com, steam-cn
+host-suffix, steamchina.com, steam-cn
+host-suffix, steamcontent.com, steam-cn
+host-suffix, steampowered.com.8686c.com, steam-cn
+host-suffix, steamserver.net, steam-cn
+host-suffix, steamstatic.com.8686c.com, steam-cn
+host-suffix, steamusercontent.com, steam-cn
+host-suffix, wmsjsteam.com, steam-cn

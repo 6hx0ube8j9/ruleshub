@@ -1,0 +1,22 @@
+# Quantumult X Rule-Set: apple-music
+
+host, aod-ssl.itunes.apple.com, apple-music
+host, aod.itunes.apple.com, apple-music
+host, audio-ssl.itunes.apple.com, apple-music
+host, audio.itunes.apple.com, apple-music
+host, mvod.itunes.apple.com, apple-music
+host, play.itunes.apple.com, apple-music
+host, streamingaudio.itunes.apple.com, apple-music
+host-suffix, applemusic.berlin, apple-music
+host-suffix, applemusic.co, apple-music
+host-suffix, applemusic.com, apple-music
+host-suffix, applemusic.com.au, apple-music
+host-suffix, applemusic.hamburg, apple-music
+host-suffix, applemusic.wang, apple-music
+host-suffix, applemusicconnect.com, apple-music
+host-suffix, applemusicfestival.com, apple-music
+host-suffix, blobstore.apple.com, apple-music
+host-suffix, music.apple.com, apple-music
+host-suffix, musickit.net, apple-music
+host-suffix, wwwapplemusic.com, apple-music
+user-agent, Music*, apple-music

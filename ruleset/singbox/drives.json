@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain": [
+        "dropbox-api.arkoselabs.com",
+        "e.pcloud.link"
+      ],
+      "domain_suffix": [
+        "db.tt",
+        "dropbox-dns.com",
+        "dropbox.com",
+        "dropbox.tech",
+        "dropbox.zendesk.com",
+        "dropboxapi.com",
+        "dropboxbusiness.com",
+        "dropboxcaptcha.com",
+        "dropboxexperiment.com",
+        "dropboxforum.com",
+        "dropboxforums.com",
+        "dropboxinsiders.com",
+        "dropboxmail.com",
+        "dropboxpartners.com",
+        "dropboxstatic.com",
+        "dropboxusercontent.com",
+        "getdropbox.com",
+        "koofr.eu",
+        "koofr.net",
+        "paper-attachments.s3.amazonaws.com",
+        "pcloud.com"
+      ],
+      "ip_cidr": [
+        "185.62.236.0/22",
+        "45.131.244.0/22",
+        "74.120.8.0/22"
+      ]
+    }
+  ]
+}
