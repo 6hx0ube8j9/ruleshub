@@ -1,0 +1,35 @@
+# === epicgames.txt Combined Base Rules ===
+
+# --- TYPE: SUFFIX ---
+suffix,3lateral.com
+suffix,artstation.com
+suffix,artstationmedia.com
+suffix,battlebreakers.com
+suffix,capturingreality.com
+suffix,cubicmotion.com
+suffix,eac-cdn.com
+suffix,easy.ac
+suffix,easyanticheat.net
+suffix,egdownload.fastly-edge.com
+suffix,epicgames.com
+suffix,epicgames.dev
+suffix,epicgamescdn.com
+suffix,fab.com
+suffix,fortnite-vod.akamaized.net
+suffix,fortnite.com
+suffix,helpshift.com
+suffix,hyprsense.com
+suffix,paragon.com
+suffix,playparagon.com
+suffix,quixel.com
+suffix,quixel.se
+suffix,radgametools.com
+suffix,realityscan.com
+suffix,roborecall.com
+suffix,shadowcomplex.com
+suffix,sketchfab.com
+suffix,spyjinx.com
+suffix,twinmotion.com
+suffix,unrealengine.com
+suffix,unrealtournament.com
+

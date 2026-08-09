@@ -1,0 +1,65 @@
+# === tiktok.txt Combined Base Rules ===
+
+# --- TYPE: FULL ---
+full,lf16-effectcdn.byteeffecttos-g.com
+full,lf16-pkgcdn.pitaya-clientai.com
+full,p16-tiktokcdn-com.akamaized.net
+full,roovza-launches.appsflyersdk.com
+full,roovza.inapps.appsflyersdk.com
+full,roovza.launches.appsflyersdk.com
+full,roovza.skadsdk.appsflyersdk.com
+full,trae-api-sg.mchost.guru
+
+# --- TYPE: SUFFIX ---
+suffix,bytedapm.com
+suffix,bytegecko-i18n.com
+suffix,byteintlapi.com
+suffix,byteoversea.com
+suffix,capcut.com
+suffix,ibytedtos.com
+suffix,ibyteimg.com
+suffix,ipstatp.com
+suffix,isnssdk.com
+suffix,marscode.com
+suffix,muscdn.com
+suffix,musical.ly
+suffix,sgpstatp.com
+suffix,snssdk.com
+suffix,tik-tokapi.com
+suffix,tiktok-minis.com
+suffix,tiktok-row.net
+suffix,tiktok.com
+suffix,tiktokcdn-eu.com
+suffix,tiktokcdn-us.com
+suffix,tiktokcdn-us.com.edgesuite.net
+suffix,tiktokcdn.com
+suffix,tiktokcdn.com.akamaized.net
+suffix,tiktokcdn.com.edgesuite.net
+suffix,tiktokd.net
+suffix,tiktokd.org
+suffix,tiktokeu-cdn.com
+suffix,tiktokglobalshopv.com
+suffix,tiktokminis.us
+suffix,tiktokmusic.app
+suffix,tiktokrow-cdn.com
+suffix,tiktokv.com
+suffix,tiktokv.com.edgekey.net
+suffix,tiktokv.com.edgesuite.net
+suffix,tiktokv.eu
+suffix,tiktokv.us
+suffix,tiktokw.eu
+suffix,tiktokw.us
+suffix,trae.ai
+suffix,ttcdn-us.com
+suffix,ttlivecdn.com
+suffix,ttoverseaus.net
+suffix,ttwebview.com
+suffix,ttwstatic.com
+
+# --- TYPE: KEYWORD ---
+keyword,musical.ly
+keyword,tiktok
+
+# --- TYPE: USERAGENT ---
+useragent,TikTok*
+

@@ -1,0 +1,45 @@
+# === spotify.txt Combined Base Rules ===
+
+# --- TYPE: FULL ---
+full,audio4-ak-spotify-com.akamaized.net
+full,cdn-spotify-experiments.conductrics.com
+full,heads-ak-spotify-com.akamaized.net
+full,spotify.com.edgesuite.net
+full,spotify.map.fastly.net
+full,spotify.map.fastlylb.net
+
+# --- TYPE: SUFFIX ---
+suffix,audio-ak-spotify-com.akamaized.net
+suffix,byspotify.com
+suffix,heads4-ak-spotify-com.akamaized.net
+suffix,lifeatspotify.com
+suffix,pscdn.co
+suffix,scdn.co
+suffix,spoti.fi
+suffix,spotify-com.akamaized.net
+suffix,spotify-everywhere.com
+suffix,spotify.app.link
+suffix,spotify.com
+suffix,spotify.design
+suffix,spotify.link
+suffix,spotifycdn.com
+suffix,spotifycdn.net
+suffix,spotifycharts.com
+suffix,spotifycodes.com
+suffix,spotifyforbrands.com
+suffix,spotifyforvendors.com
+suffix,spotifyjobs.com
+suffix,spotifynewsroom.jp
+suffix,spotilocal.com
+suffix,tospotify.com
+
+# --- TYPE: KEYWORD ---
+keyword,spotify
+
+# --- TYPE: IP ---
+ip,104.154.127.126/32
+ip,35.186.224.47/32
+
+# --- TYPE: USERAGENT ---
+useragent,Spotify*
+

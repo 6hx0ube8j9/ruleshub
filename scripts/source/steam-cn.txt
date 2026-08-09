@@ -1,0 +1,30 @@
+# === steam-cn.txt Combined Base Rules ===
+
+# --- TYPE: FULL ---
+full,dl.steam.bbtv.com.cn
+full,dl.steam.haagenti.com
+full,dl.steam.ksyna.com
+full,lv.queniujq.cn
+full,steampipe.steamcontent.tnkjmec.com
+full,wmsj.cn
+full,xz.pphimalayanrt.com
+
+# --- TYPE: SUFFIX ---
+suffix,client-update.queniuqe.com
+suffix,csgo.com.cn
+suffix,csgo.wmsj.cn
+suffix,dl.steam.clngaa.com
+suffix,dota2.com.cn
+suffix,dota2.wmsj.cn
+suffix,gstore.val.manlaxy.com
+suffix,st.dl.bscstorage.net
+suffix,st.dl.eccdnx.com
+suffix,st.dl.pinyuncloud.com
+suffix,steamchina.com
+suffix,steamcontent.com
+suffix,steampowered.com.8686c.com
+suffix,steamserver.net
+suffix,steamstatic.com.8686c.com
+suffix,steamusercontent.com
+suffix,wmsjsteam.com
+

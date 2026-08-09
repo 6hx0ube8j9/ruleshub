@@ -1,0 +1,33 @@
+# === discord.txt Combined Base Rules ===
+
+# --- TYPE: SUFFIX ---
+suffix,airhorn.solutions
+suffix,airhornbot.com
+suffix,bigbeans.solutions
+suffix,dis.gd
+suffix,discord-activities.com
+suffix,discord-attachments-uploads-prd.storage.googleapis.com
+suffix,discord.co
+suffix,discord.com
+suffix,discord.design
+suffix,discord.dev
+suffix,discord.gg
+suffix,discord.gift
+suffix,discord.gifts
+suffix,discord.media
+suffix,discord.new
+suffix,discord.store
+suffix,discord.tools
+suffix,discordactivities.com
+suffix,discordapp.com
+suffix,discordapp.io
+suffix,discordapp.net
+suffix,discordapp.page.link
+suffix,discordcdn.com
+suffix,discordmerch.com
+suffix,discordpartygames.com
+suffix,discordsays.com
+suffix,discordstatus.com
+suffix,hammerandchisel.ssl.zendesk.com
+suffix,watchanimeattheoffice.com
+

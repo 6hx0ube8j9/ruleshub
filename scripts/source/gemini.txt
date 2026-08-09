@@ -1,0 +1,55 @@
+# === gemini.txt Combined Base Rules ===
+
+# --- TYPE: FULL ---
+full,ai.google.dev
+full,alkalicore-pa.clients6.google.com
+full,alkalimakersuite-pa.clients6.google.com
+full,alkalimessages-pa.googleapis.com
+full,antigravity-pa.googleapis.com
+full,antigravity.googleapis.com
+full,cloudaicompanion.googleapis.com
+full,cloudcode-pa.googleapis.com
+full,daily-cloudcode-pa.googleapis.com
+full,gemini-user-content.googleusercontent.com
+full,notebooklm-pa.googleapis.com
+full,notebooklm.googleapis.com
+full,webchannel-alkalimakersuite-pa.clients6.google.com
+
+# --- TYPE: SUFFIX ---
+suffix,ai.studio
+suffix,aicode.googleapis.com
+suffix,aida.googleapis.com
+suffix,aisandbox-pa.googleapis.com
+suffix,aistudio.google.com
+suffix,antigravity-unleash.goog
+suffix,antigravity.google
+suffix,apis.google.com
+suffix,bard.google.com
+suffix,deepmind.com
+suffix,deepmind.google
+suffix,flow.google
+suffix,geller-pa.googleapis.com
+suffix,gemini.google
+suffix,gemini.google.com
+suffix,gemini.gstatic.com
+suffix,generativeai.google
+suffix,generativelanguage.googleapis.com
+suffix,jules.google
+suffix,jules.google.com
+suffix,labs.google
+suffix,labs.google.com
+suffix,makersuite.google.com
+suffix,notebook.google.com
+suffix,notebooklm.google
+suffix,notebooklm.google.com
+suffix,opal.google
+suffix,opal.google.com
+suffix,proactivebackend-pa.googleapis.com
+suffix,robinfrontend-pa.googleapis.com
+suffix,stitch.withgoogle.com
+
+# --- TYPE: KEYWORD ---
+keyword,colab
+keyword,developerprofiles
+keyword,generativelanguage
+

@@ -1,0 +1,6 @@
+# === koofr.txt Combined Base Rules ===
+
+# --- TYPE: SUFFIX ---
+suffix,koofr.eu
+suffix,koofr.net
+

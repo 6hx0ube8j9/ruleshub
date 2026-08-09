@@ -1,0 +1,37 @@
+# === reject.txt Combined Base Rules ===
+
+# --- TYPE: FULL ---
+full,ad.10010.com
+full,app-measurement.com
+full,clients3.google.com
+full,config.cmpassport.com
+full,config001.cmpassport.com
+full,ecm.cmpassport.com
+full,firebaseinstallations.googleapis.com
+full,firebaselogging-pa.googleapis.com
+full,gate.hockeyapp.net
+full,log001.cmpassport.com
+full,mta.e.189.cn
+full,open.e.189.cn
+full,play.googleapis.com
+full,s2.ax1x.com
+full,skype.gmw.cn
+full,ssp.kaiads.com
+full,www.cmpassport.com
+
+# --- TYPE: SUFFIX ---
+suffix,amplitude.com
+suffix,comcsoft.com
+suffix,crashlytics.com
+suffix,firefox.com.cn
+suffix,firefoxchina.cn
+suffix,id6.me
+suffix,letsencrypt.org
+suffix,omappapi.com
+suffix,pdfexpert.com
+suffix,pub.network
+suffix,revenuecat.com
+suffix,sentry.io
+suffix,shiguangpu.com
+suffix,wostore.cn
+

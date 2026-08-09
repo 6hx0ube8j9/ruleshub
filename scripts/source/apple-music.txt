@@ -1,0 +1,31 @@
+# === apple-music.txt Combined Base Rules ===
+
+# --- TYPE: PROCESS ---
+process,Music
+
+# --- TYPE: FULL ---
+full,aod-ssl.itunes.apple.com
+full,aod.itunes.apple.com
+full,audio-ssl.itunes.apple.com
+full,audio.itunes.apple.com
+full,mvod.itunes.apple.com
+full,play.itunes.apple.com
+full,streamingaudio.itunes.apple.com
+
+# --- TYPE: SUFFIX ---
+suffix,applemusic.berlin
+suffix,applemusic.co
+suffix,applemusic.com
+suffix,applemusic.com.au
+suffix,applemusic.hamburg
+suffix,applemusic.wang
+suffix,applemusicconnect.com
+suffix,applemusicfestival.com
+suffix,blobstore.apple.com
+suffix,music.apple.com
+suffix,musickit.net
+suffix,wwwapplemusic.com
+
+# --- TYPE: USERAGENT ---
+useragent,Music*
+
