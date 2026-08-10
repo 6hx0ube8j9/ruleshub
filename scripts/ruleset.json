@@ -161,6 +161,12 @@
       }
     },
     {
+      "name": "emby",
+      "inputs": [
+        "emby.txt"
+      ]
+    },
+    {
       "name": "google",
       "inputs": [
         "google.txt"
