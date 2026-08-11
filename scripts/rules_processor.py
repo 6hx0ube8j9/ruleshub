@@ -17,7 +17,7 @@ _IPV4_EXACT_RE = re.compile(
 _TRAILING_POLICY_RE = re.compile(r',\s*([a-zA-Z0-9_\-\.\'"\u4e00-\u9fa5\s]+)\s*$')
 _INVALID_POLICY_CHARS_RE = re.compile(r'[\\*?^$\[\](){}|/<>:]')
 
-# 基础结构正则：支持单 Label 格式（如 google, apple, cn）
+# 基础结构正则
 RELAXED_DOMAIN_REGEX = re.compile(
     r'^(?:[a-zA-Z0-9_](?:[a-zA-Z0-9\-_]{0,61}[a-zA-Z0-9_])?\.)*'
     r'[a-zA-Z0-9_](?:[a-zA-Z0-9\-_]{0,61}[a-zA-Z0-9_])?$'
@@ -27,19 +27,14 @@ RELAXED_DOMAIN_REGEX = re.compile(
 DOMAIN_PREFIXES = ('+*.', '+.', '*.', '.')
 
 PUBLIC_SUFFIX_BLACKLIST = {
-    # --- 1. 通用顶级域 ---
     'com', 'net', 'org', 'gov', 'edu', 'mil', 'int', 'arpa', 'biz', 'info', 'name', 'pro',
     'app', 'dev', 'shop', 'club', 'top', 'xyz', 'vip', 'fun', 'site', 'online', 'tech', 'store',
     'work', 'live', 'link', 'icu', 'ltd', 'art', 'blog', 'news', 'wiki', 'chat', 'space', 'me',
     'io', 'co', 'ai', 'so', 'to', 'do', 'in', 'cc', 'tv', 'la', 'fm', 'am', 'im', 'gg',
     'run', 'pub', 'network', 'studio', 'design', 'life', 'today', 'world', 'zone', 'host',
-    
-    # --- 2. 国家及地区 ccTLD ---
     'cn', 'hk', 'tw', 'mo', 'jp', 'kr', 'sg', 'my', 'th', 'vn', 'ph', 'id', 'pk', 'kh', 'mm', 
     'us', 'uk', 'ca', 'au', 'de', 'fr', 'ru', 'it', 'es', 'nl', 'se', 'no', 'fi', 'dk', 'ch', 
     'at', 'be', 'ie', 'nz', 'br', 'za', 'mx', 'ar', 'cl', 'tr', 'il', 'ae', 'sa', 'ua', 'pl',
-
-    # --- 3. 二级域名 ---
     'com.cn', 'net.cn', 'org.cn', 'gov.cn', 'edu.cn', 'mil.cn', 'ac.cn', 'ah.cn', 'bj.cn', 'cq.cn',
     'fj.cn', 'gd.cn', 'gs.cn', 'gz.cn', 'ha.cn', 'hb.cn', 'he.cn', 'hi.cn', 'hl.cn',
     'hn.cn', 'jl.cn', 'js.cn', 'jx.cn', 'ln.cn', 'nm.cn', 'nx.cn', 'qh.cn', 'sc.cn', 'sd.cn',
@@ -55,15 +50,7 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'com.vn', 'net.vn', 'org.vn', 'gov.vn', 'edu.vn',
     'com.au', 'net.au', 'org.au', 'asn.au', 'id.au', 'gov.au', 'edu.au',
     'co.nz', 'net.nz', 'org.nz', 'ac.nz', 'govt.nz', 'geek.nz', 'school.nz',
-    'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za', 'org.za', 'gov.za',
-
-    # --- 4. 云平台/静态托管/动态 DNS 公共后缀 ---
-    'github.io', 'gitee.io', 'gitlab.io',
-    'vercel.app', 'netlify.app', 'pages.dev',
-    'workers.dev', 'deno.dev',
-    'herokuapp.com', 'azurewebsites.net',
-    's3.amazonaws.com', 'cloudfront.net',
-    'duckdns.org', 'ddns.net', 'no-ip.org', 'synology.me'
+    'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za', 'org.za', 'gov.za'
 }
 
 _GROUPS = {
