@@ -2,9 +2,6 @@
 
 # --- TYPE: SUFFIX ---
 suffix,001wifi.com
-DOMAIN-SUFFIX,com.cn 
-DOMAIN-SUFFIX,people.com.cn
-DOMAIN-SUFFIX,people.com
 suffix,00cdn.com
 suffix,01058511989.com
 suffix,0123456789.com
@@ -18,10 +15,8 @@ suffix,1.letvlive.com
 suffix,10000.gd.cn
 suffix,10010.cn
 suffix,10010.com
-suffix,10010.com.cn
 suffix,10010.net
 suffix,10029.com
-suffix,10035.com.cn
 suffix,10044.cn
 suffix,10086.cn
 suffix,100bt.com
@@ -42,7 +37,6 @@ suffix,116cd.net
 suffix,119you.com
 suffix,12306.cn
 suffix,12306.com
-suffix,1234567.com.cn
 suffix,123juzi.com
 suffix,123juzi.net
 suffix,123pan.com
@@ -108,7 +102,6 @@ suffix,17wo.cn
 suffix,17zuoye.com
 suffix,17zuoye.net
 suffix,18.cn
-suffix,18.com.cn
 suffix,18183.com
 suffix,188.com
 suffix,188.net
@@ -127,7 +120,6 @@ suffix,1mdoutian.com
 suffix,1nongjing.com
 suffix,1qianbao.cn
 suffix,1qianbao.com
-suffix,1qianbao.com.cn
 suffix,1qianbao.net
 suffix,1ting.com
 suffix,1zhe.com
@@ -192,7 +184,6 @@ suffix,360adlab.org
 suffix,360aiyi.com
 suffix,360buy.cn
 suffix,360buy.com
-suffix,360buy.com.cn
 suffix,360buyimg.com
 suffix,360buyinternational.com
 suffix,360cc.cn
@@ -218,16 +209,12 @@ suffix,360durl.cn
 suffix,360gtm.com
 suffix,360huzhubao.cn
 suffix,360huzhubao.com
-suffix,360huzhubao.com.cn
 suffix,360imgcdn.com
 suffix,360in.com
 suffix,360jie.com
-suffix,360jie.com.cn
-suffix,360jiekuan.com.cn
 suffix,360jinrong.net
 suffix,360jq.com
 suffix,360jrjietiao.com
-suffix,360jrjietiao.com.cn
 suffix,360kan.com
 suffix,360kuai.com
 suffix,360os.com
@@ -250,7 +237,6 @@ suffix,360so.net
 suffix,360sos.cn
 suffix,360sou.cn
 suffix,360sou.com
-suffix,360sou.com.cn
 suffix,360sou.net
 suffix,360src.cn
 suffix,360src.com
@@ -396,17 +382,14 @@ suffix,55bbs.com
 suffix,56.com
 suffix,56che.com
 suffix,58.com
-suffix,58.com.cn
 suffix,5858.com
 suffix,58antenna.com
-suffix,58cdn.com.cn
 suffix,58che.com
 suffix,58control.cn
 suffix,58corp.com
 suffix,58dns.org
 suffix,58ganji-corp.com
 suffix,58ganji.com
-suffix,58img.com.cn
 suffix,58lovepet.com
 suffix,58peilian.com
 suffix,58pic.com
@@ -482,7 +465,6 @@ suffix,8btc.com
 suffix,900.la
 suffix,91.com
 suffix,911dns.cn
-suffix,911dns.com.cn
 suffix,917.com
 suffix,91danji.com
 suffix,91yunxiao.com
@@ -495,15 +477,12 @@ suffix,95508.com
 suffix,95516.com
 suffix,95516.net
 suffix,9553.com
-suffix,95559.com.cn
 suffix,95559.sh.cn
 suffix,95580.net
 suffix,95588.com
-suffix,95588.com.cn
 suffix,962.net
 suffix,9718.com
 suffix,9724.com
-suffix,9724.com.cn
 suffix,97973.com
 suffix,97bike.com
 suffix,97hanju.com
@@ -530,7 +509,6 @@ suffix,aardio.com
 suffix,abbyychina.com
 suffix,abc-ca.com
 suffix,abchina.com
-suffix,abchina.com.cn
 suffix,abercrombie.com
 suffix,abhouses.com
 suffix,acadn.com
@@ -622,13 +600,11 @@ suffix,aisee.tv
 suffix,aiskycn.com
 suffix,aitangyou.com
 suffix,aitransfy.com
-suffix,aiwei365.com.cn
 suffix,aiwei365.net.cn
 suffix,aixcoder.com
 suffix,aixifan.com
 suffix,aixinhaitun.cn
 suffix,aixinhaitun.com
-suffix,aixinhaitun.com.cn
 suffix,aiyunxiao.com
 suffix,aizhan.com
 suffix,ajhimalayanqf.com
@@ -649,7 +625,6 @@ suffix,aliappcdn.com
 suffix,alibaba-inc.com
 suffix,alibaba.cn
 suffix,alibaba.com
-suffix,alibaba.com.cn
 suffix,alibabacapital.com
 suffix,alibabachengdun.com
 suffix,alibabacloud.co.in
@@ -702,7 +677,6 @@ suffix,aligenie.com
 suffix,aligfcc.com
 suffix,aligfddos.com
 suffix,aligfwaf.com
-suffix,alihealth.com.cn
 suffix,alihealth.hk
 suffix,alihealth.net
 suffix,aliimg.com
@@ -726,7 +700,6 @@ suffix,alipay-eco.com
 suffix,alipay-inc.com
 suffix,alipay.cn
 suffix,alipay.com
-suffix,alipay.com.cn
 suffix,alipay.hk
 suffix,alipay.net
 suffix,alipaydev.com
@@ -747,7 +720,6 @@ suffix,alisealing-uat.com
 suffix,alisealing.com
 suffix,alisoft.cn
 suffix,alisoft.com
-suffix,alisoft.com.cn
 suffix,alisports.com
 suffix,alitelecom.com
 suffix,alitianji.com
@@ -930,7 +902,6 @@ suffix,api-mifit.huami.com
 suffix,api.crisp.chat
 suffix,api.game.letvstore.com
 suffix,apifabric.cn
-suffix,apifabric.com.cn
 suffix,apifabric.net
 suffix,apifox.com
 suffix,apigwtencent.com
@@ -959,11 +930,9 @@ suffix,appshike.com
 suffix,appsimg.com
 suffix,appsina.com
 suffix,appsmall.mobi
-suffix,apptaxi.com.cn
 suffix,aps.org
 suffix,aqviwv.com
 suffix,aqvx8mcr392mv7.com
-suffix,arkose.com.cn
 suffix,armaf.org
 suffix,arpun.com
 suffix,as84e.cn
@@ -1022,7 +991,6 @@ suffix,baidu-itm.com
 suffix,baidu-tech.com
 suffix,baidu.cn
 suffix,baidu.com
-suffix,baidu.com.cn
 suffix,baidu.com.hk
 suffix,baidu.hk
 suffix,baidu.mobi
@@ -1030,7 +998,6 @@ suffix,baiduads.com
 suffix,baiduapp.com
 suffix,baidubce.cn
 suffix,baidubce.com
-suffix,baidubce.com.cn
 suffix,baidubce.net.cn
 suffix,baidubcr.com
 suffix,baidubos.com
@@ -1041,7 +1008,6 @@ suffix,baiduhui.com
 suffix,baidupan.com
 suffix,baidupcs.cn
 suffix,baidupcs.com
-suffix,baidupcs.com.cn
 suffix,baidupcs.net
 suffix,baidustatic.com
 suffix,baiduux.com
@@ -1107,7 +1073,6 @@ suffix,baozengzhang.com
 suffix,bapiw.com
 suffix,bartender.cc
 suffix,battlecare.net
-suffix,battlenet.com.cn
 suffix,baydn.com
 suffix,bazai.com
 suffix,bbbcdns.com
@@ -1359,7 +1324,6 @@ suffix,bytexservice.com
 suffix,bytianshankd.com
 suffix,c-ctrip.com
 suffix,c-t.work
-suffix,c114.com.cn
 suffix,c1a0.com
 suffix,c1a2.com
 suffix,c1a3.com
@@ -1371,25 +1335,21 @@ suffix,c8uixr96iv79.com
 suffix,ca9ce6rv872ce1.com
 suffix,cabbagebox.com
 suffix,caict.ac.cn
-suffix,caifutong.com.cn
 suffix,caigoutong.net
 suffix,caihongjia.com
 suffix,caijingwu.com
 suffix,cailianpress.com
 suffix,caimi.cn
-suffix,caimi.com.cn
 suffix,caing.cn
 suffix,caing.com
 suffix,cainiao-inc.cn
 suffix,cainiao-inc.com
 suffix,cainiao-inc.net
 suffix,cainiao.com
-suffix,cainiao.com.cn
 suffix,cainiaoyizhan.com
 suffix,caixin.com
 suffix,caixinmedia.cn
 suffix,caixinmedia.com
-suffix,caixinmedia.com.cn
 suffix,caixinonline.com
 suffix,caiyu.com
 suffix,caiyun.com
@@ -1424,10 +1384,8 @@ suffix,carry6.net
 suffix,cas.org
 suffix,catus.xyz
 suffix,catuscdn.xyz
-suffix,ccb-life.com.cn
 suffix,ccb.cn
 suffix,ccb.com
-suffix,ccb.com.cn
 suffix,ccbcos.com
 suffix,ccbfund.cn
 suffix,ccbfund.com
@@ -1437,7 +1395,6 @@ suffix,ccbhome.net
 suffix,ccbintl.com.hk
 suffix,ccbleasing.com
 suffix,ccbseoul.com
-suffix,ccbtrust.com.cn
 suffix,ccbxt.com
 suffix,ccgslb.com
 suffix,ccgslb.net
@@ -1446,12 +1403,9 @@ suffix,cctalk.com
 suffix,cctv.cn
 suffix,cctv.com
 suffix,cctvlib.cn
-suffix,cctvlib.com.cn
 suffix,cctvlibrary.cn
-suffix,cctvlibrary.com.cn
 suffix,cctvpic.com
 suffix,cctvpro.cn
-suffix,cctvpro.com.cn
 suffix,ccx4e.cn
 suffix,cczq.com
 suffix,cczq.net
@@ -1578,7 +1532,6 @@ suffix,checkzeit.com
 suffix,cheetahgames.com
 suffix,cheetahgo.net
 suffix,cheetahmobile.com
-suffix,chemdraw.com.cn
 suffix,cheng.xin
 suffix,cheyisou.com
 suffix,china-ceec-cooperation.com
@@ -1586,7 +1539,6 @@ suffix,china-chair.com
 suffix,china-nengyuan.com
 suffix,china.com
 suffix,chinaamc.com
-suffix,chinabank.com.cn
 suffix,chinabnet.cn
 suffix,chinabooktrading.com
 suffix,chinabroadcast.cn
@@ -1612,7 +1564,6 @@ suffix,chinamobileltd.com
 suffix,chinamwh.com
 suffix,chinanetcenter.com
 suffix,chinanews.com
-suffix,chinanews.com.cn
 suffix,chinapay.cn
 suffix,chinapay.com
 suffix,chinapayhongkong.com
@@ -1625,19 +1576,16 @@ suffix,chinastock.com
 suffix,chinatelecom-ec.com
 suffix,chinatelecom-h.com
 suffix,chinatelecom.cn
-suffix,chinatelecom.com.cn
 suffix,chinatelecom.net.cn
 suffix,chinatelecom.org.cn
 suffix,chinatelecomglobal.com
 suffix,chinatranslation.net
 suffix,chinaunicom.cn
 suffix,chinaunicom.com
-suffix,chinaunicom.com.cn
 suffix,chinaunicom.com.hk
 suffix,chinaunicombidding.cn
 suffix,chinaunicomglobal.com
 suffix,chinaunionpay.com
-suffix,chinaunionpay.com.cn
 suffix,chinaunionpay.net
 suffix,chinaunix.net
 suffix,chinauos.com
@@ -1650,15 +1598,12 @@ suffix,chinaxiv.org
 suffix,chinaz.com
 suffix,chinaz.net
 suffix,chinazns.com
-suffix,chinesecity.com.cn
 suffix,chinesefilms.cn
 suffix,chinesemooc.org
 suffix,chineseradio.cn
-suffix,chineseradio.com.cn
 suffix,chiphell.com
 suffix,chndoi.cn
 suffix,chndoi.com
-suffix,chndoi.com.cn
 suffix,chndoi.net
 suffix,chndoi.org
 suffix,chntel.com
@@ -1693,20 +1638,16 @@ suffix,cike.cn
 suffix,cilab.cn
 suffix,cindasc.com
 suffix,ciscon.org
-suffix,citic-prudential.com.cn
 suffix,citic.com
 suffix,citicbank.cn
 suffix,citicbank.com
-suffix,citicbank.com.cn
 suffix,citicbank.net
 suffix,citicbank.net.cn
 suffix,citicbank.org
 suffix,citicbank.org.cn
 suffix,citiccapital.com
-suffix,citicgroup.com.cn
 suffix,citiciam.com
 suffix,citicifh.com
-suffix,citicprufunds.com.cn
 suffix,citics.com
 suffix,citics.com.hk
 suffix,citicsf.com
@@ -1796,7 +1737,6 @@ suffix,cloudnanan.com
 suffix,cloudnanjing.com
 suffix,cloudnanning.com
 suffix,cloudnantong.com
-suffix,cloudnet-ecloud.com.cn
 suffix,cloudnetb2b.com
 suffix,cloudquanzhou.com
 suffix,cloudsanya.com
@@ -1897,26 +1837,22 @@ suffix,cnkidoi.net
 suffix,cnkidoi.org
 suffix,cnlang.org
 suffix,cnlaw.net
-suffix,cnmo-img.com.cn
 suffix,cnmo.com
 suffix,cnmooc.org
 suffix,cnms.net.cn
 suffix,cnmstl.net
 suffix,cnnic.ac.cn
 suffix,cnnic.cn
-suffix,cnnic.com.cn
 suffix,cnnic.net
 suffix,cnnic.net.cn
 suffix,cnnic.org.cn
 suffix,cnnicresearch.cn
 suffix,cnrdn.com
-suffix,cns.com.cn
 suffix,cnsciedu.com
 suffix,cnstock.com
 suffix,cnsuning.com
 suffix,cnthinkers.com
 suffix,cntv.cn
-suffix,cntv.com.cn
 suffix,cntvwb.cn
 suffix,cnweblog.com
 suffix,cnzz.com
@@ -1936,6 +1872,7 @@ suffix,colinker.com
 suffix,coloros.com
 suffix,coloros.net
 suffix,com-hs-hkdy.com
+suffix,com.cn
 suffix,comicat.org
 suffix,computeinit.com
 suffix,comsenz.com
@@ -1955,7 +1892,6 @@ suffix,cootekservice.com
 suffix,corari.com
 suffix,coreldrawchina.com
 suffix,counter-strike.cn
-suffix,counter-strike.com.cn
 suffix,cowlevel.net
 suffix,cowtransfer.com
 suffix,cppblog.com
@@ -1972,7 +1908,6 @@ suffix,crggcn.com
 suffix,cri-grandera.com
 suffix,cri-on.com
 suffix,cri.cn
-suffix,cri.com.cn
 suffix,criankara.com
 suffix,criarabic.com
 suffix,criberlin.com
@@ -2010,7 +1945,6 @@ suffix,csdl.org.cn
 suffix,csdn.com
 suffix,csdn.net
 suffix,csfounder.com
-suffix,csgo.com.cn
 suffix,csjplatform.com
 suffix,csmjzs.com
 suffix,cspro.org
@@ -2019,11 +1953,9 @@ suffix,csto.com
 suffix,csxbank.com
 suffix,ctcdn.cn
 suffix,ctcdn.com
-suffix,ctcdn.com.cn
 suffix,ctcdn.net
 suffix,ctcdn.org
 suffix,ctdns.cn
-suffix,ctdns.com.cn
 suffix,ctdns.net
 suffix,ctdns.org
 suffix,ctexcel.ca
@@ -2037,7 +1969,6 @@ suffix,ctfund.com
 suffix,cthcdn.cn
 suffix,cthcdn.com
 suffix,cthcdn.net
-suffix,ctid.com.cn
 suffix,ctiforum.com
 suffix,ctlcdn.cn
 suffix,ctlcdn.com
@@ -2047,7 +1978,6 @@ suffix,ctmcdn.com
 suffix,ctmcdn.net
 suffix,ctobsnssdk.com
 suffix,ctoutiao.com
-suffix,ctrdc.com.cn
 suffix,ctrip.cn
 suffix,ctrip.co.id
 suffix,ctrip.co.kr
@@ -2061,7 +1991,6 @@ suffix,ctripbuy.hk
 suffix,ctripteam.com
 suffix,ctsbw.com
 suffix,ctsec.com
-suffix,ctws.com.cn
 suffix,ctxcdn.cn
 suffix,ctxcdn.com
 suffix,ctxcdn.net
@@ -2071,7 +2000,6 @@ suffix,ctycdn.net
 suffix,ctycdn.net.cn
 suffix,ctycdn.org
 suffix,ctyun.cn
-suffix,ctyun.com.cn
 suffix,ctyunapi.cn
 suffix,ctyunbdcsc.cn
 suffix,ctyuncdn.cn
@@ -2086,7 +2014,6 @@ suffix,cubead.com
 suffix,cuecp.cn
 suffix,cup62.cn
 suffix,cupb.cn
-suffix,cva.com.cn
 suffix,cvnad.com
 suffix,cwitxoakk98d.com
 suffix,cwvjg.cn
@@ -2162,7 +2089,6 @@ suffix,dcarimg.com
 suffix,dcarlive.com
 suffix,dcarstatic.com
 suffix,dcarvod.com
-suffix,dccnet.com.cn
 suffix,dcdapp.com
 suffix,dcdkjx.com
 suffix,dcloudlive.com
@@ -2227,7 +2153,6 @@ suffix,didipai.com
 suffix,didiqiche.com
 suffix,didistatic.com
 suffix,diditaxi.com
-suffix,diditaxi.com.cn
 suffix,didiwuxian.com
 suffix,didiyun.com
 suffix,didiyun.org
@@ -2237,10 +2162,8 @@ suffix,digicert.cn
 suffix,dingding.xin
 suffix,dingqibao.cn
 suffix,dingqibao.com
-suffix,dingqibao.com.cn
 suffix,dingtalk.cn
 suffix,dingtalk.com
-suffix,dingtalk.com.cn
 suffix,dingtalk.net
 suffix,dingtalkapps.com
 suffix,dingwei.link
@@ -2248,7 +2171,6 @@ suffix,dingxiang-inc.com
 suffix,diopic.net
 suffix,dious.cc
 suffix,discoverplusradio.cn
-suffix,discoverplusradio.com.cn
 suffix,discuz.com
 suffix,discuz.net
 suffix,discuz.org
@@ -2257,7 +2179,6 @@ suffix,diyiyou.com
 suffix,dj.tc
 suffix,dj3ba.cn
 suffix,dj99.com
-suffix,djcdn.com.cn
 suffix,djdyqn.com
 suffix,dji.net
 suffix,djkhgy2.com
@@ -2294,12 +2215,10 @@ suffix,dnslab.cn
 suffix,dnsnut.com
 suffix,dnspod.cn
 suffix,dnspod.com
-suffix,dnspod.com.cn
 suffix,dnspod.mobi
 suffix,dnspod.net
 suffix,dnspod.org
 suffix,dnsproxy.cn
-suffix,dnsproxy.com.cn
 suffix,dnssina.com
 suffix,dnsv1.com
 suffix,dnsv2.com
@@ -2318,11 +2237,9 @@ suffix,doctoryou.cn
 suffix,dogedoge.com
 suffix,doh.pub
 suffix,domeos.cn
-suffix,domeos.com.cn
 suffix,domob-inc.cn
 suffix,domob-inc.com
 suffix,domob.cn
-suffix,domob.com.cn
 suffix,domob.org
 suffix,domobcdn.cn
 suffix,domobcdn.com
@@ -2446,7 +2363,6 @@ suffix,dzpw1.cn
 suffix,dzsc.com
 suffix,dzw3.com
 suffix,dzwww.com
-suffix,e-engine.com.cn
 suffix,e-sscard.com
 suffix,e0n.cn
 suffix,e22a.com
@@ -2507,7 +2423,6 @@ suffix,ele.me
 suffix,ele.to
 suffix,elecfans.com
 suffix,eleme.cn
-suffix,eleme.com.cn
 suffix,eleme.io
 suffix,elemecdn.cn
 suffix,elemecdn.com
@@ -2541,7 +2456,6 @@ suffix,etagri.com
 suffix,etao.com
 suffix,etoote.cn
 suffix,etoote.com
-suffix,etoote.com.cn
 suffix,etoote.net
 suffix,ets100.com
 suffix,ettdnsv.com
@@ -2549,7 +2463,6 @@ suffix,eudic.net
 suffix,euhhob.com
 suffix,everbox.net
 suffix,everbright.com
-suffix,ewindcloud.com.cn
 suffix,ewqcxz.com
 suffix,ewsdxc.com
 suffix,ewtp.com
@@ -2570,7 +2483,6 @@ suffix,f61a.com
 suffix,f61b.com
 suffix,facephoto.com
 suffix,faceu.com
-suffix,faceu.com.cn
 suffix,faceu.mobi
 suffix,faceu.net
 suffix,fadfunds.com
@@ -2619,7 +2531,6 @@ suffix,fengniao.com
 suffix,fengniaopaotui.cn
 suffix,fengniaozhongbao.cn
 suffix,fengxian110.com
-suffix,fengzhibo.com.cn
 suffix,fenxi.com
 suffix,fenzijr.com
 suffix,fetion-portal.com
@@ -2629,7 +2540,6 @@ suffix,ffbuddy.com
 suffix,fgo.wiki
 suffix,fhldns.cn
 suffix,fhldns.com
-suffix,fhldns.com.cn
 suffix,fhldns.net
 suffix,fie1i.cn
 suffix,fihlx.cn
@@ -2664,7 +2574,6 @@ suffix,fou2d.cn
 suffix,founderff.com
 suffix,foundertype.com
 suffix,foxmail.com
-suffix,foxmail.com.cn
 suffix,fqjob.net
 suffix,fqnovel.com
 suffix,fqnovelpic.com
@@ -2677,7 +2586,6 @@ suffix,frontjs.com
 suffix,frontwize.com
 suffix,fsfund.com
 suffix,fsllq.com
-suffix,fsllq.com.cn
 suffix,fspcdn.com
 suffix,ftfund.com
 suffix,fthimalayandb.com
@@ -2763,15 +2671,12 @@ suffix,gctianshanxh.com
 suffix,gctwds.com
 suffix,gd10010.cn
 suffix,gd116114.net.cn
-suffix,gd12349.com.cn
 suffix,gd165.com
 suffix,gdbnet.cn
-suffix,gddc.com.cn
 suffix,gdfgq.club
 suffix,gdjdxy.com
 suffix,gdliontech.com
 suffix,gdrc.com
-suffix,gdtel.com.cn
 suffix,gdtianshanoa.com
 suffix,gdtimg.com
 suffix,geekpark.net
@@ -2798,7 +2703,6 @@ suffix,getui.com
 suffix,gezida.com
 suffix,gfan.com
 suffix,gfdwsx.com
-suffix,gfeel.com.cn
 suffix,gfh82.com
 suffix,gfnormal00aa.com
 suffix,gfnormal00ab.com
@@ -3192,7 +3096,6 @@ suffix,gitee.io
 suffix,gitv.cn
 suffix,gitv.tv
 suffix,gjgbdszt.cn
-suffix,gjgbdszt.com.cn
 suffix,gjgbdszt.net.cn
 suffix,gktianshanjd.com
 suffix,glinksure.com
@@ -3203,19 +3106,16 @@ suffix,gm86.com
 suffix,gmw.cn
 suffix,gmz88.com
 suffix,gneec.com
-suffix,gneec.com.cn
 suffix,gneec3.com
 suffix,gneec4.com
 suffix,gneec5.com
 suffix,gneec7.com
 suffix,gneeccloud.com
-suffix,gnoc.com.cn
 suffix,go2map.com
 suffix,goalhi.cn
 suffix,gobasearcher.com
 suffix,godic.net
 suffix,gogokid.com
-suffix,gogokid.com.cn
 suffix,gold678.com
 suffix,goldenear.club
 suffix,golue.com
@@ -3260,7 +3160,6 @@ suffix,gtarsc.com
 suffix,gtgres.com
 suffix,gtimg.cn
 suffix,gtimg.com
-suffix,gtimg.com.cn
 suffix,gtja.com
 suffix,gtm-a1b2.com
 suffix,gtm-a1b3.com
@@ -3311,7 +3210,6 @@ suffix,guaiguai.com
 suffix,guanaitong.com
 suffix,guangzhou.gd.cn
 suffix,guanhaobio.com
-suffix,guba.com.cn
 suffix,gucheng.com
 suffix,guichuideng.com
 suffix,guigu.org
@@ -3322,7 +3220,6 @@ suffix,guokr.com
 suffix,guoping123.com
 suffix,guosen.com
 suffix,guotv.com
-suffix,guotv.com.cn
 suffix,guoxinmac.com
 suffix,guoxuedashi.com
 suffix,guoxuemi.com
@@ -3330,7 +3227,6 @@ suffix,gupzs.com
 suffix,gushiwen.org
 suffix,guzhangting.com
 suffix,gvcr9zaemdzh.com
-suffix,gvmedia.com.cn
 suffix,gwdang.com
 suffix,gxairlines.com
 suffix,gxb.io
@@ -3376,7 +3272,6 @@ suffix,haokan.com
 suffix,haolietou.com
 suffix,haoso.com
 suffix,haosou.com
-suffix,haosou.com.cn
 suffix,haosou.net
 suffix,haosou360.com
 suffix,haote.com
@@ -3405,7 +3300,6 @@ suffix,hdyxgame.com
 suffix,hdyzx.cn
 suffix,healthjd.com
 suffix,healthpoint.cn
-suffix,healthpoint.com.cn
 suffix,healthybaike.com
 suffix,heavenlywind.cc
 suffix,hefei.cc
@@ -3449,7 +3343,6 @@ suffix,hiascend.com
 suffix,hibusiness.com
 suffix,hichina.cn
 suffix,hichina.com
-suffix,hichina.com.cn
 suffix,hichina.net
 suffix,hiclc.com
 suffix,hicloud.com
@@ -3462,7 +3355,6 @@ suffix,hiido.com
 suffix,hikunpeng.com
 suffix,hikunpeng.net
 suffix,hisilicon.com
-suffix,hisilicon.com.cn
 suffix,hitech.ac.cn
 suffix,hitfm.cn
 suffix,hitv.com
@@ -3494,7 +3386,6 @@ suffix,hongdefund.com
 suffix,hongen.com
 suffix,hongmeiti.cn
 suffix,hongmeiti.com
-suffix,hongmeiti.com.cn
 suffix,hongmeiti.net
 suffix,hongmi.cn
 suffix,hongsanban.com
@@ -3502,7 +3393,6 @@ suffix,hongtastock.com
 suffix,hongxiu.com
 suffix,hongyuanqh.com
 suffix,hoopchina.com
-suffix,hoopchina.com.cn
 suffix,hori-gz.com
 suffix,hostbuf.com
 suffix,hotmail.com
@@ -3523,7 +3413,6 @@ suffix,hpearx.com
 suffix,hr-welink.com
 suffix,hsbank.cc
 suffix,hsbank.com
-suffix,hsbank.com.cn
 suffix,hsdatalab.com
 suffix,hsfund.com
 suffix,htcases.com
@@ -3534,7 +3423,6 @@ suffix,htisec.com
 suffix,html5mark.com
 suffix,htsamc.com
 suffix,htsc.com
-suffix,htsc.com.cn
 suffix,htsec.com
 suffix,http.cn
 suffix,https-rulesets.org
@@ -3548,7 +3436,6 @@ suffix,huashengdaili.com
 suffix,huatu.com
 suffix,huawangzhixun.com
 suffix,huawei.com
-suffix,huawei.com.cn
 suffix,huaweiacad.com
 suffix,huaweiapaas.com
 suffix,huaweiapi.com
@@ -3588,7 +3475,6 @@ suffix,huayingsc.com
 suffix,huihui.cn
 suffix,huijistatic.com
 suffix,huijiwiki.com
-suffix,huishenghuiying.com.cn
 suffix,huishij.com
 suffix,huize.com
 suffix,hujia.org
@@ -3609,7 +3495,6 @@ suffix,huochepiao.com
 suffix,huocheso.com
 suffix,huoqibao.cn
 suffix,huoqibao.com
-suffix,huoqibao.com.cn
 suffix,huoshan.com
 suffix,huoshancdn.com
 suffix,huoshangroup.com
@@ -3647,7 +3532,6 @@ suffix,hwclouds-dns.com
 suffix,hwclouds-dns.net
 suffix,hwclouds.cn
 suffix,hwclouds.com
-suffix,hwclouds.com.cn
 suffix,hwclouds.mobi
 suffix,hwclouds.net
 suffix,hwclouds.net.cn
@@ -3661,7 +3545,6 @@ suffix,hwgis.cn
 suffix,hwgis.com
 suffix,hwht.cn
 suffix,hwht.com
-suffix,hwitsm.com.cn
 suffix,hwlchain.com
 suffix,hwmap.cn
 suffix,hwocloud.com
@@ -3711,7 +3594,6 @@ suffix,icbc.co.jp
 suffix,icbc.co.kr
 suffix,icbc.co.nl
 suffix,icbc.com.au
-suffix,icbc.com.cn
 suffix,icbc.com.es
 suffix,icbc.com.kh
 suffix,icbc.com.kw
@@ -3730,7 +3612,6 @@ suffix,icbc.lu
 suffix,icbcalmaty.kz
 suffix,icbcasia.com
 suffix,icbcbr.com.br
-suffix,icbccs.com.cn
 suffix,icbci.com.hk
 suffix,icbcina.com
 suffix,icbcindia.com
@@ -3836,7 +3717,6 @@ suffix,ikhimalayaniq.com
 suffix,ikupan.me
 suffix,ilangqu.cn
 suffix,ilangqu.com
-suffix,ilangqu.com.cn
 suffix,ileapcloud.com
 suffix,ileopard.com
 suffix,ilinksure.com
@@ -3851,7 +3731,6 @@ suffix,imark.cn
 suffix,imcapptest.com
 suffix,imedao.com
 suffix,imeigu.cn
-suffix,imeigu.com.cn
 suffix,imf.org
 suffix,img4399.com
 suffix,img4me.com
@@ -3889,7 +3768,6 @@ suffix,ip138.com
 suffix,ipadown.com
 suffix,ipanda.cn
 suffix,ipanda.com
-suffix,ipanda.com.cn
 suffix,ipanda.net
 suffix,ipapark.com
 suffix,ipinyou.com
@@ -3927,7 +3805,6 @@ suffix,it610.com
 suffix,itaiwannews.cn
 suffix,italentclc.com
 suffix,itc.cn
-suffix,itc.com.cn
 suffix,iteye.com
 suffix,ithome.com
 suffix,ithome.net
@@ -4008,12 +3885,10 @@ suffix,jclps.com
 suffix,jd-app.com
 suffix,jd-ex.cn
 suffix,jd-ex.com
-suffix,jd-ex.com.cn
 suffix,jd-ex.net
 suffix,jd.cn
 suffix,jd.co.th
 suffix,jd.com
-suffix,jd.com.cn
 suffix,jd.hk
 suffix,jd.id
 suffix,jd.ru
@@ -4084,7 +3959,6 @@ suffix,jftianshancn.com
 suffix,jhgtgb.com
 suffix,jhscm.com
 suffix,jhu.edu
-suffix,jhwan.com.cn
 suffix,jia.com
 suffix,jiameng.com
 suffix,jianbihua.com
@@ -4116,7 +3990,6 @@ suffix,jiejingku.net
 suffix,jiemeng8.com
 suffix,jiemian.com
 suffix,jiguang.cn
-suffix,jihehuaban.com.cn
 suffix,jikeiot.cloud
 suffix,jikexueyuan.com
 suffix,jikipedia.com
@@ -4140,7 +4013,6 @@ suffix,jiqizhixin.com
 suffix,jisuanke.com
 suffix,jisuqiang.cn
 suffix,jisuqiang.com
-suffix,jisuqiang.com.cn
 suffix,jisuqiang.net
 suffix,jisuxia.com
 suffix,jiuzhilan.com
@@ -4186,7 +4058,6 @@ suffix,jpopsuki.eu
 suffix,jpush.cn
 suffix,jpush.io
 suffix,jpushoa.com
-suffix,jrdaikuan.com.cn
 suffix,jrjiekuan.com
 suffix,jrurl.cn
 suffix,jrzk.net.cn
@@ -4205,13 +4076,11 @@ suffix,jtamc.com
 suffix,jtwsm.cn
 suffix,juangua.com
 suffix,juchang.cn
-suffix,juchang.com.cn
 suffix,juefeng.com
 suffix,juejin.cn
 suffix,juejin.im
 suffix,juhuasuan.com
 suffix,juhuiwan.com
-suffix,juhuiwan.com.cn
 suffix,juhuiwan.net
 suffix,juliangyinqing.cn
 suffix,juliangyinqing.com
@@ -4254,7 +4123,6 @@ suffix,kandian.cn
 suffix,kandian.com
 suffix,kandian.net
 suffix,kandian.tv
-suffix,kanduoduo.com.cn
 suffix,kanimg.com
 suffix,kankan.com
 suffix,kankanews.com
@@ -4262,7 +4130,6 @@ suffix,kantianqi.net
 suffix,kanxue.com
 suffix,kanyouxi.cn
 suffix,kanyouxi.com
-suffix,kanyouxi.com.cn
 suffix,kanyouxi.tv
 suffix,kanzhun.com
 suffix,kaola.com
@@ -4375,7 +4242,6 @@ suffix,kting.info
 suffix,ktv.com
 suffix,ku6.cn
 suffix,ku6.com
-suffix,ku6.com.cn
 suffix,ku6.net
 suffix,ku6cdn.com
 suffix,ku6img.com
@@ -4445,7 +4311,6 @@ suffix,kuqin.com
 suffix,kuwo.cn
 suffix,kuxiaomiao.cn
 suffix,kuxiaomiao.com
-suffix,kuxiaomiao.com.cn
 suffix,kuxiaomiao.net
 suffix,kuyiso.com
 suffix,kuyunbo.club
@@ -4548,13 +4413,11 @@ suffix,lemicp.com
 suffix,lenauth.com
 suffix,lenovo.cn
 suffix,lenovo.com
-suffix,lenovo.com.cn
 suffix,lenovocloudos.com
 suffix,lenovoeservice.com
 suffix,lenovogame.com
 suffix,lenovomm.cn
 suffix,lenovomm.com
-suffix,lenovovip.com.cn
 suffix,letianshanec.com
 suffix,leturich.org
 suffix,letv.com
@@ -4570,7 +4433,6 @@ suffix,liangxinyao.com
 suffix,lianjia.com
 suffix,lianlianpay.com
 suffix,lianliantao.cn
-suffix,lianliantao.com.cn
 suffix,lianliantao.net
 suffix,lianliantaoshop.com
 suffix,lianmishu.com
@@ -4593,7 +4455,6 @@ suffix,lietou.com
 suffix,lieyunwang.com
 suffix,lifetmt.cn
 suffix,lifetmt.com
-suffix,lifetmt.com.cn
 suffix,lifetmt.net
 suffix,lifetmt.org
 suffix,liffmp.com
@@ -4654,7 +4515,6 @@ suffix,longzhu.com
 suffix,loogoo.com
 suffix,lotianshangx.com
 suffix,lotpc.com
-suffix,lotuscars.com.cn
 suffix,loupan.com
 suffix,lovev.cn
 suffix,lovev.com
@@ -4715,7 +4575,6 @@ suffix,lxzjjt.cn
 suffix,lxzjjt.com
 suffix,ly.com
 suffix,lynkco-test.com
-suffix,lynkco.com.cn
 suffix,m-now.cn
 suffix,m-team.cc
 suffix,m.sohu
@@ -4724,7 +4583,6 @@ suffix,m3-cloud.com
 suffix,m6.run
 suffix,m6tza3ip7x8zr1.com
 suffix,m9.run
-suffix,m91.com.cn
 suffix,ma.run
 suffix,maccms.com
 suffix,madsrevolution.net
@@ -4742,7 +4600,6 @@ suffix,mail4399.com
 suffix,maileds.com
 suffix,mairuan.cn
 suffix,mairuan.com
-suffix,mairuan.com.cn
 suffix,mairuan.net
 suffix,mairuanwang.com
 suffix,maisanqi.com
@@ -4846,9 +4703,7 @@ suffix,miaomiaozhe.com
 suffix,miaopai.com
 suffix,miaostreet.com
 suffix,miaozhen.com
-suffix,micoce.com.cn
 suffix,micode.cn
-suffix,micode.com.cn
 suffix,micode.net
 suffix,micro-game-client.com
 suffix,microsoftonline.com
@@ -4866,7 +4721,6 @@ suffix,migufm.com
 suffix,migugk.com
 suffix,migutv.com
 suffix,miguvideo.com
-suffix,miguvideo.com.cn
 suffix,mihayo.com
 suffix,mihayou.com
 suffix,mihoyo.com
@@ -4897,7 +4751,6 @@ suffix,minippa.cn
 suffix,minitiao.com
 suffix,mioffice.cn
 suffix,mios.cn
-suffix,mios.com.cn
 suffix,mipay.com
 suffix,mipcdn.com
 suffix,mipengine.com
@@ -4944,7 +4797,6 @@ suffix,mobilemgr-global.com
 suffix,mobmore.com
 suffix,modernization.ac.cn
 suffix,modh.cn
-suffix,modh.com.cn
 suffix,mofang.com
 suffix,mofazhu.com
 suffix,mogecloud.cn
@@ -4967,7 +4819,6 @@ suffix,moke.com
 suffix,moleecel.com
 suffix,molo.cn
 suffix,monidashi.cn
-suffix,monidashi.com.cn
 suffix,monidata.com
 suffix,monternet.com
 suffix,moocollege.com
@@ -5024,8 +4875,6 @@ suffix,mycleanmymac.com
 suffix,mydown.com
 suffix,mydrivers.com
 suffix,myelasticsearch.com
-suffix,myfiles.com.cn
-suffix,mygds.com.cn
 suffix,myhichina.cn
 suffix,myhuaweicloud.cn
 suffix,myhuaweicloud.com
@@ -5034,7 +4883,6 @@ suffix,myhwcdn.com
 suffix,myhwcloudlive.com
 suffix,myhwclouds.cn
 suffix,myhwclouds.com
-suffix,myhwclouds.com.cn
 suffix,myhwclouds.net
 suffix,myid.cn
 suffix,myilibrary.com
@@ -5075,7 +4923,6 @@ suffix,ncore.cc
 suffix,ncyrqs.com
 suffix,ndiip.com
 suffix,ndpp.ac.cn
-suffix,nearme.com.cn
 suffix,nease.net
 suffix,neffkb.com
 suffix,neihancommunity.cn
@@ -5083,7 +4930,6 @@ suffix,neihancommunity.com
 suffix,neihancommunity.net
 suffix,neihandiantai.cn
 suffix,neihandiantai.com
-suffix,neihandiantai.com.cn
 suffix,neihanshequ.cn
 suffix,neihanshequ.com
 suffix,neixin.cn
@@ -5114,7 +4960,6 @@ suffix,nfoservers.com
 suffix,nga.cn
 suffix,nga.wiki
 suffix,ngaa.cn
-suffix,ngaa.com.cn
 suffix,ngaa.info
 suffix,ngaa.net.cn
 suffix,ngaa.org.cn
@@ -5237,7 +5082,6 @@ suffix,open-uc.cn
 suffix,open.cd
 suffix,openaboc.cn
 suffix,openaboc.com
-suffix,openaboc.com.cn
 suffix,openapp.run
 suffix,openarkcompiler.cn
 suffix,openharmonyproject.com
@@ -5249,7 +5093,6 @@ suffix,openlearning.com
 suffix,openmidas.com
 suffix,openrasp.cn
 suffix,openrasp.com
-suffix,openrasp.com.cn
 suffix,openrasp.info
 suffix,openrasp.net
 suffix,openrasp.net.cn
@@ -5262,7 +5105,6 @@ suffix,oppo.com
 suffix,oppo.mobi
 suffix,oppodataintel.cn
 suffix,oppodigital.com
-suffix,oppodigital.com.cn
 suffix,oppoer.cn
 suffix,oppoer.me
 suffix,oppofind.com
@@ -5347,6 +5189,7 @@ suffix,peccn.com
 suffix,peijian.com
 suffix,peiwanlu.com
 suffix,pengyou.com
+suffix,people.com
 suffix,pepsitmall.com
 suffix,pftianshanno.com
 suffix,pglstatp-toutiao-b.com
@@ -5357,26 +5200,21 @@ suffix,pharmacodia.com
 suffix,philanthropy.xin
 suffix,phoenixcenter.cn
 suffix,phoenixtv.com
-suffix,phoenixtv.com.cn
 suffix,photozoomchina.com
 suffix,phpcomposer.com
 suffix,phpweblog.net
 suffix,phpwind.com
 suffix,phpwind.net
-suffix,piao.com.cn
 suffix,piaogroup.com
 suffix,piaoliang.com
 suffix,pickpikka.com
 suffix,picself.cn
-suffix,picself.com.cn
 suffix,pigai.org
 suffix,pilidns.com
 suffix,pinduoduo.com
 suffix,pinduoduo.net
 suffix,pingan.com
-suffix,pingan.com.cn
 suffix,pingan.com.hk
-suffix,pinganonline.com.cn
 suffix,pinganventures.com
 suffix,pingplusplus.com
 suffix,pingwest.com
@@ -5408,7 +5246,6 @@ suffix,polyinno.com
 suffix,polyv.net
 suffix,popincdn.com
 suffix,powerapp.cn
-suffix,powerapp.com.cn
 suffix,powerapp.io
 suffix,pphimalayanrt.com
 suffix,pplive.cn
@@ -5417,7 +5254,6 @@ suffix,pps.tv
 suffix,ppsimg.com
 suffix,ppstream.cn
 suffix,ppstream.com
-suffix,ppstream.com.cn
 suffix,ppstream.net
 suffix,ppstream.net.cn
 suffix,ppsurl.com
@@ -5435,7 +5271,6 @@ suffix,proquest.com
 suffix,proximabeta.com
 suffix,prpracg.com
 suffix,psbc.com
-suffix,psbcoa.com.cn
 suffix,psnine.com
 suffix,pstatp.com
 suffix,pterclub.com
@@ -5548,7 +5383,6 @@ suffix,qie.tv
 suffix,qifeiye.com
 suffix,qihoo.cn
 suffix,qihoo.com
-suffix,qihoo.com.cn
 suffix,qihoo.net
 suffix,qihu-lb.com
 suffix,qihu.com
@@ -5584,7 +5418,6 @@ suffix,qiniu-enterprise.com
 suffix,qiniu-solutions.com
 suffix,qiniu.co
 suffix,qiniu.com
-suffix,qiniu.com.cn
 suffix,qiniu.in
 suffix,qiniu.io
 suffix,qiniu.org
@@ -5640,7 +5473,6 @@ suffix,qplus.com
 suffix,qpmwg68cre9pci.com
 suffix,qq.cn.com
 suffix,qq.com
-suffix,qq.com.cn
 suffix,qq.design
 suffix,qq.net
 suffix,qq.wang
@@ -5696,7 +5528,6 @@ suffix,rails.cn
 suffix,rainclassroom.com
 suffix,rarbg.to
 suffix,rat3c.com
-suffix,ratingtoken.com.cn
 suffix,ratingtoken.net
 suffix,raychase.net
 suffix,rdcnzz.com
@@ -5713,7 +5544,6 @@ suffix,realmebbs.com
 suffix,realmemobile.com
 suffix,realmeservice.com
 suffix,redacted.ch
-suffix,redbaby.com.cn
 suffix,redfcv.com
 suffix,remai.today
 suffix,renren-inc.com
@@ -5747,7 +5577,6 @@ suffix,routewize.com
 suffix,rrmj.tv
 suffix,rsc.org
 suffix,rtbasia.com
-suffix,rtx.com.cn
 suffix,rtxapp.com
 suffix,rtxonline.com
 suffix,rtyhfg.com
@@ -5918,7 +5747,6 @@ suffix,seasungames.com
 suffix,sec-wiki.com
 suffix,secec.com
 suffix,securityinsight.com
-suffix,securityinsight.com.cn
 suffix,segmentfault.com
 suffix,sehimalayanqj.com
 suffix,sencdn.com
@@ -5928,7 +5756,6 @@ suffix,seniverse.com
 suffix,senlinjimore.com
 suffix,senseagro.cn
 suffix,senseagro.com
-suffix,senseagro.com.cn
 suffix,servicewechat.com
 suffix,sf-airlines.com
 suffix,sf-cityrush.com
@@ -6017,23 +5844,19 @@ suffix,simei8.com
 suffix,simuwang.com
 suffix,sina.cn
 suffix,sina.com
-suffix,sina.com.cn
 suffix,sina.net
 suffix,sinaapp.com
 suffix,sinacdn.com
 suffix,sinacloud.cn
 suffix,sinacloud.com
-suffix,sinacloud.com.cn
 suffix,sinacloud.net
 suffix,sinacorp.cn
 suffix,sinadaxue.cn
 suffix,sinadaxue.com
-suffix,sinadaxue.com.cn
 suffix,sinaedge.cn
 suffix,sinaedge.com
 suffix,sinaimg.cn
 suffix,sinaimg.com
-suffix,sinaimg.com.cn
 suffix,sinajs.cn
 suffix,sinajs.com
 suffix,sinanet.com
@@ -6047,16 +5870,13 @@ suffix,sinauda.com
 suffix,sinaurl.cn
 suffix,sinesafe.com
 suffix,sinocache.cn
-suffix,sinocache.com.cn
 suffix,sinocache.net
 suffix,sinogslb.cn
 suffix,sinogslb.com
 suffix,sinogslb.net
-suffix,sinopayment.com.cn
 suffix,sinopec-usa.com
 suffix,sinopec.com
 suffix,sinopecgroup.com
-suffix,sinopecnews.com.cn
 suffix,sinopecsales.com
 suffix,sinorusfocus.com
 suffix,sinorussian21st.org
@@ -6118,13 +5938,11 @@ suffix,sogou-inc.com
 suffix,sogou-op.org
 suffix,sogou.cn
 suffix,sogou.com
-suffix,sogou.com.cn
 suffix,sogou.net
 suffix,sogoucdn.com
 suffix,sohu-inc.com
 suffix,sohu.cn
 suffix,sohu.com
-suffix,sohu.com.cn
 suffix,sohuapps.com
 suffix,sohucs.com
 suffix,sohumail.com
@@ -6141,7 +5959,6 @@ suffix,sony.com
 suffix,sonyentertainmentnetwork.com
 suffix,soovvi.com
 suffix,soso.com
-suffix,soso.com.cn
 suffix,sososnap.com
 suffix,sou.cn
 suffix,sou.com
@@ -6171,7 +5988,6 @@ suffix,sq.cc
 suffix,sqqnh.org
 suffix,sqzksub.com
 suffix,sseinfo.com
-suffix,ssibility-union.com.cn
 suffix,ssixvo9gaybkp5.com
 suffix,ssjlicai.com
 suffix,sslawy.com
@@ -6186,7 +6002,6 @@ suffix,stargame.com
 suffix,starlakelab.com
 suffix,starschina.cn
 suffix,starschina.com
-suffix,starschina.com.cn
 suffix,starschinalive.com
 suffix,startssl.com
 suffix,static163.net
@@ -6289,7 +6104,6 @@ suffix,tamaegis.com
 suffix,tandfonline.com
 suffix,tangeche.com
 suffix,tangping.com
-suffix,tangping.com.cn
 suffix,tankeai.com
 suffix,tanx.com
 suffix,tanxlog.istreamsche.com
@@ -6311,7 +6125,6 @@ suffix,taopiaopiao.com
 suffix,taotao.com
 suffix,taotv.cn
 suffix,taotv.com
-suffix,taotv.com.cn
 suffix,taotv.net
 suffix,tap.io
 suffix,tapd.cn
@@ -6346,7 +6159,6 @@ suffix,tcdnvod.com
 suffix,tcdnvodbak.com
 suffix,tcfmglobal.com
 suffix,tcl.com
-suffix,tcl.com.cn
 suffix,tcloudbase.com
 suffix,tcloudbase.net
 suffix,tcloudbaseapp.com
@@ -6385,7 +6197,6 @@ suffix,tencent-gcloud.com
 suffix,tencent.cn
 suffix,tencent.co.id
 suffix,tencent.com
-suffix,tencent.com.cn
 suffix,tencent.com.hk
 suffix,tencent.design
 suffix,tencent.net
@@ -6463,7 +6274,6 @@ suffix,tianmao.com
 suffix,tianqi.com
 suffix,tiantianfunds.cn
 suffix,tianya.cn
-suffix,tianya.com.cn
 suffix,tianyablog.com
 suffix,tianyaclub.com
 suffix,tianyancha.com
@@ -6477,7 +6287,6 @@ suffix,tiexue.net
 suffix,tieyou.com
 suffix,tiktokd.net
 suffix,tiktokd.org
-suffix,timatrix.com.cn
 suffix,time.is
 suffix,timedoo.com
 suffix,timibase.com
@@ -6508,7 +6317,6 @@ suffix,tmall.ru
 suffix,tmallgenie.com
 suffix,tmallgenieapi.com
 suffix,tmallplay.cn
-suffix,tmallplay.com.cn
 suffix,tmallplay.net
 suffix,tmalltv.com
 suffix,tmcdn.net
@@ -6556,7 +6364,6 @@ suffix,toutiaocloud.net
 suffix,toutiaogood.com
 suffix,toutiaohao.cn
 suffix,toutiaohao.com
-suffix,toutiaohao.com.cn
 suffix,toutiaohao.net
 suffix,toutiaoimg.cn
 suffix,toutiaoimg.com
@@ -6580,7 +6387,6 @@ suffix,tqapp.cn
 suffix,tqapp.com
 suffix,tqiangg.cn
 suffix,tqiangg.com
-suffix,tqiangg.com.cn
 suffix,tqiangg.net
 suffix,tracup.com
 suffix,tradaquan.com
@@ -6621,10 +6427,8 @@ suffix,tuwanjun.com
 suffix,tv.sohu
 suffix,tv002.com
 suffix,tvcc.cn
-suffix,tvcc.com.cn
 suffix,tweakcube.com
 suffix,twgame.cn
-suffix,twgame.com.cn
 suffix,twmsuf.com
 suffix,twsapp.com
 suffix,twscholar.com
@@ -6665,7 +6469,6 @@ suffix,ucgslb.info
 suffix,ucgslb.net
 suffix,ucgslb.top
 suffix,ucloud-edm.com
-suffix,ucloud.com.cn
 suffix,ucloud365.com
 suffix,ucloudadmin.com
 suffix,ucloudapi.com
@@ -6683,7 +6486,6 @@ suffix,ucnaming.info
 suffix,ucnaming.net
 suffix,ucweb.cn
 suffix,ucweb.com
-suffix,ucweb.com.cn
 suffix,udache.com
 suffix,udacity.com
 suffix,uetianshanyp.com
@@ -6704,7 +6506,6 @@ suffix,uhasadmin.com
 suffix,uhbthn.com
 suffix,uiwow.com
 suffix,ujnfdfv.com
-suffix,ukoo.com.cn
 suffix,ule.com
 suffix,ulecdn.com
 suffix,ulikecam.cn
@@ -6799,7 +6600,6 @@ suffix,vdnplus.cn
 suffix,vdnplus.com
 suffix,vdnplus.net
 suffix,vdolady.com
-suffix,vds.com.cn
 suffix,veeqi.net
 suffix,vegaschina.cn
 suffix,vegslb.com
@@ -6848,7 +6648,6 @@ suffix,volcimagex.net
 suffix,volcvod.com
 suffix,volleychina.org
 suffix,volvocars.com
-suffix,volvocars.com.cn
 suffix,voovlive.com
 suffix,vpgame.com
 suffix,vplay8.com
@@ -6888,7 +6687,6 @@ suffix,wapone.net
 suffix,warmchina121.com
 suffix,wbimg.cn
 suffix,wbimg.com
-suffix,wbimg.com.cn
 suffix,wcbygame.com
 suffix,wcdn.cn
 suffix,wdfok.com
@@ -6910,13 +6708,11 @@ suffix,wechatlegal.net
 suffix,wechatpay.com
 suffix,wechatpay.com.hk
 suffix,wegame.com
-suffix,wegame.com.cn
 suffix,wegamedeveloper.com
 suffix,wegameplus.com
 suffix,weiaixiaoshuo.com
 suffix,weibo.cn
 suffix,weibo.com
-suffix,weibo.com.cn
 suffix,weibo.tv
 suffix,weibocdn.com
 suffix,weiboums.com
@@ -6928,9 +6724,7 @@ suffix,weikan.cn
 suffix,weilaicaijing.com
 suffix,weilaiyunxiao.com
 suffix,weinews.cn
-suffix,weinews.com.cn
 suffix,weipan.cn
-suffix,weipan.com.cn
 suffix,weiphone.com
 suffix,weiphone.net
 suffix,weishi.com
@@ -6965,7 +6759,6 @@ suffix,whccb.com
 suffix,whlovehome.com
 suffix,whwps.cn
 suffix,whyenjoy.com
-suffix,whyenjoy.com.cn
 suffix,wicresoft.com
 suffix,wifi.com
 suffix,wifi188.com
@@ -7005,14 +6798,12 @@ suffix,wkcdn.com
 suffix,wkopen.com
 suffix,wlyxmusic.net
 suffix,wmupd.com
-suffix,wmupd.com.cn
 suffix,wmwm.com
 suffix,wmzhe.com
 suffix,wnhuifu.com
 suffix,wnsqzonebk.com
 suffix,wo-link.tech
 suffix,wo.cn
-suffix,wo.com.cn
 suffix,wo116114.com
 suffix,wo1wan.com
 suffix,woa.com
@@ -7089,13 +6880,11 @@ suffix,wumii.com
 suffix,wuming.com
 suffix,wusuobuneng.cn
 suffix,wusuobuneng.com
-suffix,wusuobuneng.com.cn
 suffix,wusuobuneng.org
 suffix,wuxianhaibao.com
 suffix,wuximediaglobal.com
 suffix,wuxizazhi.cn
 suffix,wuxizazhi.com
-suffix,wuxizazhi.com.cn
 suffix,wuxizazhi.net
 suffix,wuxizazhi.net.cn
 suffix,wuyou189.cn
@@ -7135,7 +6924,6 @@ suffix,xevddy.com
 suffix,xf-fund.com
 suffix,xfdown.com
 suffix,xfyun.cn
-suffix,xgo.com.cn
 suffix,xhaiwai.com
 suffix,xhostfire.com
 suffix,xhscdn.com
@@ -7159,7 +6947,6 @@ suffix,xiaobool.com
 suffix,xiaodutv.cn
 suffix,xiaodutv.com
 suffix,xiaoduzaijia.cn
-suffix,xiaoduzaijia.com.cn
 suffix,xiaoe-tech.com
 suffix,xiaog.xyz
 suffix,xiaogouh5.com
@@ -7181,18 +6968,15 @@ suffix,xiaomi.org
 suffix,xiaomicache.com
 suffix,xiaomicorp.cn
 suffix,xiaomicorp.com
-suffix,xiaomicorp.com.cn
 suffix,xiaomicorp.net
 suffix,xiaomicp.com
 suffix,xiaomidns.cn
 suffix,xiaomidns.com
-suffix,xiaomidns.com.cn
 suffix,xiaomidns.net
 suffix,xiaomiev.com
 suffix,xiaomiflash.com
 suffix,xiaomiinc.cn
 suffix,xiaomiinc.com
-suffix,xiaomiinc.com.cn
 suffix,xiaomiinc.net
 suffix,xiaomingtaiji.com
 suffix,xiaomisa.cn
@@ -7396,7 +7180,6 @@ suffix,yhd.com
 suffix,yhgfb-cn-static.com
 suffix,yicai.com
 suffix,yiche.com
-suffix,yichuangyun.com.cn
 suffix,yidianliulan.cn
 suffix,yidianliulan.com
 suffix,yifubao.com
@@ -7420,7 +7203,6 @@ suffix,yinhang123.net
 suffix,yinxiang.com
 suffix,yinyuetai.com
 suffix,yinzhaowang.com
-suffix,yiqianbao.com.cn
 suffix,yiqianbao.net
 suffix,yiqifa.com
 suffix,yiqifa.org
@@ -7464,7 +7246,6 @@ suffix,yo9.com
 suffix,yocajr.com
 suffix,yodao.cn
 suffix,yodao.com
-suffix,yodao.com.cn
 suffix,yodao.info
 suffix,yodao.net
 suffix,yodao.org
@@ -7484,11 +7265,9 @@ suffix,youhua.com
 suffix,youjiao.com
 suffix,youke.co
 suffix,youku.com
-suffix,youku.com.cn
 suffix,youku.org
 suffix,youlian.fun
 suffix,youpin.cn
-suffix,youpin.com.cn
 suffix,youqoo.net
 suffix,your360loans.com
 suffix,youshang.com
@@ -7543,7 +7322,6 @@ suffix,yundunwaf.com
 suffix,yundzh.com
 suffix,yunfancdn.cn
 suffix,yunfancdn.com
-suffix,yunfancdn.com.cn
 suffix,yunfancdn.net
 suffix,yunfandns.cn
 suffix,yunfandns.com
@@ -7567,7 +7345,6 @@ suffix,yunos-inc.com
 suffix,yunos.com
 suffix,yunpan.cn
 suffix,yunpan.com
-suffix,yunpan.com.cn
 suffix,yunqi.org
 suffix,yunqishi.net
 suffix,yunshipei.com
@@ -7623,7 +7400,6 @@ suffix,zastatic.com
 suffix,zbjimg.com
 suffix,zbrushcn.com
 suffix,zcjbgame.com
-suffix,zcmbc.com.cn
 suffix,zczj.com
 suffix,zdfans.com
 suffix,zdm.net
@@ -7634,7 +7410,6 @@ suffix,zdns.org.cn
 suffix,zdnscloud.biz
 suffix,zdnscloud.cn
 suffix,zdnscloud.com
-suffix,zdnscloud.com.cn
 suffix,zdnscloud.info
 suffix,zdnscloud.net
 suffix,zdnscloud.net.cn
@@ -7645,7 +7420,6 @@ suffix,zeku.com
 suffix,zenmen.com
 suffix,zgcbank.com
 suffix,zggbdszt.cn
-suffix,zggbdszt.com.cn
 suffix,zggbdszt.net.cn
 suffix,zgh.com
 suffix,zgjm.org
@@ -7675,19 +7449,16 @@ suffix,zhihang100.com
 suffix,zhihu.com
 suffix,zhihuichuzhou.com
 suffix,zhihuishu.com
-suffix,zhiliaowenda.com.cn
 suffix,zhimg.com
 suffix,zhinvnetwork.com
 suffix,zhipin.com
 suffix,zhisheng.com
 suffix,zhishifanli.cn
 suffix,zhishifanli.com
-suffix,zhishifanli.com.cn
 suffix,zhixue.com
 suffix,zhiziyun.com
 suffix,zhongcaisuo.cn
 suffix,zhongcaisuo.com
-suffix,zhongcaisuo.com.cn
 suffix,zhongkao.com
 suffix,zhuan-zhuan.cn
 suffix,zhuancorp.com
@@ -7729,7 +7500,6 @@ suffix,ziyrta.com
 suffix,zj8t5.com
 suffix,zjbuc.cn
 suffix,zjbuc.com
-suffix,zjbuc.com.cn
 suffix,zjbyte.cn
 suffix,zjbyte.com
 suffix,zjbyte.net
@@ -7765,7 +7535,6 @@ suffix,zuidaima.com
 suffix,zuihuimai.com
 suffix,zuk.cn
 suffix,zuk.com
-suffix,zuk.com.cn
 suffix,zuodao.com
 suffix,zuowen8.com
 suffix,zuowenwang.net
