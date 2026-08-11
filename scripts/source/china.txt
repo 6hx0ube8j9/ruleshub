@@ -2,6 +2,9 @@
 
 # --- TYPE: SUFFIX ---
 suffix,001wifi.com
+DOMAIN-SUFFIX,com.cn 
+DOMAIN-SUFFIX,people.com.cn
+DOMAIN-SUFFIX,people.com
 suffix,00cdn.com
 suffix,01058511989.com
 suffix,0123456789.com
