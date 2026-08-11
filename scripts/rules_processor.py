@@ -17,21 +17,29 @@ _IPV4_EXACT_RE = re.compile(
 _TRAILING_POLICY_RE = re.compile(r',\s*([a-zA-Z0-9_\-\.\'"\u4e00-\u9fa5\s]+)\s*$')
 _INVALID_POLICY_CHARS_RE = re.compile(r'[\\*?^$\[\](){}|/<>:]')
 
-# 基础结构正则
+# 基础结构正则：支持单 Label 格式（如 google, apple, cn）
 RELAXED_DOMAIN_REGEX = re.compile(
-    r'^(?:[a-zA-Z0-9_](?:[a-zA-Z0-9\-_]{0,61}[a-zA-Z0-9_])?\.)+'
+    r'^(?:[a-zA-Z0-9_](?:[a-zA-Z0-9\-_]{0,61}[a-zA-Z0-9_])?\.)*'
     r'[a-zA-Z0-9_](?:[a-zA-Z0-9\-_]{0,61}[a-zA-Z0-9_])?$'
 )
 
+# 显式前缀标识符常量定义
+DOMAIN_PREFIXES = ('+*.', '+.', '*.', '.')
+
 PUBLIC_SUFFIX_BLACKLIST = {
+    # --- 1. 通用顶级域 ---
     'com', 'net', 'org', 'gov', 'edu', 'mil', 'int', 'arpa', 'biz', 'info', 'name', 'pro',
     'app', 'dev', 'shop', 'club', 'top', 'xyz', 'vip', 'fun', 'site', 'online', 'tech', 'store',
     'work', 'live', 'link', 'icu', 'ltd', 'art', 'blog', 'news', 'wiki', 'chat', 'space', 'me',
     'io', 'co', 'ai', 'so', 'to', 'do', 'in', 'cc', 'tv', 'la', 'fm', 'am', 'im', 'gg',
     'run', 'pub', 'network', 'studio', 'design', 'life', 'today', 'world', 'zone', 'host',
+    
+    # --- 2. 国家及地区 ccTLD ---
     'cn', 'hk', 'tw', 'mo', 'jp', 'kr', 'sg', 'my', 'th', 'vn', 'ph', 'id', 'pk', 'kh', 'mm', 
     'us', 'uk', 'ca', 'au', 'de', 'fr', 'ru', 'it', 'es', 'nl', 'se', 'no', 'fi', 'dk', 'ch', 
     'at', 'be', 'ie', 'nz', 'br', 'za', 'mx', 'ar', 'cl', 'tr', 'il', 'ae', 'sa', 'ua', 'pl',
+
+    # --- 3. 二级域名 ---
     'com.cn', 'net.cn', 'org.cn', 'gov.cn', 'edu.cn', 'mil.cn', 'ac.cn', 'ah.cn', 'bj.cn', 'cq.cn',
     'fj.cn', 'gd.cn', 'gs.cn', 'gz.cn', 'ha.cn', 'hb.cn', 'he.cn', 'hi.cn', 'hl.cn',
     'hn.cn', 'jl.cn', 'js.cn', 'jx.cn', 'ln.cn', 'nm.cn', 'nx.cn', 'qh.cn', 'sc.cn', 'sd.cn',
@@ -47,7 +55,15 @@ PUBLIC_SUFFIX_BLACKLIST = {
     'com.vn', 'net.vn', 'org.vn', 'gov.vn', 'edu.vn',
     'com.au', 'net.au', 'org.au', 'asn.au', 'id.au', 'gov.au', 'edu.au',
     'co.nz', 'net.nz', 'org.nz', 'ac.nz', 'govt.nz', 'geek.nz', 'school.nz',
-    'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za', 'org.za', 'gov.za'
+    'com.br', 'net.br', 'org.br', 'gov.br', 'co.za', 'web.za', 'org.za', 'gov.za',
+
+    # --- 4. 云平台/静态托管/动态 DNS 公共后缀 ---
+    'github.io', 'gitee.io', 'gitlab.io',
+    'vercel.app', 'netlify.app', 'pages.dev',
+    'workers.dev', 'deno.dev',
+    'herokuapp.com', 'azurewebsites.net',
+    's3.amazonaws.com', 'cloudfront.net',
+    'duckdns.org', 'ddns.net', 'no-ip.org', 'synology.me'
 }
 
 _GROUPS = {
@@ -103,7 +119,16 @@ class DomainTrie:
             curr = curr[part]
         return 0 in curr
 
-# ---------------- 3. 私有校验卡尺（纯函数，零侧效应） ----------------
+
+# ---------------- 3. 独立前缀处理与校验卡尺 ----------------
+
+def strip_domain_prefix(text: str) -> Tuple[bool, str]:
+    """独立前缀剥离管道：纯函数，剥离显式后缀前缀 (+*., +., *., .)"""
+    for prefix in DOMAIN_PREFIXES:
+        if text.startswith(prefix):
+            return True, text[len(prefix):]
+    return False, text
+
 
 def filter_raw_line(line: str) -> Optional[str]:
     """第 1 层漏斗：纯物理清洗（排除正则类型）。"""
@@ -129,14 +154,11 @@ def filter_raw_line(line: str) -> Optional[str]:
     # 3. 精准条件清洗
     if tag not in immune_tags:
         line = line.split('#')[0].split('//')[0].split(';')[0].strip()
-    else:
-        pass
 
     if not line:
         return None
 
     return line
-
 
 
 def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
@@ -193,7 +215,7 @@ def _is_exact_ip(text: str) -> Tuple[Optional[str], str]:
     return None, text
 
 
-def _is_exact_domain(text: str) -> Optional[str]:
+def _is_exact_domain(text: str, allow_single_label: bool = False) -> Optional[str]:
     """纯粹的 FQDN 校验卡尺：绝不隐式截断任何前缀，依靠 IDNA 与正则强行断言。"""
     if not text or len(text) > 253:
         return None
@@ -202,7 +224,7 @@ def _is_exact_domain(text: str) -> Optional[str]:
     if not domain:
         return None
 
-    # 包含端口号阻断 (非域名语法)
+    # 包含端口号阻断
     if ':' in domain:
         parts = domain.split(':')
         if len(parts) == 2 and parts[1].isdigit():
@@ -215,7 +237,11 @@ def _is_exact_domain(text: str) -> Optional[str]:
     if all(p.isdigit() for p in sub_parts):
         return None
 
-    # IDNA 自动转码校验 (处理中文域名，自动做小写转换)
+    # 单段域名上下文判断
+    if not allow_single_label and '.' not in domain:
+        return None
+
+    # IDNA 自动转码校验
     if not domain.isascii():
         try:
             domain = domain.encode('idna').decode('ascii')
@@ -224,7 +250,7 @@ def _is_exact_domain(text: str) -> Optional[str]:
 
     domain = domain.lower()
 
-    # 标准 RFC FQDN 正则断言：任何含 * 或 + 等非法字符的输入在此被直接杀掉
+    # 标准 RFC 域名正则断言
     if len(domain) > 253 or not RELAXED_DOMAIN_REGEX.match(domain):
         return None
 
@@ -238,9 +264,9 @@ def _is_valid_policy_name(text: str) -> bool:
     if text.lower().startswith(('http://', 'https://')):
         return False
     return True
-    
-# ---------------- 4. 规则解析层（负责语义识别与显示前缀剥离） ----------------
-    
+
+# ---------------- 4. 规则解析层 ----------------
+
 def parse_line(line: str, has_policy: bool = True) -> Tuple[Optional[str], str]:
     """规则入口分发"""
     clean_line = filter_raw_line(line)
@@ -257,7 +283,7 @@ def parse_line(line: str, has_policy: bool = True) -> Tuple[Optional[str], str]:
 
 
 def parse_standard_rule(clean_line: str, has_policy: bool = True) -> Tuple[Optional[str], str]:
-    """语义解析与策略切除。"""    
+    """语义解析与策略切除。"""   
     if ',' not in clean_line:
         return None, ""
 
@@ -282,37 +308,34 @@ def parse_standard_rule(clean_line: str, has_policy: bool = True) -> Tuple[Optio
                         return internal_type, payload
         return internal_type, tail
 
-    # 2. 普通类型：取首个逗号前的内容作为 Payload，切除末尾策略及附加参数 (如 ,DIRECT, no-resolve)
+    # 2. 普通类型：取首个逗号前的内容作为 Payload
     payload = tail.split(',')[0].strip().strip("'\"")
     if not payload:
         return None, ""
 
     # 3. 校验卡尺与语义规范化
     if internal_type == 'full':
-        exact_domain = _is_exact_domain(payload)
+        exact_domain = _is_exact_domain(payload, allow_single_label=False)
         return ('full', exact_domain) if exact_domain else (None, "")
 
     if internal_type == 'suffix':
-        for prefix in ('+*.', '+.', '*.', '.'):
-            if payload.startswith(prefix):
-                payload = payload[len(prefix):]
-                break
-        exact_domain = _is_exact_domain(payload)
+        _, payload = strip_domain_prefix(payload)
+        exact_domain = _is_exact_domain(payload, allow_single_label=True)
         return ('suffix', exact_domain) if exact_domain else (None, "")
 
-    # 4. 关键字卡尺：拦截纯 IP、冒号或路径斜杠，确保只保留合法域名子串
+    # 4. 关键字卡尺
     if internal_type == 'keyword':
         if _IPV4_EXACT_RE.match(payload) or ':' in payload or '/' in payload:
             return None, ""
         return internal_type, payload
 
-    # 5. 进程名卡尺：仅拦截纯 IP 误填，放行 Windows 盘符路径 (如 C:\...) 与 Linux/macOS 绝对路径
+    # 5. 进程名卡尺
     if internal_type == 'process':
         if _IPV4_EXACT_RE.match(payload):
             return None, ""
         return internal_type, payload
 
-    # 6. IP / IP6 卡尺：格式校验与类型自愈升级
+    # 6. IP / IP6 卡尺
     if internal_type in ('ip', 'ip6'):
         ip_type, checked_ip = _is_exact_ip(payload)
         if ip_type is None:
@@ -323,14 +346,14 @@ def parse_standard_rule(clean_line: str, has_policy: bool = True) -> Tuple[Optio
             internal_type = 'ip6'
         return internal_type, checked_ip
 
-    # 7. 端口卡尺：清洗括号并标准化区间分隔符 (如 80-443)
+    # 7. 端口卡尺
     if internal_type == 'port':
         payload = payload.replace('(', '').replace(')', '').replace(':', '-')
         p_parts = [p.strip() for p in payload.split('-') if p.strip()]
         payload = '-'.join(p_parts) if p_parts else None
         return (internal_type, payload) if payload else (None, "")
 
-    # 8. ASN 卡尺：标准自治系统号校验 (如 AS13335 或 13335)
+    # 8. ASN 卡尺
     if internal_type == 'asn':
         if not re.match(r'^(?:[a-zA-Z]{2})?\d{1,10}$', payload):
             return None, ""
@@ -344,26 +367,15 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
     if not line:
         return None, ""
 
-    is_explicit_suffix = False
-    clean_val = line
-
-    # 1. 安全剥离显式前缀 (如 +.google.com, *.google.com, .google.com)
-    for prefix in ('+*.', '+.', '*.', '.'):
-        if line.startswith(prefix):
-            is_explicit_suffix = True
-            clean_val = line[len(prefix):]
-            break
+    # 1. 前缀处理管道剥离显式前缀
+    is_explicit_suffix, clean_val = strip_domain_prefix(line)
 
     # 2. 拒绝隐式通配符
     if '*' in clean_val:
         return None, ""
 
-    # 3. 无点也无冒号，非合法域名/IP
-    if '.' not in clean_val and ':' not in clean_val:
-        return None, ""
-
-    # 4. 短路 IP 校验
-    first_char = clean_val[0]
+    # 3. 短路 IP / CIDR 校验
+    first_char = clean_val[0] if clean_val else ""
     if first_char.isdigit() or first_char == '[' or ':' in clean_val or '/' in clean_val:
         ip_type, checked_ip = _is_exact_ip(clean_val)
         if ip_type is not None:
@@ -371,25 +383,26 @@ def parse_pure_text_rule(line: str) -> Tuple[Optional[str], str]:
                 return None, ""
             return ip_type, checked_ip
 
-    # 5. FQDN 域名正则卡尺
-    exact_domain = _is_exact_domain(clean_val)
+    # 4. FQDN 域名正则卡尺（显式开启 allow_single_label=True）
+    exact_domain = _is_exact_domain(clean_val, allow_single_label=True)
     if not exact_domain:
         return None, ""
 
-    # 6. 公共后缀黑名单拦截
-    if exact_domain in PUBLIC_SUFFIX_BLACKLIST:
+    # 5. 公共后缀黑名单拦截
+    if not is_explicit_suffix and exact_domain in PUBLIC_SUFFIX_BLACKLIST:
         return None, ""
-
-    # 7. 显式前缀直接弹回
+    
+    # 6. 显式前缀直接弹回为 suffix
     if is_explicit_suffix:
         return 'suffix', exact_domain
 
-    # 8. 动态 TLD 深度计算 (仅对不带前缀的裸域名执行，如 google.com / sub.google.com)
+    # 7. 单段裸域名（如 google, apple, cn）默认判定为 suffix 匹配
     parts = exact_domain.split('.')
     num_parts = len(parts)
-    if num_parts < 2:
-        return None, ""
+    if num_parts == 1:
+        return 'suffix', exact_domain
 
+    # 8. 动态 TLD 深度计算（多段域名）
     public_suffix_len = 1
     max_check_depth = min(num_parts - 1, 3)
 
@@ -415,9 +428,6 @@ def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
 
     core_content = line.split('$')[0].split('^')[0].strip().rstrip('|')
 
-    internal_type = None
-    raw_payload = None
-
     if core_content.startswith('||'):
         internal_type = 'suffix'
         raw_payload = core_content[2:].strip()
@@ -436,7 +446,10 @@ def parse_adguard_rule(line: str) -> Tuple[Optional[str], str]:
             return None, ""
         raw_payload = parts[0].strip()
 
-    exact_domain = _is_exact_domain(raw_payload)
+    exact_domain = _is_exact_domain(
+        raw_payload, 
+        allow_single_label=(internal_type == 'suffix')
+    )
     if not exact_domain:
         return None, ""
 
