@@ -1,6 +1,12 @@
 # Quantumult X Rule-Set: microsoft
 
 host, github-api.arkoselabs.com, microsoft
+host, github-cloud.s3.amazonaws.com, microsoft
+host, github-production-release-asset-2e65be.s3.amazonaws.com, microsoft
+host, github-production-repository-file-5c1aeb.s3.amazonaws.com, microsoft
+host, github-production-repository-image-32fea6.s3.amazonaws.com, microsoft
+host, github-production-upload-manifest-file-7fdce7.s3.amazonaws.com, microsoft
+host, github-production-user-asset-6210df.s3.amazonaws.com, microsoft
 host, vsmarketplacebadge.apphb.com, microsoft
 host-suffix, 1drv.com, microsoft
 host-suffix, 1drv.ms, microsoft
@@ -249,12 +255,6 @@ host-suffix, ghcr.io, microsoft
 host-suffix, ghe.com, microsoft
 host-suffix, gigjam.com, microsoft
 host-suffix, git.io, microsoft
-host-suffix, github-cloud.s3.amazonaws.com, microsoft
-host-suffix, github-production-release-asset-2e65be.s3.amazonaws.com, microsoft
-host-suffix, github-production-repository-file-5c1aeb.s3.amazonaws.com, microsoft
-host-suffix, github-production-repository-image-32fea6.s3.amazonaws.com, microsoft
-host-suffix, github-production-upload-manifest-file-7fdce7.s3.amazonaws.com, microsoft
-host-suffix, github-production-user-asset-6210df.s3.amazonaws.com, microsoft
 host-suffix, github.ai, microsoft
 host-suffix, github.blog, microsoft
 host-suffix, github.career, microsoft

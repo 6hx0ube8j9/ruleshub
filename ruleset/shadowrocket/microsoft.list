@@ -1,6 +1,12 @@
 # Shadowrocket Rule-Set: microsoft
 
 DOMAIN,github-api.arkoselabs.com
+DOMAIN,github-cloud.s3.amazonaws.com
+DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com
+DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com
+DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com
+DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com
+DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com
 DOMAIN,vsmarketplacebadge.apphb.com
 DOMAIN-SUFFIX,1drv.com
 DOMAIN-SUFFIX,1drv.ms
@@ -249,12 +255,6 @@ DOMAIN-SUFFIX,ghcr.io
 DOMAIN-SUFFIX,ghe.com
 DOMAIN-SUFFIX,gigjam.com
 DOMAIN-SUFFIX,git.io
-DOMAIN-SUFFIX,github-cloud.s3.amazonaws.com
-DOMAIN-SUFFIX,github-production-release-asset-2e65be.s3.amazonaws.com
-DOMAIN-SUFFIX,github-production-repository-file-5c1aeb.s3.amazonaws.com
-DOMAIN-SUFFIX,github-production-repository-image-32fea6.s3.amazonaws.com
-DOMAIN-SUFFIX,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com
-DOMAIN-SUFFIX,github-production-user-asset-6210df.s3.amazonaws.com
 DOMAIN-SUFFIX,github.ai
 DOMAIN-SUFFIX,github.blog
 DOMAIN-SUFFIX,github.career
