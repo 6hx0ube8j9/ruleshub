@@ -1,7 +1,6 @@
 # Shadowrocket Rule-Set: tiktok
 
 DOMAIN,lf16-effectcdn.byteeffecttos-g.com
-DOMAIN,lf16-pkgcdn.pitaya-clientai.com
 DOMAIN,p16-tiktokcdn-com.akamaized.net
 DOMAIN,roovza-launches.appsflyersdk.com
 DOMAIN,roovza.inapps.appsflyersdk.com
@@ -21,7 +20,6 @@ DOMAIN-SUFFIX,marscode.com
 DOMAIN-SUFFIX,muscdn.com
 DOMAIN-SUFFIX,musical.ly
 DOMAIN-SUFFIX,sgpstatp.com
-DOMAIN-SUFFIX,snssdk.com
 DOMAIN-SUFFIX,tik-tokapi.com
 DOMAIN-SUFFIX,tiktok-minis.com
 DOMAIN-SUFFIX,tiktok-row.net
@@ -50,7 +48,6 @@ DOMAIN-SUFFIX,trae.ai
 DOMAIN-SUFFIX,ttcdn-us.com
 DOMAIN-SUFFIX,ttlivecdn.com
 DOMAIN-SUFFIX,ttoverseaus.net
-DOMAIN-SUFFIX,ttwebview.com
 DOMAIN-SUFFIX,ttwstatic.com
 DOMAIN-KEYWORD,musical.ly
 DOMAIN-KEYWORD,tiktok

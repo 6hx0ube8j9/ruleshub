@@ -4,7 +4,6 @@
     {
       "domain": [
         "lf16-effectcdn.byteeffecttos-g.com",
-        "lf16-pkgcdn.pitaya-clientai.com",
         "p16-tiktokcdn-com.akamaized.net",
         "roovza-launches.appsflyersdk.com",
         "roovza.inapps.appsflyersdk.com",
@@ -26,7 +25,6 @@
         "muscdn.com",
         "musical.ly",
         "sgpstatp.com",
-        "snssdk.com",
         "tik-tokapi.com",
         "tiktok-minis.com",
         "tiktok-row.net",
@@ -55,7 +53,6 @@
         "ttcdn-us.com",
         "ttlivecdn.com",
         "ttoverseaus.net",
-        "ttwebview.com",
         "ttwstatic.com"
       ],
       "domain_keyword": [

@@ -1,7 +1,6 @@
 # Quantumult X Rule-Set: tiktok
 
 host, lf16-effectcdn.byteeffecttos-g.com, tiktok
-host, lf16-pkgcdn.pitaya-clientai.com, tiktok
 host, p16-tiktokcdn-com.akamaized.net, tiktok
 host, roovza-launches.appsflyersdk.com, tiktok
 host, roovza.inapps.appsflyersdk.com, tiktok
@@ -21,7 +20,6 @@ host-suffix, marscode.com, tiktok
 host-suffix, muscdn.com, tiktok
 host-suffix, musical.ly, tiktok
 host-suffix, sgpstatp.com, tiktok
-host-suffix, snssdk.com, tiktok
 host-suffix, tik-tokapi.com, tiktok
 host-suffix, tiktok-minis.com, tiktok
 host-suffix, tiktok-row.net, tiktok
@@ -50,7 +48,6 @@ host-suffix, trae.ai, tiktok
 host-suffix, ttcdn-us.com, tiktok
 host-suffix, ttlivecdn.com, tiktok
 host-suffix, ttoverseaus.net, tiktok
-host-suffix, ttwebview.com, tiktok
 host-suffix, ttwstatic.com, tiktok
 host-keyword, musical.ly, tiktok
 host-keyword, tiktok, tiktok
