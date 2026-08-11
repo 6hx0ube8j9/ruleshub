@@ -13,6 +13,7 @@ suffix,video.google.com
 suffix,wide-youtube.l.google.com
 suffix,withyoutube.com
 suffix,youtu.be
+suffix,youtube
 suffix,youtube-nocookie.com
 suffix,youtube-ui.l.google.com
 suffix,youtube.ae

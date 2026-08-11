@@ -5,7 +5,6 @@ host, appleworldwidedeveloper.hb-api.omtrdc.net, apple
 host, appleworldwidedeveloper.sc.omtrdc.net, apple
 host, beatselectronicsllc.tt.omtrdc.net, apple
 host, e16991.b.akamaiedge.net, apple
-host, edge.apple, apple
 host, lookup-api.apple.com.edgekey.net, apple
 host, notary-submissions-prod.s3-accelerate.amazonaws.com, apple
 host, notary-submissions-prod.s3.us-west-2.amazonaws.com, apple
@@ -80,6 +79,7 @@ host-suffix, appl.com, apple
 host-suffix, appl4e.com, apple
 host-suffix, appla.com, apple
 host-suffix, appldnld.apple.com.edgesuite.net, apple
+host-suffix, apple, apple
 host-suffix, apple-appstore.cn, apple
 host-suffix, apple-cloudkit.com, apple
 host-suffix, apple-darwin.com, apple
@@ -395,7 +395,6 @@ host-suffix, appletv.fr, apple
 host-suffix, appletv.wang, apple
 host-suffix, appletv4.cn, apple
 host-suffix, appletv4.com.cn, apple
-host-suffix, appletvapp.apple, apple
 host-suffix, applewallet.com, apple
 host-suffix, applewallet.tv, apple
 host-suffix, applewatch.hk, apple
@@ -1453,7 +1452,6 @@ host-suffix, researchkit.hk, apple
 host-suffix, researchkit.net, apple
 host-suffix, researchkit.org, apple
 host-suffix, researchkit.tv, apple
-host-suffix, safebrowsing.apple, apple
 host-suffix, salebeatslasteststyle4you.com, apple
 host-suffix, saleblackfridaydrebeats.com, apple
 host-suffix, salecheaphandbags.com, apple

@@ -6,7 +6,6 @@ full,appleworldwidedeveloper.hb-api.omtrdc.net
 full,appleworldwidedeveloper.sc.omtrdc.net
 full,beatselectronicsllc.tt.omtrdc.net
 full,e16991.b.akamaiedge.net
-full,edge.apple
 full,lookup-api.apple.com.edgekey.net
 full,notary-submissions-prod.s3-accelerate.amazonaws.com
 full,notary-submissions-prod.s3.us-west-2.amazonaws.com
@@ -83,6 +82,7 @@ suffix,appl.com
 suffix,appl4e.com
 suffix,appla.com
 suffix,appldnld.apple.com.edgesuite.net
+suffix,apple
 suffix,apple-appstore.cn
 suffix,apple-cloudkit.com
 suffix,apple-darwin.com
@@ -398,7 +398,6 @@ suffix,appletv.fr
 suffix,appletv.wang
 suffix,appletv4.cn
 suffix,appletv4.com.cn
-suffix,appletvapp.apple
 suffix,applewallet.com
 suffix,applewallet.tv
 suffix,applewatch.hk
@@ -1456,7 +1455,6 @@ suffix,researchkit.hk
 suffix,researchkit.net
 suffix,researchkit.org
 suffix,researchkit.tv
-suffix,safebrowsing.apple
 suffix,salebeatslasteststyle4you.com
 suffix,saleblackfridaydrebeats.com
 suffix,salecheaphandbags.com

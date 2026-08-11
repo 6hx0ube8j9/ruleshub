@@ -2,12 +2,6 @@
 
 # --- TYPE: FULL ---
 full,github-api.arkoselabs.com
-full,github-cloud.s3.amazonaws.com
-full,github-production-release-asset-2e65be.s3.amazonaws.com
-full,github-production-repository-file-5c1aeb.s3.amazonaws.com
-full,github-production-repository-image-32fea6.s3.amazonaws.com
-full,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com
-full,github-production-user-asset-6210df.s3.amazonaws.com
 full,vsmarketplacebadge.apphb.com
 
 # --- TYPE: SUFFIX ---
@@ -67,6 +61,7 @@ suffix,azcrmc.cn
 suffix,azk8s.cn
 suffix,aznbcontent.cn
 suffix,aztask.cn
+suffix,azure
 suffix,azure-api.cn
 suffix,azure-api.net
 suffix,azure-apihub.cn
@@ -151,6 +146,7 @@ suffix,biing.com
 suffix,binads.com
 suffix,binb.com
 suffix,binf.com
+suffix,bing
 suffix,bing.com
 suffix,bing.com.cn
 suffix,bing.net
@@ -256,6 +252,12 @@ suffix,ghcr.io
 suffix,ghe.com
 suffix,gigjam.com
 suffix,git.io
+suffix,github-cloud.s3.amazonaws.com
+suffix,github-production-release-asset-2e65be.s3.amazonaws.com
+suffix,github-production-repository-file-5c1aeb.s3.amazonaws.com
+suffix,github-production-repository-image-32fea6.s3.amazonaws.com
+suffix,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com
+suffix,github-production-user-asset-6210df.s3.amazonaws.com
 suffix,github.ai
 suffix,github.blog
 suffix,github.career
@@ -283,6 +285,7 @@ suffix,here.net
 suffix,heremaps.cn
 suffix,hockeyapp.net
 suffix,hololens.com
+suffix,hotmail
 suffix,hotmail.co
 suffix,hotmail.com
 suffix,hotmail.eu
@@ -338,6 +341,7 @@ suffix,mepn.com
 suffix,mesh.com
 suffix,mgmt-azure-api.cn
 suffix,microbit.org
+suffix,microsoft
 suffix,microsoft-falcon.io
 suffix,microsoft-give.com
 suffix,microsoft-int.com
@@ -563,6 +567,7 @@ suffix,o365weve-ppe.com
 suffix,o365weve.com
 suffix,oaspapps.com
 suffix,octocaptcha.com
+suffix,office
 suffix,office.com
 suffix,office.net
 suffix,office365-net.cn
@@ -577,12 +582,14 @@ suffix,officeppe.net
 suffix,officewebapps.cn
 suffix,omniroot.com
 suffix,onecollector.cloudapp.aria
+suffix,onedrive
 suffix,onedrive.co
 suffix,onedrive.co.uk
 suffix,onedrive.com
 suffix,onedrive.eu
 suffix,onedrive.net
 suffix,onedrive.org
+suffix,onedriveupdater
 suffix,onenote.com
 suffix,onenote.net
 suffix,onestore.ms
@@ -643,6 +650,7 @@ suffix,sharepoint.cn
 suffix,sharepoint.com
 suffix,sharepointonline.com
 suffix,signalr.net
+suffix,skype
 suffix,skype.com
 suffix,skype.net
 suffix,skypeassets.com
@@ -710,6 +718,7 @@ suffix,vscodeedu.app
 suffix,vscodeedu.com
 suffix,wbd.ms
 suffix,what-fan.net
+suffix,windows
 suffix,windows-int.net
 suffix,windows-ppe.net
 suffix,windows.com
@@ -733,6 +742,7 @@ suffix,wlxrs.com
 suffix,working-bing-int.com
 suffix,wunderlist.com
 suffix,xamarin.com
+suffix,xbox
 suffix,xbox.co
 suffix,xbox.com
 suffix,xbox.eu

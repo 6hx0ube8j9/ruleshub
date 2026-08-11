@@ -1,12 +1,6 @@
 # Loon Rule-Set: microsoft
 
 DOMAIN,github-api.arkoselabs.com
-DOMAIN,github-cloud.s3.amazonaws.com
-DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com
-DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com
-DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com
-DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com
-DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com
 DOMAIN,vsmarketplacebadge.apphb.com
 DOMAIN-SUFFIX,1drv.com
 DOMAIN-SUFFIX,1drv.ms
@@ -64,6 +58,7 @@ DOMAIN-SUFFIX,azcrmc.cn
 DOMAIN-SUFFIX,azk8s.cn
 DOMAIN-SUFFIX,aznbcontent.cn
 DOMAIN-SUFFIX,aztask.cn
+DOMAIN-SUFFIX,azure
 DOMAIN-SUFFIX,azure-api.cn
 DOMAIN-SUFFIX,azure-api.net
 DOMAIN-SUFFIX,azure-apihub.cn
@@ -148,6 +143,7 @@ DOMAIN-SUFFIX,biing.com
 DOMAIN-SUFFIX,binads.com
 DOMAIN-SUFFIX,binb.com
 DOMAIN-SUFFIX,binf.com
+DOMAIN-SUFFIX,bing
 DOMAIN-SUFFIX,bing.com
 DOMAIN-SUFFIX,bing.com.cn
 DOMAIN-SUFFIX,bing.net
@@ -253,6 +249,12 @@ DOMAIN-SUFFIX,ghcr.io
 DOMAIN-SUFFIX,ghe.com
 DOMAIN-SUFFIX,gigjam.com
 DOMAIN-SUFFIX,git.io
+DOMAIN-SUFFIX,github-cloud.s3.amazonaws.com
+DOMAIN-SUFFIX,github-production-release-asset-2e65be.s3.amazonaws.com
+DOMAIN-SUFFIX,github-production-repository-file-5c1aeb.s3.amazonaws.com
+DOMAIN-SUFFIX,github-production-repository-image-32fea6.s3.amazonaws.com
+DOMAIN-SUFFIX,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com
+DOMAIN-SUFFIX,github-production-user-asset-6210df.s3.amazonaws.com
 DOMAIN-SUFFIX,github.ai
 DOMAIN-SUFFIX,github.blog
 DOMAIN-SUFFIX,github.career
@@ -280,6 +282,7 @@ DOMAIN-SUFFIX,here.net
 DOMAIN-SUFFIX,heremaps.cn
 DOMAIN-SUFFIX,hockeyapp.net
 DOMAIN-SUFFIX,hololens.com
+DOMAIN-SUFFIX,hotmail
 DOMAIN-SUFFIX,hotmail.co
 DOMAIN-SUFFIX,hotmail.com
 DOMAIN-SUFFIX,hotmail.eu
@@ -335,6 +338,7 @@ DOMAIN-SUFFIX,mepn.com
 DOMAIN-SUFFIX,mesh.com
 DOMAIN-SUFFIX,mgmt-azure-api.cn
 DOMAIN-SUFFIX,microbit.org
+DOMAIN-SUFFIX,microsoft
 DOMAIN-SUFFIX,microsoft-falcon.io
 DOMAIN-SUFFIX,microsoft-give.com
 DOMAIN-SUFFIX,microsoft-int.com
@@ -560,6 +564,7 @@ DOMAIN-SUFFIX,o365weve-ppe.com
 DOMAIN-SUFFIX,o365weve.com
 DOMAIN-SUFFIX,oaspapps.com
 DOMAIN-SUFFIX,octocaptcha.com
+DOMAIN-SUFFIX,office
 DOMAIN-SUFFIX,office.com
 DOMAIN-SUFFIX,office.net
 DOMAIN-SUFFIX,office365-net.cn
@@ -574,12 +579,14 @@ DOMAIN-SUFFIX,officeppe.net
 DOMAIN-SUFFIX,officewebapps.cn
 DOMAIN-SUFFIX,omniroot.com
 DOMAIN-SUFFIX,onecollector.cloudapp.aria
+DOMAIN-SUFFIX,onedrive
 DOMAIN-SUFFIX,onedrive.co
 DOMAIN-SUFFIX,onedrive.co.uk
 DOMAIN-SUFFIX,onedrive.com
 DOMAIN-SUFFIX,onedrive.eu
 DOMAIN-SUFFIX,onedrive.net
 DOMAIN-SUFFIX,onedrive.org
+DOMAIN-SUFFIX,onedriveupdater
 DOMAIN-SUFFIX,onenote.com
 DOMAIN-SUFFIX,onenote.net
 DOMAIN-SUFFIX,onestore.ms
@@ -640,6 +647,7 @@ DOMAIN-SUFFIX,sharepoint.cn
 DOMAIN-SUFFIX,sharepoint.com
 DOMAIN-SUFFIX,sharepointonline.com
 DOMAIN-SUFFIX,signalr.net
+DOMAIN-SUFFIX,skype
 DOMAIN-SUFFIX,skype.com
 DOMAIN-SUFFIX,skype.net
 DOMAIN-SUFFIX,skypeassets.com
@@ -707,6 +715,7 @@ DOMAIN-SUFFIX,vscodeedu.app
 DOMAIN-SUFFIX,vscodeedu.com
 DOMAIN-SUFFIX,wbd.ms
 DOMAIN-SUFFIX,what-fan.net
+DOMAIN-SUFFIX,windows
 DOMAIN-SUFFIX,windows-int.net
 DOMAIN-SUFFIX,windows-ppe.net
 DOMAIN-SUFFIX,windows.com
@@ -730,6 +739,7 @@ DOMAIN-SUFFIX,wlxrs.com
 DOMAIN-SUFFIX,working-bing-int.com
 DOMAIN-SUFFIX,wunderlist.com
 DOMAIN-SUFFIX,xamarin.com
+DOMAIN-SUFFIX,xbox
 DOMAIN-SUFFIX,xbox.co
 DOMAIN-SUFFIX,xbox.com
 DOMAIN-SUFFIX,xbox.eu

@@ -5,7 +5,6 @@ payload:
   - DOMAIN,appleworldwidedeveloper.sc.omtrdc.net
   - DOMAIN,beatselectronicsllc.tt.omtrdc.net
   - DOMAIN,e16991.b.akamaiedge.net
-  - DOMAIN,edge.apple
   - DOMAIN,lookup-api.apple.com.edgekey.net
   - DOMAIN,notary-submissions-prod.s3-accelerate.amazonaws.com
   - DOMAIN,notary-submissions-prod.s3.us-west-2.amazonaws.com
@@ -80,6 +79,7 @@ payload:
   - DOMAIN-SUFFIX,appl4e.com
   - DOMAIN-SUFFIX,appla.com
   - DOMAIN-SUFFIX,appldnld.apple.com.edgesuite.net
+  - DOMAIN-SUFFIX,apple
   - DOMAIN-SUFFIX,apple-appstore.cn
   - DOMAIN-SUFFIX,apple-cloudkit.com
   - DOMAIN-SUFFIX,apple-darwin.com
@@ -395,7 +395,6 @@ payload:
   - DOMAIN-SUFFIX,appletv.wang
   - DOMAIN-SUFFIX,appletv4.cn
   - DOMAIN-SUFFIX,appletv4.com.cn
-  - DOMAIN-SUFFIX,appletvapp.apple
   - DOMAIN-SUFFIX,applewallet.com
   - DOMAIN-SUFFIX,applewallet.tv
   - DOMAIN-SUFFIX,applewatch.hk
@@ -1453,7 +1452,6 @@ payload:
   - DOMAIN-SUFFIX,researchkit.net
   - DOMAIN-SUFFIX,researchkit.org
   - DOMAIN-SUFFIX,researchkit.tv
-  - DOMAIN-SUFFIX,safebrowsing.apple
   - DOMAIN-SUFFIX,salebeatslasteststyle4you.com
   - DOMAIN-SUFFIX,saleblackfridaydrebeats.com
   - DOMAIN-SUFFIX,salecheaphandbags.com

@@ -16,7 +16,6 @@ payload:
     - +.adsense.com
     - +.adsensecustomsearchads.com
     - +.adsenseformobileapps.com
-    - +.adtrafficquality.google
     - +.advertisercommunity.com
     - +.advertiserscommunity.com
     - +.adwords-community.com
@@ -27,6 +26,7 @@ payload:
     - +.ampproject.com
     - +.ampproject.net
     - +.ampproject.org
+    - +.android
     - +.android.com
     - +.androidify.com
     - +.androidtv.com
@@ -56,7 +56,6 @@ payload:
     - +.bdn.dev
     - +.beatthatquote.com
     - +.blink.org
-    - +.blog.google
     - +.blogblog.com
     - +.blogger.com
     - +.blogspot.ae
@@ -140,13 +139,12 @@ payload:
     - +.bumptop.net
     - +.bumptop.org
     - +.bumptunes.com
-    - +.c.gle
     - +.campuslondon.com
     - +.capitalg.com
     - +.certificate-transparency.dev
     - +.certificate-transparency.org
     - +.charlestonroadregistry.com
-    - +.chat.gle
+    - +.chrome
     - +.chrome.com
     - +.chromebook.com
     - +.chromecast.com
@@ -184,6 +182,7 @@ payload:
     - +.dartsearch.net
     - +.data-vocabulary.org
     - +.dataliberation.org
+    - +.dclk
     - +.debug.com
     - +.debugproject.com
     - +.deepmind.com
@@ -222,6 +221,7 @@ payload:
     - +.g.dev
     - +.g.page
     - +.gateway.dev
+    - +.gbiz
     - +.gcr.io
     - +.gerritcodereview.com
     - +.get.app
@@ -238,7 +238,9 @@ payload:
     - +.ggpht.com
     - +.gipscorp.com
     - +.gkecnapps.cn
+    - +.gle
     - +.globaledu.org
+    - +.gmail
     - +.gmail.com
     - +.gmodules.com
     - +.go-lang.com
@@ -254,9 +256,11 @@ payload:
     - +.gonglchuangl.net
     - +.gongyichuangyi.net
     - +.goo.gl
+    - +.goog
     - +.googel.com
     - +.googil.com
     - +.googl.com
+    - +.google
     - +.google-access.net
     - +.google-analytics-cn.com
     - +.google-analytics.com
@@ -524,6 +528,7 @@ payload:
     - +.gstatic.com
     - +.gstaticcnapps.cn
     - +.gsuite.com
+    - +.guge
     - +.gv.com
     - +.gvt0.com
     - +.gvt1-cn.com
@@ -536,10 +541,10 @@ payload:
     - +.gvt7.com
     - +.gvt9.com
     - +.gwtproject.org
+    - +.hangout
     - +.haplorrhini.com
     - +.hdrplusdata.org
     - +.hey.boo
-    - +.hey.gle
     - +.hindiweb.com
     - +.howtogetmo.co.uk
     - +.html5rocks.com
@@ -573,10 +578,10 @@ payload:
     - +.nest.com
     - +.neverware.com
     - +.new.day
+    - +.nexus
     - +.nomulus.foo
     - +.oasisfeng.com
     - +.oauthz.com
-    - +.ok.gle
     - +.on.here
     - +.on2.com
     - +.onefifteen.net
@@ -601,15 +606,11 @@ payload:
     - +.picnik.com
     - +.pittpatt.com
     - +.pixate.com
-    - +.pki.goog
     - +.plus.codes
     - +.polymer-project.org
     - +.polymerproject.org
     - +.postini.com
     - +.privacysandbox.com
-    - +.prod-controlbe.floonet.goog
-    - +.prod-databe.floonet.goog
-    - +.prod.databe.floonet.goog
     - +.projectara.com
     - +.projectbaseline.com
     - +.pub.dev
@@ -622,7 +623,6 @@ payload:
     - +.recaptcha-cn.net
     - +.recaptcha.net
     - +.redhotlabs.com
-    - +.registry.google
     - +.revolv.com
     - +.ridepenguin.com
     - +.run.app
@@ -638,9 +638,6 @@ payload:
     - +.snapseed.com
     - +.solveforx.com
     - +.stadia.dev
-    - +.staging-controlbe.floonet.goog
-    - +.staging-databe.floonet.goog
-    - +.staging.databe.floonet.goog
     - +.stcroixmosquito.com
     - +.stcroixmosquitoproject.com
     - +.studywatchbyverily.com
@@ -651,7 +648,6 @@ payload:
     - +.stxmosquitoproject.org
     - +.synergyse.com
     - +.teachparentstech.org
-    - +.telephony.goog
     - +.tenor.com
     - +.tensorflow.org
     - +.tfhub.dev
@@ -703,14 +699,17 @@ payload:
     - +.x.team
     - +.xn--9kr7l.com
     - +.xn--9trs65b.com
+    - +.xn--flw351e
     - +.xn--flw351e.com
     - +.xn--ggle-55da.com
     - +.xn--gogl-0nd52e.com
     - +.xn--gogl-1nd42e.com
     - +.xn--ngstr-lra8j.com
     - +.xn--p8j9a0d9c9a.xn--q9jyb4c
+    - +.xn--qcka1pmc
     - +.xplr.co
     - +.youtu.be
+    - +.youtube
     - +.youtube-nocookie.com
     - +.youtube.ae
     - +.youtube.al

@@ -4,7 +4,6 @@ payload:
     - appleworldwidedeveloper.sc.omtrdc.net
     - beatselectronicsllc.tt.omtrdc.net
     - e16991.b.akamaiedge.net
-    - edge.apple
     - lookup-api.apple.com.edgekey.net
     - notary-submissions-prod.s3-accelerate.amazonaws.com
     - notary-submissions-prod.s3.us-west-2.amazonaws.com
@@ -79,6 +78,7 @@ payload:
     - +.appl4e.com
     - +.appla.com
     - +.appldnld.apple.com.edgesuite.net
+    - +.apple
     - +.apple-appstore.cn
     - +.apple-cloudkit.com
     - +.apple-darwin.com
@@ -394,7 +394,6 @@ payload:
     - +.appletv.wang
     - +.appletv4.cn
     - +.appletv4.com.cn
-    - +.appletvapp.apple
     - +.applewallet.com
     - +.applewallet.tv
     - +.applewatch.hk
@@ -1452,7 +1451,6 @@ payload:
     - +.researchkit.net
     - +.researchkit.org
     - +.researchkit.tv
-    - +.safebrowsing.apple
     - +.salebeatslasteststyle4you.com
     - +.saleblackfridaydrebeats.com
     - +.salecheaphandbags.com

@@ -1,12 +1,6 @@
 # Quantumult X Rule-Set: microsoft
 
 host, github-api.arkoselabs.com, microsoft
-host, github-cloud.s3.amazonaws.com, microsoft
-host, github-production-release-asset-2e65be.s3.amazonaws.com, microsoft
-host, github-production-repository-file-5c1aeb.s3.amazonaws.com, microsoft
-host, github-production-repository-image-32fea6.s3.amazonaws.com, microsoft
-host, github-production-upload-manifest-file-7fdce7.s3.amazonaws.com, microsoft
-host, github-production-user-asset-6210df.s3.amazonaws.com, microsoft
 host, vsmarketplacebadge.apphb.com, microsoft
 host-suffix, 1drv.com, microsoft
 host-suffix, 1drv.ms, microsoft
@@ -64,6 +58,7 @@ host-suffix, azcrmc.cn, microsoft
 host-suffix, azk8s.cn, microsoft
 host-suffix, aznbcontent.cn, microsoft
 host-suffix, aztask.cn, microsoft
+host-suffix, azure, microsoft
 host-suffix, azure-api.cn, microsoft
 host-suffix, azure-api.net, microsoft
 host-suffix, azure-apihub.cn, microsoft
@@ -148,6 +143,7 @@ host-suffix, biing.com, microsoft
 host-suffix, binads.com, microsoft
 host-suffix, binb.com, microsoft
 host-suffix, binf.com, microsoft
+host-suffix, bing, microsoft
 host-suffix, bing.com, microsoft
 host-suffix, bing.com.cn, microsoft
 host-suffix, bing.net, microsoft
@@ -253,6 +249,12 @@ host-suffix, ghcr.io, microsoft
 host-suffix, ghe.com, microsoft
 host-suffix, gigjam.com, microsoft
 host-suffix, git.io, microsoft
+host-suffix, github-cloud.s3.amazonaws.com, microsoft
+host-suffix, github-production-release-asset-2e65be.s3.amazonaws.com, microsoft
+host-suffix, github-production-repository-file-5c1aeb.s3.amazonaws.com, microsoft
+host-suffix, github-production-repository-image-32fea6.s3.amazonaws.com, microsoft
+host-suffix, github-production-upload-manifest-file-7fdce7.s3.amazonaws.com, microsoft
+host-suffix, github-production-user-asset-6210df.s3.amazonaws.com, microsoft
 host-suffix, github.ai, microsoft
 host-suffix, github.blog, microsoft
 host-suffix, github.career, microsoft
@@ -280,6 +282,7 @@ host-suffix, here.net, microsoft
 host-suffix, heremaps.cn, microsoft
 host-suffix, hockeyapp.net, microsoft
 host-suffix, hololens.com, microsoft
+host-suffix, hotmail, microsoft
 host-suffix, hotmail.co, microsoft
 host-suffix, hotmail.com, microsoft
 host-suffix, hotmail.eu, microsoft
@@ -335,6 +338,7 @@ host-suffix, mepn.com, microsoft
 host-suffix, mesh.com, microsoft
 host-suffix, mgmt-azure-api.cn, microsoft
 host-suffix, microbit.org, microsoft
+host-suffix, microsoft, microsoft
 host-suffix, microsoft-falcon.io, microsoft
 host-suffix, microsoft-give.com, microsoft
 host-suffix, microsoft-int.com, microsoft
@@ -560,6 +564,7 @@ host-suffix, o365weve-ppe.com, microsoft
 host-suffix, o365weve.com, microsoft
 host-suffix, oaspapps.com, microsoft
 host-suffix, octocaptcha.com, microsoft
+host-suffix, office, microsoft
 host-suffix, office.com, microsoft
 host-suffix, office.net, microsoft
 host-suffix, office365-net.cn, microsoft
@@ -574,12 +579,14 @@ host-suffix, officeppe.net, microsoft
 host-suffix, officewebapps.cn, microsoft
 host-suffix, omniroot.com, microsoft
 host-suffix, onecollector.cloudapp.aria, microsoft
+host-suffix, onedrive, microsoft
 host-suffix, onedrive.co, microsoft
 host-suffix, onedrive.co.uk, microsoft
 host-suffix, onedrive.com, microsoft
 host-suffix, onedrive.eu, microsoft
 host-suffix, onedrive.net, microsoft
 host-suffix, onedrive.org, microsoft
+host-suffix, onedriveupdater, microsoft
 host-suffix, onenote.com, microsoft
 host-suffix, onenote.net, microsoft
 host-suffix, onestore.ms, microsoft
@@ -640,6 +647,7 @@ host-suffix, sharepoint.cn, microsoft
 host-suffix, sharepoint.com, microsoft
 host-suffix, sharepointonline.com, microsoft
 host-suffix, signalr.net, microsoft
+host-suffix, skype, microsoft
 host-suffix, skype.com, microsoft
 host-suffix, skype.net, microsoft
 host-suffix, skypeassets.com, microsoft
@@ -707,6 +715,7 @@ host-suffix, vscodeedu.app, microsoft
 host-suffix, vscodeedu.com, microsoft
 host-suffix, wbd.ms, microsoft
 host-suffix, what-fan.net, microsoft
+host-suffix, windows, microsoft
 host-suffix, windows-int.net, microsoft
 host-suffix, windows-ppe.net, microsoft
 host-suffix, windows.com, microsoft
@@ -730,6 +739,7 @@ host-suffix, wlxrs.com, microsoft
 host-suffix, working-bing-int.com, microsoft
 host-suffix, wunderlist.com, microsoft
 host-suffix, xamarin.com, microsoft
+host-suffix, xbox, microsoft
 host-suffix, xbox.co, microsoft
 host-suffix, xbox.com, microsoft
 host-suffix, xbox.eu, microsoft
