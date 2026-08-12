@@ -150,9 +150,12 @@ def generate_loon(matrix_data, output_dir):
             ('DOMAIN', g_rules.get('full', set())),
             ('DOMAIN-SUFFIX', g_rules.get('suffix', set())),
             ('DOMAIN-KEYWORD', g_rules.get('keyword', set())),        
+            ('URL-REGEX', g_rules.get('url-regex', set())),
+            ('USER-AGENT', g_rules.get('useragent', set())),
             ('IP-CIDR', combined_loon_ips),
-            ('USER-AGENT', g_rules.get('useragent', set()))
+            ('GEOIP', g_rules.get('geoip', set()))
         ]
+        
         for loon_tag, rule_set in loon_rendering_pipeline:
             if rule_set:
                 for val in sorted(rule_set):
