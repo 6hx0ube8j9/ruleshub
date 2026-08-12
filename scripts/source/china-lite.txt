@@ -8941,5 +8941,6 @@ ip6,2a0b:b581::/48
 ip6,2a0b:b582::/48
 ip6,2a0b:b583::/48
 
-geoip,cn,DIRECT
+# --- TYPE: GEOIP ---
+geoip,cn
 
