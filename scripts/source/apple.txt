@@ -1575,22 +1575,22 @@ keyword,icloud.com.akadns.net
 keyword,smp-device
 keyword,testflight
 
-# --- TYPE: IP ---
-ip,139.178.128.0/18
-ip,144.178.0.0/19
-ip,144.178.36.0/22
-ip,144.178.48.0/20
-ip,17.0.0.0/8
-ip,192.35.50.0/24
-ip,198.183.17.0/24
-ip,205.180.175.0/24
-ip,63.92.224.0/19
-ip,65.199.22.0/23
-
-# --- TYPE: IP6 ---
-ip6,2403:300::/32
-ip6,2620:149::/32
-ip6,2a01:b740::/32
+# --- TYPE: WILDCARD ---
+wildcard,*-content.icloud.com.cn
+wildcard,apple.*
+wildcard,apple.com.*
+wildcard,appleworldwidedeveloper.*.net
+wildcard,imac.*
+wildcard,init*.push-apple.com.akadns.net
+wildcard,init*.push.apple.com
+wildcard,ipad.*
+wildcard,ipadair.*
+wildcard,ipadmini.*
+wildcard,iphone.*
+wildcard,ipod.*
+wildcard,macbook.*
+wildcard,macbookair.*
+wildcard,macbookpro.*
 
 # --- TYPE: USERAGENT ---
 useragent,*FindMyiPhone?
@@ -1617,20 +1617,20 @@ useragent,geod*
 useragent,locationd*
 useragent,passd*
 
-# --- TYPE: WILDCARD ---
-wildcard,*-content.icloud.com.cn
-wildcard,apple.*
-wildcard,apple.com.*
-wildcard,appleworldwidedeveloper.*.net
-wildcard,imac.*
-wildcard,init*.push-apple.com.akadns.net
-wildcard,init*.push.apple.com
-wildcard,ipad.*
-wildcard,ipadair.*
-wildcard,ipadmini.*
-wildcard,iphone.*
-wildcard,ipod.*
-wildcard,macbook.*
-wildcard,macbookair.*
-wildcard,macbookpro.*
+# --- TYPE: IP ---
+ip,139.178.128.0/18
+ip,144.178.0.0/19
+ip,144.178.36.0/22
+ip,144.178.48.0/20
+ip,17.0.0.0/8
+ip,192.35.50.0/24
+ip,198.183.17.0/24
+ip,205.180.175.0/24
+ip,63.92.224.0/19
+ip,65.199.22.0/23
+
+# --- TYPE: IP6 ---
+ip6,2403:300::/32
+ip6,2620:149::/32
+ip6,2a01:b740::/32
 

@@ -893,6 +893,11 @@ keyword,recaptcha
 keyword,www.google.
 keyword,youtube
 
+# --- TYPE: USERAGENT ---
+useragent,%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*
+useragent,*com.google.Drive*
+useragent,Google.Drive*
+
 # --- TYPE: IP ---
 ip,172.110.32.0/21
 ip,173.194.0.0/16
@@ -901,9 +906,4 @@ ip,74.125.0.0/16
 
 # --- TYPE: IP6 ---
 ip6,2620:120:e000::/40
-
-# --- TYPE: USERAGENT ---
-useragent,%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*
-useragent,*com.google.Drive*
-useragent,Google.Drive*
 

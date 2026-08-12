@@ -36,10 +36,10 @@ suffix,tospotify.com
 # --- TYPE: KEYWORD ---
 keyword,spotify
 
+# --- TYPE: USERAGENT ---
+useragent,Spotify*
+
 # --- TYPE: IP ---
 ip,104.154.127.126/32
 ip,35.186.224.47/32
-
-# --- TYPE: USERAGENT ---
-useragent,Spotify*
 

@@ -42,6 +42,9 @@ keyword,dualstack.apiproxy-
 keyword,dualstack.ichnaea-web-
 keyword,netflixdnstest
 
+# --- TYPE: USERAGENT ---
+useragent,Argo*
+
 # --- TYPE: IP ---
 ip,103.87.204.0/22
 ip,107.23.255.0/26
@@ -1164,7 +1167,4 @@ ip6,2607:fb10::/32
 ip6,2620:10c:7000::/44
 ip6,2a00:86c0::/32
 ip6,2a03:5640::/32
-
-# --- TYPE: USERAGENT ---
-useragent,Argo*
 

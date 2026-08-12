@@ -25,8 +25,10 @@ host-suffix, bnetproduct-a.akamaihd.net, blizzard
 host-suffix, bnetshopus.akamaized.net, blizzard
 host-suffix, cdp.cloud.unity3d.com, blizzard
 host-suffix, di.res.netease.com, blizzard
+host-suffix, diablo.com, blizzard
 host-suffix, diablo3.com, blizzard
 host-suffix, diablo3.nosdn.127.net, blizzard
+host-suffix, diablo4.com, blizzard
 host-suffix, diabloimmortal.com, blizzard
 host-suffix, firesidegatherings.com, blizzard
 host-suffix, gs.skugry.dev, blizzard

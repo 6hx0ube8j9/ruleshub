@@ -51324,6 +51324,8 @@ suffix,iot101.com
 suffix,iot688.com
 suffix,iot889.com
 suffix,iotachem.com
+suffix,iotaskyt.com
+suffix,iotaskyty.com
 suffix,iotbay.com
 suffix,iotfair.net
 suffix,iotku.com
@@ -87221,6 +87223,7 @@ suffix,tbapp.com
 suffix,tbbbk.com
 suffix,tbcache.com
 suffix,tbcdn.com
+suffix,tbdesk.com
 suffix,tbh5.com
 suffix,tbhcc.com
 suffix,tbhelper.com

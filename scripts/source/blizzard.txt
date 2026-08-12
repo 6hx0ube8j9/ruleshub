@@ -28,8 +28,10 @@ suffix,bnetproduct-a.akamaihd.net
 suffix,bnetshopus.akamaized.net
 suffix,cdp.cloud.unity3d.com
 suffix,di.res.netease.com
+suffix,diablo.com
 suffix,diablo3.com
 suffix,diablo3.nosdn.127.net
+suffix,diablo4.com
 suffix,diabloimmortal.com
 suffix,firesidegatherings.com
 suffix,gs.skugry.dev

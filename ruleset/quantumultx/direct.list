@@ -51632,6 +51632,8 @@ host-suffix, iot101.com, direct
 host-suffix, iot688.com, direct
 host-suffix, iot889.com, direct
 host-suffix, iotachem.com, direct
+host-suffix, iotaskyt.com, direct
+host-suffix, iotaskyty.com, direct
 host-suffix, iotbay.com, direct
 host-suffix, iotfair.net, direct
 host-suffix, iotku.com, direct
@@ -87667,6 +87669,7 @@ host-suffix, tbapp.com, direct
 host-suffix, tbbbk.com, direct
 host-suffix, tbcache.com, direct
 host-suffix, tbcdn.com, direct
+host-suffix, tbdesk.com, direct
 host-suffix, tbh5.com, direct
 host-suffix, tbhcc.com, direct
 host-suffix, tbhelper.com, direct
