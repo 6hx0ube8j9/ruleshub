@@ -60,12 +60,15 @@ _GROUPS = {
     'full':      {'DOMAIN', 'HOST', 'FULL'},
     'suffix':    {'DOMAIN-SUFFIX', 'HOST-SUFFIX', 'DOMAIN_SUFFIX', 'SUFFIX'},
     'keyword':   {'DOMAIN-KEYWORD', 'HOST-KEYWORD', 'DOMAIN_KEYWORD', 'KEYWORD'},
-    'ip':        {'IP-CIDR', 'IP'},
-    'ip6':       {'IP-CIDR6', 'IP6-CIDR', 'IP6'}, 
-    'asn':       {'IP-ASN', 'IP_ASN', 'ASN'},
-    'useragent': {'USER-AGENT', 'USERAGENT'},
     'wildcard':  {'DOMAIN-WILDCARD', 'HOST-WILDCARD', 'WILDCARD'},
-    'regex':     {'DOMAIN-REGEX', 'DOMAIN_REGEX', 'REGEX'}
+    'regex':     {'DOMAIN-REGEX', 'DOMAIN_REGEX', 'REGEX'},
+    'url-regex': {'URL-REGEX', 'URL_REGEX'},
+    'useragent': {'USER-AGENT', 'USERAGENT'},
+    'geosite':   {'GEOSITE', 'GEO-SITE'},
+    'ip':        {'IP-CIDR', 'IP'},
+    'ip6':       {'IP-CIDR6', 'IP6-CIDR', 'IP6'},
+    'asn':       {'IP-ASN', 'IP_ASN', 'ASN'},
+    'geoip':     {'GEOIP', 'GEO-IP'}
 }
 
 SOURCE_KEYS = list(_GROUPS.keys())
@@ -136,7 +139,7 @@ def filter_raw_line(line: str) -> Optional[str]:
 
     # 2. 嗅探规则类型 (Tag)
     tag = line.split(',', 1)[0].strip().upper()   
-    immune_tags = _GROUPS['regex'] | _GROUPS['useragent'] | _GROUPS['wildcard']
+    immune_tags = _GROUPS['regex'] | _GROUPS['useragent'] | _GROUPS['wildcard'] | _GROUPS['url-regex']
 
     # 3. 精准条件清洗
     if tag not in immune_tags:
@@ -284,7 +287,7 @@ def parse_standard_rule(clean_line: str, has_policy: bool = True) -> Tuple[Optio
     internal_type = RULE_MAP[tag]
 
     # 1. 特殊类型 (regex, wildcard, useragent)：精确剥离尾部策略名
-    if internal_type in ('regex', 'wildcard', 'useragent'):
+    if internal_type in ('regex', 'wildcard', 'useragent', 'url-regex'):
         if has_policy and ',' in tail:
             match = _TRAILING_POLICY_RE.search(tail)
             if match:
@@ -345,6 +348,14 @@ def parse_standard_rule(clean_line: str, has_policy: bool = True) -> Tuple[Optio
         if not re.match(r'^(?:[a-zA-Z]{2})?\d{1,10}$', payload):
             return None, ""
         return internal_type, payload.upper()
+
+    # 9. GEOSITE
+    if internal_type == 'geosite':
+        return internal_type, payload.lower()
+
+    # 10. GEOIP
+    if internal_type == 'geoip':
+        return internal_type, payload.lower()
 
     return internal_type, payload
 
