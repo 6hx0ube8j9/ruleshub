@@ -987,6 +987,9 @@ suffix,activelearnprimary.co.uk
 suffix,activelearnprimary.com.au
 suffix,activematter.game
 suffix,activeteachonline.com
+suffix,activision.com
+suffix,activisionblizzard.com
+suffix,activisionblizzardmedia.com
 suffix,activpn.com
 suffix,actualidad-rt.com
 suffix,aculo.us
@@ -3778,6 +3781,7 @@ suffix,bellsshoes.co.uk
 suffix,bemywife.cc
 suffix,benaughty.fun
 suffix,bendodson.com
+suffix,benefitsforeveryworld.com
 suffix,bengalisexvideos.com
 suffix,benliton.com
 suffix,bentobox.tv
@@ -5100,6 +5104,7 @@ suffix,buhidoh.net
 suffix,buicha.social
 suffix,building3dcontent.com
 suffix,builtfromebay.com
+suffix,builtwithnix.org
 suffix,bukkake-jav.com
 suffix,bukkake.link
 suffix,bullguard.com
@@ -5324,6 +5329,11 @@ suffix,callabitch.org
 suffix,callbackkiller.com
 suffix,callersbane.com
 suffix,callhulu.com
+suffix,callofduty.com
+suffix,callofdutyendowment.com
+suffix,callofdutyendowment.org
+suffix,callofdutyleague.com
+suffix,callofdutymobile.com
 suffix,caltech.edu
 suffix,calvappd.me
 suffix,cam-duct.com
@@ -5383,6 +5393,7 @@ suffix,canada-beatsbydre.com
 suffix,canadameet.com
 suffix,canalporno.com
 suffix,candidforum-videos.com
+suffix,candycrush.com
 suffix,candycumcity.com
 suffix,candypleasure.com
 suffix,canny.io
@@ -6583,6 +6594,7 @@ suffix,crabporn.com
 suffix,crackle.com
 suffix,craigslist.org
 suffix,crankplayer.com
+suffix,crashbandicoot.com
 suffix,crashlytics.com
 suffix,crates.io
 suffix,crazy-amateurs.com
@@ -7233,6 +7245,7 @@ suffix,demfhz.xyz
 suffix,democracy.earth
 suffix,democrats.org
 suffix,demonoid.is
+suffix,demonware.net
 suffix,demoprint.com
 suffix,demosisto.hk
 suffix,denfaminicogamer.jp
@@ -7363,7 +7376,9 @@ suffix,dharamsalanet.com
 suffix,dharmakara.net
 suffix,dhcp.biz
 suffix,dhlestudio.com.co
+suffix,diablo.com
 suffix,diablo3.com
+suffix,diablo4.com
 suffix,diabloimmortal.com
 suffix,diabrowser.com
 suffix,diabrowser.engineering
@@ -9008,6 +9023,7 @@ suffix,europeansustainabledesign.com
 suffix,europeansustainabledesign.net
 suffix,europeansustainabledesigncouncil.com
 suffix,europeansustainabledesigncouncil.net
+suffix,europeanwarzoneseries.com
 suffix,europepmc.org
 suffix,europornstar.com
 suffix,eurosexscene.com
@@ -12454,6 +12470,7 @@ suffix,higfw.com
 suffix,highbolt.net
 suffix,highcolonic.info
 suffix,highdefinitionbeatsbydre.com
+suffix,highmoonstudios.com
 suffix,highpeakspureearth.com
 suffix,highporn.net
 suffix,highrockmedia.com
@@ -13753,6 +13770,7 @@ suffix,industrialtoys.com
 suffix,inf.news
 suffix,infinitetoons.com
 suffix,infinitetube.com
+suffix,infinityward.com
 suffix,influencersgonewild.com
 suffix,info-graf.fr
 suffix,infocert.digital
@@ -15266,6 +15284,7 @@ suffix,kindleren.com
 suffix,kindnudist.com
 suffix,kindteenporn.com
 suffix,kinescopecdn.net
+suffix,king.com
 suffix,kingcomix.com
 suffix,kingdomsalvation.org
 suffix,kingextre.me
@@ -18037,6 +18056,7 @@ suffix,mynetav.net
 suffix,mynetav.org
 suffix,mynetname.net
 suffix,mynike.com
+suffix,mynixos.com
 suffix,mynumber.org
 suffix,myoctocat.com
 suffix,myparagliding.com
@@ -18819,8 +18839,16 @@ suffix,niusnews.com
 suffix,nivod.tv
 suffix,nivodi.tv
 suffix,nivodz.com
+suffix,nix-community.org
+suffix,nix.dev
+suffix,nix.store
+suffix,nixcon.org
+suffix,nixcon2017.org
+suffix,nixlang.com
 suffix,nixnet.services
 suffix,nixos.org
+suffix,nixos.wiki
+suffix,nixpkgs.org
 suffix,niziero.info
 suffix,njactb.org
 suffix,njav.tv
@@ -21597,6 +21625,7 @@ suffix,rat.xxx
 suffix,ratedgross.com
 suffix,rateyourmusic.com
 suffix,rationalwiki.org
+suffix,ravensoftware.com
 suffix,ravm.tv
 suffix,rawgit.com
 suffix,rawgithub.com
@@ -22598,6 +22627,7 @@ suffix,seiron-sankei.com
 suffix,sejie.com
 suffix,sejie80.com
 suffix,sekai.colorfulpalette.org
+suffix,sekirothegame.com
 suffix,seksmet.nl
 suffix,sekswebsite.nl
 suffix,sekur1213.guru
@@ -23120,6 +23150,7 @@ suffix,sidelinessportseatery.com
 suffix,sider.ai
 suffix,siege-amazon.com
 suffix,sierrafriendsoftibet.org
+suffix,sierragames.com
 suffix,sigcomm.org
 suffix,sigmoidoscopeexam.com
 suffix,sign.new
@@ -23270,6 +23301,7 @@ suffix,skydrive.wns.windows.com
 suffix,skyearth2.xyz
 suffix,skyking.com.tw
 suffix,skykiwi.com
+suffix,skylanders.com
 suffix,skymansion.net
 suffix,skymatter.com
 suffix,skynet.be
@@ -23315,6 +23347,7 @@ suffix,sldolls.com
 suffix,sleazydream.com
 suffix,sleazyfork.org
 suffix,sleazyneasy.com
+suffix,sledgehammergames.com
 suffix,slheng.com
 suffix,slickvpn.com
 suffix,slides.com
@@ -23493,6 +23526,7 @@ suffix,solid.ru
 suffix,solidaritetibet.org
 suffix,solidfiles.com
 suffix,solidifi.app
+suffix,solidstate.com
 suffix,solostudioksale.com
 suffix,solscan.io
 suffix,solutionstation.com
@@ -23777,6 +23811,7 @@ suffix,sputnikimages.com
 suffix,sputnikmediabank.com
 suffix,sputniknews.com
 suffix,spyjinx.com
+suffix,spyrothedragon.com
 suffix,sqlite.org
 suffix,sqlserveronlinux.com
 suffix,sqool.net
@@ -25285,6 +25320,8 @@ suffix,tonec.com
 suffix,tongil.or.kr
 suffix,tonicmovies.com
 suffix,tono-oka.jp
+suffix,tonyhawk.com
+suffix,tonyhawkthegame.com
 suffix,tonyyan.net
 suffix,toodoc.com
 suffix,toolforge.org
@@ -25458,6 +25495,7 @@ suffix,trendmicro.com
 suffix,trendsmap.com
 suffix,trendyporn.com
 suffix,tresorit.com
+suffix,treyarch.com
 suffix,trezor.io
 suffix,trialofccp.org
 suffix,triballo.net
@@ -27893,6 +27931,7 @@ suffix,worldpopulationreview.com
 suffix,worldpornvideos.com
 suffix,worldsecureemail.com
 suffix,worldsecuresystems.com
+suffix,worldseriesofwarzone.com
 suffix,worldsex.com
 suffix,worldsfastestgamer.net
 suffix,worldvpn.net
@@ -28862,6 +28901,7 @@ suffix,yandex.ee
 suffix,yandex.eu
 suffix,yandex.fi
 suffix,yandex.fr
+suffix,yandex.it
 suffix,yandex.jobs
 suffix,yandex.kg
 suffix,yandex.kz
