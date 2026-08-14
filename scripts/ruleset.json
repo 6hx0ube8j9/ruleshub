@@ -5,6 +5,8 @@
 	
 	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-music.list": "apple-music.txt",
 	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/AppleMusic/AppleMusic.list": "apple-music.txt",
+	  
+	"https://raw.githubusercontent.com/mrbruce516/apns-fix/main/Apple_APNs.list": "apple-apns.txt",
 	
 	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/blizzard.list": "blizzard.txt",
 	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Blizzard/Blizzard.list": "blizzard.txt",
@@ -76,6 +78,16 @@
       "inputs": [
         "apple-music.txt"
       ]
+    },
+    {
+      "name": "apple-apns",
+      "inputs": [
+        "apple-apns.txt"
+      ],
+      "outputs": {
+        "mihomo_domain": false,
+        "mihomo_ipcidr": false
+      }	
     },
     {
       "name": "block",
