@@ -22103,6 +22103,7 @@ host-suffix, rs2022.com, global
 host-suffix, rsdlmonitor.com, global
 host-suffix, rsf-chinese.org, global
 host-suffix, rsf.org, global
+host-suffix, rsg.ms, global
 host-suffix, rsg.sc, global
 host-suffix, rsgamen.org, global
 host-suffix, rshb.ru, global
@@ -22239,6 +22240,7 @@ host-suffix, rutracker.me, global
 host-suffix, rutracker.net, global
 host-suffix, rutracker.nl, global
 host-suffix, rutracker.org, global
+host-suffix, rutracker.wiki, global
 host-suffix, rutrecker.net, global
 host-suffix, rutube.ru, global
 host-suffix, rutube.sport, global
@@ -22470,6 +22472,8 @@ host-suffix, sbti.unun.dev, global
 host-suffix, sbux.com.my, global
 host-suffix, sbuxcard.com, global
 host-suffix, sc-cdn.net, global
+host-suffix, sc-gw.com, global
+host-suffix, sc-static.net, global
 host-suffix, sc.com, global
 host-suffix, sca-tolo.info, global
 host-suffix, scala-lang.org, global

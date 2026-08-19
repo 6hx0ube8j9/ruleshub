@@ -1,5 +1,5 @@
 # === china-lite.txt Combined Base Rules ===
-suffix,sntp.me
+
 # --- TYPE: SUFFIX ---
 suffix,0.zone
 suffix,00.net
@@ -6888,6 +6888,7 @@ suffix,snodehome.com
 suffix,snowballfinance.com
 suffix,snowballsecurities.com
 suffix,snssdk.com
+suffix,sntp.me
 suffix,snwx.com
 suffix,so.car
 suffix,so.com

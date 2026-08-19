@@ -6909,6 +6909,7 @@ var DIRECT_DOMAINS = {
     "snowballfinance.com": 1,
     "snowballsecurities.com": 1,
     "snssdk.com": 1,
+    "sntp.me": 1,
     "snwx.com": 1,
     "so.car": 1,
     "so.com": 1,

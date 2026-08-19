@@ -74239,6 +74239,7 @@ suffix,qianvisa.com
 suffix,qianwa.com
 suffix,qianwanku.com
 suffix,qianwen.com
+suffix,qianwenai.com
 suffix,qianxiangbank.com
 suffix,qianxibj.net
 suffix,qianximiye.com

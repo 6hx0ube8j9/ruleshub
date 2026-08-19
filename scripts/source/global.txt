@@ -22106,6 +22106,7 @@ suffix,rs2022.com
 suffix,rsdlmonitor.com
 suffix,rsf-chinese.org
 suffix,rsf.org
+suffix,rsg.ms
 suffix,rsg.sc
 suffix,rsgamen.org
 suffix,rshb.ru
@@ -22242,6 +22243,7 @@ suffix,rutracker.me
 suffix,rutracker.net
 suffix,rutracker.nl
 suffix,rutracker.org
+suffix,rutracker.wiki
 suffix,rutrecker.net
 suffix,rutube.ru
 suffix,rutube.sport
@@ -22473,6 +22475,8 @@ suffix,sbti.unun.dev
 suffix,sbux.com.my
 suffix,sbuxcard.com
 suffix,sc-cdn.net
+suffix,sc-gw.com
+suffix,sc-static.net
 suffix,sc.com
 suffix,sca-tolo.info
 suffix,scala-lang.org
