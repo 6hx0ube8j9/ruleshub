@@ -1,5 +1,5 @@
 # === china-lite.txt Combined Base Rules ===
-
+suffix,sntp.me
 # --- TYPE: SUFFIX ---
 suffix,0.zone
 suffix,00.net
