@@ -1,22 +1,26 @@
-    - DOMAIN-SUFFIX,futu.cn
-    - DOMAIN-SUFFIX,futu.link
-    - DOMAIN-SUFFIX,futu5.com
-    - DOMAIN-SUFFIX,futuau.com
-    - DOMAIN-SUFFIX,futuesop.com
-    - DOMAIN-SUFFIX,futufin.com
-    - DOMAIN-SUFFIX,futuhk.com
-    - DOMAIN-SUFFIX,futuhk1.com
-    - DOMAIN-SUFFIX,futuhk2.com
-    - DOMAIN-SUFFIX,futuhkapp.com
-    - DOMAIN-SUFFIX,futuhn.com
-    - DOMAIN-SUFFIX,futuholdings.com
-    - DOMAIN-SUFFIX,futuniuniu.com
-    - DOMAIN-SUFFIX,futunn.com
-    - DOMAIN-SUFFIX,futuoa.com
-    - DOMAIN-SUFFIX,futusg.com
-    - DOMAIN-SUFFIX,futustatic.com
-    - DOMAIN-SUFFIX,fututrade.com
-    - DOMAIN-SUFFIX,moomoo.com
-    - DOMAIN-SUFFIX,moomooequity.com
-    - DOMAIN-SUFFIX,moomootrustee.com
-DOMAIN-SUFFIX,moomoo.app
+# === futu.txt Combined Base Rules ===
+
+# --- TYPE: SUFFIX ---
+suffix,futu.cn
+suffix,futu.link
+suffix,futu5.com
+suffix,futuau.com
+suffix,futuesop.com
+suffix,futufin.com
+suffix,futuhk.com
+suffix,futuhk1.com
+suffix,futuhk2.com
+suffix,futuhkapp.com
+suffix,futuhn.com
+suffix,futuholdings.com
+suffix,futuniuniu.com
+suffix,futunn.com
+suffix,futuoa.com
+suffix,futusg.com
+suffix,futustatic.com
+suffix,fututrade.com
+suffix,moomoo.app
+suffix,moomoo.com
+suffix,moomooequity.com
+suffix,moomootrustee.com
+
