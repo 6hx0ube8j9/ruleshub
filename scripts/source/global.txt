@@ -1,4 +1,6 @@
 # === global.txt Combined Base Rules ===
+
+# --- TYPE: REMOVE ---
 remove,futu.cn
 remove,futu.link
 remove,futu5.com
@@ -21,6 +23,7 @@ remove,moomoo.app
 remove,moomoo.com
 remove,moomooequity.com
 remove,moomootrustee.com
+
 # --- TYPE: FULL ---
 full,1password.drift.click
 full,adobeereg.com
@@ -10625,32 +10628,18 @@ suffix,futanarihq.com
 suffix,futhead.com
 suffix,futpromos.com
 suffix,futu.com
-suffix,futu.link
 suffix,futu0.com
 suffix,futu1.com
 suffix,futu2.com
 suffix,futu3.com
 suffix,futu4.com
-suffix,futu5.com
 suffix,futu6.com
 suffix,futu7.com
 suffix,futu8.com
 suffix,futu9.com
-suffix,futuau.com
 suffix,futuchain.com
-suffix,futuesop.com
-suffix,futufin.com
-suffix,futuhk.com
-suffix,futuhk1.com
-suffix,futuhk2.com
-suffix,futuhkapp.com
-suffix,futuhn.com
-suffix,futuholdings.com
 suffix,futuinc.com
 suffix,futunited.com
-suffix,futuniuniu.com
-suffix,futunn.com
-suffix,futuoa.com
 suffix,future-cs.ru
 suffix,futurechinaforum.org
 suffix,futuremessage.org
@@ -10658,9 +10647,6 @@ suffix,futureofbritishmanufacturing.com
 suffix,futureofbusinesssurvey.org
 suffix,futureofmaktingthings.com
 suffix,futureshop.ca
-suffix,futusg.com
-suffix,futustatic.com
-suffix,fututrade.com
 suffix,fututrustee.com
 suffix,fux.com
 suffix,fuxporn.com
@@ -17610,9 +17596,6 @@ suffix,monstershopcheapbeats.net
 suffix,monthlyav.com
 suffix,moodstocks.com
 suffix,moodyz.com
-suffix,moomoo.com
-suffix,moomooequity.com
-suffix,moomootrustee.com
 suffix,moon.fm
 suffix,moonbbs.com
 suffix,moonbbs.info
