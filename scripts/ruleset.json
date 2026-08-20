@@ -22,7 +22,9 @@
 	
 	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/epicgames.list": "epicgames.txt",
 	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Epic/Epic.list": "epicgames.txt",
-	
+
+	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/futu.list": "futu.txt",  
+	  
 	"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/meta.list": "facebook.txt",
 	"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Facebook/Facebook.list": "facebook.txt",
 	
@@ -139,7 +141,8 @@
       "name": "direct",
       "inputs": [
         "geosite-cn.txt",
-	    "china-lite.txt",	  
+	    "china-lite.txt",
+		"futu.txt",
         "lan.txt"			  
       ],
       "outputs": {
@@ -163,6 +166,7 @@
       "name": "direct-lite",
       "inputs": [	  
         "china-lite.txt",
+		"futu.txt",
         "lan.txt"		  
       ],   
       "outputs": {
