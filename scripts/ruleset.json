@@ -142,7 +142,6 @@
       "inputs": [
         "geosite-cn.txt",
 	    "china-lite.txt",
-		"futu.txt",
         "lan.txt"			  
       ],
       "outputs": {
@@ -166,7 +165,6 @@
       "name": "direct-lite",
       "inputs": [	  
         "china-lite.txt",
-		"futu.txt",
         "lan.txt"		  
       ],   
       "outputs": {
