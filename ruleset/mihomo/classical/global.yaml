@@ -10601,18 +10601,32 @@ payload:
   - DOMAIN-SUFFIX,futhead.com
   - DOMAIN-SUFFIX,futpromos.com
   - DOMAIN-SUFFIX,futu.com
+  - DOMAIN-SUFFIX,futu.link
   - DOMAIN-SUFFIX,futu0.com
   - DOMAIN-SUFFIX,futu1.com
   - DOMAIN-SUFFIX,futu2.com
   - DOMAIN-SUFFIX,futu3.com
   - DOMAIN-SUFFIX,futu4.com
+  - DOMAIN-SUFFIX,futu5.com
   - DOMAIN-SUFFIX,futu6.com
   - DOMAIN-SUFFIX,futu7.com
   - DOMAIN-SUFFIX,futu8.com
   - DOMAIN-SUFFIX,futu9.com
+  - DOMAIN-SUFFIX,futuau.com
   - DOMAIN-SUFFIX,futuchain.com
+  - DOMAIN-SUFFIX,futuesop.com
+  - DOMAIN-SUFFIX,futufin.com
+  - DOMAIN-SUFFIX,futuhk.com
+  - DOMAIN-SUFFIX,futuhk1.com
+  - DOMAIN-SUFFIX,futuhk2.com
+  - DOMAIN-SUFFIX,futuhkapp.com
+  - DOMAIN-SUFFIX,futuhn.com
+  - DOMAIN-SUFFIX,futuholdings.com
   - DOMAIN-SUFFIX,futuinc.com
   - DOMAIN-SUFFIX,futunited.com
+  - DOMAIN-SUFFIX,futuniuniu.com
+  - DOMAIN-SUFFIX,futunn.com
+  - DOMAIN-SUFFIX,futuoa.com
   - DOMAIN-SUFFIX,future-cs.ru
   - DOMAIN-SUFFIX,futurechinaforum.org
   - DOMAIN-SUFFIX,futuremessage.org
@@ -10620,6 +10634,9 @@ payload:
   - DOMAIN-SUFFIX,futureofbusinesssurvey.org
   - DOMAIN-SUFFIX,futureofmaktingthings.com
   - DOMAIN-SUFFIX,futureshop.ca
+  - DOMAIN-SUFFIX,futusg.com
+  - DOMAIN-SUFFIX,futustatic.com
+  - DOMAIN-SUFFIX,fututrade.com
   - DOMAIN-SUFFIX,fututrustee.com
   - DOMAIN-SUFFIX,fux.com
   - DOMAIN-SUFFIX,fuxporn.com
@@ -17569,6 +17586,9 @@ payload:
   - DOMAIN-SUFFIX,monthlyav.com
   - DOMAIN-SUFFIX,moodstocks.com
   - DOMAIN-SUFFIX,moodyz.com
+  - DOMAIN-SUFFIX,moomoo.com
+  - DOMAIN-SUFFIX,moomooequity.com
+  - DOMAIN-SUFFIX,moomootrustee.com
   - DOMAIN-SUFFIX,moon.fm
   - DOMAIN-SUFFIX,moonbbs.com
   - DOMAIN-SUFFIX,moonbbs.info
