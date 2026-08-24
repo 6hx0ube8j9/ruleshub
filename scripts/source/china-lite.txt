@@ -1,4 +1,6 @@
 # === china-lite.txt Combined Base Rules ===
+
+# --- TYPE: REMOVE ---
 remove,futu.link
 remove,futu5.com
 remove,futuau.com
@@ -20,6 +22,7 @@ remove,moomoo.app
 remove,moomoo.com
 remove,moomooequity.com
 remove,moomootrustee.com
+
 # --- TYPE: SUFFIX ---
 suffix,0.zone
 suffix,00.net
@@ -3267,8 +3270,6 @@ suffix,funshion.net
 suffix,fusion.design
 suffix,fusionappl.com
 suffix,futa.eu
-suffix,futu5.com
-suffix,futunn.com
 suffix,fuwai.com
 suffix,fuwj.com
 suffix,fw4.co
@@ -5693,7 +5694,6 @@ suffix,moleecel.com
 suffix,monidata.com
 suffix,monternet.com
 suffix,moocollege.com
-suffix,moomoo.com
 suffix,moomoobull.com
 suffix,moonton.com
 suffix,mop.com
