@@ -2169,9 +2169,9 @@ suffix,apexlegends.com
 suffix,apexprint.com.hk
 suffix,api-extractor.com
 suffix,api.ai
-suffix,api.mixpanel.com
-suffix,api.moomoobull.com
-suffix,api.nebula-emby.com
+suffix,mixpanel.com
+suffix,moomoobull.com
+suffix,nebula-emby.com
 suffix,api.news
 suffix,apiary.io
 suffix,apiauto.ru
@@ -17598,6 +17598,8 @@ suffix,monthlyav.com
 suffix,moodstocks.com
 suffix,moodyz.com
 suffix,moomoo.com
+suffix,xlys.me
+suffix,moomooapp.com
 suffix,moomooequity.com
 suffix,moomootrustee.com
 suffix,moon.fm
@@ -17625,6 +17627,7 @@ suffix,mortein.co.in
 suffix,mortein.co.nz
 suffix,mortein.co.za
 suffix,mortein.com
+suffix,kelee.one
 suffix,mortein.com.au
 suffix,mortein.com.br
 suffix,mortein.com.ng
