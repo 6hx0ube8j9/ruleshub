@@ -1,5 +1,25 @@
 # === china-lite.txt Combined Base Rules ===
-
+remove,futu.link
+remove,futu5.com
+remove,futuau.com
+remove,futuesop.com
+remove,futufin.com
+remove,futuhk.com
+remove,futuhk1.com
+remove,futuhk2.com
+remove,futuhkapp.com
+remove,futuhn.com
+remove,futuholdings.com
+remove,futuniuniu.com
+remove,futunn.com
+remove,futuoa.com
+remove,futusg.com
+remove,futustatic.com
+remove,fututrade.com
+remove,moomoo.app
+remove,moomoo.com
+remove,moomooequity.com
+remove,moomootrustee.com
 # --- TYPE: SUFFIX ---
 suffix,0.zone
 suffix,00.net
