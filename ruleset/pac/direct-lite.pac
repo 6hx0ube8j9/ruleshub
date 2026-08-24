@@ -5682,7 +5682,6 @@ var DIRECT_DOMAINS = {
     "monidata.com": 1,
     "monternet.com": 1,
     "moocollege.com": 1,
-    "moomoobull.com": 1,
     "moonton.com": 1,
     "mop.com": 1,
     "morethan.tv": 1,

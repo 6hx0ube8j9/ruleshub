@@ -1,3 +1,4 @@
+# === china-lite.txt Combined Base Rules ===
 
 # --- TYPE: SUFFIX ---
 suffix,0.zone
