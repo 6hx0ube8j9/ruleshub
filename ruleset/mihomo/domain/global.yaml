@@ -2165,9 +2165,6 @@ payload:
     - +.apexprint.com.hk
     - +.api-extractor.com
     - +.api.ai
-    - +.api.mixpanel.com
-    - +.api.moomoobull.com
-    - +.api.nebula-emby.com
     - +.api.news
     - +.apiary.io
     - +.apiauto.ru
@@ -15194,6 +15191,7 @@ payload:
     - +.keepyourcad.com
     - +.keezmovies.com
     - +.keiba.net
+    - +.kelee.one
     - +.kemono.cr
     - +.kemono.party
     - +.kemono.su
@@ -17358,6 +17356,7 @@ payload:
     - +.mixin.one
     - +.mixlr.com
     - +.mixmaturesex.com
+    - +.mixpanel.com
     - +.mixplorer.com
     - +.mixpod.com
     - +.mixvintagesex.com
@@ -17594,6 +17593,8 @@ payload:
     - +.moodstocks.com
     - +.moodyz.com
     - +.moomoo.com
+    - +.moomooapp.com
+    - +.moomoobull.com
     - +.moomooequity.com
     - +.moomootrustee.com
     - +.moon.fm
@@ -18280,6 +18281,7 @@ payload:
     - +.near.by
     - +.nebay.net
     - +.neborder.com
+    - +.nebula-emby.com
     - +.ned.org
     - +.nee4you.com
     - +.needforspeed.com
@@ -27481,7 +27483,6 @@ payload:
     - +.web-instagram.net
     - +.web.app
     - +.web.dev
-    - +.web.nebula-emby.com
     - +.web2project.net
     - +.web3modal.org
     - +.webappfieldguide.com
@@ -28266,6 +28267,7 @@ payload:
     - +.xlovecam.com
     - +.xlstudio.com
     - +.xlydh.cc
+    - +.xlys.me
     - +.xm.com
     - +.xmail.ru
     - +.xmalay.com

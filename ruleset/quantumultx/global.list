@@ -2166,9 +2166,6 @@ host-suffix, apexlegends.com, global
 host-suffix, apexprint.com.hk, global
 host-suffix, api-extractor.com, global
 host-suffix, api.ai, global
-host-suffix, api.mixpanel.com, global
-host-suffix, api.moomoobull.com, global
-host-suffix, api.nebula-emby.com, global
 host-suffix, api.news, global
 host-suffix, apiary.io, global
 host-suffix, apiauto.ru, global
@@ -15195,6 +15192,7 @@ host-suffix, keepmovingwithmovefree.com, global
 host-suffix, keepyourcad.com, global
 host-suffix, keezmovies.com, global
 host-suffix, keiba.net, global
+host-suffix, kelee.one, global
 host-suffix, kemono.cr, global
 host-suffix, kemono.party, global
 host-suffix, kemono.su, global
@@ -17359,6 +17357,7 @@ host-suffix, mixi.net, global
 host-suffix, mixin.one, global
 host-suffix, mixlr.com, global
 host-suffix, mixmaturesex.com, global
+host-suffix, mixpanel.com, global
 host-suffix, mixplorer.com, global
 host-suffix, mixpod.com, global
 host-suffix, mixvintagesex.com, global
@@ -17595,6 +17594,8 @@ host-suffix, monthlyav.com, global
 host-suffix, moodstocks.com, global
 host-suffix, moodyz.com, global
 host-suffix, moomoo.com, global
+host-suffix, moomooapp.com, global
+host-suffix, moomoobull.com, global
 host-suffix, moomooequity.com, global
 host-suffix, moomootrustee.com, global
 host-suffix, moon.fm, global
@@ -18281,6 +18282,7 @@ host-suffix, ndr.de, global
 host-suffix, near.by, global
 host-suffix, nebay.net, global
 host-suffix, neborder.com, global
+host-suffix, nebula-emby.com, global
 host-suffix, ned.org, global
 host-suffix, nee4you.com, global
 host-suffix, needforspeed.com, global
@@ -27482,7 +27484,6 @@ host-suffix, weav.xyz, global
 host-suffix, web-instagram.net, global
 host-suffix, web.app, global
 host-suffix, web.dev, global
-host-suffix, web.nebula-emby.com, global
 host-suffix, web2project.net, global
 host-suffix, web3modal.org, global
 host-suffix, webappfieldguide.com, global
@@ -28267,6 +28268,7 @@ host-suffix, xlinkz.to, global
 host-suffix, xlovecam.com, global
 host-suffix, xlstudio.com, global
 host-suffix, xlydh.cc, global
+host-suffix, xlys.me, global
 host-suffix, xm.com, global
 host-suffix, xmail.ru, global
 host-suffix, xmalay.com, global
