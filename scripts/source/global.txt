@@ -2170,6 +2170,7 @@ suffix,apexprint.com.hk
 suffix,api-extractor.com
 suffix,api.ai
 suffix,api.news
+suffix,api.shuaiapi.com
 suffix,apiary.io
 suffix,apiauto.ru
 suffix,apibay.org
@@ -28089,6 +28090,7 @@ suffix,x365x.com
 suffix,x3guide.com
 suffix,x3vid.com
 suffix,x6av.com
+suffix,x86.fr
 suffix,x99av.com
 suffix,x9wang.com
 suffix,xacmbq.xyz

@@ -2167,6 +2167,7 @@ payload:
   - DOMAIN-SUFFIX,api-extractor.com
   - DOMAIN-SUFFIX,api.ai
   - DOMAIN-SUFFIX,api.news
+  - DOMAIN-SUFFIX,api.shuaiapi.com
   - DOMAIN-SUFFIX,apiary.io
   - DOMAIN-SUFFIX,apiauto.ru
   - DOMAIN-SUFFIX,apibay.org
@@ -28086,6 +28087,7 @@ payload:
   - DOMAIN-SUFFIX,x3guide.com
   - DOMAIN-SUFFIX,x3vid.com
   - DOMAIN-SUFFIX,x6av.com
+  - DOMAIN-SUFFIX,x86.fr
   - DOMAIN-SUFFIX,x99av.com
   - DOMAIN-SUFFIX,x9wang.com
   - DOMAIN-SUFFIX,xacmbq.xyz
