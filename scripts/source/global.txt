@@ -4154,6 +4154,7 @@ suffix,blackamateursvideos.com
 suffix,blackandstacked.com
 suffix,blackboxgames.com
 suffix,blacked.com
+suffix,blackedraw.com
 suffix,blackfridaydrebeatsnew.com
 suffix,blackfridaydrebeatsshop.com
 suffix,blackhomeporn.com
@@ -10782,6 +10783,8 @@ suffix,gate-project.com
 suffix,gate.cc
 suffix,gate.com
 suffix,gate.io
+suffix,gate.tv
+suffix,gateapi.io
 suffix,gatecoin.com
 suffix,gatedata.org
 suffix,gateimg.com
@@ -16999,6 +17002,7 @@ suffix,milfthreesomes.com
 suffix,milftube.pro
 suffix,milftugs.com
 suffix,milfvr.com
+suffix,milfy.com
 suffix,milfzr.com
 suffix,miliav.com
 suffix,milkmanbook.com
@@ -23368,6 +23372,7 @@ suffix,slashdot.org
 suffix,slashine.onl
 suffix,slavbank.ru
 suffix,slavicstar.com
+suffix,slayed.com
 suffix,slaytizle.com
 suffix,slc.tl
 suffix,sldolls.com
@@ -25743,6 +25748,7 @@ suffix,turntable.fm
 suffix,tusco.ru
 suffix,tushy.com
 suffix,tushycash.com
+suffix,tushyraw.com
 suffix,tuta.com
 suffix,tuta.io
 suffix,tutamail.com
@@ -26880,6 +26886,7 @@ suffix,vivatube.com
 suffix,vivaxnxx.com
 suffix,vivthomas.com
 suffix,vixen.com
+suffix,vixengroup.com
 suffix,vixvids.to
 suffix,vizvaz.com
 suffix,vjav.com
