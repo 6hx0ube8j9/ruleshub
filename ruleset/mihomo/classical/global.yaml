@@ -811,6 +811,7 @@ payload:
   - DOMAIN-SUFFIX,9bis.com
   - DOMAIN-SUFFIX,9bis.net
   - DOMAIN-SUFFIX,9cache.com
+  - DOMAIN-SUFFIX,9cao9.com
   - DOMAIN-SUFFIX,9ccms.me
   - DOMAIN-SUFFIX,9cdn.net
   - DOMAIN-SUFFIX,9gag.com
@@ -1020,6 +1021,7 @@ payload:
   - DOMAIN-SUFFIX,adguard.io
   - DOMAIN-SUFFIX,adguard.org
   - DOMAIN-SUFFIX,adguardaccount.com
+  - DOMAIN-SUFFIX,adguardaccount.net
   - DOMAIN-SUFFIX,adguardcdn.com
   - DOMAIN-SUFFIX,adguardvpn.com
   - DOMAIN-SUFFIX,adhelpnews.com
@@ -10981,6 +10983,7 @@ payload:
   - DOMAIN-SUFFIX,getlantern.org
   - DOMAIN-SUFFIX,getmalus.com
   - DOMAIN-SUFFIX,getmdl.io
+  - DOMAIN-SUFFIX,getmonero.org
   - DOMAIN-SUFFIX,getnews.jp
   - DOMAIN-SUFFIX,getoutline.org
   - DOMAIN-SUFFIX,getpaint.net
@@ -11943,6 +11946,7 @@ payload:
   - DOMAIN-SUFFIX,h0930.com
   - DOMAIN-SUFFIX,h18ani1.vip
   - DOMAIN-SUFFIX,h1n1china.org
+  - DOMAIN-SUFFIX,h264.io
   - DOMAIN-SUFFIX,h2o.ai
   - DOMAIN-SUFFIX,h2porn.com
   - DOMAIN-SUFFIX,h528.com
@@ -19691,6 +19695,7 @@ payload:
   - DOMAIN-SUFFIX,oursteps.com.au
   - DOMAIN-SUFFIX,oursweb.net
   - DOMAIN-SUFFIX,ourtv.hk
+  - DOMAIN-SUFFIX,ouryahoo.com
   - DOMAIN-SUFFIX,out-app-purchase.com
   - DOMAIN-SUFFIX,outbound.io
   - DOMAIN-SUFFIX,outdoorpublicsex.com
@@ -21874,6 +21879,7 @@ payload:
   - DOMAIN-SUFFIX,religionnews.com
   - DOMAIN-SUFFIX,religioustolerance.org
   - DOMAIN-SUFFIX,remirepo.net
+  - DOMAIN-SUFFIX,remna.st
   - DOMAIN-SUFFIX,rencapbank.ru
   - DOMAIN-SUFFIX,renchead.com
   - DOMAIN-SUFFIX,rencredit.ru
@@ -25372,6 +25378,7 @@ payload:
   - DOMAIN-SUFFIX,toperoticartsites.com
   - DOMAIN-SUFFIX,topescort.nl
   - DOMAIN-SUFFIX,topescortbabes.com
+  - DOMAIN-SUFFIX,topexhib.net
   - DOMAIN-SUFFIX,topface.com
   - DOMAIN-SUFFIX,topfantasyart.com
   - DOMAIN-SUFFIX,topfreepornvideos.com
@@ -27981,6 +27988,7 @@ payload:
   - DOMAIN-SUFFIX,wrchina.org
   - DOMAIN-SUFFIX,wrenchead.com
   - DOMAIN-SUFFIX,wretch.cc
+  - DOMAIN-SUFFIX,write.as
   - DOMAIN-SUFFIX,writesonic.com
   - DOMAIN-SUFFIX,ws-blau.com
   - DOMAIN-SUFFIX,ws-tcg.com
@@ -28887,6 +28895,7 @@ payload:
   - DOMAIN-SUFFIX,yahoodns.net
   - DOMAIN-SUFFIX,yahoofinance.com
   - DOMAIN-SUFFIX,yahoohealth.com
+  - DOMAIN-SUFFIX,yahooinc.com
   - DOMAIN-SUFFIX,yahoomusic.com
   - DOMAIN-SUFFIX,yahoosandbox.com
   - DOMAIN-SUFFIX,yahoosportsbook.com
