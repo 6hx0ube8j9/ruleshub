@@ -34,8 +34,11 @@ def mihomo_domain_text(rules):
 
 # ---------------- 阶段 2: 核心调度与路由 ----------------
 
-def export_all(global_matrix, dir_map):
-    """统一调度并导出所有平台的规则集文件（动态映射驱动）。"""
+def export_all(global_matrix, dir_map, write_func):
+    """
+    统一调度并导出所有平台的规则集文件（动态映射驱动）。
+    【架构解耦】将磁盘 I/O 控制权反转给主控，接收外部传入的原子级写入方法 write_func
+    """
     print("[信息] 开始启动多平台规则集统一导出流程")
     for plat, output_dir in dir_map.items():
         print(f"[信息] 正在检索平台配置分支: {plat}")
@@ -43,25 +46,34 @@ def export_all(global_matrix, dir_map):
             generator_func = globals().get(f"generate_{plat}")
             if generator_func:
                 print(f"[信息] 成功映射平台生成函数，准备调用: generate_{plat}")
-                generator_func(global_matrix[plat], output_dir)
+                # 注入外部传入的安全写入函数
+                generator_func(global_matrix[plat], output_dir, write_func)
             else:
                 print(f"[警告] 找不到该平台的生成函数: {plat}")
 
 
 # ---------------- 阶段 3: 平台规则集生成器 ----------------
 
-def generate_mihomo_classical(matrix_data, output_dir):
+def generate_mihomo_classical(matrix_data, output_dir, write_func):
     """生成 Mihomo Classical 格式的 YAML 规则集。"""
     for g_name, g_rules in matrix_data.items():
         mihomo_path = os.path.join(output_dir, f"{g_name}.yaml")
         lines = [f"# Mihomo Payload Rule-Set: {g_name}\npayload:\n"]
         
-        # 定义 Mihomo 规则类型的写入顺序与映射关系
+        # 1. 动态嗅探并处理进程类型 (精确剥离 PROCESS-PATH 与 PROCESS-NAME)
+        for val in sorted(g_rules.get('process', [])):
+            if '/' in val.replace('\\', '/'):
+                lines.append(f"  - PROCESS-PATH,{val}\n")
+            else:
+                lines.append(f"  - PROCESS-NAME,{val}\n")
+
+        # 2. 定义其他常规规则类型的写入顺序与映射关系
         ordered_types = [
-            ('PROCESS-NAME', 'process'), ('DST-PORT', 'port'), ('DOMAIN', 'full'),
+            ('DST-PORT', 'port'), ('DOMAIN', 'full'),
             ('DOMAIN-SUFFIX', 'suffix'), ('DOMAIN-KEYWORD', 'keyword'),
             ('IP-CIDR', 'ip'), ('IP-CIDR6', 'ip6'), ('DOMAIN-WILDCARD', 'wildcard'), ('DOMAIN-REGEX', 'regex')
         ]
+        
         for raw_type, ik in ordered_types:
             for val in sorted(g_rules.get(ik, [])):
                 if ik in ['ip', 'ip6']: 
@@ -69,12 +81,12 @@ def generate_mihomo_classical(matrix_data, output_dir):
                 else: 
                     lines.append(f"  - {raw_type},{val}\n")
 
-        print(f"[信息] 开始写入 Mihomo Classical 规则集文件: {mihomo_path}")
-        with open(mihomo_path, 'w', encoding='utf-8') as f:
-            f.write("".join(lines))
-        print(f"[成功] Mihomo Classical 规则集文件写入完成: {mihomo_path}")
+        print(f"[信息] 开始装配 Mihomo Classical 规则集: {mihomo_path}")
+        # 【解耦】交由外部原子级落盘代理
+        write_func(mihomo_path, "".join(lines))
+        print(f"[成功] Mihomo Classical 规则集提交给存储管道: {mihomo_path}")
 
-def generate_quantumultx(matrix_data, output_dir):
+def generate_quantumultx(matrix_data, output_dir, write_func):
     """生成 Quantumult X 格式的规则集文件 (.list)。"""
     for g_name, g_rules in matrix_data.items():
         qx_path = os.path.join(output_dir, f"{g_name}.list")
@@ -102,18 +114,17 @@ def generate_quantumultx(matrix_data, output_dir):
         for val in sorted(g_rules.get('regex', [])): 
             lines.append(f"host-regex, {val.strip()}, {qx_policy}\n")
 
-        print(f"[信息] 开始写入 Quantumult X 规则集文件: {qx_path}")
-        with open(qx_path, 'w', encoding='utf-8') as f:
-            f.write("".join(lines))
-        print(f"[成功] Quantumult X 规则集文件写入完成: {qx_path}")
+        print(f"[信息] 开始装配 Quantumult X 规则集: {qx_path}")
+        write_func(qx_path, "".join(lines))
+        print(f"[成功] Quantumult X 规则集提交给存储管道: {qx_path}")
 
-def generate_shadowrocket(matrix_data, output_dir):
+def generate_shadowrocket(matrix_data, output_dir, write_func):
     """生成 Shadowrocket 格式的规则集文件 (.list)。"""
     for g_name, g_rules in matrix_data.items():
         sr_path = os.path.join(output_dir, f"{g_name}.list")
         
         lines = [f"# Shadowrocket Rule-Set: {g_name}\n\n"]
-        # 过滤并单独处理端口规则
+        # 过滤并单独处理端口规则（保留对范围端口 - 和 : 的过滤逻辑）
         for val in sorted({str(p) for p in g_rules.get('port', [])}):
             if '-' in val or ':' in val: continue
             lines.append(f"DST-PORT,{val}\n")
@@ -131,12 +142,11 @@ def generate_shadowrocket(matrix_data, output_dir):
                 else: 
                     lines.append(f"{raw_type},{val}\n")
 
-        print(f"[信息] 开始写入 Shadowrocket 规则集文件: {sr_path}")
-        with open(sr_path, 'w', encoding='utf-8') as f:
-            f.write("".join(lines))
-        print(f"[成功] Shadowrocket 规则集文件写入完成: {sr_path}")
+        print(f"[信息] 开始装配 Shadowrocket 规则集: {sr_path}")
+        write_func(sr_path, "".join(lines))
+        print(f"[成功] Shadowrocket 规则集提交给存储管道: {sr_path}")
 
-def generate_loon(matrix_data, output_dir):
+def generate_loon(matrix_data, output_dir, write_func):
     """生成 Loon 格式的规则集文件 (.lsr)。"""
     for g_name, g_rules in matrix_data.items():
         loon_path = os.path.join(output_dir, f"{g_name}.lsr")
@@ -164,12 +174,11 @@ def generate_loon(matrix_data, output_dir):
                     else:
                         lines.append(f"{loon_tag},{val}\n")
 
-        print(f"[信息] 开始写入 Loon 规则集文件: {loon_path}")
-        with open(loon_path, 'w', encoding='utf-8') as f:
-            f.write("".join(lines))
-        print(f"[成功] LSR 规则集生成成功: {g_name}.lsr")
+        print(f"[信息] 开始装配 Loon 规则集: {loon_path}")
+        write_func(loon_path, "".join(lines))
+        print(f"[成功] LSR 规则集提交给存储管道: {g_name}.lsr")
 
-def generate_singbox(matrix_data, output_dir):
+def generate_singbox(matrix_data, output_dir, write_func):
     """生成 Sing-box 格式的 JSON 规则集文件。"""
     for g_name, raw_rules in matrix_data.items():
         sb_path = os.path.join(output_dir, f"{g_name}.json")
@@ -191,10 +200,9 @@ def generate_singbox(matrix_data, output_dir):
         if dest_rule:
             sb_data["rules"].append(dest_rule)
             
-        # 提取进程名（剔除路径与 Windows 后缀）
+        # 提取进程名
         if g_rules.get('process'):
-            proc_set = {os.path.basename(p.replace('\\', '/'))[:-4] if p.replace('\\', '/').lower().endswith('.exe') 
-                        else os.path.basename(p.replace('\\', '/')) for p in g_rules['process'] if p}
+            proc_set = {os.path.basename(p.replace('\\', '/')) for p in g_rules['process'] if p}
             if proc_set:
                 sb_data["rules"].append({"process_name": sorted(list(proc_set))})
 
@@ -203,15 +211,12 @@ def generate_singbox(matrix_data, output_dir):
             for and_rule in g_rules['logical_and']:
                 sb_data["rules"].append(and_rule)
 
-        # 100% 保证写盘，不漏掉任何文件
-        print(f"[信息] 开始写入 Sing-box 规则集文件: {sb_path}")
-        with open(sb_path, 'w', encoding='utf-8') as f:
-            json.dump(sb_data, f, indent=2, ensure_ascii=False)
-        print(f"[成功] Sing-box 规则集文件写入完成: {sb_path}")
+        print(f"[信息] 开始组装 Sing-box 规则集: {sb_path}")
+        json_str = json.dumps(sb_data, indent=2, ensure_ascii=False)
+        write_func(sb_path, json_str)
+        print(f"[成功] Sing-box 规则集提交给存储管道: {sb_path}")
 
-import os
-
-def generate_pac(matrix_data, output_dir):
+def generate_pac(matrix_data, output_dir, write_func):
     """生成标准 Proxy Auto-Config (PAC) 脚本文件 (.pac)。"""
     for g_name, g_rules in matrix_data.items():
         pac_path = os.path.join(output_dir, f"{g_name}.pac")
@@ -283,7 +288,6 @@ function FindProxyForURL(url, host) {
 }
 """
         lines.append(js_function)
-        print(f"[信息] 开始写入 PAC 脚本文件: {pac_path}")
-        with open(pac_path, 'w', encoding='utf-8') as f:
-            f.write("".join(lines))
-        print(f"[成功] PAC 脚本文件写入完成: {pac_path}")
+        print(f"[信息] 开始装配 PAC 脚本: {pac_path}")
+        write_func(pac_path, "".join(lines))
+        print(f"[成功] PAC 脚本提交给存储管道: {pac_path}")
