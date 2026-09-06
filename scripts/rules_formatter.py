@@ -146,6 +146,44 @@ def generate_shadowrocket(matrix_data, output_dir, write_func):
         write_func(sr_path, "".join(lines))
         print(f"[成功] Shadowrocket 规则集提交给存储管道: {sr_path}")
 
+def generate_surfboard(matrix_data, output_dir, write_func):
+    """生成 Surfboard / Surge 格式的规则集文件 (.list)。"""
+    for g_name, g_rules in matrix_data.items():
+        sb_path = os.path.join(output_dir, f"{g_name}.list")
+        lines = [f"# Surfboard Rule-Set: {g_name}\n\n"]
+        
+        # 1. 保留核心特性：Android App 包名进程路由
+        for val in sorted(g_rules.get('process', [])):
+            if not ('/' in val or '\\' in val): 
+                lines.append(f"PROCESS-NAME,{val}\n")
+                
+        # 2. 端口过滤（采用标准的 DEST-PORT）
+        for val in sorted({str(p) for p in g_rules.get('port', [])}):
+            if '-' in val or ':' in val: continue
+            lines.append(f"DEST-PORT,{val}\n")
+
+        # 3. 基础域名与 IP 映射
+        sb_ordered_types = [
+            ('DOMAIN', 'full'), ('DOMAIN-SUFFIX', 'suffix'), ('DOMAIN-KEYWORD', 'keyword'),
+            ('IP-CIDR', 'ip'), ('IP-CIDR6', 'ip6'), ('USER-AGENT', 'useragent'),
+            ('DOMAIN-WILDCARD', 'wildcard')
+        ]
+        for raw_type, ik in sb_ordered_types:
+            for val in sorted(g_rules.get(ik, [])):
+                if ik in ['ip', 'ip6']: 
+                    lines.append(f"{raw_type},{val},no-resolve\n")
+                else: 
+                    lines.append(f"{raw_type},{val}\n")
+                    
+        # 4. 正则归一化：将全部正则降级/转化为 Surfboard 支持的 URL-REGEX
+        for ik in ['regex', 'url-regex']:
+            for val in sorted(g_rules.get(ik, [])):
+                lines.append(f"URL-REGEX,{val}\n")
+
+        print(f"[信息] 开始装配 Surfboard 规则集: {sb_path}")
+        write_func(sb_path, "".join(lines))
+        print(f"[成功] Surfboard 规则集提交给存储管道: {sb_path}")
+        
 def generate_loon(matrix_data, output_dir, write_func):
     """生成 Loon 格式的规则集文件 (.lsr)。"""
     for g_name, g_rules in matrix_data.items():
