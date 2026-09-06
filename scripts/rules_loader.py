@@ -30,7 +30,8 @@ ROUTING_MATRIX = {
     'mihomo_classical': {'dir': os.path.join(MIHOMO_DIR, 'classical')},    
     'quantumultx':      {'dir': os.path.join(RULESET_BASE_DIR, 'quantumultx')},    
     'singbox':          {'dir': os.path.join(RULESET_BASE_DIR, 'singbox')},
-    'shadowrocket':     {'dir': os.path.join(RULESET_BASE_DIR, 'shadowrocket')},    
+    'shadowrocket':     {'dir': os.path.join(RULESET_BASE_DIR, 'shadowrocket')},   
+	'surfboard':        {'dir': os.path.join(RULESET_BASE_DIR, 'surfboard')},
     'pac':              {'whitelist': ['direct-lite'], 'dir': os.path.join(RULESET_BASE_DIR, 'pac')},
 	'mihomo_ipcidr':    {'dir': os.path.join(MIHOMO_DIR, 'ipcidr')},
     'mihomo_domain':    {'dir': os.path.join(MIHOMO_DIR, 'domain')}
