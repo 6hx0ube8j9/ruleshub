@@ -286,7 +286,17 @@ def parse_standard_rule(clean_line: str, has_policy: bool = True) -> Tuple[Optio
 
     internal_type = RULE_MAP[tag]
 
-    # 1. 特殊类型 (regex, wildcard, useragent)：精确剥离尾部策略名
+    # REMOVE 规则的递归清洗逻辑
+    if internal_type == 'remove':
+        _, normalized_payload = parse_line(tail, has_policy=has_policy)
+        
+        if normalized_payload:
+            return 'remove', normalized_payload
+        else:
+            fallback_payload = tail.split(',')[-1].strip().strip("'\"")
+            return ('remove', fallback_payload) if fallback_payload else (None, "")
+
+    # 1. 特殊类型 (regex, wildcard, useragent, url-regex)：精确剥离尾部策略名
     if internal_type in ('regex', 'wildcard', 'useragent', 'url-regex'):
         if has_policy and ',' in tail:
             match = _TRAILING_POLICY_RE.search(tail)
