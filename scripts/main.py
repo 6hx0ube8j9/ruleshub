@@ -504,8 +504,13 @@ async def async_main():
         
         # 3. 驱动上游格式化模块全量导出纯文本规则
         print("[信息] 开始驱动上游格式化模块全量导出各平台纯文本规则")
-        FORMATTER_EXPORT_ALL(global_matrix=global_matrix, dir_map=output_directories)
+        FORMATTER_EXPORT_ALL(
+            global_matrix=global_matrix, 
+            dir_map=output_directories,
+            write_func=safe_write_text
+        )
         print("[成功] 各平台纯文本规则全量导出完成")
+        
         
         # 4. 驱动外部二进制链条执行最终编译固化
         for group_name, (group_config, rules) in group_rules_cache.items():
