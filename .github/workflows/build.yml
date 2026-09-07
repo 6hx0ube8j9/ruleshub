@@ -1,9 +1,9 @@
 name: Build Matrix
 
 on:
-  #push:
-  #  branches:
-  #    - main
+  push:
+    branches:
+      - main
     paths:
       - 'scripts/**'
       - 'scripts/ruleset.json'
