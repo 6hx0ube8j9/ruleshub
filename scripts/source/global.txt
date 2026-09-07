@@ -15815,6 +15815,7 @@ suffix,linseysworld.com
 suffix,linux.do
 suffix,linux.org
 suffix,linux.org.hk
+suffix,linux.sb
 suffix,linuxfoundation.org
 suffix,linuxfromscratch.org
 suffix,linuxmint.com
