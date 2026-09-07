@@ -149,7 +149,7 @@
       ],
       "outputs": {
 		"qx_policy": "direct", 	
-        "surfboard_domain": true		  
+        "surfboard_domain": true,		  
         "mihomo_ipcidr": false
       }	
     },
