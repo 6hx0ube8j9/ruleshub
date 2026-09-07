@@ -32,6 +32,7 @@ ROUTING_MATRIX = {
     'singbox':          {'dir': os.path.join(RULESET_BASE_DIR, 'singbox')},
     'shadowrocket':     {'dir': os.path.join(RULESET_BASE_DIR, 'shadowrocket')},   
 	'surfboard':        {'dir': os.path.join(RULESET_BASE_DIR, 'surfboard')},
+	'surfboard_domain': {'regex': r'domain', 'blacklist': ['nodomain'], 'dir': os.path.join(RULESET_BASE_DIR, 'surfboard', 'domain')},
     'pac':              {'whitelist': ['direct-lite'], 'dir': os.path.join(RULESET_BASE_DIR, 'pac')},
 	'mihomo_ipcidr':    {'dir': os.path.join(MIHOMO_DIR, 'ipcidr')},
     'mihomo_domain':    {'dir': os.path.join(MIHOMO_DIR, 'domain')}
