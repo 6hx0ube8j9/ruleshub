@@ -147,42 +147,56 @@ def generate_shadowrocket(matrix_data, output_dir, write_func):
         print(f"[成功] Shadowrocket 规则集提交给存储管道: {sr_path}")
 
 def generate_surfboard(matrix_data, output_dir, write_func):
-    """生成 Surfboard / Surge 格式的规则集文件 (.list)。"""
+    """生成 Surfboard RULE-SET规则集文件 (.list)"""
     for g_name, g_rules in matrix_data.items():
         sb_path = os.path.join(output_dir, f"{g_name}.list")
         lines = [f"# Surfboard Rule-Set: {g_name}\n\n"]
         
-        # 1. 保留核心特性：Android App 包名进程路由
+        # 1. 提取安卓 App 包名
         for val in sorted(g_rules.get('process', [])):
-            if not ('/' in val or '\\' in val): 
+            if not ('/' in val or '\\' in val):
                 lines.append(f"PROCESS-NAME,{val}\n")
                 
-        # 2. 端口过滤（采用标准的 DEST-PORT）
-        for val in sorted({str(p) for p in g_rules.get('port', [])}):
-            if '-' in val or ':' in val: continue
-            lines.append(f"DEST-PORT,{val}\n")
-
-        # 3. 基础域名与 IP 映射
+        # 2. 基础规则映射
         sb_ordered_types = [
             ('DOMAIN', 'full'), ('DOMAIN-SUFFIX', 'suffix'), ('DOMAIN-KEYWORD', 'keyword'),
-            ('IP-CIDR', 'ip'), ('IP-CIDR6', 'ip6'), ('USER-AGENT', 'useragent'),
-            ('DOMAIN-WILDCARD', 'wildcard')
+            ('DOMAIN-WILDCARD', 'wildcard'), ('IP-CIDR', 'ip'), ('IP-CIDR6', 'ip6'), 
+            ('GEOIP', 'geoip')
         ]
+        
         for raw_type, ik in sb_ordered_types:
             for val in sorted(g_rules.get(ik, [])):
-                if ik in ['ip', 'ip6']: 
-                    lines.append(f"{raw_type},{val},no-resolve\n")
-                else: 
-                    lines.append(f"{raw_type},{val}\n")
-                    
-        # 4. 正则归一化：将全部正则降级/转化为 Surfboard 支持的 URL-REGEX
-        for ik in ['regex', 'url-regex']:
-            for val in sorted(g_rules.get(ik, [])):
-                lines.append(f"URL-REGEX,{val}\n")
+                lines.append(f"{raw_type},{val}\n")
 
         print(f"[信息] 开始装配 Surfboard 规则集: {sb_path}")
         write_func(sb_path, "".join(lines))
         print(f"[成功] Surfboard 规则集提交给存储管道: {sb_path}")
+		
+def generate_surfboard_domain(matrix_data, output_dir, write_func):
+    """生成 Surfboard DOMAIN-SET 规则集文件 (.txt) """
+    for g_name, g_rules in matrix_data.items():
+        # 如果没有命中任何基础域名，跳过生成
+        if not g_rules.get('full') and not g_rules.get('suffix'):
+            print(f"[信息] 策略组 {g_name} 无有效域名数据，跳过 DOMAIN-SET 列表生成")
+            continue
+            
+        sb_path = os.path.join(output_dir, f"{g_name}.txt")
+        lines = [f"# Surfboard Domain-Set: {g_name}\n"]
+        
+        # 1. 处理精确域名 (DOMAIN -> 'full')
+        for val in sorted(g_rules.get('full', [])):
+            lines.append(f"{val}\n")
+            
+        # 2. 处理域名后缀 (DOMAIN-SUFFIX -> 'suffix')
+        for val in sorted(g_rules.get('suffix', [])):
+            if val.startswith('.'):
+                lines.append(f"{val}\n")
+            else:
+                lines.append(f".{val}\n")
+
+        print(f"[信息] 开始装配 Surfboard 域名列表: {sb_path}")
+        write_func(sb_path, "".join(lines))
+        print(f"[成功] Surfboard 域名列表提交给存储管道: {sb_path}")
         
 def generate_loon(matrix_data, output_dir, write_func):
     """生成 Loon 格式的规则集文件 (.lsr)。"""
