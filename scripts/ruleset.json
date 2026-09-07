@@ -73,7 +73,10 @@
       "name": "apple",
       "inputs": [
         "apple.txt"
-      ]
+      ],   
+      "outputs": {
+        "surfboard_domain": true	 
+      }
     },
     {
       "name": "apple-music",
@@ -145,7 +148,8 @@
         "lan.txt"			  
       ],
       "outputs": {
-		"qx_policy": "direct", 		  
+		"qx_policy": "direct", 	
+        "surfboard_domain": true		  
         "mihomo_ipcidr": false
       }	
     },
@@ -184,19 +188,28 @@
       "name": "google",
       "inputs": [
         "google.txt"
-      ]
+      ],   
+      "outputs": {
+        "surfboard_domain": true	 
+      }
     },
     {
       "name": "global",
       "inputs": [
         "global.txt"
-      ]
+      ],   
+      "outputs": {
+        "surfboard_domain": true	 
+      }
     },
     {
       "name": "microsoft",
       "inputs": [
         "microsoft.txt"
-      ]
+      ],   
+      "outputs": {
+        "surfboard_domain": true	 
+      }
     },
     {
       "name": "mihoyo",
