@@ -9,9 +9,8 @@ on:
       - 'scripts/ruleset.json'
       - '.github/workflows/build.yml'
   schedule:
-    - cron: '0 22 */6 * *'
+    - cron: '17 22 * * 0'
   workflow_dispatch:
-
 permissions:
   contents: write
 
