@@ -18898,6 +18898,7 @@ host-suffix, nodejs.org, global
 host-suffix, nodequality.com, global
 host-suffix, nodereal.io, global
 host-suffix, nodeseek.com, global
+host-suffix, nodeseek.org, global
 host-suffix, nodesnoop.com, global
 host-suffix, nodesource.com, global
 host-suffix, nofile.io, global
@@ -21445,6 +21446,7 @@ host-suffix, qt-project.org, global
 host-suffix, qt.io, global
 host-suffix, qtrac.eu, global
 host-suffix, qtweeter.com, global
+host-suffix, quakemachinex.com, global
 host-suffix, qualcomm-email.com, global
 host-suffix, qualcomm-inc.com, global
 host-suffix, qualcomm.co.id, global

@@ -105953,6 +105953,7 @@ suffix,yuano.cc
 suffix,yuanpanguoji.com
 suffix,yuanqiao.net
 suffix,yuanqiao.pw
+suffix,yuanqidesk.com
 suffix,yuanqilt.com
 suffix,yuanqingsh.com
 suffix,yuanqisenlin.com

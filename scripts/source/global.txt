@@ -18901,6 +18901,7 @@ suffix,nodejs.org
 suffix,nodequality.com
 suffix,nodereal.io
 suffix,nodeseek.com
+suffix,nodeseek.org
 suffix,nodesnoop.com
 suffix,nodesource.com
 suffix,nofile.io
@@ -21448,6 +21449,7 @@ suffix,qt-project.org
 suffix,qt.io
 suffix,qtrac.eu
 suffix,qtweeter.com
+suffix,quakemachinex.com
 suffix,qualcomm-email.com
 suffix,qualcomm-inc.com
 suffix,qualcomm.co.id
