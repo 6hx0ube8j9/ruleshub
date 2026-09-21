@@ -24190,6 +24190,9 @@ host-suffix, stripcamfun.com, global
 host-suffix, stripchat.com, global
 host-suffix, stripe-terminal-local-reader.net, global
 host-suffix, stripe.com, global
+host-suffix, stripe.dev, global
+host-suffix, stripe.events, global
+host-suffix, stripe.global, global
 host-suffix, stripe.network, global
 host-suffix, stripecdn.com, global
 host-suffix, stripparadise.com, global

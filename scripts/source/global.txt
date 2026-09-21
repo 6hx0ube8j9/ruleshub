@@ -24193,6 +24193,9 @@ suffix,stripcamfun.com
 suffix,stripchat.com
 suffix,stripe-terminal-local-reader.net
 suffix,stripe.com
+suffix,stripe.dev
+suffix,stripe.events
+suffix,stripe.global
 suffix,stripe.network
 suffix,stripecdn.com
 suffix,stripparadise.com
