@@ -206,6 +206,7 @@ google-ohttp-relay-safebrowsing.fastly-edge.com
 .fflick.com
 .financeleadsonline.com
 .firebase.com
+.firebase.dev
 .firebase.io
 .firebaseapp.com
 .firebaseio.com

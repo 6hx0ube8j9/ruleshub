@@ -886,7 +886,6 @@ ztedevices.com
 .ablwang.com
 .aboluowang.com
 .about.co.kr
-.about.google
 .about.me
 .aboutamazon.cn
 .aboutamazon.co.uk
@@ -1007,6 +1006,7 @@ ztedevices.com
 .addison-wesley.ch
 .addthiscdn.com
 .addtoany.com
+.addtodropbox.com
 .addyoutube.com
 .adelaidebbs.com
 .adelaidenow.com.au
@@ -1314,7 +1314,6 @@ ztedevices.com
 .ai-sdk.dev
 .ai-wen.net
 .ai.dev
-.ai.google
 .ai.studio
 .ai7995.site
 .ai91porn.cc
@@ -4191,7 +4190,6 @@ ztedevices.com
 .blog.com
 .blog.de
 .blog.descargasgay.com
-.blog.google
 .blog.jp
 .blogblog.com
 .blogcatalog.com
@@ -5266,6 +5264,7 @@ ztedevices.com
 .c-span.org
 .c-spanvideo.org
 .c.gle
+.c.go-mpulse.net
 .c.mi.com
 .c0930.com
 .c100tibet.org
@@ -5972,6 +5971,7 @@ ztedevices.com
 .chinesen.de
 .chinesenews.net.au
 .chinesepen.org
+.chineseposters.net
 .chineseradioseattle.com
 .chinesespanking.com
 .chinesetalks.net
@@ -6005,7 +6005,6 @@ ztedevices.com
 .chrome.com
 .chromebook.com
 .chromecast.com
-.chromeenterprise.google
 .chromeexperiments.com
 .chromeos.dev
 .chromercise.com
@@ -6333,6 +6332,7 @@ ztedevices.com
 .code1984.com
 .codeberg.org
 .codeberg.page
+.codebuff.com
 .codecademy.com
 .codeforaliving.io
 .codeforces.com
@@ -6404,7 +6404,6 @@ ztedevices.com
 .colorfulstage.com
 .colorme-repeat.jp
 .colorprotechnology.com
-.com.google
 .com.ru
 .com.sb
 .com.uk
@@ -6638,7 +6637,6 @@ ztedevices.com
 .creditkarma.com
 .crewai.com
 .cricketcountry.com
-.crisisresponse.google
 .crisp.chat
 .cristyli.com
 .crit-staging.com
@@ -7273,7 +7271,6 @@ ztedevices.com
 .desertbmw.com
 .design-ledrev.com
 .design-ledrevolution.com
-.design.google
 .designeriphonescases.com
 .designledrevolution.com
 .designsformovement.com
@@ -7750,7 +7747,6 @@ ztedevices.com
 .dnitv.com
 .dns-dns.com
 .dns-stuff.com
-.dns.google
 .dns.sb
 .dns04.com
 .dns05.com
@@ -7823,7 +7819,6 @@ ztedevices.com
 .dolphiners.com
 .dolyame.ru
 .domain.club.tw
-.domains.google
 .domaintoday.com.au
 .dombosco.com.br
 .domrfbank.ru
@@ -8003,12 +7998,15 @@ ztedevices.com
 .dropboxapi.com
 .dropboxbusiness.com
 .dropboxcaptcha.com
+.dropboxexperiment.com
 .dropboxforum.com
 .dropboxforums.com
 .dropboxinsiders.com
+.dropboxlegal.com
 .dropboxmail.com
 .dropboxpartners.com
 .dropboxstatic.com
+.dropboxteam.com
 .dropboxusercontent.com
 .droplr.com
 .drpc.org
@@ -8757,7 +8755,6 @@ ztedevices.com
 .envato-static.com
 .envato.com
 .envatousercontent.com
-.environment.google
 .envybox.company
 .envybox.family
 .envybox.io
@@ -9863,11 +9860,13 @@ ztedevices.com
 .fire-emblem-heroes.com
 .firearmsworld.net
 .firebase.com
+.firebase.dev
 .firebase.io
 .firebaseapp.com
 .firebaseio.com
 .firech.at
 .fireemblemawakening.com
+.firefox-portal-detection.com
 .firefox.com
 .firefox.com.cn
 .firefox.hu
@@ -10330,6 +10329,7 @@ ztedevices.com
 .freebrowser.org
 .freebs.com
 .freebsd.org
+.freebuff.com
 .freecamsfan.com
 .freecamstars.com
 .freecarrierlookup.com
@@ -11400,6 +11400,7 @@ ztedevices.com
 .googel.com
 .googil.com
 .googl.com
+.google
 .google-access.net
 .google-analytics-cn.com
 .google-analytics.com
@@ -11854,7 +11855,6 @@ ztedevices.com
 .groupib.sg
 .groupib.us
 .groups.com
-.grow.google
 .grss-ieee.org
 .grupobmw.com
 .gs-discuss.com
@@ -15645,7 +15645,6 @@ ztedevices.com
 .lepornofrais.com
 .lerna.ru
 .lerosua.org
-.lers.google
 .lesbian8.com
 .lesbianpics.org
 .lesbianpornvideos.com
@@ -18604,7 +18603,6 @@ ztedevices.com
 .nhkworld.jp
 .nhncorp.jp
 .nianticlabs.com
-.nic.google
 .nic.gov
 .nic.ru
 .nic.yandex
@@ -18928,6 +18926,7 @@ ztedevices.com
 .norsk.mobi
 .norton.com
 .nos.nl
+.note.com
 .notegpt.io
 .notepad-plus-plus.org
 .notesnook.com
@@ -21107,7 +21106,6 @@ ztedevices.com
 .pricelesstv.com
 .pricesearch.jp
 .priconne-redive.jp
-.pride.google
 .pridetube.com
 .primbank.ru
 .prime-video.com
@@ -21877,7 +21875,6 @@ ztedevices.com
 .regiongold.com
 .registerhulu.com
 .registeridm.com
-.registry.google
 .reimu.net
 .reiporno.com
 .relateiq.com
@@ -21913,7 +21910,6 @@ ztedevices.com
 .republicworld.com
 .rerouted.org
 .resao.com
-.research.google
 .researchandcare.org
 .researchgate.net
 .researchintel.com
@@ -22337,7 +22333,6 @@ ztedevices.com
 .safeliner.tech
 .safepal.com
 .safervpn.com
-.safety.google
 .saffrontech.com
 .sagabank.co.jp
 .sage-observability.tech
@@ -24123,7 +24118,6 @@ ztedevices.com
 .storagenewsletter.com
 .store-bridgestonesports.com
 .storesense.com
-.stories.google
 .storiesonline.net
 .storify.com
 .storj.io
@@ -24325,7 +24319,6 @@ ztedevices.com
 .sushi.com
 .sushi.ski
 .susiewildin.com
-.sustainability.google
 .sustainablebuildingstudio.com
 .sustainabledesigncouncil.com
 .sustainabledesigncouncil.net
@@ -24817,6 +24810,7 @@ ztedevices.com
 .textnow.me
 .texttobuy.org
 .texture.com
+.tfbnw.net
 .tfc-taiwan.org.tw
 .tferwq.com
 .tfhub.dev
@@ -26405,6 +26399,7 @@ ztedevices.com
 .vaultify.info
 .vaultify.net
 .vaultproject.io
+.vava8.com
 .vbcdn.com
 .vbcdn.net
 .vbejeyv.shop

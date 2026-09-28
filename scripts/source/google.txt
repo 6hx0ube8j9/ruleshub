@@ -210,6 +210,7 @@ suffix,feedburner.com
 suffix,fflick.com
 suffix,financeleadsonline.com
 suffix,firebase.com
+suffix,firebase.dev
 suffix,firebase.io
 suffix,firebaseapp.com
 suffix,firebaseio.com

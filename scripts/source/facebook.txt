@@ -520,6 +520,7 @@ suffix,sportsfacebook.com
 suffix,sportstream.com
 suffix,supportfacebook.com
 suffix,terragraph.com
+suffix,tfbnw.net
 suffix,thefacebook.com
 suffix,thefacebook.net
 suffix,thefind.com

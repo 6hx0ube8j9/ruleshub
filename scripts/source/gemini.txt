@@ -28,6 +28,7 @@ suffix,bard.google.com
 suffix,deepmind.com
 suffix,deepmind.google
 suffix,flow.google
+suffix,flow.google.com
 suffix,geller-pa.googleapis.com
 suffix,gemini.google
 suffix,gemini.google.com
@@ -39,6 +40,7 @@ suffix,jules.google.com
 suffix,labs.google
 suffix,labs.google.com
 suffix,makersuite.google.com
+suffix,notebook.google
 suffix,notebook.google.com
 suffix,notebooklm.google
 suffix,notebooklm.google.com
