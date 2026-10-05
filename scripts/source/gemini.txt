@@ -11,6 +11,8 @@ full,cloudaicompanion.googleapis.com
 full,cloudcode-pa.googleapis.com
 full,daily-cloudcode-pa.googleapis.com
 full,gemini-user-content.googleusercontent.com
+full,geminiweb-pa.clients.google.com
+full,geminiweb-pa.clients6.google.com
 full,notebooklm-pa.googleapis.com
 full,notebooklm.googleapis.com
 full,webchannel-alkalimakersuite-pa.clients6.google.com
@@ -39,6 +41,7 @@ suffix,jules.google
 suffix,jules.google.com
 suffix,labs.google
 suffix,labs.google.com
+suffix,labstailwind.pa.googleapis.com
 suffix,makersuite.google.com
 suffix,notebook.google
 suffix,notebook.google.com

@@ -6157,6 +6157,7 @@ suffix,classymomsex.com
 suffix,clau.de
 suffix,claude.ai
 suffix,claude.com
+suffix,claude.dev
 suffix,claudemcpclient.com
 suffix,claudemcpcontent.com
 suffix,claudeusercontent.com
@@ -10652,6 +10653,7 @@ suffix,fututrustee.com
 suffix,fux.com
 suffix,fuxporn.com
 suffix,fuyin.net
+suffix,fuyin116.com
 suffix,fuyindiantai.org
 suffix,fuyu.org.tw
 suffix,fuzokudx.com
@@ -13065,6 +13067,7 @@ suffix,huaren.us
 suffix,huaren4us.com
 suffix,huarenav.com
 suffix,huarenporn.com
+suffix,huarun.win
 suffix,huashangnews.com
 suffix,huashundg.com
 suffix,huasing.org
@@ -16785,6 +16788,7 @@ suffix,messytube.com
 suffix,met-nude.com
 suffix,meta.ai
 suffix,meta.com
+suffix,metaaivm.com
 suffix,metabora.io
 suffix,metabrainz.org
 suffix,metacafe.com
@@ -17873,6 +17877,7 @@ suffix,musashinobank.co.jp
 suffix,muscache.com
 suffix,muscdn.com
 suffix,musclegirlflix.com
+suffix,muse.ai
 suffix,mushroomtrack.com
 suffix,mushymush.tv
 suffix,musicade.net
@@ -19545,6 +19550,7 @@ suffix,openbase.com
 suffix,openbook.org.tw
 suffix,opencas.io
 suffix,openclaw.ai
+suffix,opencode.ai
 suffix,opencollective.com
 suffix,opencreate.org
 suffix,opencritic.com
@@ -27745,6 +27751,7 @@ suffix,wikibooks.org
 suffix,wikidata.org
 suffix,wikidot.com
 suffix,wikifeet.com
+suffix,wikifunctions.org
 suffix,wikihow.com
 suffix,wikileaks-forum.com
 suffix,wikileaks.ch
@@ -27768,6 +27775,7 @@ suffix,wikiquote.org
 suffix,wikis.tw
 suffix,wikisexguide.com
 suffix,wikisource.org
+suffix,wikispecies.org
 suffix,wikiunblocked.org
 suffix,wikiversity.org
 suffix,wikivoyage.org

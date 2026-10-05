@@ -474,9 +474,11 @@ suffix,messenger.com
 suffix,messengerdevelopers.com
 suffix,meta.ai
 suffix,meta.com
+suffix,metaaivm.com
 suffix,midentsolutions.com
 suffix,mobilefacebook.com
 suffix,moneywithfacebook.com
+suffix,muse.ai
 suffix,myfbfans.com
 suffix,nbabot.net
 suffix,newsfeed.com

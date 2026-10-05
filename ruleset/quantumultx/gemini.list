@@ -10,6 +10,8 @@ host, cloudaicompanion.googleapis.com, gemini
 host, cloudcode-pa.googleapis.com, gemini
 host, daily-cloudcode-pa.googleapis.com, gemini
 host, gemini-user-content.googleusercontent.com, gemini
+host, geminiweb-pa.clients.google.com, gemini
+host, geminiweb-pa.clients6.google.com, gemini
 host, notebooklm-pa.googleapis.com, gemini
 host, notebooklm.googleapis.com, gemini
 host, webchannel-alkalimakersuite-pa.clients6.google.com, gemini
@@ -36,6 +38,7 @@ host-suffix, jules.google, gemini
 host-suffix, jules.google.com, gemini
 host-suffix, labs.google, gemini
 host-suffix, labs.google.com, gemini
+host-suffix, labstailwind.pa.googleapis.com, gemini
 host-suffix, makersuite.google.com, gemini
 host-suffix, notebook.google, gemini
 host-suffix, notebook.google.com, gemini
