@@ -4747,6 +4747,7 @@ yacd.metacubex.one
 .4399er.com
 .4399hdhh.com
 .4399hhh.com
+.4399houtai.com
 .4399i.net
 .4399inc.com
 .4399j.com
@@ -5746,6 +5747,7 @@ yacd.metacubex.one
 .51zhi.com
 .51zhishang.com
 .51zhizhao.com
+.51zjb.com
 .51zjedu.com
 .51zjxm.com
 .51zmt.net
@@ -9649,6 +9651,7 @@ yacd.metacubex.one
 .9fav.com
 .9fb8d5b6bff66a4d.com
 .9fbank.com
+.9fe06a.fyi
 .9fe3e7d4c10311.beer
 .9fh5.com
 .9first.com
@@ -10839,6 +10842,7 @@ yacd.metacubex.one
 .aibeike.com
 .aibiaomei.com
 .aibiaow.com
+.aibilun.com
 .aibing.cc
 .aibll.com
 .aibo123.com
@@ -11868,6 +11872,7 @@ yacd.metacubex.one
 .aliyunwaf4.com
 .aliyunwaf5.com
 .aliyunx.com
+.alizch.com
 .alizhaopin.com
 .alizhizhu.com
 .alizila.com
@@ -17110,6 +17115,7 @@ yacd.metacubex.one
 .blissmall.net
 .blizzardcn.com
 .blju.com
+.blkcan.com
 .blksails.net
 .bllsbz.com
 .blm.net
@@ -20444,6 +20450,7 @@ yacd.metacubex.one
 .cfd-china.com
 .cfd163.com
 .cfdns43.com
+.cfdns46.com
 .cfdns5.com
 .cfdns81.com
 .cfdp.org
@@ -24901,6 +24908,7 @@ yacd.metacubex.one
 .codeaha.com
 .codebaoku.com
 .codebe.org
+.codebuddy.ai
 .codebuddy.info
 .codebuddy.net
 .codebuddy.pro
@@ -25285,6 +25293,7 @@ yacd.metacubex.one
 .coremakingsolutions.com
 .corerain.com
 .corex-design.com
+.corexpertdata.com
 .coreyun.net
 .corgichina.com
 .corlercar888.com
@@ -29637,6 +29646,7 @@ yacd.metacubex.one
 .ditiezu.com
 .ditiezu.net
 .ditrit.com
+.dittocdn.com
 .ditu.live.com
 .dituhui.com
 .dituw.net
@@ -30004,6 +30014,7 @@ yacd.metacubex.one
 .dns-waf.com
 .dns.com
 .dns.la
+.dns.lat
 .dns.pub
 .dns002.com
 .dns0755.net
@@ -30069,6 +30080,7 @@ yacd.metacubex.one
 .dnsjiasu001.com
 .dnsjp.cc
 .dnsjxla.com
+.dnski.com
 .dnslin.com
 .dnsmeasurement.com
 .dnsmsn.com
@@ -30682,6 +30694,7 @@ yacd.metacubex.one
 .dp.tech
 .dp168.com
 .dp2u.com
+.dpafmp641.vip
 .dpanel.cc
 .dpangzi.com
 .dpcafc.com
@@ -32321,6 +32334,7 @@ yacd.metacubex.one
 .edisec.net
 .editbanana.net
 .editorjianying.com
+.editorjianyingk.com
 .editsprings.com
 .ediuschina.com
 .edlcaster.com
@@ -36145,6 +36159,7 @@ yacd.metacubex.one
 .frp-ski.com
 .frp-sun.com
 .frp-tag.com
+.frp-web.com
 .frpapp.com
 .frrcw.com
 .frt.ltd
@@ -37070,7 +37085,9 @@ yacd.metacubex.one
 .gameol.com
 .gamepingce.com
 .gamepp.com
+.gamer520.fan
 .gamer520.net
+.gamer520.wiki
 .gamerboom.com
 .gameres.com
 .gamerhome.com
@@ -40008,6 +40025,7 @@ yacd.metacubex.one
 .graueneko.xyz
 .gravity-engine.com
 .graz.quest
+.grboi.com
 .grcbank.com
 .grchina.com
 .great-future.com
@@ -45789,6 +45807,8 @@ yacd.metacubex.one
 .hexun.com
 .hexun.com.tw
 .hexuu.com
+.hey-can.com
+.hey-creator.com
 .heyang.cc
 .heyang365.com
 .heycan.com
@@ -47341,6 +47361,7 @@ yacd.metacubex.one
 .hongfengye.com
 .hongfuloi.com
 .hongganshebei.net
+.hongguoduanju.com
 .hongguogame.com
 .hongguoyouxi.com
 .honghaibengye.com
@@ -49599,6 +49620,7 @@ yacd.metacubex.one
 .hxkgjt.com
 .hxkj.cc
 .hxkj.vip
+.hxkjtop.com
 .hxkq.net
 .hxkq.org
 .hxkqyxzz.net
@@ -50369,6 +50391,7 @@ yacd.metacubex.one
 .hzzzpt.com
 .i-27.name
 .i-520.net
+.i-amtr.com
 .i-bei.com
 .i-bigdatas.net
 .i-click.com
@@ -54409,6 +54432,7 @@ yacd.metacubex.one
 .jianyechina.com
 .jianyewx.com
 .jianying.com
+.jianyingmicro.com
 .jianyixinli.com
 .jianyu360.com
 .jianyujiasu.com
@@ -55969,6 +55993,7 @@ yacd.metacubex.one
 .jmonline.org
 .jmp-cn.com
 .jmp.gd
+.jmqux.com
 .jmqy.com
 .jmqyjt.com
 .jmrb.com
@@ -59263,6 +59288,7 @@ yacd.metacubex.one
 .klhpw.com
 .klhuyan.com
 .klicen.com
+.klinecharts.com
 .kling-ai.com
 .klingai.com
 .klinlee.com
@@ -61635,6 +61661,7 @@ yacd.metacubex.one
 .lewenss.com
 .lewenxsw.com
 .lewifi.com
+.lewl88.com
 .lex.download.prss.microsoft.com
 .lexar.com
 .lexed.org
@@ -63923,6 +63950,7 @@ yacd.metacubex.one
 .lungai.com
 .lunkuokeji.com
 .lunlunapp.com
+.lunprin.com
 .lunwengo.net
 .lunwenlib.com
 .lunwentong.com
@@ -73258,6 +73286,7 @@ yacd.metacubex.one
 .pcdrv.com
 .pcdtg.com
 .pceggs.com
+.pcelves.com
 .pceva.net
 .pcfphs.com
 .pcfreetime.com
@@ -75012,6 +75041,7 @@ yacd.metacubex.one
 .pymh.com
 .pyneo.com
 .pyou.com
+.pyquan.com
 .pyral07m8m.com
 .pyrc.net
 .pyshszh.com
@@ -76501,6 +76531,7 @@ yacd.metacubex.one
 .qldgd.com
 .qldzj.com
 .qledu.net
+.qlgfdns.com
 .qlhimalayantm.com
 .qlife-lab.com
 .qlinyun.com
@@ -78723,6 +78754,7 @@ yacd.metacubex.one
 .rljydt.com
 .rlkj.com
 .rlkj.net
+.rlkrmx.com
 .rlmeijia.com
 .rlnk.net
 .rlreader.com
@@ -82324,6 +82356,7 @@ yacd.metacubex.one
 .shengsci.com
 .shengshizhicheng.com
 .shengtai.com
+.shengtai.cyou
 .shengtaigroup.net
 .shengtian.com
 .shengtiangames.com
@@ -84281,6 +84314,7 @@ yacd.metacubex.one
 .sireda.com
 .sirenyouxiang.com
 .sirfang.com
+.siriser.com
 .sirweara.com
 .siryin.com
 .siscantech.com
@@ -84680,6 +84714,7 @@ yacd.metacubex.one
 .slk1.net
 .slkg1949.com
 .sllai.com
+.slldbs641.vip
 .sllngy.com
 .sllssrq.com
 .slodon.net
@@ -89641,6 +89676,7 @@ yacd.metacubex.one
 .tenganxinxi.com
 .tengbai-it.com
 .tengbo.cc
+.tengcanxi.com
 .tengchangjiancai.com
 .tengchu.com
 .tengdatumu.com
@@ -93203,6 +93239,7 @@ yacd.metacubex.one
 .uliaobao.com
 .ulife.com
 .ulife.group
+.ulikeapi.com
 .ulikecam.com
 .ulikecam.mobi
 .ulikecam.net
@@ -94212,6 +94249,7 @@ yacd.metacubex.one
 .vfund.org
 .vfvdf.com
 .vfx123.com
+.vfxfu.com
 .vg.com
 .vg173.com
 .vg89qeas3xagd.com
@@ -94570,6 +94608,7 @@ yacd.metacubex.one
 .vksoft.com
 .vkua.com
 .vkxiazai.com
+.vlabimg.com
 .vlabstatic.com
 .vlabvod.com
 .vlan.fun
@@ -98120,6 +98159,7 @@ yacd.metacubex.one
 .wordstorming.com
 .wordsunny.com
 .workbenchapi.com
+.workbuddy.ai
 .workbuddy.host
 .workbuddy.link
 .workchat.com
@@ -100008,6 +100048,7 @@ yacd.metacubex.one
 .xhlcsl.com
 .xhlld002.shop
 .xhlsgs.com
+.xhlylx.com
 .xhma.com
 .xhmedia.com
 .xhmwxy.com
@@ -101178,6 +101219,7 @@ yacd.metacubex.one
 .xingtangzp.com
 .xingtu.com
 .xingtui520.com
+.xingtupics.com
 .xinguad.com
 .xinguangjian.com
 .xinguge.com

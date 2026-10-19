@@ -709,6 +709,7 @@ suffix,7mmtv.tv
 suffix,7tb.cc
 suffix,7tv.app
 suffix,7tv.io
+suffix,7x24hrs.com
 suffix,8-d.com
 suffix,8008206616.com
 suffix,8111y.top
@@ -787,6 +788,7 @@ suffix,91se.fun
 suffix,91sesex.xyz
 suffix,91sew.xyz
 suffix,91sew40.buzz
+suffix,91short.com
 suffix,91vhome.com
 suffix,91vps.club
 suffix,920share.com
@@ -5075,6 +5077,7 @@ suffix,bs-adreview.com
 suffix,bs-awh.ne.jp
 suffix,bsappapi.cc
 suffix,bsappapi.com
+suffix,bscdnweb.com
 suffix,bsersd.xyz
 suffix,bsi.ir
 suffix,bsky.app
@@ -22664,6 +22667,7 @@ suffix,scatvids.club
 suffix,scatville.com
 suffix,scb.ru
 suffix,scdn.co
+suffix,scea.com
 suffix,scene7.com
 suffix,scenesource.me
 suffix,scharferporno.com
@@ -23759,6 +23763,7 @@ suffix,sony.com.ni
 suffix,sony.com.pa
 suffix,sony.com.pe
 suffix,sony.com.ph
+suffix,sony.com.py
 suffix,sony.com.sg
 suffix,sony.com.sv
 suffix,sony.com.tr
@@ -23801,8 +23806,10 @@ suffix,sonyclassics.com
 suffix,sonydesign.com
 suffix,sonydna.com
 suffix,sonyglobalsolutions.jp
+suffix,sonyinteractive.com
 suffix,sonykigyo.jp
 suffix,sonylatvija.com
+suffix,sonymusic.com.hk
 suffix,sonynetwork.co.jp
 suffix,sonypcl.jp
 suffix,sonypictures.com

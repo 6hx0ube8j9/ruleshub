@@ -20,6 +20,9 @@ suffix,bytegecko-i18n.com
 suffix,byteintlapi.com
 suffix,byteoversea.com
 suffix,capcut.com
+suffix,capcutapi.com
+suffix,capcutapi.us
+suffix,capcutstatic.com
 suffix,ibytedtos.com
 suffix,ibyteimg.com
 suffix,ipstatp.com
