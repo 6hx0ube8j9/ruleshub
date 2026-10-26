@@ -87769,6 +87769,8 @@ suffix,sztxsz.com
 suffix,szty56.com
 suffix,sztz.org
 suffix,sztzzs.com
+suffix,szu.app
+suffix,szu.moe
 suffix,szuavia.org
 suffix,szudad.com
 suffix,szunionlab.com

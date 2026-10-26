@@ -5336,6 +5336,8 @@ var DIRECT_DOMAINS = {
     "local.adguard.org": 1,
     "localhost.ptlogin2.qq.com": 1,
     "localhost.sec.qq.com": 1,
+    "localhost.weixin.qq.com": 1,
+    "localhost.work.weixin.qq.com": 1,
     "localizecdn.com": 1,
     "lofter.com": 1,
     "logi.im": 1,

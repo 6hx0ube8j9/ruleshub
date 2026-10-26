@@ -2,6 +2,8 @@ payload:
     - asusrouter.com
     - instant.arubanetworks.com
     - local.adguard.org
+    - localhost.weixin.qq.com
+    - localhost.work.weixin.qq.com
     - oasisauth.h3c.com
     - router.asus.com
     - routerlogin.net
@@ -88204,6 +88206,8 @@ payload:
     - +.szty56.com
     - +.sztz.org
     - +.sztzzs.com
+    - +.szu.app
+    - +.szu.moe
     - +.szuavia.org
     - +.szudad.com
     - +.szunionlab.com

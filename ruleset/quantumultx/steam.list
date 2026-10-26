@@ -46,6 +46,7 @@ host-suffix, steamcontent.tnkjmec.com, steam
 host-suffix, steamdeck.com, steam
 host-suffix, steamgames.com, steam
 host-suffix, steammobile.akamaized.net, steam
+host-suffix, steamos.cloud, steam
 host-suffix, steampipe-kr.akamaized.net, steam
 host-suffix, steampipe-partner.akamaized.net, steam
 host-suffix, steampipe.akamaized.net, steam
@@ -68,3 +69,15 @@ host-suffix, wmsjsteam.com, steam
 host-keyword, steambroadcast, steam
 host-keyword, steamstore, steam
 host-keyword, steamuserimages, steam
+ip-cidr, 103.10.124.0/23, steam
+ip-cidr, 103.28.54.0/24, steam
+ip-cidr, 146.66.152.0/24, steam
+ip-cidr, 146.66.155.0/24, steam
+ip-cidr, 155.133.224.0/19, steam
+ip-cidr, 162.254.192.0/21, steam
+ip-cidr, 185.25.180.0/22, steam
+ip-cidr, 192.69.96.0/22, steam
+ip-cidr, 205.196.6.0/24, steam
+ip-cidr, 208.64.200.0/22, steam
+ip-cidr, 208.78.164.0/22, steam
+ip-cidr, 45.121.184.0/24, steam

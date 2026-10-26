@@ -179,6 +179,7 @@ host-suffix, 11jav.com, global
 host-suffix, 123-hp.com, global
 host-suffix, 123av.com, global
 host-suffix, 123av.me, global
+host-suffix, 123av.org, global
 host-suffix, 123bin.cc, global
 host-suffix, 123dapp.com, global
 host-suffix, 123dappipad.com, global
@@ -340,6 +341,7 @@ host-suffix, 1password.ca, global
 host-suffix, 1password.co, global
 host-suffix, 1password.com, global
 host-suffix, 1password.community, global
+host-suffix, 1password.dev, global
 host-suffix, 1password.eu, global
 host-suffix, 1password.io, global
 host-suffix, 1passwordservices.com, global
@@ -398,6 +400,7 @@ host-suffix, 228.net.tw, global
 host-suffix, 233abc.com, global
 host-suffix, 233v2.com, global
 host-suffix, 2371tom.com, global
+host-suffix, 24.place, global
 host-suffix, 24h.tv, global
 host-suffix, 24hbook.com, global
 host-suffix, 24hjav.com, global
@@ -2101,6 +2104,7 @@ host-suffix, anpopo.com, global
 host-suffix, ansarbank.com, global
 host-suffix, ansin.erodayo.com, global
 host-suffix, answering-islam.org, global
+host-suffix, ant.dev, global
 host-suffix, antarvasnaclips.com, global
 host-suffix, antarvasnax.com, global
 host-suffix, antd.org, global
@@ -2109,12 +2113,14 @@ host-suffix, anthemgame.com, global
 host-suffix, anthemthegame.com, global
 host-suffix, anthonycalzadilla.com, global
 host-suffix, anthropic.com, global
+host-suffix, anthropic.team, global
 host-suffix, anti1984.com, global
 host-suffix, antichristendom.com, global
 host-suffix, antiphishing.nl, global
 host-suffix, antiphishing.ru, global
 host-suffix, antiwave.net, global
 host-suffix, antpool.com, global
+host-suffix, antspace.dev, global
 host-suffix, anudetube.com, global
 host-suffix, anuneko.com, global
 host-suffix, anxiangxing.com, global
@@ -3072,8 +3078,10 @@ host-suffix, avinetworks.com, global
 host-suffix, avinin.com, global
 host-suffix, avira.com, global
 host-suffix, avistaz.to, global
+host-suffix, avito.com, global
 host-suffix, avito.ru, global
 host-suffix, avito.st, global
+host-suffix, avito.tech, global
 host-suffix, avizoon.site, global
 host-suffix, avizoone.com, global
 host-suffix, avjb.com, global
@@ -3771,8 +3779,15 @@ host-suffix, beevpn.com, global
 host-suffix, beforeigners.com, global
 host-suffix, befuck.com, global
 host-suffix, befuck.net, global
+host-suffix, beget.app, global
+host-suffix, beget.cloud, global
 host-suffix, beget.com, global
+host-suffix, beget.de, global
+host-suffix, beget.hosting, global
+host-suffix, beget.pro, global
 host-suffix, beget.ru, global
+host-suffix, beget.tech, global
+host-suffix, begetcdn.cloud, global
 host-suffix, begin-trade.com, global
 host-suffix, behance.net, global
 host-suffix, behindkink.com, global
@@ -3812,6 +3827,7 @@ host-suffix, berlinerbericht.de, global
 host-suffix, berlintwitterwall.com, global
 host-suffix, berm.co.nz, global
 host-suffix, beru.ru, global
+host-suffix, beserver.ru, global
 host-suffix, best-sex-games.com, global
 host-suffix, best2pay.net, global
 host-suffix, best3dhere.com, global
@@ -3932,6 +3948,7 @@ host-suffix, bfads.net, global
 host-suffix, bffshd.com, global
 host-suffix, bfnn.org, global
 host-suffix, bfsh.hk, global
+host-suffix, bget.ru, global
 host-suffix, bgicdn.com, global
 host-suffix, bgm.tv, global
 host-suffix, bgme.me, global
@@ -3955,6 +3972,7 @@ host-suffix, bibox.com, global
 host-suffix, bic2011.org, global
 host-suffix, bidbay.com, global
 host-suffix, bidi.net.uk, global
+host-suffix, bidobido.xyz, global
 host-suffix, bidong25.com, global
 host-suffix, bidong9.com, global
 host-suffix, bidorbuyindia.com, global
@@ -4012,6 +4030,7 @@ host-suffix, bijukujo.club, global
 host-suffix, bikaa.xyz, global
 host-suffix, bikac.xyz, global
 host-suffix, bikaios.xyz, global
+host-suffix, bikawebapp.com, global
 host-suffix, bild.de, global
 host-suffix, bili2.cc, global
 host-suffix, bili888.com, global
@@ -4202,6 +4221,8 @@ host-suffix, blizzardgearstore.com, global
 host-suffix, blob.core.windows.net, global
 host-suffix, blockcast.it, global
 host-suffix, blockchain.com, global
+host-suffix, blockchair.com, global
+host-suffix, blockchair.net, global
 host-suffix, blockcn.com, global
 host-suffix, blockedbyhk.com, global
 host-suffix, blockfrost.io, global
@@ -5701,6 +5722,10 @@ host-suffix, cdp1989.org, global
 host-suffix, cdp1998.org, global
 host-suffix, cdp2006.org, global
 host-suffix, cdpeu.org, global
+host-suffix, cdpred.services, global
+host-suffix, cdprojekt.com, global
+host-suffix, cdprojekt.red, global
+host-suffix, cdprojektred.com, global
 host-suffix, cdpuk.co.uk, global
 host-suffix, cdpusa.org, global
 host-suffix, cdpweb.org, global
@@ -5810,6 +5835,7 @@ host-suffix, charticulator.com, global
 host-suffix, chat.com, global
 host-suffix, chat.gle, global
 host-suffix, chatango.com, global
+host-suffix, chatbotclaude.com, global
 host-suffix, chatgpt.com, global
 host-suffix, chatgpt.livekit.cloud, global
 host-suffix, chatgpt.site, global
@@ -6184,10 +6210,16 @@ host-suffix, classicnike.com, global
 host-suffix, classymomsex.com, global
 host-suffix, clau.de, global
 host-suffix, claude.ai, global
+host-suffix, claude.app, global
 host-suffix, claude.com, global
 host-suffix, claude.dev, global
+host-suffix, claude.new, global
+host-suffix, claude.site, global
+host-suffix, claudeacademy.com, global
 host-suffix, claudemcpclient.com, global
 host-suffix, claudemcpcontent.com, global
+host-suffix, claudepages.dev, global
+host-suffix, claudestudio.com, global
 host-suffix, claudeusercontent.com, global
 host-suffix, clawhub.ai, global
 host-suffix, clb.org.hk, global
@@ -6629,6 +6661,7 @@ host-suffix, cq99.us, global
 host-suffix, cqcorea.com, global
 host-suffix, crabporn.com, global
 host-suffix, crackle.com, global
+host-suffix, craftifyx.com, global
 host-suffix, craigslist.org, global
 host-suffix, crankplayer.com, global
 host-suffix, crashbandicoot.com, global
@@ -6711,6 +6744,7 @@ host-suffix, cruxpool.com, global
 host-suffix, crypto.com, global
 host-suffix, cryptocompare.com, global
 host-suffix, cryptographyengineering.com, global
+host-suffix, cryptoid.info, global
 host-suffix, cryptomator.org, global
 host-suffix, cryptomus.com, global
 host-suffix, crypton.co.jp, global
@@ -6806,6 +6840,7 @@ host-suffix, cursor-cdn.com, global
 host-suffix, cursor.com, global
 host-suffix, cursor.sh, global
 host-suffix, cursorapi.com, global
+host-suffix, cursorvm.com, global
 host-suffix, curve.fi, global
 host-suffix, curvefish.com, global
 host-suffix, curvybbwwives.com, global
@@ -6840,6 +6875,7 @@ host-suffix, cybercrimecon.com, global
 host-suffix, cyberctm.com, global
 host-suffix, cyberghostvpn.com, global
 host-suffix, cybermondaybeats4sale.com, global
+host-suffix, cyberpunk.net, global
 host-suffix, cybersport.ru, global
 host-suffix, cybertrust.co.jp, global
 host-suffix, cybertrust.ne.jp, global
@@ -7120,6 +7156,7 @@ host-suffix, delcamp.net, global
 host-suffix, delcamtv.com, global
 host-suffix, delcamuniversity.com, global
 host-suffix, delcamusa.com, global
+host-suffix, delets.cash, global
 host-suffix, delets.online, global
 host-suffix, delicious.com, global
 host-suffix, delicious.com.au, global
@@ -9526,6 +9563,7 @@ host-suffix, fanatical.com, global
 host-suffix, fanbox.cc, global
 host-suffix, fandango.com, global
 host-suffix, fandom.com, global
+host-suffix, fanfiction.net, global
 host-suffix, fanfictionero.com, global
 host-suffix, fanfox.net, global
 host-suffix, fangbinxing.com, global
@@ -10046,6 +10084,17 @@ host-suffix, fluidpreview.com, global
 host-suffix, flurry.com, global
 host-suffix, flutter.dev, global
 host-suffix, flutterapp.com, global
+host-suffix, fluxer.app, global
+host-suffix, fluxer.com, global
+host-suffix, fluxer.dev, global
+host-suffix, fluxer.gg, global
+host-suffix, fluxer.gift, global
+host-suffix, fluxer.media, global
+host-suffix, fluxer.tools, global
+host-suffix, fluxerapp.com, global
+host-suffix, fluxerstatic.com, global
+host-suffix, fluxerstatus.com, global
+host-suffix, fluxerusercontent.com, global
 host-suffix, flxvpn.net, global
 host-suffix, fly.dev, global
 host-suffix, fly.io, global
@@ -10635,6 +10684,7 @@ host-suffix, fundraisingwithfacebook.com, global
 host-suffix, fundsupermart.com, global
 host-suffix, funf.tw, global
 host-suffix, funimation.com, global
+host-suffix, funko.com, global
 host-suffix, funkyimg.com, global
 host-suffix, funnyfacebook.org, global
 host-suffix, funnyordie.com, global
@@ -10743,6 +10793,7 @@ host-suffix, g1.com.br, global
 host-suffix, g1d1goob.xyz, global
 host-suffix, g6hentai.com, global
 host-suffix, g9.co.kr, global
+host-suffix, ga.jspm.io, global
 host-suffix, gab.com, global
 host-suffix, gabia.net, global
 host-suffix, gabocorp.com, global
@@ -10770,6 +10821,7 @@ host-suffix, game-platform.net, global
 host-suffix, game-repack.site, global
 host-suffix, game735.com, global
 host-suffix, gameapps.hk, global
+host-suffix, gamebanana.com, global
 host-suffix, gamebase.com.tw, global
 host-suffix, gamebeforethegame.com, global
 host-suffix, gamebiz.jp, global
@@ -11057,6 +11109,7 @@ host-suffix, getpocket.com, global
 host-suffix, getporn.tv, global
 host-suffix, getpricetag.com, global
 host-suffix, getprintersupports.com, global
+host-suffix, getsafety.com, global
 host-suffix, getscorecash.com, global
 host-suffix, getsentry.com, global
 host-suffix, getsession.org, global
@@ -11249,6 +11302,8 @@ host-suffix, glarity.app, global
 host-suffix, glasamerike.net, global
 host-suffix, glass8.eu, global
 host-suffix, gleline.com, global
+host-suffix, glitchprod.com, global
+host-suffix, glitchproductions.store, global
 host-suffix, glitchwave.com, global
 host-suffix, global-sci.org, global
 host-suffix, global.market.xiaomi.com, global
@@ -13119,6 +13174,7 @@ host-suffix, hua-yue.net, global
 host-suffix, huabansp.com, global
 host-suffix, huabansp7.club, global
 host-suffix, huaglad.com, global
+host-suffix, huakacomic.com, global
 host-suffix, huanghuagang.org, global
 host-suffix, huangse.love, global
 host-suffix, huangyiyu.com, global
@@ -15345,6 +15401,7 @@ host-suffix, killwall.com, global
 host-suffix, kilmeadeandfriends.com, global
 host-suffix, kimchi.tv, global
 host-suffix, kimogirl.cc, global
+host-suffix, kimootoko.net, global
 host-suffix, kimosex.com, global
 host-suffix, kimy.com.tw, global
 host-suffix, kindgirls.com, global
@@ -15552,6 +15609,7 @@ host-suffix, kuper.ru, global
 host-suffix, kurashsultan.com, global
 host-suffix, kuromis.com, global
 host-suffix, kuromisubs.shop, global
+host-suffix, kurs.expert, global
 host-suffix, kurtmunger.com, global
 host-suffix, kusocity.com, global
 host-suffix, kusugurizanmai.com, global
@@ -16314,6 +16372,7 @@ host-suffix, magestic.com, global
 host-suffix, magic-net.info, global
 host-suffix, magicalmirai.com, global
 host-suffix, magicmovies.com, global
+host-suffix, magnific.com, global
 host-suffix, mahabodhi.org, global
 host-suffix, mahajantech.com, global
 host-suffix, mahjongsoul.com, global
@@ -16352,6 +16411,7 @@ host-suffix, makeitrealcontest.com, global
 host-suffix, makemymood.com, global
 host-suffix, makerepeater.jp, global
 host-suffix, makesenseofdata.com, global
+host-suffix, makeship.com, global
 host-suffix, makeshop.jp, global
 host-suffix, makingstartshere.com, global
 host-suffix, makkahnewspaper.com, global
@@ -17396,6 +17456,7 @@ host-suffix, miniwidget.ca, global
 host-suffix, miniwindsor.com, global
 host-suffix, miniworkshop.com, global
 host-suffix, miniyaletown.ca, global
+host-suffix, minkch.com, global
 host-suffix, minnano-av.com, global
 host-suffix, minne.com, global
 host-suffix, minneapolisbmw.com, global
@@ -17921,6 +17982,7 @@ host-suffix, mt.lv, global
 host-suffix, mt0011.site, global
 host-suffix, mtao.fun, global
 host-suffix, mthruf.com, global
+host-suffix, mts-link.ru, global
 host-suffix, mts-ws.net, global
 host-suffix, mts.ru, global
 host-suffix, mtsbank.ru, global
@@ -18976,6 +19038,7 @@ host-suffix, nixos.wiki, global
 host-suffix, nixpkgs.org, global
 host-suffix, niziero.info, global
 host-suffix, njactb.org, global
+host-suffix, njav.com, global
 host-suffix, njav.tv, global
 host-suffix, njavtv.com, global
 host-suffix, njpw.co.jp, global
@@ -19648,6 +19711,7 @@ host-suffix, op.gg, global
 host-suffix, op7979.com, global
 host-suffix, opac-project.eu, global
 host-suffix, open.com.hk, global
+host-suffix, openai.org, global
 host-suffix, openallweb.com, global
 host-suffix, openamt.com, global
 host-suffix, openapiplatform.com, global
@@ -19842,6 +19906,7 @@ host-suffix, ow.ly, global
 host-suffix, owind.com, global
 host-suffix, owl.li, global
 host-suffix, owltail.com, global
+host-suffix, ownaj.com, global
 host-suffix, owncube.cloud, global
 host-suffix, owncube.com, global
 host-suffix, owxd.xyz, global
@@ -20409,6 +20474,7 @@ host-suffix, piaotia.com, global
 host-suffix, piaotian.net, global
 host-suffix, piapp.com.tw, global
 host-suffix, piapro.net, global
+host-suffix, pica-id.com, global
 host-suffix, picacg2022.com, global
 host-suffix, picacgy.com, global
 host-suffix, picacn.xyz, global
@@ -20609,6 +20675,7 @@ host-suffix, playfab.com, global
 host-suffix, playfabapi.com, global
 host-suffix, playfamily.ru, global
 host-suffix, playforceone.com, global
+host-suffix, playgwent.com, global
 host-suffix, playhearthstone.com, global
 host-suffix, playmation.com, global
 host-suffix, playmeow.com, global
@@ -20665,6 +20732,7 @@ host-suffix, pmatehunter.com, global
 host-suffix, pmates.com, global
 host-suffix, pmem.org, global
 host-suffix, pmem.us, global
+host-suffix, po-kaki-to.com, global
 host-suffix, po18.tw, global
 host-suffix, po2b.com, global
 host-suffix, pobeda.page, global
@@ -21130,6 +21198,7 @@ host-suffix, postimages.org, global
 host-suffix, postimg.cc, global
 host-suffix, postimg.org, global
 host-suffix, postini.com, global
+host-suffix, postman.com, global
 host-suffix, posty.kr, global
 host-suffix, postyourgirls.ws, global
 host-suffix, potato.im, global
@@ -21454,6 +21523,7 @@ host-suffix, putinho.net, global
 host-suffix, putlocker.com, global
 host-suffix, putty.org, global
 host-suffix, puuko.com, global
+host-suffix, pv-cdn.net, global
 host-suffix, pvp.net, global
 host-suffix, pvp.tv, global
 host-suffix, pvt.sexy, global
@@ -21486,6 +21556,7 @@ host-suffix, pythonhackers.com, global
 host-suffix, pythonhosted.org, global
 host-suffix, pythonic.life, global
 host-suffix, pytorch.org, global
+host-suffix, pyup.io, global
 host-suffix, pzforever.skin, global
 host-suffix, pzforever01.homes, global
 host-suffix, pzhanfor.today, global
@@ -21675,6 +21746,7 @@ host-suffix, r18av.com, global
 host-suffix, r18lu-avi.shop, global
 host-suffix, r18lu.com, global
 host-suffix, r2.dev, global
+host-suffix, r2modman.com, global
 host-suffix, r34porn.net, global
 host-suffix, ra.gg, global
 host-suffix, rabbitcounter.com, global
@@ -22465,6 +22537,7 @@ host-suffix, safeguarddefenders.com, global
 host-suffix, safeliner.tech, global
 host-suffix, safepal.com, global
 host-suffix, safervpn.com, global
+host-suffix, safetycli.com, global
 host-suffix, saffrontech.com, global
 host-suffix, sagabank.co.jp, global
 host-suffix, sage-observability.tech, global
@@ -22677,6 +22750,7 @@ host-suffix, schwab.com, global
 host-suffix, schwab.com.hk, global
 host-suffix, schwab.com.sg, global
 host-suffix, schwabassetmanagement.com, global
+host-suffix, schwabcdn.com, global
 host-suffix, schwabplan.com, global
 host-suffix, sci-hub.it.nf, global
 host-suffix, sci-hub.mksa.top, global
@@ -23985,6 +24059,7 @@ host-suffix, sprinklesapp.com, global
 host-suffix, sprite.org, global
 host-suffix, sproutcore.com, global
 host-suffix, sproxy.info, global
+host-suffix, sprut.io, global
 host-suffix, sptvbroadcast.com, global
 host-suffix, sputnikglobe.com, global
 host-suffix, sputnikimages.com, global
@@ -24978,6 +25053,7 @@ host-suffix, tgirlcentral.com, global
 host-suffix, tgirlpostop.com, global
 host-suffix, tgp6.com, global
 host-suffix, tgstat.com, global
+host-suffix, tgtime.store, global
 host-suffix, tgtube.com, global
 host-suffix, tgutube.com, global
 host-suffix, th.hao123.com, global
@@ -25177,6 +25253,7 @@ host-suffix, theweek.com, global
 host-suffix, theweek.in, global
 host-suffix, thewgo.org, global
 host-suffix, thewirechina.com, global
+host-suffix, thewitcher.com, global
 host-suffix, thewonderful101.com, global
 host-suffix, theync.com, global
 host-suffix, theyxxx.com, global
@@ -25246,6 +25323,8 @@ host-suffix, thumbzilla.com, global
 host-suffix, thunderbird.net, global
 host-suffix, thunderbolttechnology.net, global
 host-suffix, thundermail.com, global
+host-suffix, thunderstore.io, global
+host-suffix, thunderstore.org, global
 host-suffix, thywords.com, global
 host-suffix, thywords.com.tw, global
 host-suffix, thz7.net, global
@@ -25399,6 +25478,8 @@ host-suffix, timesnownews.com, global
 host-suffix, timestalks.com, global
 host-suffix, timeweb.cloud, global
 host-suffix, timeweb.com, global
+host-suffix, timeweb.tech, global
+host-suffix, timewebcloud.kz, global
 host-suffix, timi1.me, global
 host-suffix, timo0.com, global
 host-suffix, timsah.com, global
@@ -25434,6 +25515,7 @@ host-suffix, tinypic.com, global
 host-suffix, tinyurl.com, global
 host-suffix, tiohentai.com, global
 host-suffix, tipas.net, global
+host-suffix, tipatipa.xyz, global
 host-suffix, tiqcdn.com, global
 host-suffix, tire-cadcam.com, global
 host-suffix, tiresplus.com, global
@@ -25461,6 +25543,7 @@ host-suffix, tmdfish.com, global
 host-suffix, tmei-taoyuan.com, global
 host-suffix, tmi.me, global
 host-suffix, tmiaf.ru, global
+host-suffix, tmimgcdn.com, global
 host-suffix, tmpp.org, global
 host-suffix, tmsnrt.rs, global
 host-suffix, tnaflix.com, global
@@ -26115,6 +26198,7 @@ host-suffix, typekit.com, global
 host-suffix, typekit.net, global
 host-suffix, typenetwork.com, global
 host-suffix, typepad.com, global
+host-suffix, typesafe.ai, global
 host-suffix, typeset.io, global
 host-suffix, typesquare.com, global
 host-suffix, typography.com, global
@@ -28145,6 +28229,7 @@ host-suffix, worldoftanks.com, global
 host-suffix, worldoftanks.eu, global
 host-suffix, worldofwarcraft.com, global
 host-suffix, worldofwarplanes.com, global
+host-suffix, worldofwarships.asia, global
 host-suffix, worldofwarships.com, global
 host-suffix, worldpopulationreview.com, global
 host-suffix, worldpornvideos.com, global
@@ -28531,6 +28616,7 @@ host-suffix, xn--8uq428d76d.tokyo, global
 host-suffix, xn--90ab.com, global
 host-suffix, xn--90ab2c.xn--p1ai, global
 host-suffix, xn--90absjljw3g.xn--p1ai, global
+host-suffix, xn--90aefb9d.xn--p1ai, global
 host-suffix, xn--90aifd0az.shop, global
 host-suffix, xn--90aifd0azb.xn--p1acf, global
 host-suffix, xn--90wwvt03e.com, global
@@ -28549,6 +28635,12 @@ host-suffix, xn--d1aqf.xn--p1ai, global
 host-suffix, xn--d4ty0ojsqzfd.com, global
 host-suffix, xn--e1adjldbbpv.xn--90ais, global
 host-suffix, xn--e1aigb.xn--p1ai, global
+host-suffix, xn--fiq80y.hk, global
+host-suffix, xn--fiq80y.xn--j6w193g, global
+host-suffix, xn--fiq80y3xbiwr.hk, global
+host-suffix, xn--fiq80y3xbiwr.xn--j6w193g, global
+host-suffix, xn--fiq80y3xbiwrs0kiu9d.hk, global
+host-suffix, xn--fiq80y3xbiwrs0kiu9d.xn--j6w193g, global
 host-suffix, xn--fiqs8s1bxp3anr7a.hk, global
 host-suffix, xn--fiqs8s1bxp3anr7a.xn--j6w193g, global
 host-suffix, xn--fiqs8s1byzqyvl.hk, global
@@ -28586,6 +28678,7 @@ host-suffix, xn--p8j9a0d9c9a.xn--q9jyb4c, global
 host-suffix, xn--pearsonenespaol-brb.com, global
 host-suffix, xn--pssu7ci2j23mp9ny48b.hk, global
 host-suffix, xn--pssu7ci2j23mp9ny48b.xn--j6w193g, global
+host-suffix, xn--pssu7ci3q5oge0ai91q.xn--j6w193g, global
 host-suffix, xn--pssu7cv61af1tcs59bnvd.hk, global
 host-suffix, xn--pssu7cv61af1tcs59bnvd.xn--j6w193g, global
 host-suffix, xn--pssu7cv61af44b.hk, global
@@ -28594,6 +28687,7 @@ host-suffix, xn--pssu7cv61ahw8aq79bztd.hk, global
 host-suffix, xn--pssu7cv61ahw8aq79bztd.xn--j6w193g, global
 host-suffix, xn--pssu7cv61ahwcb1p2yk.hk, global
 host-suffix, xn--pssu7cv61ahwcb1p2yk.xn--j6w193g, global
+host-suffix, xn--pssu7cz8nr8ibkx1e8a.xn--j6w193g, global
 host-suffix, xn--q41am8x.com, global
 host-suffix, xn--qhrx81fxh2a.xn--55qx5d.hk, global
 host-suffix, xn--qoq462m.com, global
@@ -29386,6 +29480,7 @@ host-suffix, youskbe.com, global
 host-suffix, youthforfreechina.org, global
 host-suffix, youthnetradio.org, global
 host-suffix, youthwant.com.tw, global
+host-suffix, youtooz.com, global
 host-suffix, youtrack.cloud, global
 host-suffix, youtrannytube.com, global
 host-suffix, youtu.be, global
@@ -29869,6 +29964,7 @@ host-suffix, zorinos.com, global
 host-suffix, zorrovpn.com, global
 host-suffix, zotero.org, global
 host-suffix, zozotown.com, global
+host-suffix, zozovideo.com, global
 host-suffix, zpagov.net, global
 host-suffix, zpath.com, global
 host-suffix, zpn.im, global

@@ -3,6 +3,8 @@
 host, asusrouter.com, direct
 host, instant.arubanetworks.com, direct
 host, local.adguard.org, direct
+host, localhost.weixin.qq.com, direct
+host, localhost.work.weixin.qq.com, direct
 host, oasisauth.h3c.com, direct
 host, router.asus.com, direct
 host, routerlogin.net, direct
@@ -88205,6 +88207,8 @@ host-suffix, sztxsz.com, direct
 host-suffix, szty56.com, direct
 host-suffix, sztz.org, direct
 host-suffix, sztzzs.com, direct
+host-suffix, szu.app, direct
+host-suffix, szu.moe, direct
 host-suffix, szuavia.org, direct
 host-suffix, szudad.com, direct
 host-suffix, szunionlab.com, direct

@@ -182,6 +182,7 @@ suffix,11jav.com
 suffix,123-hp.com
 suffix,123av.com
 suffix,123av.me
+suffix,123av.org
 suffix,123bin.cc
 suffix,123dapp.com
 suffix,123dappipad.com
@@ -343,6 +344,7 @@ suffix,1password.ca
 suffix,1password.co
 suffix,1password.com
 suffix,1password.community
+suffix,1password.dev
 suffix,1password.eu
 suffix,1password.io
 suffix,1passwordservices.com
@@ -401,6 +403,7 @@ suffix,228.net.tw
 suffix,233abc.com
 suffix,233v2.com
 suffix,2371tom.com
+suffix,24.place
 suffix,24h.tv
 suffix,24hbook.com
 suffix,24hjav.com
@@ -2104,6 +2107,7 @@ suffix,anpopo.com
 suffix,ansarbank.com
 suffix,ansin.erodayo.com
 suffix,answering-islam.org
+suffix,ant.dev
 suffix,antarvasnaclips.com
 suffix,antarvasnax.com
 suffix,antd.org
@@ -2112,12 +2116,14 @@ suffix,anthemgame.com
 suffix,anthemthegame.com
 suffix,anthonycalzadilla.com
 suffix,anthropic.com
+suffix,anthropic.team
 suffix,anti1984.com
 suffix,antichristendom.com
 suffix,antiphishing.nl
 suffix,antiphishing.ru
 suffix,antiwave.net
 suffix,antpool.com
+suffix,antspace.dev
 suffix,anudetube.com
 suffix,anuneko.com
 suffix,anxiangxing.com
@@ -3075,8 +3081,10 @@ suffix,avinetworks.com
 suffix,avinin.com
 suffix,avira.com
 suffix,avistaz.to
+suffix,avito.com
 suffix,avito.ru
 suffix,avito.st
+suffix,avito.tech
 suffix,avizoon.site
 suffix,avizoone.com
 suffix,avjb.com
@@ -3774,8 +3782,15 @@ suffix,beevpn.com
 suffix,beforeigners.com
 suffix,befuck.com
 suffix,befuck.net
+suffix,beget.app
+suffix,beget.cloud
 suffix,beget.com
+suffix,beget.de
+suffix,beget.hosting
+suffix,beget.pro
 suffix,beget.ru
+suffix,beget.tech
+suffix,begetcdn.cloud
 suffix,begin-trade.com
 suffix,behance.net
 suffix,behindkink.com
@@ -3815,6 +3830,7 @@ suffix,berlinerbericht.de
 suffix,berlintwitterwall.com
 suffix,berm.co.nz
 suffix,beru.ru
+suffix,beserver.ru
 suffix,best-sex-games.com
 suffix,best2pay.net
 suffix,best3dhere.com
@@ -3935,6 +3951,7 @@ suffix,bfads.net
 suffix,bffshd.com
 suffix,bfnn.org
 suffix,bfsh.hk
+suffix,bget.ru
 suffix,bgicdn.com
 suffix,bgm.tv
 suffix,bgme.me
@@ -3958,6 +3975,7 @@ suffix,bibox.com
 suffix,bic2011.org
 suffix,bidbay.com
 suffix,bidi.net.uk
+suffix,bidobido.xyz
 suffix,bidong25.com
 suffix,bidong9.com
 suffix,bidorbuyindia.com
@@ -4015,6 +4033,7 @@ suffix,bijukujo.club
 suffix,bikaa.xyz
 suffix,bikac.xyz
 suffix,bikaios.xyz
+suffix,bikawebapp.com
 suffix,bild.de
 suffix,bili2.cc
 suffix,bili888.com
@@ -4205,6 +4224,8 @@ suffix,blizzardgearstore.com
 suffix,blob.core.windows.net
 suffix,blockcast.it
 suffix,blockchain.com
+suffix,blockchair.com
+suffix,blockchair.net
 suffix,blockcn.com
 suffix,blockedbyhk.com
 suffix,blockfrost.io
@@ -5704,6 +5725,10 @@ suffix,cdp1989.org
 suffix,cdp1998.org
 suffix,cdp2006.org
 suffix,cdpeu.org
+suffix,cdpred.services
+suffix,cdprojekt.com
+suffix,cdprojekt.red
+suffix,cdprojektred.com
 suffix,cdpuk.co.uk
 suffix,cdpusa.org
 suffix,cdpweb.org
@@ -5813,6 +5838,7 @@ suffix,charticulator.com
 suffix,chat.com
 suffix,chat.gle
 suffix,chatango.com
+suffix,chatbotclaude.com
 suffix,chatgpt.com
 suffix,chatgpt.livekit.cloud
 suffix,chatgpt.site
@@ -6187,10 +6213,16 @@ suffix,classicnike.com
 suffix,classymomsex.com
 suffix,clau.de
 suffix,claude.ai
+suffix,claude.app
 suffix,claude.com
 suffix,claude.dev
+suffix,claude.new
+suffix,claude.site
+suffix,claudeacademy.com
 suffix,claudemcpclient.com
 suffix,claudemcpcontent.com
+suffix,claudepages.dev
+suffix,claudestudio.com
 suffix,claudeusercontent.com
 suffix,clawhub.ai
 suffix,clb.org.hk
@@ -6632,6 +6664,7 @@ suffix,cq99.us
 suffix,cqcorea.com
 suffix,crabporn.com
 suffix,crackle.com
+suffix,craftifyx.com
 suffix,craigslist.org
 suffix,crankplayer.com
 suffix,crashbandicoot.com
@@ -6714,6 +6747,7 @@ suffix,cruxpool.com
 suffix,crypto.com
 suffix,cryptocompare.com
 suffix,cryptographyengineering.com
+suffix,cryptoid.info
 suffix,cryptomator.org
 suffix,cryptomus.com
 suffix,crypton.co.jp
@@ -6809,6 +6843,7 @@ suffix,cursor-cdn.com
 suffix,cursor.com
 suffix,cursor.sh
 suffix,cursorapi.com
+suffix,cursorvm.com
 suffix,curve.fi
 suffix,curvefish.com
 suffix,curvybbwwives.com
@@ -6843,6 +6878,7 @@ suffix,cybercrimecon.com
 suffix,cyberctm.com
 suffix,cyberghostvpn.com
 suffix,cybermondaybeats4sale.com
+suffix,cyberpunk.net
 suffix,cybersport.ru
 suffix,cybertrust.co.jp
 suffix,cybertrust.ne.jp
@@ -7123,6 +7159,7 @@ suffix,delcamp.net
 suffix,delcamtv.com
 suffix,delcamuniversity.com
 suffix,delcamusa.com
+suffix,delets.cash
 suffix,delets.online
 suffix,delicious.com
 suffix,delicious.com.au
@@ -9529,6 +9566,7 @@ suffix,fanatical.com
 suffix,fanbox.cc
 suffix,fandango.com
 suffix,fandom.com
+suffix,fanfiction.net
 suffix,fanfictionero.com
 suffix,fanfox.net
 suffix,fangbinxing.com
@@ -10049,6 +10087,17 @@ suffix,fluidpreview.com
 suffix,flurry.com
 suffix,flutter.dev
 suffix,flutterapp.com
+suffix,fluxer.app
+suffix,fluxer.com
+suffix,fluxer.dev
+suffix,fluxer.gg
+suffix,fluxer.gift
+suffix,fluxer.media
+suffix,fluxer.tools
+suffix,fluxerapp.com
+suffix,fluxerstatic.com
+suffix,fluxerstatus.com
+suffix,fluxerusercontent.com
 suffix,flxvpn.net
 suffix,fly.dev
 suffix,fly.io
@@ -10638,6 +10687,7 @@ suffix,fundraisingwithfacebook.com
 suffix,fundsupermart.com
 suffix,funf.tw
 suffix,funimation.com
+suffix,funko.com
 suffix,funkyimg.com
 suffix,funnyfacebook.org
 suffix,funnyordie.com
@@ -10746,6 +10796,7 @@ suffix,g1.com.br
 suffix,g1d1goob.xyz
 suffix,g6hentai.com
 suffix,g9.co.kr
+suffix,ga.jspm.io
 suffix,gab.com
 suffix,gabia.net
 suffix,gabocorp.com
@@ -10773,6 +10824,7 @@ suffix,game-platform.net
 suffix,game-repack.site
 suffix,game735.com
 suffix,gameapps.hk
+suffix,gamebanana.com
 suffix,gamebase.com.tw
 suffix,gamebeforethegame.com
 suffix,gamebiz.jp
@@ -11060,6 +11112,7 @@ suffix,getpocket.com
 suffix,getporn.tv
 suffix,getpricetag.com
 suffix,getprintersupports.com
+suffix,getsafety.com
 suffix,getscorecash.com
 suffix,getsentry.com
 suffix,getsession.org
@@ -11252,6 +11305,8 @@ suffix,glarity.app
 suffix,glasamerike.net
 suffix,glass8.eu
 suffix,gleline.com
+suffix,glitchprod.com
+suffix,glitchproductions.store
 suffix,glitchwave.com
 suffix,global-sci.org
 suffix,global.market.xiaomi.com
@@ -13122,6 +13177,7 @@ suffix,hua-yue.net
 suffix,huabansp.com
 suffix,huabansp7.club
 suffix,huaglad.com
+suffix,huakacomic.com
 suffix,huanghuagang.org
 suffix,huangse.love
 suffix,huangyiyu.com
@@ -15348,6 +15404,7 @@ suffix,killwall.com
 suffix,kilmeadeandfriends.com
 suffix,kimchi.tv
 suffix,kimogirl.cc
+suffix,kimootoko.net
 suffix,kimosex.com
 suffix,kimy.com.tw
 suffix,kindgirls.com
@@ -15555,6 +15612,7 @@ suffix,kuper.ru
 suffix,kurashsultan.com
 suffix,kuromis.com
 suffix,kuromisubs.shop
+suffix,kurs.expert
 suffix,kurtmunger.com
 suffix,kusocity.com
 suffix,kusugurizanmai.com
@@ -16317,6 +16375,7 @@ suffix,magestic.com
 suffix,magic-net.info
 suffix,magicalmirai.com
 suffix,magicmovies.com
+suffix,magnific.com
 suffix,mahabodhi.org
 suffix,mahajantech.com
 suffix,mahjongsoul.com
@@ -16355,6 +16414,7 @@ suffix,makeitrealcontest.com
 suffix,makemymood.com
 suffix,makerepeater.jp
 suffix,makesenseofdata.com
+suffix,makeship.com
 suffix,makeshop.jp
 suffix,makingstartshere.com
 suffix,makkahnewspaper.com
@@ -17399,6 +17459,7 @@ suffix,miniwidget.ca
 suffix,miniwindsor.com
 suffix,miniworkshop.com
 suffix,miniyaletown.ca
+suffix,minkch.com
 suffix,minnano-av.com
 suffix,minne.com
 suffix,minneapolisbmw.com
@@ -17924,6 +17985,7 @@ suffix,mt.lv
 suffix,mt0011.site
 suffix,mtao.fun
 suffix,mthruf.com
+suffix,mts-link.ru
 suffix,mts-ws.net
 suffix,mts.ru
 suffix,mtsbank.ru
@@ -18979,6 +19041,7 @@ suffix,nixos.wiki
 suffix,nixpkgs.org
 suffix,niziero.info
 suffix,njactb.org
+suffix,njav.com
 suffix,njav.tv
 suffix,njavtv.com
 suffix,njpw.co.jp
@@ -19651,6 +19714,7 @@ suffix,op.gg
 suffix,op7979.com
 suffix,opac-project.eu
 suffix,open.com.hk
+suffix,openai.org
 suffix,openallweb.com
 suffix,openamt.com
 suffix,openapiplatform.com
@@ -19845,6 +19909,7 @@ suffix,ow.ly
 suffix,owind.com
 suffix,owl.li
 suffix,owltail.com
+suffix,ownaj.com
 suffix,owncube.cloud
 suffix,owncube.com
 suffix,owxd.xyz
@@ -20412,6 +20477,7 @@ suffix,piaotia.com
 suffix,piaotian.net
 suffix,piapp.com.tw
 suffix,piapro.net
+suffix,pica-id.com
 suffix,picacg2022.com
 suffix,picacgy.com
 suffix,picacn.xyz
@@ -20612,6 +20678,7 @@ suffix,playfab.com
 suffix,playfabapi.com
 suffix,playfamily.ru
 suffix,playforceone.com
+suffix,playgwent.com
 suffix,playhearthstone.com
 suffix,playmation.com
 suffix,playmeow.com
@@ -20668,6 +20735,7 @@ suffix,pmatehunter.com
 suffix,pmates.com
 suffix,pmem.org
 suffix,pmem.us
+suffix,po-kaki-to.com
 suffix,po18.tw
 suffix,po2b.com
 suffix,pobeda.page
@@ -21133,6 +21201,7 @@ suffix,postimages.org
 suffix,postimg.cc
 suffix,postimg.org
 suffix,postini.com
+suffix,postman.com
 suffix,posty.kr
 suffix,postyourgirls.ws
 suffix,potato.im
@@ -21457,6 +21526,7 @@ suffix,putinho.net
 suffix,putlocker.com
 suffix,putty.org
 suffix,puuko.com
+suffix,pv-cdn.net
 suffix,pvp.net
 suffix,pvp.tv
 suffix,pvt.sexy
@@ -21489,6 +21559,7 @@ suffix,pythonhackers.com
 suffix,pythonhosted.org
 suffix,pythonic.life
 suffix,pytorch.org
+suffix,pyup.io
 suffix,pzforever.skin
 suffix,pzforever01.homes
 suffix,pzhanfor.today
@@ -21678,6 +21749,7 @@ suffix,r18av.com
 suffix,r18lu-avi.shop
 suffix,r18lu.com
 suffix,r2.dev
+suffix,r2modman.com
 suffix,r34porn.net
 suffix,ra.gg
 suffix,rabbitcounter.com
@@ -22468,6 +22540,7 @@ suffix,safeguarddefenders.com
 suffix,safeliner.tech
 suffix,safepal.com
 suffix,safervpn.com
+suffix,safetycli.com
 suffix,saffrontech.com
 suffix,sagabank.co.jp
 suffix,sage-observability.tech
@@ -22680,6 +22753,7 @@ suffix,schwab.com
 suffix,schwab.com.hk
 suffix,schwab.com.sg
 suffix,schwabassetmanagement.com
+suffix,schwabcdn.com
 suffix,schwabplan.com
 suffix,sci-hub.it.nf
 suffix,sci-hub.mksa.top
@@ -23988,6 +24062,7 @@ suffix,sprinklesapp.com
 suffix,sprite.org
 suffix,sproutcore.com
 suffix,sproxy.info
+suffix,sprut.io
 suffix,sptvbroadcast.com
 suffix,sputnikglobe.com
 suffix,sputnikimages.com
@@ -24981,6 +25056,7 @@ suffix,tgirlcentral.com
 suffix,tgirlpostop.com
 suffix,tgp6.com
 suffix,tgstat.com
+suffix,tgtime.store
 suffix,tgtube.com
 suffix,tgutube.com
 suffix,th.hao123.com
@@ -25180,6 +25256,7 @@ suffix,theweek.com
 suffix,theweek.in
 suffix,thewgo.org
 suffix,thewirechina.com
+suffix,thewitcher.com
 suffix,thewonderful101.com
 suffix,theync.com
 suffix,theyxxx.com
@@ -25249,6 +25326,8 @@ suffix,thumbzilla.com
 suffix,thunderbird.net
 suffix,thunderbolttechnology.net
 suffix,thundermail.com
+suffix,thunderstore.io
+suffix,thunderstore.org
 suffix,thywords.com
 suffix,thywords.com.tw
 suffix,thz7.net
@@ -25402,6 +25481,8 @@ suffix,timesnownews.com
 suffix,timestalks.com
 suffix,timeweb.cloud
 suffix,timeweb.com
+suffix,timeweb.tech
+suffix,timewebcloud.kz
 suffix,timi1.me
 suffix,timo0.com
 suffix,timsah.com
@@ -25437,6 +25518,7 @@ suffix,tinypic.com
 suffix,tinyurl.com
 suffix,tiohentai.com
 suffix,tipas.net
+suffix,tipatipa.xyz
 suffix,tiqcdn.com
 suffix,tire-cadcam.com
 suffix,tiresplus.com
@@ -25464,6 +25546,7 @@ suffix,tmdfish.com
 suffix,tmei-taoyuan.com
 suffix,tmi.me
 suffix,tmiaf.ru
+suffix,tmimgcdn.com
 suffix,tmpp.org
 suffix,tmsnrt.rs
 suffix,tnaflix.com
@@ -26118,6 +26201,7 @@ suffix,typekit.com
 suffix,typekit.net
 suffix,typenetwork.com
 suffix,typepad.com
+suffix,typesafe.ai
 suffix,typeset.io
 suffix,typesquare.com
 suffix,typography.com
@@ -28148,6 +28232,7 @@ suffix,worldoftanks.com
 suffix,worldoftanks.eu
 suffix,worldofwarcraft.com
 suffix,worldofwarplanes.com
+suffix,worldofwarships.asia
 suffix,worldofwarships.com
 suffix,worldpopulationreview.com
 suffix,worldpornvideos.com
@@ -28534,6 +28619,7 @@ suffix,xn--8uq428d76d.tokyo
 suffix,xn--90ab.com
 suffix,xn--90ab2c.xn--p1ai
 suffix,xn--90absjljw3g.xn--p1ai
+suffix,xn--90aefb9d.xn--p1ai
 suffix,xn--90aifd0az.shop
 suffix,xn--90aifd0azb.xn--p1acf
 suffix,xn--90wwvt03e.com
@@ -28552,6 +28638,12 @@ suffix,xn--d1aqf.xn--p1ai
 suffix,xn--d4ty0ojsqzfd.com
 suffix,xn--e1adjldbbpv.xn--90ais
 suffix,xn--e1aigb.xn--p1ai
+suffix,xn--fiq80y.hk
+suffix,xn--fiq80y.xn--j6w193g
+suffix,xn--fiq80y3xbiwr.hk
+suffix,xn--fiq80y3xbiwr.xn--j6w193g
+suffix,xn--fiq80y3xbiwrs0kiu9d.hk
+suffix,xn--fiq80y3xbiwrs0kiu9d.xn--j6w193g
 suffix,xn--fiqs8s1bxp3anr7a.hk
 suffix,xn--fiqs8s1bxp3anr7a.xn--j6w193g
 suffix,xn--fiqs8s1byzqyvl.hk
@@ -28589,6 +28681,7 @@ suffix,xn--p8j9a0d9c9a.xn--q9jyb4c
 suffix,xn--pearsonenespaol-brb.com
 suffix,xn--pssu7ci2j23mp9ny48b.hk
 suffix,xn--pssu7ci2j23mp9ny48b.xn--j6w193g
+suffix,xn--pssu7ci3q5oge0ai91q.xn--j6w193g
 suffix,xn--pssu7cv61af1tcs59bnvd.hk
 suffix,xn--pssu7cv61af1tcs59bnvd.xn--j6w193g
 suffix,xn--pssu7cv61af44b.hk
@@ -28597,6 +28690,7 @@ suffix,xn--pssu7cv61ahw8aq79bztd.hk
 suffix,xn--pssu7cv61ahw8aq79bztd.xn--j6w193g
 suffix,xn--pssu7cv61ahwcb1p2yk.hk
 suffix,xn--pssu7cv61ahwcb1p2yk.xn--j6w193g
+suffix,xn--pssu7cz8nr8ibkx1e8a.xn--j6w193g
 suffix,xn--q41am8x.com
 suffix,xn--qhrx81fxh2a.xn--55qx5d.hk
 suffix,xn--qoq462m.com
@@ -29389,6 +29483,7 @@ suffix,youskbe.com
 suffix,youthforfreechina.org
 suffix,youthnetradio.org
 suffix,youthwant.com.tw
+suffix,youtooz.com
 suffix,youtrack.cloud
 suffix,youtrannytube.com
 suffix,youtu.be
@@ -29872,6 +29967,7 @@ suffix,zorinos.com
 suffix,zorrovpn.com
 suffix,zotero.org
 suffix,zozotown.com
+suffix,zozovideo.com
 suffix,zpagov.net
 suffix,zpath.com
 suffix,zpn.im

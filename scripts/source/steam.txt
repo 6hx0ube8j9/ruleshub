@@ -49,6 +49,7 @@ suffix,steamcontent.tnkjmec.com
 suffix,steamdeck.com
 suffix,steamgames.com
 suffix,steammobile.akamaized.net
+suffix,steamos.cloud
 suffix,steampipe-kr.akamaized.net
 suffix,steampipe-partner.akamaized.net
 suffix,steampipe.akamaized.net
@@ -73,4 +74,18 @@ suffix,wmsjsteam.com
 keyword,steambroadcast
 keyword,steamstore
 keyword,steamuserimages
+
+# --- TYPE: IP ---
+ip,103.10.124.0/23
+ip,103.28.54.0/24
+ip,146.66.152.0/24
+ip,146.66.155.0/24
+ip,155.133.224.0/19
+ip,162.254.192.0/21
+ip,185.25.180.0/22
+ip,192.69.96.0/22
+ip,205.196.6.0/24
+ip,208.64.200.0/22
+ip,208.78.164.0/22
+ip,45.121.184.0/24
 

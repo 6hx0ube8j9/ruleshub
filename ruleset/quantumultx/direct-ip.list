@@ -3,6 +3,8 @@
 host, asusrouter.com, direct
 host, instant.arubanetworks.com, direct
 host, local.adguard.org, direct
+host, localhost.weixin.qq.com, direct
+host, localhost.work.weixin.qq.com, direct
 host, oasisauth.h3c.com, direct
 host, router.asus.com, direct
 host, routerlogin.net, direct
@@ -954,6 +956,7 @@ ip-cidr, 103.186.228.0/23, direct
 ip-cidr, 103.186.4.0/23, direct
 ip-cidr, 103.189.152.0/22, direct
 ip-cidr, 103.189.154.0/23, direct
+ip-cidr, 103.189.197.0/24, direct
 ip-cidr, 103.189.92.0/23, direct
 ip-cidr, 103.19.12.0/22, direct
 ip-cidr, 103.19.232.0/22, direct
@@ -4657,6 +4660,7 @@ ip-cidr, 160.20.18.0/23, direct
 ip-cidr, 160.20.48.0/22, direct
 ip-cidr, 160.202.148.0/22, direct
 ip-cidr, 160.202.152.0/22, direct
+ip-cidr, 160.202.210.0/23, direct
 ip-cidr, 160.202.212.0/22, direct
 ip-cidr, 160.202.216.0/21, direct
 ip-cidr, 160.202.224.0/19, direct
@@ -5095,6 +5099,7 @@ ip-cidr, 192.140.156.0/22, direct
 ip-cidr, 192.140.160.0/19, direct
 ip-cidr, 192.140.192.0/20, direct
 ip-cidr, 192.140.208.0/21, direct
+ip-cidr, 192.140.244.0/23, direct
 ip-cidr, 192.144.128.0/17, direct
 ip-cidr, 192.163.11.0/24, direct
 ip-cidr, 192.168.0.0/16, direct
@@ -7507,11 +7512,16 @@ ip-cidr, 223.112.0.0/14, direct
 ip-cidr, 223.116.0.0/15, direct
 ip-cidr, 223.121.128.0/17, direct
 ip-cidr, 223.122.12.0/22, direct
+ip-cidr, 223.122.13.0/24, direct
+ip-cidr, 223.122.14.0/23, direct
 ip-cidr, 223.122.18.0/23, direct
 ip-cidr, 223.122.20.0/22, direct
 ip-cidr, 223.122.26.0/23, direct
 ip-cidr, 223.122.28.0/22, direct
+ip-cidr, 223.122.28.0/23, direct
 ip-cidr, 223.122.4.0/22, direct
+ip-cidr, 223.122.5.0/24, direct
+ip-cidr, 223.122.6.0/23, direct
 ip-cidr, 223.123.195.0/24, direct
 ip-cidr, 223.123.196.0/22, direct
 ip-cidr, 223.123.202.0/23, direct
@@ -7859,6 +7869,7 @@ ip-cidr, 43.122.0.0/16, direct
 ip-cidr, 43.123.0.0/17, direct
 ip-cidr, 43.123.128.0/18, direct
 ip-cidr, 43.124.0.0/16, direct
+ip-cidr, 43.125.0.0/19, direct
 ip-cidr, 43.125.0.0/20, direct
 ip-cidr, 43.125.24.0/21, direct
 ip-cidr, 43.125.32.0/20, direct
@@ -8357,6 +8368,7 @@ ip-cidr, 45.119.104.0/22, direct
 ip-cidr, 45.119.104.0/23, direct
 ip-cidr, 45.119.116.0/22, direct
 ip-cidr, 45.119.232.0/22, direct
+ip-cidr, 45.119.42.0/23, direct
 ip-cidr, 45.119.60.0/22, direct
 ip-cidr, 45.119.64.0/21, direct
 ip-cidr, 45.119.72.0/22, direct
@@ -8633,6 +8645,7 @@ ip-cidr, 47.246.176.0/20, direct
 ip-cidr, 47.246.192.0/20, direct
 ip-cidr, 47.246.208.0/23, direct
 ip-cidr, 47.246.212.0/22, direct
+ip-cidr, 47.246.216.0/22, direct
 ip-cidr, 47.246.32.0/22, direct
 ip-cidr, 47.246.66.0/23, direct
 ip-cidr, 47.246.68.0/23, direct
@@ -10320,6 +10333,7 @@ ip6-cidr, 2402:7d80::/32, direct
 ip6-cidr, 2402:7d80::/48, direct
 ip6-cidr, 2402:7da0::/32, direct
 ip6-cidr, 2402:7e20::/32, direct
+ip6-cidr, 2402:7ee0::/32, direct
 ip6-cidr, 2402:8180::/32, direct
 ip6-cidr, 2402:8300::/32, direct
 ip6-cidr, 2402:8380::/32, direct
@@ -11281,6 +11295,11 @@ ip6-cidr, 2405:84c0:8050::/48, direct
 ip6-cidr, 2405:84c0:8053::/48, direct
 ip6-cidr, 2405:84c0:8058::/45, direct
 ip6-cidr, 2405:84c0:8060::/43, direct
+ip6-cidr, 2405:84c0:8061::/48, direct
+ip6-cidr, 2405:84c0:8062::/47, direct
+ip6-cidr, 2405:84c0:8064::/46, direct
+ip6-cidr, 2405:84c0:8068::/45, direct
+ip6-cidr, 2405:84c0:8070::/44, direct
 ip6-cidr, 2405:84c0:8080::/41, direct
 ip6-cidr, 2405:84c0:8100::/40, direct
 ip6-cidr, 2405:84c0:8200::/39, direct
@@ -11858,6 +11877,8 @@ ip6-cidr, 2406:840:9610::/44, direct
 ip6-cidr, 2406:840:9630::/44, direct
 ip6-cidr, 2406:840:9640::/43, direct
 ip6-cidr, 2406:840:9660::/46, direct
+ip6-cidr, 2406:840:9660::/48, direct
+ip6-cidr, 2406:840:9662::/47, direct
 ip6-cidr, 2406:840:9664::/47, direct
 ip6-cidr, 2406:840:9667::/48, direct
 ip6-cidr, 2406:840:9668::/45, direct
@@ -11915,6 +11936,10 @@ ip6-cidr, 2406:840:9fe0::/44, direct
 ip6-cidr, 2406:840::/48, direct
 ip6-cidr, 2406:840:a000::/35, direct
 ip6-cidr, 2406:840:a00::/44, direct
+ip6-cidr, 2406:840:a01::/48, direct
+ip6-cidr, 2406:840:a02::/47, direct
+ip6-cidr, 2406:840:a04::/46, direct
+ip6-cidr, 2406:840:a08::/45, direct
 ip6-cidr, 2406:840:a0::/43, direct
 ip6-cidr, 2406:840:a12::/47, direct
 ip6-cidr, 2406:840:a14::/46, direct
@@ -13497,6 +13522,7 @@ ip6-cidr, 240b:4002::/36, direct
 ip6-cidr, 240b:4004::/31, direct
 ip6-cidr, 240b:4006:1000::/43, direct
 ip6-cidr, 240b:4006:1020::/44, direct
+ip6-cidr, 240b:4006:1100::/44, direct
 ip6-cidr, 240b:4006:1100::/45, direct
 ip6-cidr, 240b:4006:110c::/46, direct
 ip6-cidr, 240b:4006:1110::/45, direct

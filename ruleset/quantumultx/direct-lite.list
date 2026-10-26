@@ -3,6 +3,8 @@
 host, asusrouter.com, direct
 host, instant.arubanetworks.com, direct
 host, local.adguard.org, direct
+host, localhost.weixin.qq.com, direct
+host, localhost.work.weixin.qq.com, direct
 host, oasisauth.h3c.com, direct
 host, router.asus.com, direct
 host, routerlogin.net, direct
