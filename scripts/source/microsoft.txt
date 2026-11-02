@@ -172,6 +172,7 @@ suffix,bingpix.com
 suffix,bingpk.com
 suffix,bings.com
 suffix,bingsandbox.com
+suffix,bingstatic.com
 suffix,bingtoolbar.com
 suffix,bingtranslator.com
 suffix,bingvisualsearch.com
@@ -512,6 +513,7 @@ suffix,msfteducation.ca
 suffix,msftidentity.com
 suffix,msftncsi.com
 suffix,msftnet.org
+suffix,msftstatic.com
 suffix,msgamesresearch.com
 suffix,msgamestudios.com
 suffix,mshome.net

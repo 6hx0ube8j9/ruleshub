@@ -48,11 +48,14 @@ suffix,tiktokglobalshopv.com
 suffix,tiktokminis.us
 suffix,tiktokmusic.app
 suffix,tiktokrow-cdn.com
+suffix,tiktokshop.com
+suffix,tiktokstaticb.com
 suffix,tiktokv.com
 suffix,tiktokv.com.edgekey.net
 suffix,tiktokv.com.edgesuite.net
 suffix,tiktokv.eu
 suffix,tiktokv.us
+suffix,tiktokvapp.com
 suffix,tiktokw.eu
 suffix,tiktokw.us
 suffix,trae.ai

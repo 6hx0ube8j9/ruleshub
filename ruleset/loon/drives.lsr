@@ -2,7 +2,10 @@
 
 DOMAIN,dropbox-api.arkoselabs.com
 DOMAIN,e.pcloud.link
+DOMAIN-SUFFIX,addtodropbox.com
+DOMAIN-SUFFIX,dash.ai
 DOMAIN-SUFFIX,db.tt
+DOMAIN-SUFFIX,docsend.com
 DOMAIN-SUFFIX,dropbox-dns.com
 DOMAIN-SUFFIX,dropbox.com
 DOMAIN-SUFFIX,dropbox.tech
@@ -14,11 +17,15 @@ DOMAIN-SUFFIX,dropboxexperiment.com
 DOMAIN-SUFFIX,dropboxforum.com
 DOMAIN-SUFFIX,dropboxforums.com
 DOMAIN-SUFFIX,dropboxinsiders.com
+DOMAIN-SUFFIX,dropboxlegal.com
 DOMAIN-SUFFIX,dropboxmail.com
 DOMAIN-SUFFIX,dropboxpartners.com
 DOMAIN-SUFFIX,dropboxstatic.com
+DOMAIN-SUFFIX,dropboxteam.com
 DOMAIN-SUFFIX,dropboxusercontent.com
 DOMAIN-SUFFIX,getdropbox.com
+DOMAIN-SUFFIX,hellofax.com
+DOMAIN-SUFFIX,hellosign.com
 DOMAIN-SUFFIX,koofr.eu
 DOMAIN-SUFFIX,koofr.net
 DOMAIN-SUFFIX,paper-attachments.s3.amazonaws.com

@@ -2,7 +2,10 @@
 
 host, dropbox-api.arkoselabs.com, drives
 host, e.pcloud.link, drives
+host-suffix, addtodropbox.com, drives
+host-suffix, dash.ai, drives
 host-suffix, db.tt, drives
+host-suffix, docsend.com, drives
 host-suffix, dropbox-dns.com, drives
 host-suffix, dropbox.com, drives
 host-suffix, dropbox.tech, drives
@@ -14,11 +17,15 @@ host-suffix, dropboxexperiment.com, drives
 host-suffix, dropboxforum.com, drives
 host-suffix, dropboxforums.com, drives
 host-suffix, dropboxinsiders.com, drives
+host-suffix, dropboxlegal.com, drives
 host-suffix, dropboxmail.com, drives
 host-suffix, dropboxpartners.com, drives
 host-suffix, dropboxstatic.com, drives
+host-suffix, dropboxteam.com, drives
 host-suffix, dropboxusercontent.com, drives
 host-suffix, getdropbox.com, drives
+host-suffix, hellofax.com, drives
+host-suffix, hellosign.com, drives
 host-suffix, koofr.eu, drives
 host-suffix, koofr.net, drives
 host-suffix, paper-attachments.s3.amazonaws.com, drives

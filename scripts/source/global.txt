@@ -39,6 +39,7 @@ full,courier-push-apple.com.akadns.net
 full,crl.versign.net
 full,databank.worldbank.org
 full,datarouter.apps.netherrealm.com
+full,dc.services.visualstudio.com
 full,dl.begellhouse.com
 full,elib.maruzen.co.jp
 full,faronics.kayako.com
@@ -106,6 +107,7 @@ full,rsshub.rssforever.com
 full,rsshub.umzzz.com
 full,rsshub.woodland.cafe
 full,rsshub2.asailor.org
+full,rt.services.visualstudio.com
 full,sberpro.vedomosti.ru
 full,sentry.lbry.tech
 full,standchartbank.sc.omtrdc.net
@@ -7022,6 +7024,7 @@ suffix,darwinsource.com
 suffix,darwinsource.org
 suffix,darwinsourcecode.com
 suffix,dasaob.online
+suffix,dash.ai
 suffix,dashlane.com
 suffix,dashly.app
 suffix,dashly.help
@@ -7865,6 +7868,7 @@ suffix,docs.com
 suffix,docs.new
 suffix,docs.rs
 suffix,docs.rw
+suffix,docsend.com
 suffix,doctor-videos.com
 suffix,doctorvoice.org
 suffix,documentforce.com
@@ -12341,9 +12345,11 @@ suffix,heise360182.buzz
 suffix,helixstudios.net
 suffix,helloandroid.com
 suffix,helloavgirls.com
+suffix,hellofax.com
 suffix,hellokittybeats.com
 suffix,hellomoto.com
 suffix,helloqueer.com
+suffix,hellosign.com
 suffix,hellosmartbook.com
 suffix,helloss.pw
 suffix,hellotxt.com
@@ -15866,6 +15872,7 @@ suffix,librarylovefest.com
 suffix,libraryofthumbs.com
 suffix,libredd.it
 suffix,libreoffice.org
+suffix,librewolf.dev
 suffix,librewolf.net
 suffix,libsolutions.app
 suffix,libsolutions.domains

@@ -38,6 +38,7 @@ host, courier-push-apple.com.akadns.net, global
 host, crl.versign.net, global
 host, databank.worldbank.org, global
 host, datarouter.apps.netherrealm.com, global
+host, dc.services.visualstudio.com, global
 host, dl.begellhouse.com, global
 host, elib.maruzen.co.jp, global
 host, faronics.kayako.com, global
@@ -105,6 +106,7 @@ host, rsshub.rssforever.com, global
 host, rsshub.umzzz.com, global
 host, rsshub.woodland.cafe, global
 host, rsshub2.asailor.org, global
+host, rt.services.visualstudio.com, global
 host, sberpro.vedomosti.ru, global
 host, sentry.lbry.tech, global
 host, standchartbank.sc.omtrdc.net, global
@@ -7019,6 +7021,7 @@ host-suffix, darwinsource.com, global
 host-suffix, darwinsource.org, global
 host-suffix, darwinsourcecode.com, global
 host-suffix, dasaob.online, global
+host-suffix, dash.ai, global
 host-suffix, dashlane.com, global
 host-suffix, dashly.app, global
 host-suffix, dashly.help, global
@@ -7862,6 +7865,7 @@ host-suffix, docs.com, global
 host-suffix, docs.new, global
 host-suffix, docs.rs, global
 host-suffix, docs.rw, global
+host-suffix, docsend.com, global
 host-suffix, doctor-videos.com, global
 host-suffix, doctorvoice.org, global
 host-suffix, documentforce.com, global
@@ -12338,9 +12342,11 @@ host-suffix, heise360182.buzz, global
 host-suffix, helixstudios.net, global
 host-suffix, helloandroid.com, global
 host-suffix, helloavgirls.com, global
+host-suffix, hellofax.com, global
 host-suffix, hellokittybeats.com, global
 host-suffix, hellomoto.com, global
 host-suffix, helloqueer.com, global
+host-suffix, hellosign.com, global
 host-suffix, hellosmartbook.com, global
 host-suffix, helloss.pw, global
 host-suffix, hellotxt.com, global
@@ -15863,6 +15869,7 @@ host-suffix, librarylovefest.com, global
 host-suffix, libraryofthumbs.com, global
 host-suffix, libredd.it, global
 host-suffix, libreoffice.org, global
+host-suffix, librewolf.dev, global
 host-suffix, librewolf.net, global
 host-suffix, libsolutions.app, global
 host-suffix, libsolutions.domains, global

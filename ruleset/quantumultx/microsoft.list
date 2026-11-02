@@ -169,6 +169,7 @@ host-suffix, bingpix.com, microsoft
 host-suffix, bingpk.com, microsoft
 host-suffix, bings.com, microsoft
 host-suffix, bingsandbox.com, microsoft
+host-suffix, bingstatic.com, microsoft
 host-suffix, bingtoolbar.com, microsoft
 host-suffix, bingtranslator.com, microsoft
 host-suffix, bingvisualsearch.com, microsoft
@@ -509,6 +510,7 @@ host-suffix, msfteducation.ca, microsoft
 host-suffix, msftidentity.com, microsoft
 host-suffix, msftncsi.com, microsoft
 host-suffix, msftnet.org, microsoft
+host-suffix, msftstatic.com, microsoft
 host-suffix, msgamesresearch.com, microsoft
 host-suffix, msgamestudios.com, microsoft
 host-suffix, mshome.net, microsoft

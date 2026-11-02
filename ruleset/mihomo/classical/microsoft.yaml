@@ -169,6 +169,7 @@ payload:
   - DOMAIN-SUFFIX,bingpk.com
   - DOMAIN-SUFFIX,bings.com
   - DOMAIN-SUFFIX,bingsandbox.com
+  - DOMAIN-SUFFIX,bingstatic.com
   - DOMAIN-SUFFIX,bingtoolbar.com
   - DOMAIN-SUFFIX,bingtranslator.com
   - DOMAIN-SUFFIX,bingvisualsearch.com
@@ -509,6 +510,7 @@ payload:
   - DOMAIN-SUFFIX,msftidentity.com
   - DOMAIN-SUFFIX,msftncsi.com
   - DOMAIN-SUFFIX,msftnet.org
+  - DOMAIN-SUFFIX,msftstatic.com
   - DOMAIN-SUFFIX,msgamesresearch.com
   - DOMAIN-SUFFIX,msgamestudios.com
   - DOMAIN-SUFFIX,mshome.net

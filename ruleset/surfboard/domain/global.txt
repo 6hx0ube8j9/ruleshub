@@ -37,6 +37,7 @@ courier-push-apple.com.akadns.net
 crl.versign.net
 databank.worldbank.org
 datarouter.apps.netherrealm.com
+dc.services.visualstudio.com
 dl.begellhouse.com
 elib.maruzen.co.jp
 faronics.kayako.com
@@ -104,6 +105,7 @@ rsshub.rssforever.com
 rsshub.umzzz.com
 rsshub.woodland.cafe
 rsshub2.asailor.org
+rt.services.visualstudio.com
 sberpro.vedomosti.ru
 sentry.lbry.tech
 standchartbank.sc.omtrdc.net
@@ -7018,6 +7020,7 @@ ztedevices.com
 .darwinsource.org
 .darwinsourcecode.com
 .dasaob.online
+.dash.ai
 .dashlane.com
 .dashly.app
 .dashly.help
@@ -7861,6 +7864,7 @@ ztedevices.com
 .docs.new
 .docs.rs
 .docs.rw
+.docsend.com
 .doctor-videos.com
 .doctorvoice.org
 .documentforce.com
@@ -12337,9 +12341,11 @@ ztedevices.com
 .helixstudios.net
 .helloandroid.com
 .helloavgirls.com
+.hellofax.com
 .hellokittybeats.com
 .hellomoto.com
 .helloqueer.com
+.hellosign.com
 .hellosmartbook.com
 .helloss.pw
 .hellotxt.com
@@ -15862,6 +15868,7 @@ ztedevices.com
 .libraryofthumbs.com
 .libredd.it
 .libreoffice.org
+.librewolf.dev
 .librewolf.net
 .libsolutions.app
 .libsolutions.domains

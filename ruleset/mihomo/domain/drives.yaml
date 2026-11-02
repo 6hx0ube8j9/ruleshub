@@ -1,7 +1,10 @@
 payload:
     - dropbox-api.arkoselabs.com
     - e.pcloud.link
+    - +.addtodropbox.com
+    - +.dash.ai
     - +.db.tt
+    - +.docsend.com
     - +.dropbox-dns.com
     - +.dropbox.com
     - +.dropbox.tech
@@ -13,11 +16,15 @@ payload:
     - +.dropboxforum.com
     - +.dropboxforums.com
     - +.dropboxinsiders.com
+    - +.dropboxlegal.com
     - +.dropboxmail.com
     - +.dropboxpartners.com
     - +.dropboxstatic.com
+    - +.dropboxteam.com
     - +.dropboxusercontent.com
     - +.getdropbox.com
+    - +.hellofax.com
+    - +.hellosign.com
     - +.koofr.eu
     - +.koofr.net
     - +.paper-attachments.s3.amazonaws.com

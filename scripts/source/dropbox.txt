@@ -4,7 +4,10 @@
 full,dropbox-api.arkoselabs.com
 
 # --- TYPE: SUFFIX ---
+suffix,addtodropbox.com
+suffix,dash.ai
 suffix,db.tt
+suffix,docsend.com
 suffix,dropbox-dns.com
 suffix,dropbox.com
 suffix,dropbox.tech
@@ -16,10 +19,14 @@ suffix,dropboxexperiment.com
 suffix,dropboxforum.com
 suffix,dropboxforums.com
 suffix,dropboxinsiders.com
+suffix,dropboxlegal.com
 suffix,dropboxmail.com
 suffix,dropboxpartners.com
 suffix,dropboxstatic.com
+suffix,dropboxteam.com
 suffix,dropboxusercontent.com
 suffix,getdropbox.com
+suffix,hellofax.com
+suffix,hellosign.com
 suffix,paper-attachments.s3.amazonaws.com
 

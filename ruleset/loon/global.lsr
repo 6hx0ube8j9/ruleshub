@@ -38,6 +38,7 @@ DOMAIN,courier-push-apple.com.akadns.net
 DOMAIN,crl.versign.net
 DOMAIN,databank.worldbank.org
 DOMAIN,datarouter.apps.netherrealm.com
+DOMAIN,dc.services.visualstudio.com
 DOMAIN,dl.begellhouse.com
 DOMAIN,elib.maruzen.co.jp
 DOMAIN,faronics.kayako.com
@@ -105,6 +106,7 @@ DOMAIN,rsshub.rssforever.com
 DOMAIN,rsshub.umzzz.com
 DOMAIN,rsshub.woodland.cafe
 DOMAIN,rsshub2.asailor.org
+DOMAIN,rt.services.visualstudio.com
 DOMAIN,sberpro.vedomosti.ru
 DOMAIN,sentry.lbry.tech
 DOMAIN,standchartbank.sc.omtrdc.net
@@ -7019,6 +7021,7 @@ DOMAIN-SUFFIX,darwinsource.com
 DOMAIN-SUFFIX,darwinsource.org
 DOMAIN-SUFFIX,darwinsourcecode.com
 DOMAIN-SUFFIX,dasaob.online
+DOMAIN-SUFFIX,dash.ai
 DOMAIN-SUFFIX,dashlane.com
 DOMAIN-SUFFIX,dashly.app
 DOMAIN-SUFFIX,dashly.help
@@ -7862,6 +7865,7 @@ DOMAIN-SUFFIX,docs.com
 DOMAIN-SUFFIX,docs.new
 DOMAIN-SUFFIX,docs.rs
 DOMAIN-SUFFIX,docs.rw
+DOMAIN-SUFFIX,docsend.com
 DOMAIN-SUFFIX,doctor-videos.com
 DOMAIN-SUFFIX,doctorvoice.org
 DOMAIN-SUFFIX,documentforce.com
@@ -12338,9 +12342,11 @@ DOMAIN-SUFFIX,heise360182.buzz
 DOMAIN-SUFFIX,helixstudios.net
 DOMAIN-SUFFIX,helloandroid.com
 DOMAIN-SUFFIX,helloavgirls.com
+DOMAIN-SUFFIX,hellofax.com
 DOMAIN-SUFFIX,hellokittybeats.com
 DOMAIN-SUFFIX,hellomoto.com
 DOMAIN-SUFFIX,helloqueer.com
+DOMAIN-SUFFIX,hellosign.com
 DOMAIN-SUFFIX,hellosmartbook.com
 DOMAIN-SUFFIX,helloss.pw
 DOMAIN-SUFFIX,hellotxt.com
@@ -15863,6 +15869,7 @@ DOMAIN-SUFFIX,librarylovefest.com
 DOMAIN-SUFFIX,libraryofthumbs.com
 DOMAIN-SUFFIX,libredd.it
 DOMAIN-SUFFIX,libreoffice.org
+DOMAIN-SUFFIX,librewolf.dev
 DOMAIN-SUFFIX,librewolf.net
 DOMAIN-SUFFIX,libsolutions.app
 DOMAIN-SUFFIX,libsolutions.domains

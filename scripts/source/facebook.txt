@@ -474,6 +474,7 @@ suffix,messenger.com
 suffix,messengerdevelopers.com
 suffix,meta.ai
 suffix,meta.com
+suffix,metaaiusercontent.com
 suffix,metaaivm.com
 suffix,midentsolutions.com
 suffix,mobilefacebook.com
